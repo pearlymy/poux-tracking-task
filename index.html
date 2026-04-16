@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracking Elite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        /* CSS MỚI CỦA BẠN (CÁC BIẾN & STYLE FORM) */
+        :root {
+            --po-primary: #2563EB;
+            --po-primary-hover: #1D4ED8;
+            --po-bg-light: #F8FAFC;
+            --po-border: #E2E8F0;
+            --po-text-main: #1E293B;
+            --po-text-muted: #64748B;
+            --po-alert-bg: #EFF6FF;
+            --po-alert-text: #1E40AF;
+        }
+
+        .po-modal {
+            background: #FFFFFF;
+            width: 100%;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--po-border);
+            margin-bottom: 16px;
+        }
+
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--po-text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .po-input, .po-textarea {
+            width: 100%; border: 1px solid var(--po-border); border-radius: 8px;
+            padding: 10px 12px; font-size: 13px; color: var(--po-text-main); outline: none; transition: 0.2s;
+        }
+        .po-input::placeholder, .po-textarea::placeholder { color: #94A3B8; }
+        .po-input:focus, .po-textarea:focus { border-color: var(--po-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .po-textarea { height: 70px; resize: none; }
+
+        .row-flex { display: flex; gap: 10px; align-items: center; }
+        .po-select { border: 1px solid var(--po-border); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: var(--po-text-main); outline: none; background: #fff; cursor: pointer; }
+
+        .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; border: 1px solid var(--po-border); padding: 8px; border-radius: 8px; min-height: 42px; align-items: center;}
+        .po-tag {
+            background: var(--po-bg-light); border: 1px solid var(--po-border); color: var(--po-text-main);
+            padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .po-tag:hover { background: #E2E8F0; }
+        
+        /* Trạng thái Tag được chọn */
+        .po-tag-active {
+            background: var(--po-primary) !important;
+            color: white !important;
+            border-color: var(--po-primary) !important;
+        }
+
+        .modal-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 8px; }
+        .btn-cancel { background: transparent; border: none; color: var(--po-text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+        .btn-cancel:hover { color: var(--po-text-main); }
+        .btn-submit {
+            background: var(--po-primary); color: white; border: none; border-radius: 8px;
+            padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-submit:hover { background: var(--po-primary-hover); transform: translateY(-1px); }
+
+        /* CSS TỔNG QUAN (GIỮ NGUYÊN) */
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #1e293b; overflow-x: auto; }
+        ::-webkit-scrollbar { height: 10px; width: 8px; }
+        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; border: 2px solid #f1f5f9; }
+        ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+        .sortable-ghost { background-color: #e2e8f0 !important; border: 2px dashed #94a3b8 !important; border-radius: 12px !important; opacity: 0.5 !important; }
+        .sortable-drag { cursor: grabbing !important; background-color: white !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; border: 1px solid #3b82f6 !important; border-radius: 12px !important; opacity: 1 !important; transform: rotate(4deg) scale(1.05) !important; z-index: 9999; transition: transform 0.1s ease-out; }
+        .kanban-list>div { transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1); }
+        .task-card { cursor: grab; }
+        .task-card:active { cursor: grabbing; }
+        .kanban-list { counter-reset: task-counter; }
+        .task-title::before { counter-increment: task-counter; content: counter(task-counter) ". "; color: #94a3b8; font-weight: 700; }
+
+        #col-backlog .task-card { border: 1px solid #cbd5e1 !important; }
+        #col-backlog .task-card:hover { border-color: #94a3b8 !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        #col-inprogress .task-card { border: 1px solid #93c5fd !important; }
+        #col-inprogress .task-card:hover { border-color: #60a5fa !important; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.15); }
+        #col-done .task-card { border: 1px solid #6ee7b7 !important; }
+        #col-done .task-card:hover { border-color: #34d399 !important; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15); }
+        #col-pending .task-card { border: 1px solid #fed7aa !important; }
+        #col-pending .task-card:hover { border-color: #fb923c !important; }
+        #col-cancel .task-card { border: 1px solid #fecaca !important; }
+        #col-cancel .task-card:hover { border-color: #f87171 !important; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
+        .input-error { animation: shake 0.3s ease-in-out; border-color: #ef4444 !important; background-color: #fef2f2 !important; }
+        .input-error::placeholder { color: #ef4444 !important; font-style: italic; }
+        .task-desc { white-space: pre-wrap; word-break: break-word; }
+        .tag-name { display: inline-flex; align-items: center; justify-content: center; height: 18px; padding: 0 6px; border-radius: 4px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); white-space: nowrap; line-height: 1; }
+    /* --- CUSTOM SELECT STYLES --- */
+        .custom-select-wrapper {
+            position: relative;
+            flex: 1;
+            user-select: none;
+        }
+
+        .custom-select-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1px solid var(--po-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--po-text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            height: 35px; /* Cho bằng với thẻ Date */
+        }
+
+        .custom-select-wrapper.open .custom-select-trigger {
+            border-color: var(--po-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .arrow-icon {
+            width: 16px; height: 16px;
+            color: var(--po-text-muted);
+            transition: transform 0.2s ease;
+        }
+        .custom-select-wrapper.open .arrow-icon { transform: rotate(180deg); }
+
+        .custom-options-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0; right: 0;
+            background: #FFFFFF;
+            border: 1px solid var(--po-border);
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 6px;
+            z-index: 100;
+            opacity: 0; visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .custom-select-wrapper.open .custom-options-menu {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+
+        .custom-option {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px; font-size: 13px; color: var(--po-text-main);
+            border-radius: 6px; cursor: pointer; transition: all 0.15s ease;
+        }
+
+        .custom-option:hover {
+            background-color: var(--po-primary-light, #EFF6FF);
+            color: var(--po-primary-dark, #1E40AF);
+        }
+
+        .custom-option.selected {
+            background-color: var(--po-primary-light, #EFF6FF);
+            color: var(--po-primary-dark, #1E40AF);
+            font-weight: 600;
+        }
+
+        .check-icon { width: 16px; height: 16px; opacity: 0; color: var(--po-primary); }
+        .custom-option.selected .check-icon { opacity: 1; }
+        .hidden-native-select { display: none; }
+    </style>
+</head>
+
+<body class="p-4 md:p-8 min-h-screen selection:bg-blue-100 selection:text-blue-900">
+
+    <div class="w-full px-6 flex flex-col h-screen">
+
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl"></div>
+
+            <div>
+                <h1 class="text-2xl font-semibold text-slate-800 flex items-center gap-3 tracking-tight">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
+                        <i class="fa-solid fa-list-check text-lg"></i>
+                    </div>
+                    Task Tracking Elite
+                </h1>
+                <p class="text-slate-500 mt-2 text-[13px] font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-400"></i> Bảng điều khiển tiến độ dự án 2024
+                </p>
+            </div>
+
+            <div class="flex w-full md:w-auto gap-3 items-center">
+                <div class="relative w-full md:w-64 group">
+                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                    <input type="text" placeholder="Tìm kiếm Task..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
+                </div>
+
+                <button type="button" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
+                </button>
+
+                <button type="button" onclick="openInlineForm()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mới</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-x-auto pb-8">
+            <div class="flex gap-6 items-start flex-nowrap pb-6">
+
+                <div class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm">
+                    <div class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-3 h-3 rounded-full bg-slate-400 shadow-inner"></div>
+                            <h3 class="text-[15px] font-extrabold text-slate-700 uppercase tracking-wide">Backlog</h3>
+                            <span class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-backlog">0</span>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div class="px-4 pt-4 pb-1">
+                        <button type="button" onclick="openInlineForm()" class="w-full border-2 border-dashed border-slate-200 rounded-xl py-2.5 text-[13px] font-bold text-slate-400 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus text-[14px]"></i> Thêm Task mới
+                        </button>
+                    </div>
+                    <div id="col-backlog" class="px-4 pb-4 pt-2 flex flex-col gap-4 min-h-[150px] kanban-list">
+                        
+                        <div id="inlineAddForm" class="hidden po-modal relative z-20">
+                            <div class="form-group">
+                                <input type="text" id="inlineTitle" class="po-input" placeholder="Nhập tiêu đề công việc...">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="inlineDesc" class="po-textarea" placeholder="Mô tả công việc..."></textarea>
+                            </div>
+                            <div class="form-group row-flex">
+                                <input type="date" id="inlineDate" class="po-select">
+<div class="custom-select-wrapper" id="inlinePrivacyWrapper">
+                                    <select id="inlineIsPersonal" class="hidden-native-select" onchange="togglePersonalMode(this)">
+                                        <option value="false" selected>Public</option>
+                                        <option value="true">Only me</option>
+                                    </select>
+                                    <div class="custom-select-trigger">
+                                        <span class="trigger-text">Public</span>
+                                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                    <div class="custom-options-menu">
+                                        <div class="custom-option selected" data-value="false">
+                                            Public
+                                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <div class="custom-option" data-value="true">
+                                            Only me
+                                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inlineAssigneeGroup">
+                                <label class="form-label">PHỤ TRÁCH</label>
+                                <div class="tags-wrap" id="inlinePicSelection"></div>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" onclick="hideInlineForm()" class="btn-cancel">Hủy</button>
+                                <button type="button" onclick="saveInlineTask()" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="w-[360px] shrink-0 bg-blue-50/40 border border-blue-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div class="p-4 border-b border-blue-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-3 h-3 rounded-full bg-blue-500 shadow-inner"></div>
+                            <h3 class="text-[14px] font-extrabold text-blue-700 uppercase tracking-wide">In Progress</h3>
+                            <span class="bg-white border border-blue-200 text-blue-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-inprogress">0</span>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg hover:bg-blue-100 flex items-center justify-center text-blue-400 transition">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div id="col-inprogress" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
+                </div>
+
+                <div class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-inner"></div>
+                            <h3 class="text-[14px] font-extrabold text-emerald-700 uppercase tracking-wide">Done</h3>
+                            <span class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-done">0</span>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div id="col-done" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
+                </div>
+
+                <div class="w-[360px] shrink-0 bg-orange-50/40 border border-orange-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div class="p-4 border-b border-orange-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-3 h-3 rounded-full bg-orange-500 shadow-inner"></div>
+                            <h3 class="text-[14px] font-extrabold text-orange-700 uppercase tracking-wide">Pending</h3>
+                            <span class="bg-white border border-orange-200 text-orange-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-pending">0</span>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg hover:bg-orange-100 flex items-center justify-center text-orange-400 transition">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div id="col-pending" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
+                </div>
+
+                <div class="w-[360px] shrink-0 bg-red-50/40 border border-red-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div class="p-4 border-b border-red-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-3 h-3 rounded-full bg-red-500 shadow-inner"></div>
+                            <h3 class="text-[14px] font-extrabold text-red-700 uppercase tracking-wide">Cancel</h3>
+                            <span class="bg-white border border-red-200 text-red-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-cancel">0</span>
+                        </div>
+                        <button class="w-7 h-7 rounded-lg hover:bg-red-100 flex items-center justify-center text-red-400 transition">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                    <div id="col-cancel" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy giá trị true/false từ thẻ Select
+        function togglePersonalMode(select) {
+            const assigneeGroup = document.getElementById('inlineAssigneeGroup');
+            if (select.value === 'true') assigneeGroup.classList.add('hidden');
+            else assigneeGroup.classList.remove('hidden');
+        }
+        // Hàm khởi tạo Custom Dropdown động
+        function initCustomSelect(wrapper) {
+            const trigger = wrapper.querySelector('.custom-select-trigger');
+            const triggerText = wrapper.querySelector('.trigger-text');
+            const options = wrapper.querySelectorAll('.custom-option');
+            const nativeSelect = wrapper.querySelector('.hidden-native-select');
+
+            // Hủy event cũ nếu có (để tránh click đúp khi edit)
+            const newTrigger = trigger.cloneNode(true);
+            trigger.parentNode.replaceChild(newTrigger, trigger);
+
+            newTrigger.addEventListener('click', function(e) {
+                // Đóng các dropdown khác đang mở
+                document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+                    if (w !== wrapper) w.classList.remove('open');
+                });
+                wrapper.classList.toggle('open');
+                e.stopPropagation();
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    triggerText.textContent = this.textContent.trim();
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    nativeSelect.value = this.getAttribute('data-value');
+                    // Kích hoạt sự kiện onchange cho thẻ select ẩn để chạy logic ẩn/hiện Assignee
+                    nativeSelect.dispatchEvent(new Event('change')); 
+                    
+                    wrapper.classList.remove('open');
+                });
+            });
+
+            // Click ra ngoài thì đóng
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
+            });
+        }
+
+        function toggleEditPersonalMode(select) {
+            const editForm = select.closest('.edit-form');
+            const assigneeGroup = editForm.querySelector('.edit-assignee-group');
+            if (select.value === 'true') assigneeGroup.classList.add('hidden');
+            else assigneeGroup.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // KEYBOARD USERS 
+        // ==========================================
+        const USERS = {
+            'U01': { name: 'a.AN', color: '#D97A2B' },      
+            'U02': { name: 'HIẾU PHAN', color: '#EA2264' }, 
+            'U03': { name: 'ĐỊNH', color: '#6FAF4F' },      
+            'U04': { name: 'VÂN', color: '#003049' },       
+            'U05': { name: 'QUỲNH', color: '#8b5cf6' },     
+            'U06': { name: 'THẮNG', color: '#3852B4' },     
+        };
+        const ALL_USER_KEYS = Object.keys(USERS);
+
+        function renderInlinePicSelection() {
+            const container = document.getElementById('inlinePicSelection');
+            if (!container) return;
+            container.innerHTML = '';
+            ALL_USER_KEYS.forEach(key => {
+                const user = USERS[key];
+                container.innerHTML += `<button type="button" onclick="toggleInlinePic(this, '${key}')" class="po-tag">${user.name}</button>`;
+            });
+        }
+
+        function createTagHtml(userKey) {
+            const user = USERS[userKey];
+            if (!user) return '';
+            return `<div class="tag-name" data-user-key="${userKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.name}</div>`;
+        }
+
+        function generateTicketId() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const currentDateStr = `${yyyy}${mm}${dd}`;
+
+            let storedDate = localStorage.getItem('ticket_date');
+            let counter = parseInt(localStorage.getItem('ticket_counter') || '0');
+
+            if (storedDate !== currentDateStr) {
+                storedDate = currentDateStr;
+                counter = 1;
+            } else {
+                counter++;
+            }
+
+            localStorage.setItem('ticket_date', storedDate);
+            localStorage.setItem('ticket_counter', counter.toString());
+
+            const counterStr = String(counter).padStart(4, '0');
+            return `${currentDateStr}${counterStr}`;
+        }
+
+        function syncTagNames() {
+            document.querySelectorAll('.tag-name').forEach(tag => {
+                const key = tag.dataset.userKey;
+                if (key && USERS[key]) {
+                    tag.innerText = USERS[key].name;
+                    tag.style.backgroundColor = USERS[key].color;
+                    tag.style.borderColor = USERS[key].color;
+                    tag.style.color = '#ffffff';
+                }
+            });
+        }
+
+        // ==========================================
+        // 1. HỆ THỐNG LƯU TRỮ (LOCAL STORAGE)
+        // ==========================================
+        function updateCounts() {
+            document.getElementById('count-backlog').innerText = document.getElementById('col-backlog').querySelectorAll('.task-card').length;
+            document.getElementById('count-inprogress').innerText = document.getElementById('col-inprogress').querySelectorAll('.task-card').length;
+            document.getElementById('count-pending').innerText = document.getElementById('col-pending').querySelectorAll('.task-card').length;
+            document.getElementById('count-cancel').innerText = document.getElementById('col-cancel').querySelectorAll('.task-card').length;
+            document.getElementById('count-done').innerText = document.getElementById('col-done').querySelectorAll('.task-card').length;
+        }
+
+        function saveBoardState() {
+            const backlogTasks = Array.from(document.getElementById('col-backlog').querySelectorAll('.task-card')).map(card => card.outerHTML);
+            const inprogressTasks = Array.from(document.getElementById('col-inprogress').querySelectorAll('.task-card')).map(card => card.outerHTML);
+            const pendingTasks = Array.from(document.getElementById('col-pending').querySelectorAll('.task-card')).map(card => card.outerHTML);
+            const cancelTasks = Array.from(document.getElementById('col-cancel').querySelectorAll('.task-card')).map(card => card.outerHTML);
+            const doneTasks = Array.from(document.getElementById('col-done').querySelectorAll('.task-card')).map(card => card.outerHTML);
+
+            localStorage.setItem('kanban_backlog', JSON.stringify(backlogTasks));
+            localStorage.setItem('kanban_inprogress', JSON.stringify(inprogressTasks));
+            localStorage.setItem('kanban_pending', JSON.stringify(pendingTasks));
+            localStorage.setItem('kanban_cancel', JSON.stringify(cancelTasks));
+            localStorage.setItem('kanban_done', JSON.stringify(doneTasks));
+        }
+
+        function loadBoardState() {
+            const backlogTasks = JSON.parse(localStorage.getItem('kanban_backlog'));
+            const inprogressTasks = JSON.parse(localStorage.getItem('kanban_inprogress'));
+            const pendingTasks = JSON.parse(localStorage.getItem('kanban_pending'));
+            const cancelTasks = JSON.parse(localStorage.getItem('kanban_cancel'));
+            const doneTasks = JSON.parse(localStorage.getItem('kanban_done'));
+
+            if (backlogTasks || inprogressTasks || pendingTasks || cancelTasks || doneTasks) {
+                document.querySelectorAll('.task-card').forEach(el => el.remove());
+
+                const form = document.getElementById('inlineAddForm');
+                if (backlogTasks) backlogTasks.reverse().forEach(html => form.insertAdjacentHTML('afterend', html));
+
+                const colInprogress = document.getElementById('col-inprogress');
+                if (inprogressTasks) inprogressTasks.forEach(html => colInprogress.insertAdjacentHTML('beforeend', html));
+
+                const colPending = document.getElementById('col-pending');
+                if (pendingTasks) pendingTasks.forEach(html => colPending.insertAdjacentHTML('beforeend', html));
+
+                const colCancel = document.getElementById('col-cancel');
+                if (cancelTasks) cancelTasks.forEach(html => colCancel.insertAdjacentHTML('beforeend', html));
+
+                const colDone = document.getElementById('col-done');
+                if (doneTasks) doneTasks.forEach(html => colDone.insertAdjacentHTML('beforeend', html));
+            }
+            updateCounts();
+            renderInlinePicSelection();
+            syncTagNames();
+        }
+
+        // ==========================================
+        // 2. KÉO THẢ TASK (SORTABLE)
+        // ==========================================
+        const sortableConfig = {
+            group: 'shared-tasks',
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+            onEnd: function (evt) {
+                updateCounts();
+                saveBoardState();
+            }
+        };
+
+        new Sortable(document.getElementById('col-backlog'), sortableConfig);
+        new Sortable(document.getElementById('col-inprogress'), sortableConfig);
+        new Sortable(document.getElementById('col-done'), sortableConfig);
+        new Sortable(document.getElementById('col-pending'), sortableConfig);
+        new Sortable(document.getElementById('col-cancel'), sortableConfig);
+
+        // ==========================================
+        // 3. THÊM TASK MỚI (INLINE ADD)
+        // ==========================================
+        let inlineSelectedPICs = [];
+
+function openInlineForm() {
+            const form = document.getElementById('inlineAddForm');
+            form.classList.remove('hidden');
+            document.getElementById('inlineTitle').focus();
+            
+            // KÍCH HOẠT CUSTOM DROPDOWN
+            initCustomSelect(document.getElementById('inlinePrivacyWrapper'));
+        }
+
+        function hideInlineForm() {
+            const form = document.getElementById('inlineAddForm');
+            form.classList.add('hidden');
+            document.getElementById('inlineTitle').value = '';
+            document.getElementById('inlineDesc').value = '';
+            document.getElementById('inlineDate').value = '';
+            inlineSelectedPICs = [];
+            // Reset Tags CSS
+            document.querySelectorAll('#inlinePicSelection button').forEach(btn => {
+                btn.classList.remove('po-tag-active');
+            });
+            
+            // RESET CUSTOM DROPDOWN VỀ PUBLIC
+            const wrapper = document.getElementById('inlinePrivacyWrapper');
+            if (wrapper) {
+                const nativeSelect = wrapper.querySelector('.hidden-native-select');
+                const triggerText = wrapper.querySelector('.trigger-text');
+                const options = wrapper.querySelectorAll('.custom-option');
+                
+                nativeSelect.value = 'false';
+                triggerText.textContent = 'Public';
+                options.forEach(opt => opt.classList.remove('selected'));
+                wrapper.querySelector('.custom-option[data-value="false"]').classList.add('selected');
+                togglePersonalMode(nativeSelect); 
+            }
+        }
+
+        function toggleInlinePic(btn, name) {
+            const index = inlineSelectedPICs.indexOf(name);
+            if (index === -1) {
+                inlineSelectedPICs.push(name);
+                btn.classList.add('po-tag-active');
+            } else {
+                inlineSelectedPICs.splice(index, 1);
+                btn.classList.remove('po-tag-active');
+            }
+        }
+
+        function saveInlineTask() {
+            const title = document.getElementById('inlineTitle').value.trim();
+            const desc = document.getElementById('inlineDesc').value.trim(); 
+
+            if (!title) {
+                const titleInput = document.getElementById('inlineTitle');
+                titleInput.classList.add('input-error');
+                titleInput.placeholder = "Vui lòng nhập tiêu đề công việc";
+                titleInput.focus();
+                setTimeout(() => { titleInput.classList.remove('input-error'); }, 400);
+                return;
+            }
+
+            const dateRaw = document.getElementById('inlineDate').value;
+            let dateStr = "Chưa có hạn";
+            let statusTextHtml = "";
+            if (dateRaw) {
+                let parts = dateRaw.split('-');
+                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                let today = new Date(); today.setHours(0, 0, 0, 0);
+                let taskDate = new Date(dateRaw); taskDate.setHours(0, 0, 0, 0);
+                let diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
+
+                if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
+                else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
+                else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
+            }
+
+            const isPersonalSelect = document.getElementById('inlineIsPersonal');
+            // Lấy logic True/False từ Select thay vì Checkbox
+            const isPersonal = isPersonalSelect ? (isPersonalSelect.value === 'true') : false;
+            
+            let picsHtml = '';
+            if (isPersonal) {
+                picsHtml = `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
+            } else {
+                if (inlineSelectedPICs.length === 0) {
+                    picsHtml = `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
+                } else {
+                    inlineSelectedPICs.forEach(key => {
+                        picsHtml += createTagHtml(key);
+                    });
+                }
+            }
+
+            const ticketId = typeof generateTicketId === 'function' ? generateTicketId() : '';
+            const userKeysString = isPersonal ? '' : inlineSelectedPICs.join(',');
+
+            const cardHTML = `
+                <div class="task-card relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]" data-ticket-id="${ticketId}" data-is-personal="${isPersonal}" data-user-keys="${userKeysString}">
+                    <button type="button" onclick="editTask(this)" class="absolute top-3.5 right-3 w-7 h-7 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 opacity-0 group-hover:opacity-100 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm cursor-pointer z-10">
+                        <i class="fa-solid fa-pen text-[11px] pointer-events-none"></i>
+                    </button>
+                    <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
+                    <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
+                    <div class="flex justify-between items-start pt-3 border-t border-slate-100">
+                        <div class="flex flex-col gap-0.5">
+                            <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
+                                <i class="fa-regular fa-calendar"></i> ${dateStr}
+                            </div>
+                            ${statusTextHtml}
+                        </div>
+                        <div class="flex gap-1.5 flex-wrap justify-end mt-1">
+                            ${picsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('inlineAddForm').insertAdjacentHTML('afterend', cardHTML);
+            updateCounts();
+            saveBoardState();
+            hideInlineForm();
+        }
+
+        // ==========================================
+        // 4. CHỈNH SỬA TASK (EDIT)
+        // ==========================================
+        function editTask(btn) {
+            const card = btn.closest('.task-card');
+            const titleEl = card.querySelector('.task-title');
+            const oldTitle = titleEl ? titleEl.innerText.replace(/^\d+\.\s/, '') : '';
+            const descEl = card.querySelector('.task-desc');
+            const oldDesc = descEl ? descEl.innerText : '';
+
+            const dateEl = card.querySelector('.fa-calendar');
+            let oldDateVal = '';
+            if (dateEl) {
+                const dateText = dateEl.parentElement.innerText.trim();
+                if (dateText && dateText !== 'Chưa có hạn') {
+                    const parts = dateText.split('/');
+                    if (parts.length === 3) oldDateVal = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                }
+            }
+
+            const isPersonal = card.dataset.isPersonal === "true";
+
+            let oldPicsKeys = [];
+            card.querySelectorAll('.tag-name, .justify-end > div').forEach(el => {
+                const key = el.dataset.userKey;
+                const text = el.innerText.trim();
+
+                if (key) {
+                    oldPicsKeys.push(key);
+                } else if (text !== 'Chưa giao' && text !== '') {
+                    const foundKey = Object.keys(USERS).find(k => USERS[k].name === text || USERS[k].name.includes(text));
+                    if (foundKey) oldPicsKeys.push(foundKey);
+                }
+            });
+
+            card.dataset.originalHtml = card.innerHTML;
+
+            // Render Tags với CSS mới
+            let picButtonsHtml = '';
+            ALL_USER_KEYS.forEach(userKey => {
+                const isSelected = oldPicsKeys.includes(userKey);
+                const btnClass = isSelected ? "po-tag po-tag-active" : "po-tag";
+                picButtonsHtml += `<button type="button" onclick="toggleEditPic(this)" class="${btnClass}" data-pic="${userKey}">${USERS[userKey].name}</button>`;
+            });
+
+            // Giao diện Edit được chuyển sang CSS mới của bạn
+// Giao diện Edit được chuyển sang CSS mới của bạn
+            card.innerHTML = `
+                <div class="edit-form relative z-20 w-full">
+                    <div class="form-group">
+                        <input type="text" class="edit-title po-input" placeholder="Nhập tiêu đề công việc..." value="${oldTitle}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea class="edit-desc po-textarea" placeholder="Mô tả công việc...">${oldDesc}</textarea>
+                    </div>
+                    
+<div class="form-group row-flex">
+                        <input type="date" class="edit-date po-select" value="${oldDateVal}">
+                        
+                        <div class="custom-select-wrapper editPrivacyWrapper">
+                            <select class="edit-is-personal hidden-native-select" onchange="toggleEditPersonalMode(this)">
+                                <option value="false" ${!isPersonal ? 'selected' : ''}>Public</option>
+                                <option value="true" ${isPersonal ? 'selected' : ''}>Only me</option>
+                            </select>
+                            <div class="custom-select-trigger">
+                                <span class="trigger-text">${isPersonal ? 'Only me' : 'Public'}</span>
+                                <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="custom-options-menu">
+                                <div class="custom-option ${!isPersonal ? 'selected' : ''}" data-value="false">
+                                    Public
+                                    <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div class="custom-option ${isPersonal ? 'selected' : ''}" data-value="true">
+                                    Only me
+                                    <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group edit-assignee-group ${isPersonal ? 'hidden' : ''}">
+                        <label class="form-label">PHỤ TRÁCH</label>
+                        <div class="tags-wrap edit-pic-selection">
+                            ${picButtonsHtml}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" onclick="cancelEditTask(this)" class="btn-cancel">Hủy</button>
+                        <button type="button" onclick="saveEditedTask(this)" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                    </div>
+                </div>
+            `;
+
+            const editArea = card.querySelector('.edit-desc');
+            if (editArea) {
+                autoResize(editArea);
+                editArea.addEventListener('input', function () { autoResize(this); });
+            }
+            initCustomSelect(card.querySelector('.editPrivacyWrapper'));
+        }
+
+        function toggleEditPic(btn) {
+            btn.classList.toggle('po-tag-active');
+        }
+
+        function cancelEditTask(btn) {
+            const card = btn.closest('.task-card');
+            card.innerHTML = card.dataset.originalHtml;
+        }
+
+        function saveEditedTask(btn) {
+            const card = btn.closest('.task-card');
+            const title = card.querySelector('.edit-title').value.trim();
+            const desc = card.querySelector('.edit-desc').value.trim();
+
+            if (!title) {
+                const editInput = card.querySelector('.edit-title');
+                editInput.classList.add('input-error');
+                editInput.placeholder = "Tiêu đề không được để trống!";
+                editInput.focus();
+                setTimeout(() => editInput.classList.remove('input-error'), 400);
+                return;
+            }
+
+            const dateRaw = card.querySelector('.edit-date').value;
+            let dateStr = "Chưa có hạn";
+            let statusTextHtml = "";
+            if (dateRaw) {
+                let parts = dateRaw.split('-');
+                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                let today = new Date(); today.setHours(0, 0, 0, 0);
+                let taskDate = new Date(dateRaw); taskDate.setHours(0, 0, 0, 0);
+                let diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
+
+                if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
+                else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
+                else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
+            }
+
+            // Đọc Select Value thay vì Checkbox
+            const isPersonal = card.querySelector('.edit-is-personal').value === 'true';
+            card.dataset.isPersonal = isPersonal; 
+
+            let picsHtml = '';
+            let selectedKeys = [];
+
+            if (isPersonal) {
+                picsHtml = `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
+            } else {
+                // Lấy các Tag đang có class Active
+                const picEls = card.querySelectorAll('.po-tag-active');
+                if (picEls.length === 0) {
+                    picsHtml = `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
+                } else {
+                    picEls.forEach(el => { 
+                        selectedKeys.push(el.dataset.pic);
+                        picsHtml += createTagHtml(el.dataset.pic); 
+                    });
+                }
+            }
+            card.dataset.userKeys = selectedKeys.join(',');
+
+            // RENDER VIEW CARD
+            card.innerHTML = `
+                <button type="button" onclick="editTask(this)" class="absolute top-3.5 right-3 w-7 h-7 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 opacity-0 group-hover:opacity-100 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm cursor-pointer z-10">
+                    <i class="fa-solid fa-pen text-[11px] pointer-events-none"></i>
+                </button>
+                <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
+                <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
+                <div class="flex justify-between items-start pt-3 border-t border-slate-100">
+                    <div class="flex flex-col gap-0.5">
+                        <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
+                            <i class="fa-regular fa-calendar"></i> ${dateStr}
+                        </div>
+                        ${statusTextHtml}
+                    </div>
+                    <div class="flex gap-1.5 flex-wrap justify-end mt-1">
+                        ${picsHtml}
+                    </div>
+                </div>
+            `;
+
+            updateCounts();
+            saveBoardState();
+        }
+
+        // ==========================================
+        // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
+        // ==========================================
+        loadBoardState();
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        document.getElementById('inlineDesc').addEventListener('input', function () {
+            autoResize(this);
+        });
+    </script>
+</body>
+
+</html>
