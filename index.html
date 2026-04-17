@@ -194,23 +194,29 @@
             background-color: #94a3b8;
         }
 
+/* --- HIỆU ỨNG KÉO THẢ (PO WORKSPACE STYLE) --- */
         .sortable-ghost {
-            background-color: #e2e8f0 !important;
-            border: 2px dashed #94a3b8 !important;
+            background-color: #f8fafc !important; /* Nền xám nhạt */
+            border: 2px dashed #94a3b8 !important; /* Viền đứt nét */
             border-radius: 12px !important;
-            opacity: 0.5 !important;
+            opacity: 1 !important;
+        }
+
+        .sortable-ghost > * {
+            opacity: 0 !important; /* Ẩn toàn bộ nội dung chữ bên trong vùng rớt xuống */
+            visibility: hidden !important; 
         }
 
         .sortable-drag {
             cursor: grabbing !important;
-            background-color: white !important;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25) !important; /* Bóng đổ xanh dương */
             border: 1px solid #3b82f6 !important;
             border-radius: 12px !important;
             opacity: 1 !important;
-            transform: rotate(4deg) scale(1.05) !important;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
+            transform: rotate(3deg) scale(1.02) !important; /* Nghiêng 3 độ, to lên 2% */
+            z-index: 99999 !important;
+            transition: none !important; /* BẮT BUỘC: Tắt transition để thẻ không bị lag trễ so với chuột */
         }
 
         .kanban-list>div {
@@ -508,6 +514,29 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .delete-btn .delete-text { display: none; font-size: 11px; font-weight: 700; white-space: nowrap; pointer-events: none;}
         .delete-btn.confirm-mode .trash-icon { display: none; }
         .delete-btn.confirm-mode .delete-text { display: block; }
+        /* --- HIỆU ỨNG TRƯỢT FORM CHUẨN UX --- */
+        .form-wrapper {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-12px);
+            transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.3s ease, margin 0.3s ease;
+            overflow: hidden;
+        }
+
+        .form-wrapper.open {
+            max-height: 800px; /* Đủ lớn để chứa form */
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            margin-bottom: 16px;
+        }
+
+        /* Làm mờ nút bấm khi form đang mở */
+        .btn-add-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -991,7 +1020,7 @@ function togglePersonalMode(select) {
         }
 
         // GIẢ LẬP ĐĂNG NHẬP: Đổi thành 'U04' (Vân), 'U06' (Thắng) để test
-        const CURRENT_USER_ID = 'U02'; 
+        const CURRENT_USER_ID = 'U01'; 
 
         // Hàm áp dụng quyền lên giao diện
         function applyUIPermissions() {
