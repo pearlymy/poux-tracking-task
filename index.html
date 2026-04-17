@@ -2,6 +2,7 @@
 <html lang="vi">
 
 <head>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50V0z' fill='%232563EB'/><path d='M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50V0z' fill='%23F97316'/><path d='M35 50l10 10 20-20' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Tracking Elite</title>
@@ -34,27 +35,92 @@
             margin-bottom: 16px;
         }
 
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--po-text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .po-input, .po-textarea {
-            width: 100%; border: 1px solid var(--po-border); border-radius: 8px;
-            padding: 10px 12px; font-size: 13px; color: var(--po-text-main); outline: none; transition: 0.2s;
+        .form-group {
+            margin-bottom: 16px;
         }
-        .po-input::placeholder, .po-textarea::placeholder { color: #94A3B8; }
-        .po-input:focus, .po-textarea:focus { border-color: var(--po-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .po-textarea { height: 70px; resize: none; }
 
-        .row-flex { display: flex; gap: 10px; align-items: center; }
-        .po-select { border: 1px solid var(--po-border); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: var(--po-text-main); outline: none; background: #fff; cursor: pointer; }
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--po-text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-        .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; border: 1px solid var(--po-border); padding: 8px; border-radius: 8px; min-height: 42px; align-items: center;}
+        .po-input,
+        .po-textarea {
+            width: 100%;
+            border: 1px solid var(--po-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--po-text-main);
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .po-input::placeholder,
+        .po-textarea::placeholder {
+            color: #94A3B8;
+        }
+
+        .po-input:focus,
+        .po-textarea:focus {
+            border-color: var(--po-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .po-textarea {
+            height: 70px;
+            resize: none;
+        }
+
+        .row-flex {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .po-select {
+            border: 1px solid var(--po-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--po-text-main);
+            outline: none;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border: 1px solid var(--po-border);
+            padding: 8px;
+            border-radius: 8px;
+            min-height: 42px;
+            align-items: center;
+        }
+
         .po-tag {
-            background: var(--po-bg-light); border: 1px solid var(--po-border); color: var(--po-text-main);
-            padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;
+            background: var(--po-bg-light);
+            border: 1px solid var(--po-border);
+            color: var(--po-text-main);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .po-tag:hover { background: #E2E8F0; }
-        
+
+        .po-tag:hover {
+            background: #E2E8F0;
+        }
+
         /* Trạng thái Tag được chọn */
         .po-tag-active {
             background: var(--po-primary) !important;
@@ -62,46 +128,255 @@
             border-color: var(--po-primary) !important;
         }
 
-        .modal-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 8px; }
-        .btn-cancel { background: transparent; border: none; color: var(--po-text-muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;}
-        .btn-cancel:hover { color: var(--po-text-main); }
-        .btn-submit {
-            background: var(--po-primary); color: white; border: none; border-radius: 8px;
-            padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-            display: flex; align-items: center; gap: 6px;
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
         }
-        .btn-submit:hover { background: var(--po-primary-hover); transform: translateY(-1px); }
+
+        .btn-cancel {
+            background: transparent;
+            border: none;
+            color: var(--po-text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-cancel:hover {
+            color: var(--po-text-main);
+        }
+
+        .btn-submit {
+            background: var(--po-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-submit:hover {
+            background: var(--po-primary-hover);
+            transform: translateY(-1px);
+        }
 
         /* CSS TỔNG QUAN (GIỮ NGUYÊN) */
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #1e293b; overflow-x: auto; }
-        ::-webkit-scrollbar { height: 10px; width: 8px; }
-        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; border: 2px solid #f1f5f9; }
-        ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
-        .sortable-ghost { background-color: #e2e8f0 !important; border: 2px dashed #94a3b8 !important; border-radius: 12px !important; opacity: 0.5 !important; }
-        .sortable-drag { cursor: grabbing !important; background-color: white !important; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; border: 1px solid #3b82f6 !important; border-radius: 12px !important; opacity: 1 !important; transform: rotate(4deg) scale(1.05) !important; z-index: 9999; transition: transform 0.1s ease-out; }
-        .kanban-list>div { transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1); }
-        .task-card { cursor: grab; }
-        .task-card:active { cursor: grabbing; }
-        .kanban-list { counter-reset: task-counter; }
-        .task-title::before { counter-increment: task-counter; content: counter(task-counter) ". "; color: #94a3b8; font-weight: 700; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            overflow-x: auto;
+        }
 
-        #col-backlog .task-card { border: 1px solid #cbd5e1 !important; }
-        #col-backlog .task-card:hover { border-color: #94a3b8 !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        #col-inprogress .task-card { border: 1px solid #93c5fd !important; }
-        #col-inprogress .task-card:hover { border-color: #60a5fa !important; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.15); }
-        #col-done .task-card { border: 1px solid #6ee7b7 !important; }
-        #col-done .task-card:hover { border-color: #34d399 !important; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15); }
-        #col-pending .task-card { border: 1px solid #fed7aa !important; }
-        #col-pending .task-card:hover { border-color: #fb923c !important; }
-        #col-cancel .task-card { border: 1px solid #fecaca !important; }
-        #col-cancel .task-card:hover { border-color: #f87171 !important; }
+        ::-webkit-scrollbar {
+            height: 10px;
+            width: 8px;
+        }
 
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
-        .input-error { animation: shake 0.3s ease-in-out; border-color: #ef4444 !important; background-color: #fef2f2 !important; }
-        .input-error::placeholder { color: #ef4444 !important; font-style: italic; }
-        .task-desc { white-space: pre-wrap; word-break: break-word; }
-        .tag-name { display: inline-flex; align-items: center; justify-content: center; height: 18px; padding: 0 6px; border-radius: 4px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); white-space: nowrap; line-height: 1; }
-    /* --- CUSTOM SELECT STYLES --- */
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+            border: 2px solid #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+
+        .sortable-ghost {
+            background-color: #e2e8f0 !important;
+            border: 2px dashed #94a3b8 !important;
+            border-radius: 12px !important;
+            opacity: 0.5 !important;
+        }
+
+        .sortable-drag {
+            cursor: grabbing !important;
+            background-color: white !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+            border: 1px solid #3b82f6 !important;
+            border-radius: 12px !important;
+            opacity: 1 !important;
+            transform: rotate(4deg) scale(1.05) !important;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+
+        .kanban-list>div {
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .task-card {
+            cursor: grab;
+        }
+
+        .task-card:active {
+            cursor: grabbing;
+        }
+
+        .kanban-list {
+            counter-reset: task-counter;
+        }
+
+        .task-title::before {
+            counter-increment: task-counter;
+            content: counter(task-counter) ". ";
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        #col-backlog .task-card {
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        #col-backlog .task-card:hover {
+            border-color: #94a3b8 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        #col-inprogress .task-card {
+            border: 1px solid #93c5fd !important;
+        }
+
+        #col-inprogress .task-card:hover {
+            border-color: #60a5fa !important;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.15);
+        }
+
+        #col-done .task-card {
+            border: 1px solid #6ee7b7 !important;
+        }
+
+        #col-done .task-card:hover {
+            border-color: #34d399 !important;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15);
+        }
+
+        #col-pending .task-card {
+            border: 1px solid #fed7aa !important;
+        }
+
+        #col-pending .task-card:hover {
+            border-color: #fb923c !important;
+        }
+
+        #col-cancel .task-card {
+            border: 1px solid #fecaca !important;
+        }
+
+        #col-cancel .task-card:hover {
+            border-color: #f87171 !important;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+        }
+
+        .input-error {
+            animation: shake 0.3s ease-in-out;
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+
+        .input-error::placeholder {
+            color: #ef4444 !important;
+            font-style: italic;
+        }
+
+        .task-desc {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .tag-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 18px;
+            padding: 0 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            white-space: nowrap;
+            line-height: 1;
+        }
+/* --- BỔ SUNG MÀU CHO DATE PICKER --- */
+        :root {
+            --po-bg-light: #EFF6FF; /* Màu xanh siêu nhạt khi hover ngày */
+            --po-text-light: #94A3B8;
+        }
+
+        /* --- DATE PICKER WRAPPER --- */
+        .po-datepicker { position: relative; width: 140px; user-select: none; }
+        
+.dp-trigger {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #FFFFFF; border: 1px solid var(--po-border);
+            border-radius: 8px; padding: 0 12px; font-size: 13px; color: var(--po-text-muted);
+            cursor: pointer; transition: all 0.2s ease; height: 35px;
+        }
+        .po-datepicker.open .dp-trigger { border-color: var(--po-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); color: var(--po-text-main); }
+        .dp-icon { width: 14px; height: 14px; color: var(--po-text-muted); }
+
+        .dp-popup {
+position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
+            border: 1px solid var(--po-border); border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 16px; width: 260px; z-index: 100;
+            opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease;
+        }
+        .po-datepicker.open .dp-popup { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .dp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .dp-month-year { font-size: 14px; font-weight: 700; color: var(--po-text-main); display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .dp-month-year svg { width: 14px; height: 14px; }
+        .dp-nav { display: flex; gap: 4px; }
+        .dp-nav-btn { background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--po-text-main); transition: 0.2s; }
+        .dp-nav-btn:hover { background: #F1F5F9; }
+        .dp-nav-btn svg { width: 16px; height: 16px; }
+
+        .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .dp-day-name { font-size: 11px; font-weight: 600; color: var(--po-text-main); padding-bottom: 8px; }
+        .dp-date { width: 28px; height: 28px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s ease; color: var(--po-text-main); }
+        .dp-date:hover:not(.empty) { background: var(--po-bg-light); color: var(--po-primary); }
+        .dp-date.empty { color: var(--po-text-light); cursor: default; }
+        .dp-date.selected { background: var(--po-primary); color: white; border-color: var(--po-primary); font-weight: 600; }
+        .dp-date.selected:hover { background: var(--po-primary-hover); color: white; }
+
+        .dp-footer { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--po-border); }
+        .dp-action-btn { background: transparent; border: none; font-size: 12px; font-weight: 600; color: var(--po-primary); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
+        .dp-action-btn:hover { background: var(--po-bg-light); }
+        /* --- CUSTOM SELECT STYLES --- */
         .custom-select-wrapper {
             position: relative;
             flex: 1;
@@ -120,7 +395,8 @@
             color: var(--po-text-main);
             cursor: pointer;
             transition: all 0.2s ease;
-            height: 35px; /* Cho bằng với thẻ Date */
+            height: 35px;
+            /* Cho bằng với thẻ Date */
         }
 
         .custom-select-wrapper.open .custom-select-trigger {
@@ -129,35 +405,49 @@
         }
 
         .arrow-icon {
-            width: 16px; height: 16px;
+            width: 16px;
+            height: 16px;
             color: var(--po-text-muted);
             transition: transform 0.2s ease;
         }
-        .custom-select-wrapper.open .arrow-icon { transform: rotate(180deg); }
+
+        .custom-select-wrapper.open .arrow-icon {
+            transform: rotate(180deg);
+        }
 
         .custom-options-menu {
             position: absolute;
             top: calc(100% + 6px);
-            left: 0; right: 0;
+            left: 0;
+            right: 0;
             background: #FFFFFF;
             border: 1px solid var(--po-border);
             border-radius: 8px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             padding: 6px;
             z-index: 100;
-            opacity: 0; visibility: hidden;
+            opacity: 0;
+            visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.2s ease;
         }
 
         .custom-select-wrapper.open .custom-options-menu {
-            opacity: 1; visibility: visible; transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         .custom-option {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 12px; font-size: 13px; color: var(--po-text-main);
-            border-radius: 6px; cursor: pointer; transition: all 0.15s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--po-text-main);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
         }
 
         .custom-option:hover {
@@ -171,9 +461,53 @@
             font-weight: 600;
         }
 
-        .check-icon { width: 16px; height: 16px; opacity: 0; color: var(--po-primary); }
-        .custom-option.selected .check-icon { opacity: 1; }
-        .hidden-native-select { display: none; }
+        .check-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0;
+            color: var(--po-primary);
+        }
+
+        .custom-option.selected .check-icon {
+            opacity: 1;
+        }
+
+        .hidden-native-select {
+            display: none;
+        }
+        /* --- HIỆU ỨNG NÚT XÓA & HÀNH ĐỘNG TICKET --- */
+        .task-card.deleting {
+            transform: scale(0.9);
+            opacity: 0;
+            margin-top: -80px; 
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-actions-wrap {
+            position: absolute; top: 12px; right: 12px;
+            display: flex; gap: 6px; z-index: 10;
+            opacity: 0; transform: translateX(5px); transition: all 0.2s ease;
+        }
+        .task-card:hover .card-actions-wrap {
+            opacity: 1; transform: translateX(0);
+        }
+        .icon-btn {
+            display: flex; justify-content: center; align-items: center;
+            height: 28px; width: 28px; padding: 0;
+            background: white; border: 1px solid var(--po-border); border-radius: 8px;
+            color: var(--po-text-muted); cursor: pointer; transition: all 0.2s ease; overflow: hidden;
+        }
+        .icon-btn:hover { background: #F8FAFC; color: var(--po-text-main); border-color: #cbd5e1; }
+        .icon-btn svg { width: 14px; height: 14px; flex-shrink: 0; pointer-events: none;}
+        
+        .delete-btn.confirm-mode {
+            width: 56px; 
+            background: #FEF2F2; border-color: #EF4444; color: #EF4444;
+        }
+        .delete-btn.confirm-mode:hover { background: #FEE2E2; }
+        .delete-btn .delete-text { display: none; font-size: 11px; font-weight: 700; white-space: nowrap; pointer-events: none;}
+        .delete-btn.confirm-mode .trash-icon { display: none; }
+        .delete-btn.confirm-mode .delete-text { display: block; }
     </style>
 </head>
 
@@ -181,12 +515,14 @@
 
     <div class="w-full px-6 flex flex-col h-screen">
 
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
             <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl"></div>
 
             <div>
                 <h1 class="text-2xl font-semibold text-slate-800 flex items-center gap-3 tracking-tight">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
+                    <div
+                        class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
                         <i class="fa-solid fa-list-check text-lg"></i>
                     </div>
                     Task Tracking Elite
@@ -198,15 +534,19 @@
 
             <div class="flex w-full md:w-auto gap-3 items-center">
                 <div class="relative w-full md:w-64 group">
-                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
-                    <input type="text" placeholder="Tìm kiếm Task..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
+                    <i
+                        class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                    <input type="text" placeholder="Tìm kiếm Task..."
+                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
                 </div>
 
-                <button type="button" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
+                <button type="button"
+                    class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
                 </button>
 
-                <button type="button" onclick="openInlineForm()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
+                <button type="button" onclick="openInlineForm()"
+                    class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
                     <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mới</span>
                 </button>
             </div>
@@ -215,50 +555,93 @@
         <div class="flex-1 overflow-x-auto pb-8">
             <div class="flex gap-6 items-start flex-nowrap pb-6">
 
-                <div class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm">
-                    <div class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
+                <div
+                    class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm">
+                    <div
+                        class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
                         <div class="flex items-center gap-2.5">
                             <div class="w-3 h-3 rounded-full bg-slate-400 shadow-inner"></div>
                             <h3 class="text-[15px] font-extrabold text-slate-700 uppercase tracking-wide">Backlog</h3>
-                            <span class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-backlog">0</span>
+                            <span
+                                class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
+                                id="count-backlog">0</span>
                         </div>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
+                        <button
+                            class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                     </div>
                     <div class="px-4 pt-4 pb-1">
-                        <button type="button" onclick="openInlineForm()" class="w-full border-2 border-dashed border-slate-200 rounded-xl py-2.5 text-[13px] font-bold text-slate-400 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <button type="button" onclick="openInlineForm()"
+                            class="w-full border-2 border-dashed border-slate-200 rounded-xl py-2.5 text-[13px] font-bold text-slate-400 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 transition-all flex items-center justify-center gap-2 shadow-sm">
                             <i class="fa-solid fa-plus text-[14px]"></i> Thêm Task mới
                         </button>
                     </div>
                     <div id="col-backlog" class="px-4 pb-4 pt-2 flex flex-col gap-4 min-h-[150px] kanban-list">
-                        
+
                         <div id="inlineAddForm" class="hidden po-modal relative z-20">
                             <div class="form-group">
-                                <input type="text" id="inlineTitle" class="po-input" placeholder="Nhập tiêu đề công việc...">
+                                <input type="text" id="inlineTitle" class="po-input"
+                                    placeholder="Nhập tiêu đề công việc...">
                             </div>
                             <div class="form-group">
-                                <textarea id="inlineDesc" class="po-textarea" placeholder="Mô tả công việc..."></textarea>
+                                <textarea id="inlineDesc" class="po-textarea"
+                                    placeholder="Mô tả công việc..."></textarea>
                             </div>
                             <div class="form-group row-flex">
-                                <input type="date" id="inlineDate" class="po-select">
-<div class="custom-select-wrapper" id="inlinePrivacyWrapper">
-                                    <select id="inlineIsPersonal" class="hidden-native-select" onchange="togglePersonalMode(this)">
+<div class="po-datepicker" id="inlineDateWrapper">
+                                  <input type="hidden" id="inlineDate" class="hidden-date-input">
+                                  <div class="dp-trigger">
+                                    <span class="dp-text"><i class="fa-regular fa-calendar mr-1.5"></i> dd/mm/yyyy</span>
+                                    <svg class="dp-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                  </div>
+                                  <div class="dp-popup">
+                                    <div class="dp-header">
+                                      <div class="dp-month-year">April 2026 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                                      <div class="dp-nav">
+                                        <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                                        <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                                      </div>
+                                    </div>
+                                    <div class="dp-grid">
+                                      <div class="dp-day-name">Su</div><div class="dp-day-name">Mo</div><div class="dp-day-name">Tu</div><div class="dp-day-name">We</div><div class="dp-day-name">Th</div><div class="dp-day-name">Fr</div><div class="dp-day-name">Sa</div>
+                                      <div class="dp-date empty">29</div><div class="dp-date empty">30</div><div class="dp-date empty">31</div>
+                                      <div class="dp-date">1</div><div class="dp-date">2</div><div class="dp-date">3</div><div class="dp-date">4</div><div class="dp-date">5</div><div class="dp-date">6</div><div class="dp-date">7</div><div class="dp-date">8</div><div class="dp-date">9</div><div class="dp-date">10</div><div class="dp-date">11</div><div class="dp-date">12</div><div class="dp-date">13</div><div class="dp-date">14</div><div class="dp-date">15</div><div class="dp-date">16</div><div class="dp-date">17</div><div class="dp-date">18</div><div class="dp-date">19</div><div class="dp-date">20</div><div class="dp-date">21</div><div class="dp-date">22</div><div class="dp-date">23</div><div class="dp-date">24</div><div class="dp-date">25</div><div class="dp-date">26</div><div class="dp-date">27</div><div class="dp-date">28</div><div class="dp-date">29</div><div class="dp-date">30</div><div class="dp-date empty">1</div><div class="dp-date empty">2</div>
+                                    </div>
+                                    <div class="dp-footer">
+                                      <button type="button" class="dp-action-btn dpClear">Clear</button>
+                                      <button type="button" class="dp-action-btn dpToday">Today</button>
+                                    </div>
+                                  </div>
+                                </div>                                <div class="custom-select-wrapper" id="inlinePrivacyWrapper">
+                                    <select id="inlineIsPersonal" class="hidden-native-select"
+                                        onchange="togglePersonalMode(this)">
                                         <option value="false" selected>Public</option>
                                         <option value="true">Only me</option>
                                     </select>
                                     <div class="custom-select-trigger">
                                         <span class="trigger-text">Public</span>
-                                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7"></path>
+                                        </svg>
                                     </div>
                                     <div class="custom-options-menu">
                                         <div class="custom-option selected" data-value="false">
                                             Public
-                                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                            <svg class="check-icon" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
                                         </div>
                                         <div class="custom-option" data-value="true">
                                             Only me
-                                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                            <svg class="check-icon" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
                                         </div>
                                     </div>
                                 </div>
@@ -269,63 +652,85 @@
                             </div>
                             <div class="modal-actions">
                                 <button type="button" onclick="hideInlineForm()" class="btn-cancel">Hủy</button>
-                                <button type="button" onclick="saveInlineTask()" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                                <button type="button" onclick="saveInlineTask()" class="btn-submit"><i
+                                        class="fa-solid fa-check"></i> Lưu ngay</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="w-[360px] shrink-0 bg-blue-50/40 border border-blue-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div class="p-4 border-b border-blue-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                <div
+                    class="w-[360px] shrink-0 bg-blue-50/40 border border-blue-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div
+                        class="p-4 border-b border-blue-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
                         <div class="flex items-center gap-2.5">
                             <div class="w-3 h-3 rounded-full bg-blue-500 shadow-inner"></div>
-                            <h3 class="text-[14px] font-extrabold text-blue-700 uppercase tracking-wide">In Progress</h3>
-                            <span class="bg-white border border-blue-200 text-blue-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-inprogress">0</span>
+                            <h3 class="text-[14px] font-extrabold text-blue-700 uppercase tracking-wide">In Progress
+                            </h3>
+                            <span
+                                class="bg-white border border-blue-200 text-blue-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
+                                id="count-inprogress">0</span>
                         </div>
-                        <button class="w-7 h-7 rounded-lg hover:bg-blue-100 flex items-center justify-center text-blue-400 transition">
+                        <button
+                            class="w-7 h-7 rounded-lg hover:bg-blue-100 flex items-center justify-center text-blue-400 transition">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                     </div>
                     <div id="col-inprogress" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
                 </div>
 
-                <div class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm opacity-80 hover:opacity-100 transition-opacity">
-                    <div class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
+                <div
+                    class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm opacity-80 hover:opacity-100 transition-opacity">
+                    <div
+                        class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
                         <div class="flex items-center gap-2.5">
                             <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-inner"></div>
                             <h3 class="text-[14px] font-extrabold text-emerald-700 uppercase tracking-wide">Done</h3>
-                            <span class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-done">0</span>
+                            <span
+                                class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
+                                id="count-done">0</span>
                         </div>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
+                        <button
+                            class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                     </div>
                     <div id="col-done" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
                 </div>
 
-                <div class="w-[360px] shrink-0 bg-orange-50/40 border border-orange-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div class="p-4 border-b border-orange-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                <div
+                    class="w-[360px] shrink-0 bg-orange-50/40 border border-orange-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div
+                        class="p-4 border-b border-orange-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
                         <div class="flex items-center gap-2.5">
                             <div class="w-3 h-3 rounded-full bg-orange-500 shadow-inner"></div>
                             <h3 class="text-[14px] font-extrabold text-orange-700 uppercase tracking-wide">Pending</h3>
-                            <span class="bg-white border border-orange-200 text-orange-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-pending">0</span>
+                            <span
+                                class="bg-white border border-orange-200 text-orange-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
+                                id="count-pending">0</span>
                         </div>
-                        <button class="w-7 h-7 rounded-lg hover:bg-orange-100 flex items-center justify-center text-orange-400 transition">
+                        <button
+                            class="w-7 h-7 rounded-lg hover:bg-orange-100 flex items-center justify-center text-orange-400 transition">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                     </div>
                     <div id="col-pending" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
                 </div>
 
-                <div class="w-[360px] shrink-0 bg-red-50/40 border border-red-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div class="p-4 border-b border-red-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
+                <div
+                    class="w-[360px] shrink-0 bg-red-50/40 border border-red-200/60 rounded-2xl flex flex-col shadow-sm">
+                    <div
+                        class="p-4 border-b border-red-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
                         <div class="flex items-center gap-2.5">
                             <div class="w-3 h-3 rounded-full bg-red-500 shadow-inner"></div>
                             <h3 class="text-[14px] font-extrabold text-red-700 uppercase tracking-wide">Cancel</h3>
-                            <span class="bg-white border border-red-200 text-red-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1" id="count-cancel">0</span>
+                            <span
+                                class="bg-white border border-red-200 text-red-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
+                                id="count-cancel">0</span>
                         </div>
-                        <button class="w-7 h-7 rounded-lg hover:bg-red-100 flex items-center justify-center text-red-400 transition">
+                        <button
+                            class="w-7 h-7 rounded-lg hover:bg-red-100 flex items-center justify-center text-red-400 transition">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                     </div>
@@ -338,25 +743,118 @@
 
     <script>
         // Lấy giá trị true/false từ thẻ Select
-        function togglePersonalMode(select) {
+function togglePersonalMode(select) {
             const assigneeGroup = document.getElementById('inlineAssigneeGroup');
-            if (select.value === 'true') assigneeGroup.classList.add('hidden');
-            else assigneeGroup.classList.remove('hidden');
+            
+            if (select.value === 'true') {
+                // Nếu là Private: Ẩn nhóm phụ trách
+                assigneeGroup.classList.add('hidden');
+            } else {
+                // Nếu là Public: Hiện nhóm phụ trách
+                assigneeGroup.classList.remove('hidden');
+                
+                // Tự động chọn Hiếu Phan nếu chưa chọn ai
+                if (inlineSelectedPICs.length === 0) {
+                    const picButtons = document.querySelectorAll('#inlinePicSelection button');
+                    const hieuPhanBtn = Array.from(picButtons).find(btn => btn.textContent.trim() === 'HIẾU PHAN');
+                    if (hieuPhanBtn) {
+                        inlineSelectedPICs.push('U02');
+                        hieuPhanBtn.classList.add('po-tag-active');
+                    }
+                }
+            }
         }
+        // Khởi tạo Custom Date Picker
+ // Khởi tạo Custom Date Picker
+        function initCustomDatePicker(wrapper) {
+            if (!wrapper) return;
+            const trigger = wrapper.querySelector('.dp-trigger');
+
+            // Nhân bản để xóa các event rác cũ
+            const newTrigger = trigger.cloneNode(true);
+            trigger.parentNode.replaceChild(newTrigger, trigger);
+
+            // BẮT BUỘC: Phải lấy lại biến từ newTrigger sau khi đã thay thế vào DOM
+            const triggerText = newTrigger.querySelector('.dp-text');
+            const hiddenInput = wrapper.querySelector('.hidden-date-input');
+            const dates = wrapper.querySelectorAll('.dp-date:not(.empty)');
+            const btnClear = wrapper.querySelector('.dpClear');
+            const btnToday = wrapper.querySelector('.dpToday');
+
+            newTrigger.addEventListener('click', function(e) {
+                // Đóng tất cả popup khác
+                document.querySelectorAll('.po-datepicker.open, .custom-select-wrapper.open').forEach(w => {
+                    if (w !== wrapper) w.classList.remove('open');
+                });
+                wrapper.classList.toggle('open');
+                e.stopPropagation();
+            });
+
+            dates.forEach(date => {
+                date.addEventListener('click', function(e) {
+                    dates.forEach(d => d.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const day = this.textContent.padStart(2, '0');
+                    // Dùng innerHTML để giữ lại icon cuốn lịch
+                    triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> ${day}/04/2026`; 
+                    triggerText.style.color = 'var(--po-text-main)';
+                    
+                    // Lưu vào thẻ ẩn để code cũ lấy được
+                    hiddenInput.value = `2026-04-${day}`;
+                    
+                    wrapper.classList.remove('open');
+                    e.stopPropagation();
+                });
+            });
+
+            if(btnClear) {
+                btnClear.addEventListener('click', function(e) {
+                    dates.forEach(d => d.classList.remove('selected'));
+                    triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> dd/mm/yyyy`;
+                    triggerText.style.color = 'var(--po-text-muted)';
+                    hiddenInput.value = '';
+                    wrapper.classList.remove('open');
+                    e.stopPropagation();
+                });
+            }
+
+            if(btnToday) {
+                btnToday.addEventListener('click', function(e) {
+                    dates.forEach(d => d.classList.remove('selected'));
+                    const todayDate = Array.from(dates).find(d => d.textContent === '17');
+                    if(todayDate) todayDate.classList.add('selected');
+                    
+                    triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> 17/04/2026`;
+                    triggerText.style.color = 'var(--po-text-main)';
+                    hiddenInput.value = '2026-04-17';
+                    
+                    wrapper.classList.remove('open');
+                    e.stopPropagation();
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
+            });
+        }
+
         // Hàm khởi tạo Custom Dropdown động
+ // Hàm khởi tạo Custom Dropdown động
         function initCustomSelect(wrapper) {
+            if (!wrapper) return;
+
+            // BẢO VỆ: Nếu đã khởi tạo rồi thì bỏ qua để tránh lỗi đơ nút bấm
+            if (wrapper.dataset.initialized === 'true') return;
+            wrapper.dataset.initialized = 'true';
+
             const trigger = wrapper.querySelector('.custom-select-trigger');
             const triggerText = wrapper.querySelector('.trigger-text');
             const options = wrapper.querySelectorAll('.custom-option');
             const nativeSelect = wrapper.querySelector('.hidden-native-select');
 
-            // Hủy event cũ nếu có (để tránh click đúp khi edit)
-            const newTrigger = trigger.cloneNode(true);
-            trigger.parentNode.replaceChild(newTrigger, trigger);
-
-            newTrigger.addEventListener('click', function(e) {
-                // Đóng các dropdown khác đang mở
-                document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+            trigger.addEventListener('click', function (e) {
+                document.querySelectorAll('.custom-select-wrapper.open, .po-datepicker.open').forEach(w => {
                     if (w !== wrapper) w.classList.remove('open');
                 });
                 wrapper.classList.toggle('open');
@@ -364,25 +862,23 @@
             });
 
             options.forEach(option => {
-                option.addEventListener('click', function() {
+                option.addEventListener('click', function (e) {
                     triggerText.textContent = this.textContent.trim();
                     options.forEach(opt => opt.classList.remove('selected'));
                     this.classList.add('selected');
-                    
+
                     nativeSelect.value = this.getAttribute('data-value');
-                    // Kích hoạt sự kiện onchange cho thẻ select ẩn để chạy logic ẩn/hiện Assignee
-                    nativeSelect.dispatchEvent(new Event('change')); 
-                    
+                    nativeSelect.dispatchEvent(new Event('change'));
+
                     wrapper.classList.remove('open');
+                    e.stopPropagation();
                 });
             });
 
-            // Click ra ngoài thì đóng
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
             });
         }
-
         function toggleEditPersonalMode(select) {
             const editForm = select.closest('.edit-form');
             const assigneeGroup = editForm.querySelector('.edit-assignee-group');
@@ -393,14 +889,125 @@
         // ==========================================
         // KEYBOARD USERS 
         // ==========================================
+// ==========================================
+        // DANH SÁCH USER (TÍCH HỢP CẤU TRÚC PHÒNG BAN & PHÂN QUYỀN)
+        // ==========================================
         const USERS = {
-            'U01': { name: 'a.AN', color: '#D97A2B' },      
-            'U02': { name: 'HIẾU PHAN', color: '#EA2264' }, 
-            'U03': { name: 'ĐỊNH', color: '#6FAF4F' },      
-            'U04': { name: 'VÂN', color: '#003049' },       
-            'U05': { name: 'QUỲNH', color: '#8b5cf6' },     
-            'U06': { name: 'THẮNG', color: '#3852B4' },     
+            'U01': { 
+                name: 'a.AN', 
+                color: '#D97A2B',
+                username: 'an.nguyen',
+                email: 'an.nguyen@vib.com.vn',
+                jobTitle: 'Head of Digital',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.BOD', deptName: 'Ban Giám đốc',
+                teamCode: 'DB.BOD', teamName: 'Ban Giám đốc',
+                systemRoles: ['SUPER_ADMIN'], // Toàn quyền hệ thống
+                isActive: true
+            },
+            'U02': { 
+                name: 'HIẾU PHAN', 
+                color: '#EA2264',
+                username: 'hieu.phan',
+                email: 'hieu.phan@vib.com.vn',
+                jobTitle: 'Product Owner',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.PO', teamName: 'Team PO UX',
+                systemRoles: ['MANAGER', 'MEMBER'], // Quản lý nội dung dự án
+                isActive: true
+            },
+            'U03': { 
+                name: 'ĐỊNH', 
+                color: '#6FAF4F',
+                username: 'dinh.tran',
+                email: 'dinh.tran@vib.com.vn',
+                jobTitle: 'Senior Developer',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.DEV', teamName: 'Team Dev',
+                systemRoles: ['MEMBER'], // Thành viên code trực tiếp
+                isActive: true
+            },
+            'U04': { 
+                name: 'VÂN', 
+                color: '#003049',
+                username: 'van.le',
+                email: 'van.le@vib.com.vn',
+                jobTitle: 'Fresher Tester',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.QA', teamName: 'Team QA',
+                systemRoles: ['INTERN'], // Role dị biệt: Được tạo task nhưng cấm sửa/cấm kéo thả
+                isActive: true
+            },
+            'U05': { 
+                name: 'QUỲNH', 
+                color: '#8b5cf6',
+                username: 'quynh.pham',
+                email: 'quynh.pham@vib.com.vn',
+                jobTitle: 'Business Analyst',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.BA', teamName: 'Team BA',
+                systemRoles: ['MANAGER'], // Quản lý luồng nghiệp vụ
+                isActive: true
+            },
+            'U06': { 
+                name: 'THẮNG', 
+                color: '#3852B4',
+                username: 'thang.vu',
+                email: 'thang.vu@vib.com.vn',
+                jobTitle: 'Mobile Developer',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.APP', deptName: 'Phòng Giải pháp Mobile App', // Lưu ý: Team App, không phải team Web
+                teamCode: 'DB.APP.DEV', teamName: 'Team App Dev',
+                systemRoles: ['VIEWER'], // Khách từ phòng khác vào xem tiến độ, không có quyền thao tác
+                isActive: true
+            }
         };
+
+        // ĐỊNH NGHĨA QUYỀN HẠN CHO TỪNG ROLE
+        const ROLES_CONFIG = {
+            'SUPER_ADMIN': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK', 'DELETE_TASK'],
+            'MANAGER': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK', 'DELETE_TASK'],
+            'MEMBER': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK'],
+            'INTERN': ['VIEW_BOARD', 'CREATE_TASK'], 
+            'VIEWER': ['VIEW_BOARD']
+        };
+
+        // Hàm kiểm tra quyền dùng chung
+        function checkPermission(userKey, action) {
+            const user = USERS[userKey];
+            if (!user || !user.systemRoles) return false;
+            
+            let userActions = [];
+            user.systemRoles.forEach(role => {
+                const actions = ROLES_CONFIG[role] || [];
+                userActions = [...userActions, ...actions];
+            });
+
+            return userActions.includes(action);
+        }
+
+        // GIẢ LẬP ĐĂNG NHẬP: Đổi thành 'U04' (Vân), 'U06' (Thắng) để test
+        const CURRENT_USER_ID = 'U02'; 
+
+        // Hàm áp dụng quyền lên giao diện
+        function applyUIPermissions() {
+            // Kiểm tra quyền tạo Task
+            const canCreate = checkPermission(CURRENT_USER_ID, 'CREATE_TASK');
+            
+            // Tìm tất cả các nút có gọi hàm openInlineForm()
+            const addButtons = document.querySelectorAll('[onclick="openInlineForm()"]');
+            addButtons.forEach(btn => {
+                // Nếu không có quyền -> Ẩn nút đi
+                btn.style.display = canCreate ? 'flex' : 'none';
+            });
+        }
+
+        // Chạy hàm ngay khi load trang
+        applyUIPermissions();
         const ALL_USER_KEYS = Object.keys(USERS);
 
         function renderInlinePicSelection() {
@@ -540,38 +1147,80 @@ function openInlineForm() {
             const form = document.getElementById('inlineAddForm');
             form.classList.remove('hidden');
             document.getElementById('inlineTitle').focus();
-            
-            // KÍCH HOẠT CUSTOM DROPDOWN
-            initCustomSelect(document.getElementById('inlinePrivacyWrapper'));
-        }
 
-        function hideInlineForm() {
+            const dateWrapper = document.getElementById('inlineDateWrapper');
+            initCustomDatePicker(dateWrapper);
+
+            // 1. Logic Ngày mặc định = Today
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const hiddenInput = dateWrapper.querySelector('.hidden-date-input');
+            const triggerText = dateWrapper.querySelector('.dp-text');
+            hiddenInput.value = `${yyyy}-${mm}-${dd}`;
+            triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> ${dd}/${mm}/${yyyy}`;
+            triggerText.style.color = 'var(--po-text-main)';
+
+            // 2. Kích hoạt Dropdown Privacy
+            const privacySelect = document.getElementById('inlinePrivacyWrapper');
+            initCustomSelect(privacySelect);
+
+            // 3. LOGIC DEFAULT PIC = HIẾU PHAN (U02)
+            // Reset danh sách chọn cũ
+            inlineSelectedPICs = []; 
+            const picButtons = document.querySelectorAll('#inlinePicSelection button');
+            picButtons.forEach(btn => btn.classList.remove('po-tag-active'));
+
+            // Tìm nút Hiếu Phan và kích hoạt
+            const hieuPhanBtn = Array.from(picButtons).find(btn => btn.textContent.trim() === 'HIẾU PHAN');
+            if (hieuPhanBtn) {
+                inlineSelectedPICs.push('U02'); // Mã của Hiếu Phan
+                hieuPhanBtn.classList.add('po-tag-active');
+            }
+        }
+  function hideInlineForm() {
             const form = document.getElementById('inlineAddForm');
             form.classList.add('hidden');
             document.getElementById('inlineTitle').value = '';
             document.getElementById('inlineDesc').value = '';
-            document.getElementById('inlineDate').value = '';
+            
             inlineSelectedPICs = [];
             // Reset Tags CSS
             document.querySelectorAll('#inlinePicSelection button').forEach(btn => {
                 btn.classList.remove('po-tag-active');
             });
-            
+
+            // RESET CUSTOM DATEPICKER
+            const dateWrapper = document.getElementById('inlineDateWrapper');
+            if (dateWrapper) {
+                const dateText = dateWrapper.querySelector('.dp-text');
+                const dateInput = dateWrapper.querySelector('.hidden-date-input');
+                if (dateText) {
+                    dateText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> dd/mm/yyyy`;
+                    dateText.style.color = 'var(--po-text-muted)';
+                }
+                if (dateInput) dateInput.value = '';
+                dateWrapper.querySelectorAll('.dp-date').forEach(d => d.classList.remove('selected'));
+            }
+
             // RESET CUSTOM DROPDOWN VỀ PUBLIC
             const wrapper = document.getElementById('inlinePrivacyWrapper');
             if (wrapper) {
                 const nativeSelect = wrapper.querySelector('.hidden-native-select');
                 const triggerText = wrapper.querySelector('.trigger-text');
                 const options = wrapper.querySelectorAll('.custom-option');
-                
+
                 nativeSelect.value = 'false';
-                triggerText.textContent = 'Public';
+                if(triggerText) triggerText.textContent = 'Public';
                 options.forEach(opt => opt.classList.remove('selected'));
-                wrapper.querySelector('.custom-option[data-value="false"]').classList.add('selected');
-                togglePersonalMode(nativeSelect); 
+                
+                const falseOption = wrapper.querySelector('.custom-option[data-value="false"]');
+                if (falseOption) falseOption.classList.add('selected');
+                
+                togglePersonalMode(nativeSelect);
             }
         }
-
         function toggleInlinePic(btn, name) {
             const index = inlineSelectedPICs.indexOf(name);
             if (index === -1) {
@@ -585,7 +1234,7 @@ function openInlineForm() {
 
         function saveInlineTask() {
             const title = document.getElementById('inlineTitle').value.trim();
-            const desc = document.getElementById('inlineDesc').value.trim(); 
+            const desc = document.getElementById('inlineDesc').value.trim();
 
             if (!title) {
                 const titleInput = document.getElementById('inlineTitle');
@@ -614,7 +1263,7 @@ function openInlineForm() {
             const isPersonalSelect = document.getElementById('inlineIsPersonal');
             // Lấy logic True/False từ Select thay vì Checkbox
             const isPersonal = isPersonalSelect ? (isPersonalSelect.value === 'true') : false;
-            
+
             let picsHtml = '';
             if (isPersonal) {
                 picsHtml = `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
@@ -632,10 +1281,18 @@ function openInlineForm() {
             const userKeysString = isPersonal ? '' : inlineSelectedPICs.join(',');
 
             const cardHTML = `
-                <div class="task-card relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]" data-ticket-id="${ticketId}" data-is-personal="${isPersonal}" data-user-keys="${userKeysString}">
-                    <button type="button" onclick="editTask(this)" class="absolute top-3.5 right-3 w-7 h-7 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 opacity-0 group-hover:opacity-100 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm cursor-pointer z-10">
-                        <i class="fa-solid fa-pen text-[11px] pointer-events-none"></i>
+                <div class="task-card animate-in relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]" data-ticket-id="${ticketId}" data-is-personal="${isPersonal}" data-user-keys="${userKeysString}">
+<div class="card-actions-wrap">
+                    ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
+                        ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
+                            <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            <span class="delete-text">Xóa</span>
+                           </button>` 
+                        : ''}
+                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
+                </div>
                     <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
                     <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
                     <div class="flex justify-between items-start pt-3 border-t border-slate-100">
@@ -657,6 +1314,7 @@ function openInlineForm() {
             saveBoardState();
             hideInlineForm();
         }
+        
 
         // ==========================================
         // 4. CHỈNH SỬA TASK (EDIT)
@@ -704,7 +1362,7 @@ function openInlineForm() {
             });
 
             // Giao diện Edit được chuyển sang CSS mới của bạn
-// Giao diện Edit được chuyển sang CSS mới của bạn
+            // Giao diện Edit được chuyển sang CSS mới của bạn
             card.innerHTML = `
                 <div class="edit-form relative z-20 w-full">
                     <div class="form-group">
@@ -716,8 +1374,31 @@ function openInlineForm() {
                     </div>
                     
 <div class="form-group row-flex">
-                        <input type="date" class="edit-date po-select" value="${oldDateVal}">
-                        
+<div class="po-datepicker editDateWrapper">
+                          <input type="hidden" class="edit-date hidden-date-input" value="${oldDateVal}">
+                          <div class="dp-trigger">
+                            <span class="dp-text" style="${oldDateVal ? 'color: var(--po-text-main)' : ''}"><i class="fa-regular fa-calendar mr-1.5"></i> ${oldDateVal ? oldDateVal.split('-').reverse().join('/') : 'dd/mm/yyyy'}</span>
+                            <svg class="dp-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                          </div>
+                          <div class="dp-popup">
+                            <div class="dp-header">
+                              <div class="dp-month-year">April 2026 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                              <div class="dp-nav">
+                                <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                                <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                              </div>
+                            </div>
+                            <div class="dp-grid">
+                              <div class="dp-day-name">Su</div><div class="dp-day-name">Mo</div><div class="dp-day-name">Tu</div><div class="dp-day-name">We</div><div class="dp-day-name">Th</div><div class="dp-day-name">Fr</div><div class="dp-day-name">Sa</div>
+                              <div class="dp-date empty">29</div><div class="dp-date empty">30</div><div class="dp-date empty">31</div>
+                              <div class="dp-date">1</div><div class="dp-date">2</div><div class="dp-date">3</div><div class="dp-date">4</div><div class="dp-date">5</div><div class="dp-date">6</div><div class="dp-date">7</div><div class="dp-date">8</div><div class="dp-date">9</div><div class="dp-date">10</div><div class="dp-date">11</div><div class="dp-date">12</div><div class="dp-date">13</div><div class="dp-date">14</div><div class="dp-date">15</div><div class="dp-date">16</div><div class="dp-date">17</div><div class="dp-date">18</div><div class="dp-date">19</div><div class="dp-date">20</div><div class="dp-date">21</div><div class="dp-date">22</div><div class="dp-date">23</div><div class="dp-date">24</div><div class="dp-date">25</div><div class="dp-date">26</div><div class="dp-date">27</div><div class="dp-date">28</div><div class="dp-date">29</div><div class="dp-date">30</div><div class="dp-date empty">1</div><div class="dp-date empty">2</div>
+                            </div>
+                            <div class="dp-footer">
+                              <button type="button" class="dp-action-btn dpClear">Clear</button>
+                              <button type="button" class="dp-action-btn dpToday">Today</button>
+                            </div>
+                          </div>
+                        </div>                        
                         <div class="custom-select-wrapper editPrivacyWrapper">
                             <select class="edit-is-personal hidden-native-select" onchange="toggleEditPersonalMode(this)">
                                 <option value="false" ${!isPersonal ? 'selected' : ''}>Public</option>
@@ -760,6 +1441,7 @@ function openInlineForm() {
                 editArea.addEventListener('input', function () { autoResize(this); });
             }
             initCustomSelect(card.querySelector('.editPrivacyWrapper'));
+            initCustomDatePicker(card.querySelector('.editDateWrapper'));
         }
 
         function toggleEditPic(btn) {
@@ -802,7 +1484,7 @@ function openInlineForm() {
 
             // Đọc Select Value thay vì Checkbox
             const isPersonal = card.querySelector('.edit-is-personal').value === 'true';
-            card.dataset.isPersonal = isPersonal; 
+            card.dataset.isPersonal = isPersonal;
 
             let picsHtml = '';
             let selectedKeys = [];
@@ -815,9 +1497,9 @@ function openInlineForm() {
                 if (picEls.length === 0) {
                     picsHtml = `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
                 } else {
-                    picEls.forEach(el => { 
+                    picEls.forEach(el => {
                         selectedKeys.push(el.dataset.pic);
-                        picsHtml += createTagHtml(el.dataset.pic); 
+                        picsHtml += createTagHtml(el.dataset.pic);
                     });
                 }
             }
@@ -825,9 +1507,17 @@ function openInlineForm() {
 
             // RENDER VIEW CARD
             card.innerHTML = `
-                <button type="button" onclick="editTask(this)" class="absolute top-3.5 right-3 w-7 h-7 flex items-center justify-center rounded-lg bg-white border border-slate-200 text-slate-400 opacity-0 group-hover:opacity-100 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all shadow-sm cursor-pointer z-10">
-                    <i class="fa-solid fa-pen text-[11px] pointer-events-none"></i>
-                </button>
+<div class="card-actions-wrap">
+                    ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
+                        ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
+                            <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            <span class="delete-text">Xóa</span>
+                           </button>` 
+                        : ''}
+                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    </button>
+                </div>
                 <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
                 <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
                 <div class="flex justify-between items-start pt-3 border-t border-slate-100">
@@ -846,7 +1536,40 @@ function openInlineForm() {
             updateCounts();
             saveBoardState();
         }
+// ==========================================
+        // 5. XÓA TASK & HIỆU ỨNG XÁC NHẬN
+        // ==========================================
+        function confirmDelete(btn, event) {
+            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            
+            if (!btn.classList.contains('confirm-mode')) {
+                // Tắt các nút xóa khác đang mở (nếu có)
+                document.querySelectorAll('.delete-btn.confirm-mode').forEach(b => {
+                    if (b !== btn) b.classList.remove('confirm-mode');
+                });
+                // Chuyển sang chế độ xác nhận (Nút đỏ)
+                btn.classList.add('confirm-mode');
+            } else {
+                // Bấm lần 2 -> Thực hiện xóa
+                const card = btn.closest('.task-card');
+                card.classList.add('deleting'); // Chạy CSS thu nhỏ, mờ đi
+                
+                setTimeout(() => {
+                    card.remove(); // Xóa khỏi HTML
+                    updateCounts(); // Cập nhật lại số lượng
+                    saveBoardState(); // Lưu vào DB / LocalStorage
+                }, 300); // Đợi 300ms cho animation chạy xong
+            }
+        }
 
+        // Bấm ra ngoài khoảng trống thì hủy trạng thái "Xóa"
+        document.addEventListener('click', (e) => {
+            document.querySelectorAll('.delete-btn.confirm-mode').forEach(btn => {
+                if (!btn.contains(e.target)) {
+                    btn.classList.remove('confirm-mode');
+                }
+            });
+        });
         // ==========================================
         // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
         // ==========================================

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --po-primary: #2563EB;
+    --po-primary-hover: #1D4ED8;
+    --po-bg-light: #EFF6FF; /* Màu xanh siêu nhạt khi hover ngày */
+    --po-border: #E2E8F0;
+    --po-text-main: #1E293B;
+    --po-text-muted: #64748B;
+    --po-text-light: #94A3B8;
+    --po-bg-white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { background: #F8FAFC; padding: 3rem; display: flex; justify-content: center; }
+
+  /* --- DATE PICKER WRAPPER --- */
+  .po-datepicker {
+    position: relative;
+    width: 220px;
+    user-select: none;
+  }
+
+  /* Input/Trigger giả */
+  .dp-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--po-bg-white);
+    border: 1px solid var(--po-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--po-text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .po-datepicker.open .dp-trigger {
+    border-color: var(--po-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    color: var(--po-text-main);
+  }
+  .dp-icon { width: 16px; height: 16px; color: var(--po-text-muted); }
+
+  /* Popup Lịch */
+  .dp-popup {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: var(--po-bg-white);
+    border: 1px solid var(--po-border);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 260px;
+    z-index: 100;
+    
+    /* Hiệu ứng Thu gọn / Mở rộng */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+  }
+  .po-datepicker.open .dp-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Header (Tháng Năm & Nút điều hướng) */
+  .dp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .dp-month-year { font-size: 15px; font-weight: 700; color: var(--po-text-main); display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .dp-month-year svg { width: 14px; height: 14px; }
+  .dp-nav { display: flex; gap: 4px; }
+  .dp-nav-btn {
+    background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center; color: var(--po-text-main); transition: 0.2s;
+  }
+  .dp-nav-btn:hover { background: #F1F5F9; }
+  .dp-nav-btn svg { width: 16px; height: 16px; }
+
+  /* Lưới Lịch */
+  .dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+  .dp-day-name { font-size: 12px; font-weight: 600; color: var(--po-text-main); padding-bottom: 8px; }
+  
+  .dp-date {
+    width: 28px; height: 28px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s ease;
+    color: var(--po-text-main);
+  }
+  .dp-date:hover:not(.empty) { background: var(--po-bg-light); color: var(--po-primary); }
+  .dp-date.empty { color: var(--po-text-light); cursor: default; }
+  
+  /* Ngày đang chọn (giống số 17 trong ảnh) */
+  .dp-date.selected { background: var(--po-primary); color: white; border-color: var(--po-primary); font-weight: 600; }
+  .dp-date.selected:hover { background: var(--po-primary-hover); color: white; }
+
+  /* Footer (Clear & Today) */
+  .dp-footer { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--po-border); }
+  .dp-action-btn { background: transparent; border: none; font-size: 13px; font-weight: 500; color: var(--po-primary); cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
+  .dp-action-btn:hover { background: var(--po-bg-light); }
+
+  /* Giữ thẻ input gốc ẩn đi để submit form */
+  .hidden-date-input { display: none; }
+</style>
+</head>
+<body>
+
+<div class="po-datepicker" id="customDatePicker">
+  <input type="date" class="hidden-date-input" name="task_date">
+
+  <div class="dp-trigger">
+    <span class="dp-text">dd/mm/yyyy</span>
+    <svg class="dp-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+  </div>
+
+  <div class="dp-popup">
+    <div class="dp-header">
+      <div class="dp-month-year">
+        April 2026 
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </div>
+      <div class="dp-nav">
+        <button class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+        <button class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+      </div>
+    </div>
+
+    <div class="dp-grid">
+      <div class="dp-day-name">Su</div><div class="dp-day-name">Mo</div><div class="dp-day-name">Tu</div>
+      <div class="dp-day-name">We</div><div class="dp-day-name">Th</div><div class="dp-day-name">Fr</div><div class="dp-day-name">Sa</div>
+      
+      <div class="dp-date empty">29</div><div class="dp-date empty">30</div><div class="dp-date empty">31</div>
+      <div class="dp-date">1</div><div class="dp-date">2</div><div class="dp-date">3</div><div class="dp-date">4</div>
+      <div class="dp-date">5</div><div class="dp-date">6</div><div class="dp-date">7</div><div class="dp-date">8</div><div class="dp-date">9</div><div class="dp-date">10</div><div class="dp-date">11</div>
+      <div class="dp-date">12</div><div class="dp-date">13</div><div class="dp-date">14</div><div class="dp-date">15</div><div class="dp-date">16</div><div class="dp-date selected">17</div><div class="dp-date">18</div>
+      <div class="dp-date">19</div><div class="dp-date">20</div><div class="dp-date">21</div><div class="dp-date">22</div><div class="dp-date">23</div><div class="dp-date">24</div><div class="dp-date">25</div>
+      <div class="dp-date">26</div><div class="dp-date">27</div><div class="dp-date">28</div><div class="dp-date">29</div><div class="dp-date">30</div><div class="dp-date empty">1</div><div class="dp-date empty">2</div>
+      <div class="dp-date empty">3</div><div class="dp-date empty">4</div><div class="dp-date empty">5</div><div class="dp-date empty">6</div><div class="dp-date empty">7</div><div class="dp-date empty">8</div><div class="dp-date empty">9</div>
+    </div>
+
+    <div class="dp-footer">
+      <button class="dp-action-btn" id="dpClear">Clear</button>
+      <button class="dp-action-btn" id="dpToday">Today</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.getElementById('customDatePicker');
+    const trigger = wrapper.querySelector('.dp-trigger');
+    const triggerText = wrapper.querySelector('.dp-text');
+    const dates = wrapper.querySelectorAll('.dp-date:not(.empty)');
+    const btnClear = document.getElementById('dpClear');
+    const btnToday = document.getElementById('dpToday');
+
+    // Toggle (Mở/Thu gọn popup) với hiệu ứng animation
+    trigger.addEventListener('click', function(e) {
+      wrapper.classList.toggle('open');
+      e.stopPropagation();
+    });
+
+    // Khi chọn 1 ngày
+    dates.forEach(date => {
+      date.addEventListener('click', function() {
+        // Xóa select cũ, thêm select mới
+        dates.forEach(d => d.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        // Cập nhật text hiển thị
+        const day = this.textContent.padStart(2, '0');
+        triggerText.textContent = `${day}/04/2026`;
+        triggerText.style.color = 'var(--po-text-main)'; // Đổi màu thành đậm
+
+        // Đóng popup
+        wrapper.classList.remove('open');
+      });
+    });
+
+    // Nút Clear
+    btnClear.addEventListener('click', function(e) {
+      dates.forEach(d => d.classList.remove('selected'));
+      triggerText.textContent = 'dd/mm/yyyy';
+      triggerText.style.color = 'var(--po-text-muted)';
+      wrapper.classList.remove('open');
+      e.stopPropagation();
+    });
+
+    // Nút Today (Giả lập chọn ngày 17)
+    btnToday.addEventListener('click', function(e) {
+      dates.forEach(d => d.classList.remove('selected'));
+      const todayDate = Array.from(dates).find(d => d.textContent === '17');
+      if(todayDate) todayDate.classList.add('selected');
+      triggerText.textContent = '17/04/2026';
+      triggerText.style.color = 'var(--po-text-main)';
+      wrapper.classList.remove('open');
+      e.stopPropagation();
+    });
+
+    // Click ra ngoài thì tự thu gọn
+    document.addEventListener('click', function(e) {
+      if (!wrapper.contains(e.target)) {
+        wrapper.classList.remove('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
