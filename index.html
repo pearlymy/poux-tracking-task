@@ -783,14 +783,9 @@ function togglePersonalMode(select) {
                 // Nếu là Public: Hiện nhóm phụ trách
                 assigneeGroup.classList.remove('hidden');
                 
-                // Tự động chọn Hiếu Phan nếu chưa chọn ai
+                // Tự động chọn PIC mặc định nếu chưa chọn ai
                 if (inlineSelectedPICs.length === 0) {
-                    const picButtons = document.querySelectorAll('#inlinePicSelection button');
-                    const hieuPhanBtn = Array.from(picButtons).find(btn => btn.textContent.trim() === 'HIẾU PHAN');
-                    if (hieuPhanBtn) {
-                        inlineSelectedPICs.push('U02');
-                        hieuPhanBtn.classList.add('po-tag-active');
-                    }
+                    applyDefaultInlinePicSelection();
                 }
             }
         }
@@ -923,7 +918,7 @@ function togglePersonalMode(select) {
         // DANH SÁCH USER (TÍCH HỢP CẤU TRÚC PHÒNG BAN & PHÂN QUYỀN)
         // ==========================================
         const USERS = {
-            'U01': { 
+            'U0001': { 
                 name: 'a.AN', 
                 color: '#D97A2B',
                 username: 'an.nguyen',
@@ -935,7 +930,7 @@ function togglePersonalMode(select) {
                 systemRoles: ['SUPER_ADMIN'], // Toàn quyền hệ thống
                 isActive: true
             },
-            'U02': { 
+            'U0002': { 
                 name: 'HIẾU PHAN', 
                 color: '#EA2264',
                 username: 'hieu.phan',
@@ -947,7 +942,7 @@ function togglePersonalMode(select) {
                 systemRoles: ['MANAGER', 'MEMBER'], // Quản lý nội dung dự án
                 isActive: true
             },
-            'U03': { 
+            'U0003': { 
                 name: 'ĐỊNH', 
                 color: '#6FAF4F',
                 username: 'dinh.tran',
@@ -959,7 +954,7 @@ function togglePersonalMode(select) {
                 systemRoles: ['MEMBER'], // Thành viên code trực tiếp
                 isActive: true
             },
-            'U04': { 
+            'U0004': { 
                 name: 'VÂN', 
                 color: '#003049',
                 username: 'van.le',
@@ -971,7 +966,7 @@ function togglePersonalMode(select) {
                 systemRoles: ['INTERN'], // Role dị biệt: Được tạo task nhưng cấm sửa/cấm kéo thả
                 isActive: true
             },
-            'U05': { 
+            'U0005': { 
                 name: 'QUỲNH', 
                 color: '#8b5cf6',
                 username: 'quynh.pham',
@@ -983,7 +978,7 @@ function togglePersonalMode(select) {
                 systemRoles: ['MANAGER'], // Quản lý luồng nghiệp vụ
                 isActive: true
             },
-            'U06': { 
+            'U0006': { 
                 name: 'THẮNG', 
                 color: '#3852B4',
                 username: 'thang.vu',
@@ -994,8 +989,46 @@ function togglePersonalMode(select) {
                 teamCode: 'DB.APP.DEV', teamName: 'Team App Dev',
                 systemRoles: ['VIEWER'], // Khách từ phòng khác vào xem tiến độ, không có quyền thao tác
                 isActive: true
+            },
+            'U0007': {
+                name: 'TUẤN',
+                color: '#F59E0B',
+                username: 'tuan.le2',
+                email: 'tuan.le2@vib.com.vn',
+                jobTitle: 'UI/UX Designer',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.PO', teamName: 'Team PO UX',
+                systemRoles: ['VIEWER'],
+                isActive: false
+            },
+            'U0008': {
+                name: 'LINH',
+                color: '#94A3B8',
+                username: 'linh.ngo',
+                email: 'linh.ngo@vib.com.vn',
+                jobTitle: 'Ex-Employee',
+                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
+                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
+                teamCode: 'DB.WEB.DEV', teamName: 'Team Dev',
+                systemRoles: ['VIEWER'],
+                isActive: false
             }
         };
+
+        const LEGACY_USER_KEY_MAP = {
+            'U01': 'U0001',
+            'U02': 'U0002',
+            'U03': 'U0003',
+            'U04': 'U0004',
+            'U05': 'U0005',
+            'U06': 'U0006'
+        };
+
+        function normalizeUserKey(userKey) {
+            if (!userKey) return userKey;
+            return USERS[userKey] ? userKey : (LEGACY_USER_KEY_MAP[userKey] || userKey);
+        }
 
         // ĐỊNH NGHĨA QUYỀN HẠN CHO TỪNG ROLE
         const ROLES_CONFIG = {
@@ -1008,7 +1041,8 @@ function togglePersonalMode(select) {
 
         // Hàm kiểm tra quyền dùng chung
         function checkPermission(userKey, action) {
-            const user = USERS[userKey];
+            const normalizedUserKey = normalizeUserKey(userKey);
+            const user = USERS[normalizedUserKey];
             if (!user || !user.systemRoles) return false;
             
             let userActions = [];
@@ -1020,8 +1054,22 @@ function togglePersonalMode(select) {
             return userActions.includes(action);
         }
 
-        // GIẢ LẬP ĐĂNG NHẬP: Đổi thành 'U04' (Vân), 'U06' (Thắng) để test
-        const CURRENT_USER_ID = 'U01'; 
+        const ALL_USER_KEYS = Object.keys(USERS);
+        const ACTIVE_USER_KEYS = ALL_USER_KEYS.filter(key => USERS[key].isActive);
+        const DEFAULT_INLINE_PIC_ID = 'U0002';
+
+        function applyDefaultInlinePicSelection() {
+            const defaultPicBtn = document.querySelector(`#inlinePicSelection button[data-user-key="${DEFAULT_INLINE_PIC_ID}"]`);
+            if (!defaultPicBtn) return;
+
+            if (!inlineSelectedPICs.includes(DEFAULT_INLINE_PIC_ID)) {
+                inlineSelectedPICs.push(DEFAULT_INLINE_PIC_ID);
+            }
+            defaultPicBtn.classList.add('po-tag-active');
+        }
+
+        // GIẢ LẬP ĐĂNG NHẬP: Đổi thành 'U0004' (Vân), 'U0006' (Thắng) để test
+        const CURRENT_USER_ID = 'U0001'; 
 
         // Hàm áp dụng quyền lên giao diện
         function applyUIPermissions() {
@@ -1038,22 +1086,22 @@ function togglePersonalMode(select) {
 
         // Chạy hàm ngay khi load trang
         applyUIPermissions();
-        const ALL_USER_KEYS = Object.keys(USERS);
 
         function renderInlinePicSelection() {
             const container = document.getElementById('inlinePicSelection');
             if (!container) return;
             container.innerHTML = '';
-            ALL_USER_KEYS.forEach(key => {
+            ACTIVE_USER_KEYS.forEach(key => {
                 const user = USERS[key];
-                container.innerHTML += `<button type="button" onclick="toggleInlinePic(this, '${key}')" class="po-tag">${user.name}</button>`;
+                container.innerHTML += `<button type="button" onclick="toggleInlinePic(this, '${key}')" class="po-tag" data-user-key="${key}">${user.name}</button>`;
             });
         }
 
         function createTagHtml(userKey) {
-            const user = USERS[userKey];
+            const normalizedUserKey = normalizeUserKey(userKey);
+            const user = USERS[normalizedUserKey];
             if (!user) return '';
-            return `<div class="tag-name" data-user-key="${userKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.name}</div>`;
+            return `<div class="tag-name" data-user-key="${normalizedUserKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.name}</div>`;
         }
 
         function generateTicketId() {
@@ -1082,8 +1130,9 @@ function togglePersonalMode(select) {
 
         function syncTagNames() {
             document.querySelectorAll('.tag-name').forEach(tag => {
-                const key = tag.dataset.userKey;
+                const key = normalizeUserKey(tag.dataset.userKey);
                 if (key && USERS[key]) {
+                    tag.dataset.userKey = key;
                     tag.innerText = USERS[key].name;
                     tag.style.backgroundColor = USERS[key].color;
                     tag.style.borderColor = USERS[key].color;
@@ -1196,18 +1245,13 @@ function openInlineForm() {
             const privacySelect = document.getElementById('inlinePrivacyWrapper');
             initCustomSelect(privacySelect);
 
-            // 3. LOGIC DEFAULT PIC = HIẾU PHAN (U02)
+            // 3. LOGIC DEFAULT PIC = Hiếu Phan
             // Reset danh sách chọn cũ
             inlineSelectedPICs = []; 
             const picButtons = document.querySelectorAll('#inlinePicSelection button');
             picButtons.forEach(btn => btn.classList.remove('po-tag-active'));
 
-            // Tìm nút Hiếu Phan và kích hoạt
-            const hieuPhanBtn = Array.from(picButtons).find(btn => btn.textContent.trim() === 'HIẾU PHAN');
-            if (hieuPhanBtn) {
-                inlineSelectedPICs.push('U02'); // Mã của Hiếu Phan
-                hieuPhanBtn.classList.add('po-tag-active');
-            }
+            applyDefaultInlinePicSelection();
         }
   function hideInlineForm() {
             const form = document.getElementById('inlineAddForm');
@@ -1370,7 +1414,7 @@ function openInlineForm() {
 
             let oldPicsKeys = [];
             card.querySelectorAll('.tag-name, .justify-end > div').forEach(el => {
-                const key = el.dataset.userKey;
+                const key = normalizeUserKey(el.dataset.userKey);
                 const text = el.innerText.trim();
 
                 if (key) {
@@ -1385,7 +1429,8 @@ function openInlineForm() {
 
             // Render Tags với CSS mới
             let picButtonsHtml = '';
-            ALL_USER_KEYS.forEach(userKey => {
+            const selectableUserKeys = Array.from(new Set([...ACTIVE_USER_KEYS, ...oldPicsKeys]));
+            selectableUserKeys.forEach(userKey => {
                 const isSelected = oldPicsKeys.includes(userKey);
                 const btnClass = isSelected ? "po-tag po-tag-active" : "po-tag";
                 picButtonsHtml += `<button type="button" onclick="toggleEditPic(this)" class="${btnClass}" data-pic="${userKey}">${USERS[userKey].name}</button>`;
