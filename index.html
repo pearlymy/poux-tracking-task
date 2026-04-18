@@ -243,48 +243,167 @@
             font-weight: 700;
         }
 
-        #col-backlog .task-card {
-            border: 1px solid #cbd5e1 !important;
+        .kanban-column {
+            width: 360px;
+            flex-shrink: 0;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
         }
 
-        #col-backlog .task-card:hover {
+        .kanban-column-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        .kanban-column-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .kanban-count {
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+            margin-left: 0.25rem;
+            background: #ffffff;
+        }
+
+        .kanban-add-wrap {
+            padding: 1rem 1rem 0.25rem;
+        }
+
+        .kanban-list-body {
+            padding: 1rem;
+            padding-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 150px;
+        }
+
+        .kanban-column[data-color-theme="slate"] {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .kanban-column[data-color-theme="slate"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .kanban-column[data-color-theme="slate"] .kanban-dot { background: #94a3b8; }
+        .kanban-column[data-color-theme="slate"] .kanban-column-title { color: #475569; }
+        .kanban-column[data-color-theme="slate"] .kanban-count { color: #475569; border: 1px solid #e2e8f0; }
+        .kanban-column[data-color-theme="slate"] .kanban-menu-btn { color: #94a3b8; }
+        .kanban-column[data-color-theme="slate"] .kanban-menu-btn:hover { background: #e2e8f0; }
+        .kanban-column[data-color-theme="slate"] .kanban-add-btn {
+            border-color: #e2e8f0;
+            color: #94a3b8;
+        }
+        .kanban-column[data-color-theme="slate"] .kanban-add-btn:hover {
+            background: #f8fafc;
+            border-color: #93c5fd;
+            color: #2563eb;
+        }
+        .kanban-column[data-color-theme="slate"] .task-card { border: 1px solid #cbd5e1 !important; }
+        .kanban-column[data-color-theme="slate"] .task-card:hover {
             border-color: #94a3b8 !important;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        #col-inprogress .task-card {
-            border: 1px solid #93c5fd !important;
+        .kanban-column[data-color-theme="blue"] {
+            background: rgba(239, 246, 255, 0.4);
+            border: 1px solid rgba(191, 219, 254, 0.6);
         }
 
-        #col-inprogress .task-card:hover {
+        .kanban-column[data-color-theme="blue"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid #dbeafe;
+        }
+
+        .kanban-column[data-color-theme="blue"] .kanban-dot { background: #3b82f6; }
+        .kanban-column[data-color-theme="blue"] .kanban-column-title { color: #1d4ed8; }
+        .kanban-column[data-color-theme="blue"] .kanban-count { color: #2563eb; border: 1px solid #bfdbfe; }
+        .kanban-column[data-color-theme="blue"] .kanban-menu-btn { color: #60a5fa; }
+        .kanban-column[data-color-theme="blue"] .kanban-menu-btn:hover { background: #dbeafe; }
+        .kanban-column[data-color-theme="blue"] .task-card { border: 1px solid #93c5fd !important; }
+        .kanban-column[data-color-theme="blue"] .task-card:hover {
             border-color: #60a5fa !important;
             box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.15);
         }
 
-        #col-done .task-card {
-            border: 1px solid #6ee7b7 !important;
+        .kanban-column[data-color-theme="orange"] {
+            background: rgba(255, 247, 237, 0.4);
+            border: 1px solid rgba(254, 215, 170, 0.6);
         }
 
-        #col-done .task-card:hover {
+        .kanban-column[data-color-theme="orange"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid #ffedd5;
+        }
+
+        .kanban-column[data-color-theme="orange"] .kanban-dot { background: #f97316; }
+        .kanban-column[data-color-theme="orange"] .kanban-column-title { color: #c2410c; }
+        .kanban-column[data-color-theme="orange"] .kanban-count { color: #ea580c; border: 1px solid #fed7aa; }
+        .kanban-column[data-color-theme="orange"] .kanban-menu-btn { color: #fb923c; }
+        .kanban-column[data-color-theme="orange"] .kanban-menu-btn:hover { background: #ffedd5; }
+        .kanban-column[data-color-theme="orange"] .task-card { border: 1px solid #fed7aa !important; }
+        .kanban-column[data-color-theme="orange"] .task-card:hover { border-color: #fb923c !important; }
+
+        .kanban-column[data-color-theme="emerald"] {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .kanban-column[data-color-theme="emerald"]:hover {
+            opacity: 1;
+        }
+
+        .kanban-column[data-color-theme="emerald"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .kanban-column[data-color-theme="emerald"] .kanban-dot { background: #10b981; }
+        .kanban-column[data-color-theme="emerald"] .kanban-column-title { color: #047857; }
+        .kanban-column[data-color-theme="emerald"] .kanban-count { color: #475569; border: 1px solid #e2e8f0; }
+        .kanban-column[data-color-theme="emerald"] .kanban-menu-btn { color: #94a3b8; }
+        .kanban-column[data-color-theme="emerald"] .kanban-menu-btn:hover { background: #e2e8f0; }
+        .kanban-column[data-color-theme="emerald"] .task-card { border: 1px solid #6ee7b7 !important; }
+        .kanban-column[data-color-theme="emerald"] .task-card:hover {
             border-color: #34d399 !important;
             box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15);
         }
 
-        #col-pending .task-card {
-            border: 1px solid #fed7aa !important;
+        .kanban-column[data-color-theme="red"] {
+            background: rgba(254, 242, 242, 0.4);
+            border: 1px solid rgba(254, 202, 202, 0.6);
         }
 
-        #col-pending .task-card:hover {
-            border-color: #fb923c !important;
+        .kanban-column[data-color-theme="red"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid #fee2e2;
         }
 
-        #col-cancel .task-card {
-            border: 1px solid #fecaca !important;
-        }
-
-        #col-cancel .task-card:hover {
-            border-color: #f87171 !important;
-        }
+        .kanban-column[data-color-theme="red"] .kanban-dot { background: #ef4444; }
+        .kanban-column[data-color-theme="red"] .kanban-column-title { color: #b91c1c; }
+        .kanban-column[data-color-theme="red"] .kanban-count { color: #dc2626; border: 1px solid #fecaca; }
+        .kanban-column[data-color-theme="red"] .kanban-menu-btn { color: #f87171; }
+        .kanban-column[data-color-theme="red"] .kanban-menu-btn:hover { background: #fee2e2; }
+        .kanban-column[data-color-theme="red"] .task-card { border: 1px solid #fecaca !important; }
+        .kanban-column[data-color-theme="red"] .task-card:hover { border-color: #f87171 !important; }
 
         @keyframes shake {
 
@@ -583,195 +702,185 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         </div>
 
         <div class="flex-1 overflow-x-auto pb-8">
-            <div class="flex gap-6 items-start flex-nowrap pb-6">
-
-                <div
-                    class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm">
-                    <div
-                        class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-3 h-3 rounded-full bg-slate-400 shadow-inner"></div>
-                            <h3 class="text-[15px] font-extrabold text-slate-700 uppercase tracking-wide">Backlog</h3>
-                            <span
-                                class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
-                                id="count-backlog">0</span>
-                        </div>
-                        <button
-                            class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
-                    <div class="px-4 pt-4 pb-1">
-                        <button type="button" onclick="openInlineForm()"
-                            class="w-full border-2 border-dashed border-slate-200 rounded-xl py-2.5 text-[13px] font-bold text-slate-400 hover:bg-slate-50 hover:border-blue-300 hover:text-blue-600 transition-all flex items-center justify-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-plus text-[14px]"></i> Thêm Task mới
-                        </button>
-                    </div>
-                    <div id="col-backlog" class="px-4 pb-4 pt-2 flex flex-col gap-4 min-h-[150px] kanban-list">
-
-                        <div id="inlineAddForm" class="hidden po-modal relative z-20">
-                            <div class="form-group">
-                                <input type="text" id="inlineTitle" class="po-input"
-                                    placeholder="Nhập tiêu đề công việc...">
-                            </div>
-                            <div class="form-group">
-                                <textarea id="inlineDesc" class="po-textarea"
-                                    placeholder="Mô tả công việc..."></textarea>
-                            </div>
-                            <div class="form-group row-flex">
-<div class="po-datepicker" id="inlineDateWrapper">
-                                  <input type="hidden" id="inlineDate" class="hidden-date-input">
-                                  <div class="dp-trigger">
-                                    <span class="dp-text"><i class="fa-regular fa-calendar mr-1.5"></i> dd/mm/yyyy</span>
-                                    <svg class="dp-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                  </div>
-                                  <div class="dp-popup">
-                                    <div class="dp-header">
-                                      <div class="dp-month-year">April 2026 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
-                                      <div class="dp-nav">
-                                        <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
-                                        <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-                                      </div>
-                                    </div>
-                                    <div class="dp-grid">
-                                      <div class="dp-day-name">Su</div><div class="dp-day-name">Mo</div><div class="dp-day-name">Tu</div><div class="dp-day-name">We</div><div class="dp-day-name">Th</div><div class="dp-day-name">Fr</div><div class="dp-day-name">Sa</div>
-                                      <div class="dp-date empty">29</div><div class="dp-date empty">30</div><div class="dp-date empty">31</div>
-                                      <div class="dp-date">1</div><div class="dp-date">2</div><div class="dp-date">3</div><div class="dp-date">4</div><div class="dp-date">5</div><div class="dp-date">6</div><div class="dp-date">7</div><div class="dp-date">8</div><div class="dp-date">9</div><div class="dp-date">10</div><div class="dp-date">11</div><div class="dp-date">12</div><div class="dp-date">13</div><div class="dp-date">14</div><div class="dp-date">15</div><div class="dp-date">16</div><div class="dp-date">17</div><div class="dp-date">18</div><div class="dp-date">19</div><div class="dp-date">20</div><div class="dp-date">21</div><div class="dp-date">22</div><div class="dp-date">23</div><div class="dp-date">24</div><div class="dp-date">25</div><div class="dp-date">26</div><div class="dp-date">27</div><div class="dp-date">28</div><div class="dp-date">29</div><div class="dp-date">30</div><div class="dp-date empty">1</div><div class="dp-date empty">2</div>
-                                    </div>
-                                    <div class="dp-footer">
-                                      <button type="button" class="dp-action-btn dpClear">Clear</button>
-                                      <button type="button" class="dp-action-btn dpToday">Today</button>
-                                    </div>
-                                  </div>
-                                </div>                                <div class="custom-select-wrapper" id="inlinePrivacyWrapper">
-                                    <select id="inlineIsPersonal" class="hidden-native-select"
-                                        onchange="togglePersonalMode(this)">
-                                        <option value="false" selected>Public</option>
-                                        <option value="true">Only me</option>
-                                    </select>
-                                    <div class="custom-select-trigger">
-                                        <span class="trigger-text">Public</span>
-                                        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="custom-options-menu">
-                                        <div class="custom-option selected" data-value="false">
-                                            Public
-                                            <svg class="check-icon" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                                    d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="custom-option" data-value="true">
-                                            Only me
-                                            <svg class="check-icon" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                                    d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" id="inlineAssigneeGroup">
-                                <label class="form-label">PHỤ TRÁCH</label>
-                                <div class="tags-wrap" id="inlinePicSelection"></div>
-                            </div>
-                            <div class="modal-actions">
-                                <button type="button" onclick="hideInlineForm()" class="btn-cancel">Hủy</button>
-                                <button type="button" onclick="saveInlineTask()" class="btn-submit"><i
-                                        class="fa-solid fa-check"></i> Lưu ngay</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div
-                    class="w-[360px] shrink-0 bg-blue-50/40 border border-blue-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div
-                        class="p-4 border-b border-blue-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-3 h-3 rounded-full bg-blue-500 shadow-inner"></div>
-                            <h3 class="text-[14px] font-extrabold text-blue-700 uppercase tracking-wide">In Progress
-                            </h3>
-                            <span
-                                class="bg-white border border-blue-200 text-blue-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
-                                id="count-inprogress">0</span>
-                        </div>
-                        <button
-                            class="w-7 h-7 rounded-lg hover:bg-blue-100 flex items-center justify-center text-blue-400 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
-                    <div id="col-inprogress" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
-                </div>
-
-                <div
-                    class="w-[360px] shrink-0 bg-slate-50/80 border border-slate-200/80 rounded-2xl flex flex-col shadow-sm opacity-80 hover:opacity-100 transition-opacity">
-                    <div
-                        class="p-4 border-b border-slate-200/60 flex items-center justify-between bg-white/50 rounded-t-2xl">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-inner"></div>
-                            <h3 class="text-[14px] font-extrabold text-emerald-700 uppercase tracking-wide">Done</h3>
-                            <span
-                                class="bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
-                                id="count-done">0</span>
-                        </div>
-                        <button
-                            class="w-7 h-7 rounded-lg hover:bg-slate-200 flex items-center justify-center text-slate-400 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
-                    <div id="col-done" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
-                </div>
-
-                <div
-                    class="w-[360px] shrink-0 bg-orange-50/40 border border-orange-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div
-                        class="p-4 border-b border-orange-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-3 h-3 rounded-full bg-orange-500 shadow-inner"></div>
-                            <h3 class="text-[14px] font-extrabold text-orange-700 uppercase tracking-wide">Pending</h3>
-                            <span
-                                class="bg-white border border-orange-200 text-orange-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
-                                id="count-pending">0</span>
-                        </div>
-                        <button
-                            class="w-7 h-7 rounded-lg hover:bg-orange-100 flex items-center justify-center text-orange-400 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
-                    <div id="col-pending" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
-                </div>
-
-                <div
-                    class="w-[360px] shrink-0 bg-red-50/40 border border-red-200/60 rounded-2xl flex flex-col shadow-sm">
-                    <div
-                        class="p-4 border-b border-red-100 flex items-center justify-between bg-white/60 rounded-t-2xl">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-3 h-3 rounded-full bg-red-500 shadow-inner"></div>
-                            <h3 class="text-[14px] font-extrabold text-red-700 uppercase tracking-wide">Cancel</h3>
-                            <span
-                                class="bg-white border border-red-200 text-red-600 px-2 py-0.5 rounded-md text-[11px] font-bold shadow-sm ml-1"
-                                id="count-cancel">0</span>
-                        </div>
-                        <button
-                            class="w-7 h-7 rounded-lg hover:bg-red-100 flex items-center justify-center text-red-400 transition">
-                            <i class="fa-solid fa-ellipsis"></i>
-                        </button>
-                    </div>
-                    <div id="col-cancel" class="p-4 flex flex-col gap-4 min-h-[150px] kanban-list"></div>
-                </div>
-
-            </div>
+            <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
         </div>
     </div>
 
     <script>
+        const KANBAN_STATES = [
+            {
+                stateCode: 'BACKLOG',
+                stateName: 'Backlog',
+                description: 'Công việc mới tạo, chưa được xử lý.',
+                orderIndex: 1,
+                colorTheme: 'slate',
+                legacyStorageKey: 'kanban_backlog'
+            },
+            {
+                stateCode: 'IN_PROGRESS',
+                stateName: 'In Progress',
+                description: 'Công việc đang được phân công và thực hiện.',
+                orderIndex: 2,
+                colorTheme: 'blue',
+                legacyStorageKey: 'kanban_inprogress'
+            },
+            {
+                stateCode: 'PENDING',
+                stateName: 'Pending',
+                description: 'Công việc đang bị tạm dừng hoặc chờ phụ thuộc.',
+                orderIndex: 3,
+                colorTheme: 'orange',
+                legacyStorageKey: 'kanban_pending'
+            },
+            {
+                stateCode: 'DONE',
+                stateName: 'Done',
+                description: 'Công việc đã hoàn thành và bàn giao.',
+                orderIndex: 4,
+                colorTheme: 'emerald',
+                legacyStorageKey: 'kanban_done'
+            },
+            {
+                stateCode: 'CANCEL',
+                stateName: 'Cancel',
+                description: 'Công việc đã bị hủy bỏ, không tiếp tục thực hiện.',
+                orderIndex: 5,
+                colorTheme: 'red',
+                legacyStorageKey: 'kanban_cancel'
+            }
+        ].sort((a, b) => a.orderIndex - b.orderIndex);
+
+        const BOARD_STORAGE_KEY = 'kanban_board_state_v2';
+        let sortableInstances = [];
+
+        const INLINE_FORM_HTML = `
+            <div id="inlineAddForm" class="hidden po-modal relative z-20">
+                <div class="form-group">
+                    <input type="text" id="inlineTitle" class="po-input" placeholder="Nhập tiêu đề công việc...">
+                </div>
+                <div class="form-group">
+                    <textarea id="inlineDesc" class="po-textarea" placeholder="Mô tả công việc..."></textarea>
+                </div>
+                <div class="form-group row-flex">
+                    <div class="po-datepicker" id="inlineDateWrapper">
+                        <input type="hidden" id="inlineDate" class="hidden-date-input">
+                        <div class="dp-trigger">
+                            <span class="dp-text"><i class="fa-regular fa-calendar mr-1.5"></i> dd/mm/yyyy</span>
+                            <svg class="dp-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="dp-popup">
+                            <div class="dp-header">
+                                <div class="dp-month-year">April 2026 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                                <div class="dp-nav">
+                                    <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                                    <button type="button" class="dp-nav-btn"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="dp-grid">
+                                <div class="dp-day-name">Su</div><div class="dp-day-name">Mo</div><div class="dp-day-name">Tu</div><div class="dp-day-name">We</div><div class="dp-day-name">Th</div><div class="dp-day-name">Fr</div><div class="dp-day-name">Sa</div>
+                                <div class="dp-date empty">29</div><div class="dp-date empty">30</div><div class="dp-date empty">31</div>
+                                <div class="dp-date">1</div><div class="dp-date">2</div><div class="dp-date">3</div><div class="dp-date">4</div><div class="dp-date">5</div><div class="dp-date">6</div><div class="dp-date">7</div><div class="dp-date">8</div><div class="dp-date">9</div><div class="dp-date">10</div><div class="dp-date">11</div><div class="dp-date">12</div><div class="dp-date">13</div><div class="dp-date">14</div><div class="dp-date">15</div><div class="dp-date">16</div><div class="dp-date">17</div><div class="dp-date">18</div><div class="dp-date">19</div><div class="dp-date">20</div><div class="dp-date">21</div><div class="dp-date">22</div><div class="dp-date">23</div><div class="dp-date">24</div><div class="dp-date">25</div><div class="dp-date">26</div><div class="dp-date">27</div><div class="dp-date">28</div><div class="dp-date">29</div><div class="dp-date">30</div><div class="dp-date empty">1</div><div class="dp-date empty">2</div>
+                            </div>
+                            <div class="dp-footer">
+                                <button type="button" class="dp-action-btn dpClear">Clear</button>
+                                <button type="button" class="dp-action-btn dpToday">Today</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-select-wrapper" id="inlinePrivacyWrapper">
+                        <select id="inlineIsPersonal" class="hidden-native-select" onchange="togglePersonalMode(this)">
+                            <option value="false" selected>Public</option>
+                            <option value="true">Only me</option>
+                        </select>
+                        <div class="custom-select-trigger">
+                            <span class="trigger-text">Public</span>
+                            <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div class="custom-options-menu">
+                            <div class="custom-option selected" data-value="false">
+                                Public
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div class="custom-option" data-value="true">
+                                Only me
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="inlineAssigneeGroup">
+                    <label class="form-label">PHỤ TRÁCH</label>
+                    <div class="tags-wrap" id="inlinePicSelection"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" onclick="hideInlineForm()" class="btn-cancel">Hủy</button>
+                    <button type="button" onclick="saveInlineTask()" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                </div>
+            </div>
+        `;
+
+        function slugifyStateCode(stateCode) {
+            return stateCode.toLowerCase().replace(/_/g, '-');
+        }
+
+        function getStateColumnId(stateCode) {
+            return `col-${slugifyStateCode(stateCode)}`;
+        }
+
+        function getStateCountId(stateCode) {
+            return `count-${slugifyStateCode(stateCode)}`;
+        }
+
+        function getStateConfig(stateCode) {
+            return KANBAN_STATES.find(state => state.stateCode === stateCode);
+        }
+
+        function getFirstStateConfig() {
+            return KANBAN_STATES[0];
+        }
+
+        function renderKanbanBoard() {
+            const board = document.getElementById('kanbanBoard');
+            if (!board) return;
+
+            board.innerHTML = KANBAN_STATES.map((state, index) => {
+                const isEntryState = index === 0;
+                const addButtonHtml = isEntryState ? `
+                    <div class="kanban-add-wrap">
+                        <button type="button" onclick="openInlineForm()" class="kanban-add-btn w-full border-2 border-dashed rounded-xl py-2.5 text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-plus text-[14px]"></i> Thêm Task mới
+                        </button>
+                    </div>
+                ` : '';
+                const formHtml = isEntryState ? INLINE_FORM_HTML : '';
+
+                return `
+                    <div class="kanban-column" data-state-code="${state.stateCode}" data-color-theme="${state.colorTheme}" title="${state.description}">
+                        <div class="kanban-column-header">
+                            <div class="flex items-center gap-2.5">
+                                <div class="kanban-dot w-3 h-3 rounded-full shadow-inner"></div>
+                                <h3 class="kanban-column-title">${state.stateName}</h3>
+                                <span class="kanban-count" id="${getStateCountId(state.stateCode)}">0</span>
+                            </div>
+                            <button class="kanban-menu-btn w-7 h-7 rounded-lg flex items-center justify-center transition">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                        </div>
+                        ${addButtonHtml}
+                        <div id="${getStateColumnId(state.stateCode)}" class="kanban-list kanban-list-body">
+                            ${formHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         // Lấy giá trị true/false từ thẻ Select
 function togglePersonalMode(select) {
             const assigneeGroup = document.getElementById('inlineAssigneeGroup');
@@ -1084,9 +1193,6 @@ function togglePersonalMode(select) {
             });
         }
 
-        // Chạy hàm ngay khi load trang
-        applyUIPermissions();
-
         function renderInlinePicSelection() {
             const container = document.getElementById('inlinePicSelection');
             if (!container) return;
@@ -1145,55 +1251,87 @@ function togglePersonalMode(select) {
         // 1. HỆ THỐNG LƯU TRỮ (LOCAL STORAGE)
         // ==========================================
         function updateCounts() {
-            document.getElementById('count-backlog').innerText = document.getElementById('col-backlog').querySelectorAll('.task-card').length;
-            document.getElementById('count-inprogress').innerText = document.getElementById('col-inprogress').querySelectorAll('.task-card').length;
-            document.getElementById('count-pending').innerText = document.getElementById('col-pending').querySelectorAll('.task-card').length;
-            document.getElementById('count-cancel').innerText = document.getElementById('col-cancel').querySelectorAll('.task-card').length;
-            document.getElementById('count-done').innerText = document.getElementById('col-done').querySelectorAll('.task-card').length;
+            KANBAN_STATES.forEach(state => {
+                const countEl = document.getElementById(getStateCountId(state.stateCode));
+                const columnEl = document.getElementById(getStateColumnId(state.stateCode));
+                if (countEl && columnEl) {
+                    countEl.innerText = columnEl.querySelectorAll('.task-card').length;
+                }
+            });
         }
 
         function saveBoardState() {
-            const backlogTasks = Array.from(document.getElementById('col-backlog').querySelectorAll('.task-card')).map(card => card.outerHTML);
-            const inprogressTasks = Array.from(document.getElementById('col-inprogress').querySelectorAll('.task-card')).map(card => card.outerHTML);
-            const pendingTasks = Array.from(document.getElementById('col-pending').querySelectorAll('.task-card')).map(card => card.outerHTML);
-            const cancelTasks = Array.from(document.getElementById('col-cancel').querySelectorAll('.task-card')).map(card => card.outerHTML);
-            const doneTasks = Array.from(document.getElementById('col-done').querySelectorAll('.task-card')).map(card => card.outerHTML);
+            const boardState = {};
 
-            localStorage.setItem('kanban_backlog', JSON.stringify(backlogTasks));
-            localStorage.setItem('kanban_inprogress', JSON.stringify(inprogressTasks));
-            localStorage.setItem('kanban_pending', JSON.stringify(pendingTasks));
-            localStorage.setItem('kanban_cancel', JSON.stringify(cancelTasks));
-            localStorage.setItem('kanban_done', JSON.stringify(doneTasks));
+            KANBAN_STATES.forEach(state => {
+                const columnEl = document.getElementById(getStateColumnId(state.stateCode));
+                boardState[state.stateCode] = columnEl
+                    ? Array.from(columnEl.querySelectorAll('.task-card')).map(card => card.outerHTML)
+                    : [];
+            });
+
+            localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardState));
+        }
+
+        function loadLegacyBoardState() {
+            const legacyState = {};
+            let hasLegacyData = false;
+
+            KANBAN_STATES.forEach(state => {
+                if (!state.legacyStorageKey) return;
+                const raw = localStorage.getItem(state.legacyStorageKey);
+                if (!raw) return;
+
+                try {
+                    legacyState[state.stateCode] = JSON.parse(raw) || [];
+                    hasLegacyData = true;
+                } catch (error) {
+                    legacyState[state.stateCode] = [];
+                }
+            });
+
+            return hasLegacyData ? legacyState : null;
         }
 
         function loadBoardState() {
-            const backlogTasks = JSON.parse(localStorage.getItem('kanban_backlog'));
-            const inprogressTasks = JSON.parse(localStorage.getItem('kanban_inprogress'));
-            const pendingTasks = JSON.parse(localStorage.getItem('kanban_pending'));
-            const cancelTasks = JSON.parse(localStorage.getItem('kanban_cancel'));
-            const doneTasks = JSON.parse(localStorage.getItem('kanban_done'));
+            let boardState = null;
+            let loadedFromLegacyStorage = false;
 
-            if (backlogTasks || inprogressTasks || pendingTasks || cancelTasks || doneTasks) {
+            try {
+                boardState = JSON.parse(localStorage.getItem(BOARD_STORAGE_KEY));
+            } catch (error) {
+                boardState = null;
+            }
+
+            if (!boardState || typeof boardState !== 'object') {
+                boardState = loadLegacyBoardState();
+                loadedFromLegacyStorage = !!boardState;
+            }
+
+            if (boardState) {
                 document.querySelectorAll('.task-card').forEach(el => el.remove());
 
-                const form = document.getElementById('inlineAddForm');
-                if (backlogTasks) backlogTasks.reverse().forEach(html => form.insertAdjacentHTML('afterend', html));
+                KANBAN_STATES.forEach((state, index) => {
+                    const columnEl = document.getElementById(getStateColumnId(state.stateCode));
+                    const tasks = Array.isArray(boardState[state.stateCode]) ? boardState[state.stateCode] : [];
+                    if (!columnEl || tasks.length === 0) return;
 
-                const colInprogress = document.getElementById('col-inprogress');
-                if (inprogressTasks) inprogressTasks.forEach(html => colInprogress.insertAdjacentHTML('beforeend', html));
-
-                const colPending = document.getElementById('col-pending');
-                if (pendingTasks) pendingTasks.forEach(html => colPending.insertAdjacentHTML('beforeend', html));
-
-                const colCancel = document.getElementById('col-cancel');
-                if (cancelTasks) cancelTasks.forEach(html => colCancel.insertAdjacentHTML('beforeend', html));
-
-                const colDone = document.getElementById('col-done');
-                if (doneTasks) doneTasks.forEach(html => colDone.insertAdjacentHTML('beforeend', html));
+                    if (index === 0) {
+                        const form = document.getElementById('inlineAddForm');
+                        tasks.slice().reverse().forEach(html => form.insertAdjacentHTML('afterend', html));
+                    } else {
+                        tasks.forEach(html => columnEl.insertAdjacentHTML('beforeend', html));
+                    }
+                });
             }
+
             updateCounts();
             renderInlinePicSelection();
             syncTagNames();
+
+            if (loadedFromLegacyStorage) {
+                saveBoardState();
+            }
         }
 
         // ==========================================
@@ -1211,11 +1349,13 @@ function togglePersonalMode(select) {
             }
         };
 
-        new Sortable(document.getElementById('col-backlog'), sortableConfig);
-        new Sortable(document.getElementById('col-inprogress'), sortableConfig);
-        new Sortable(document.getElementById('col-done'), sortableConfig);
-        new Sortable(document.getElementById('col-pending'), sortableConfig);
-        new Sortable(document.getElementById('col-cancel'), sortableConfig);
+        function initSortableColumns() {
+            sortableInstances.forEach(instance => instance.destroy());
+            sortableInstances = KANBAN_STATES
+                .map(state => document.getElementById(getStateColumnId(state.stateCode)))
+                .filter(Boolean)
+                .map(columnEl => new Sortable(columnEl, sortableConfig));
+        }
 
         // ==========================================
         // 3. THÊM TASK MỚI (INLINE ADD)
@@ -1648,15 +1788,21 @@ function openInlineForm() {
         // ==========================================
         // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
         // ==========================================
+        renderKanbanBoard();
+        applyUIPermissions();
+        initSortableColumns();
         loadBoardState();
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
         }
 
-        document.getElementById('inlineDesc').addEventListener('input', function () {
-            autoResize(this);
-        });
+        const inlineDesc = document.getElementById('inlineDesc');
+        if (inlineDesc) {
+            inlineDesc.addEventListener('input', function () {
+                autoResize(this);
+            });
+        }
     </script>
 </body>
 
