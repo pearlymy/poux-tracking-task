@@ -360,6 +360,27 @@
         .kanban-column[data-color-theme="orange"] .task-card { border: 1px solid #fed7aa !important; }
         .kanban-column[data-color-theme="orange"] .task-card:hover { border-color: #fb923c !important; }
 
+        .kanban-column[data-color-theme="indigo"] {
+            background: rgba(245, 243, 255, 0.58);
+            border: 1px solid rgba(196, 181, 253, 0.7);
+        }
+
+        .kanban-column[data-color-theme="indigo"] .kanban-column-header {
+            background: rgba(255, 255, 255, 0.62);
+            border-bottom: 1px solid #e9d5ff;
+        }
+
+        .kanban-column[data-color-theme="indigo"] .kanban-dot { background: #8b5cf6; }
+        .kanban-column[data-color-theme="indigo"] .kanban-column-title { color: #6d28d9; }
+        .kanban-column[data-color-theme="indigo"] .kanban-count { color: #7c3aed; border: 1px solid #ddd6fe; }
+        .kanban-column[data-color-theme="indigo"] .kanban-menu-btn { color: #a78bfa; }
+        .kanban-column[data-color-theme="indigo"] .kanban-menu-btn:hover { background: #ede9fe; }
+        .kanban-column[data-color-theme="indigo"] .task-card { border: 1px solid #c4b5fd !important; }
+        .kanban-column[data-color-theme="indigo"] .task-card:hover {
+            border-color: #a78bfa !important;
+            box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.16);
+        }
+
         .kanban-column[data-color-theme="emerald"] {
             background: rgba(248, 250, 252, 0.8);
             border: 1px solid rgba(226, 232, 240, 0.8);
@@ -442,33 +463,157 @@
         }
 
         .tag-name {
+            --dot-color: #94a3b8;
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 20px;
-            padding: 0 10px 0 8px;
-            border-radius: 4px;
-            font-size: 9px;
+            min-height: 28px;
+            padding: 0 14px 0 12px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            letter-spacing: 0.04em;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
             white-space: nowrap;
             line-height: 1;
+            transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
         }
 
-        .tag-name::after {
-            content: "";
+        .tag-name:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 24px rgba(15, 23, 42, 0.14);
+            filter: saturate(1.05);
+        }
+
+        .tag-name[data-user-key] {
+            cursor: pointer;
+        }
+
+        .tag-label {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .tag-status-dot {
             position: absolute;
             top: -2px;
             right: -2px;
-            width: 7px;
-            height: 7px;
+            width: 9px;
+            height: 9px;
             border-radius: 9999px;
-            background: #ef4444;
-            border: 1.5px solid #ffffff;
-            box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.08);
+            background: var(--dot-color);
+            box-shadow:
+                0 0 0 1.5px rgba(255, 255, 255, 0.95),
+                0 4px 9px color-mix(in srgb, var(--dot-color) 22%, transparent);
+            overflow: hidden;
+        }
+
+        .tag-status-dot::before,
+        .tag-status-dot::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+        }
+
+        .tag-status-dot::before {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.18) 42%, transparent 43%);
+        }
+
+        .tag-status-dot::after {
+            background: linear-gradient(315deg, rgba(0, 0, 0, 0.10) 0%, transparent 45%);
+        }
+
+        .tag-name.workflow-backlog {
+            --dot-color: #94a3b8;
+        }
+
+        .tag-name.workflow-in-progress {
+            --dot-color: #3b82f6;
+        }
+
+        .tag-name.workflow-in-review {
+            --dot-color: #8b5cf6;
+        }
+
+        .tag-name.workflow-pending {
+            --dot-color: #f59e0b;
+        }
+
+        .tag-name.workflow-done {
+            --dot-color: #22c55e;
+        }
+
+        .tag-name.workflow-cancel {
+            --dot-color: #ef4444;
+        }
+
+        .assignee-status-menu {
+            position: fixed;
+            min-width: 150px;
+            padding: 6px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid #dbeafe;
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 200;
+        }
+
+        .assignee-status-option {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.55rem 0.7rem;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            transition: background-color 0.18s ease, color 0.18s ease;
+        }
+
+        .assignee-status-option:hover {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .assignee-status-option.is-active {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .assignee-status-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .assignee-status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.92);
+        }
+
+        .assignee-status-check {
+            width: 14px;
+            height: 14px;
+            color: #2563eb;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+
+        .assignee-status-option.is-active .assignee-status-check {
+            opacity: 1;
+            transform: scale(1);
         }
 /* --- BỔ SUNG MÀU CHO DATE PICKER --- */
         :root {
@@ -701,6 +846,92 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             transition: max-height 0.34s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
+        .kanban-scroll-shell {
+            position: relative;
+        }
+
+        .kanban-scroll-area {
+            overflow-x: auto;
+            overflow-y: visible;
+            padding-bottom: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        .kanban-scroll-area::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .kanban-scroll-nav-group {
+            position: fixed;
+            bottom: 1.5rem;
+            z-index: 40;
+            right: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .kanban-scroll-nav {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid rgba(191, 219, 254, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(37, 99, 235, 0.48);
+            box-shadow: none;
+            opacity: 0.72;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .kanban-scroll-nav-group:hover .kanban-scroll-nav {
+            border-color: rgba(191, 219, 254, 0.9);
+            background: rgba(255, 255, 255, 0.62);
+            color: rgba(37, 99, 235, 0.78);
+            box-shadow: 0 8px 18px rgba(148, 163, 184, 0.12);
+            opacity: 1;
+        }
+
+        .kanban-scroll-nav:hover {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(147, 197, 253, 0.95);
+            color: #2563eb;
+            box-shadow: 0 12px 24px rgba(96, 165, 250, 0.18);
+        }
+
+        .kanban-scroll-nav:active {
+            transform: scale(0.98);
+        }
+
+        .kanban-scroll-nav:disabled,
+        .kanban-scroll-nav.is-disabled {
+            cursor: not-allowed;
+            opacity: 0.42;
+            color: rgba(148, 163, 184, 0.9);
+            background: rgba(241, 245, 249, 0.28);
+            border-color: rgba(203, 213, 225, 0.6);
+            box-shadow: none;
+        }
+
+        .kanban-scroll-nav-group:hover .kanban-scroll-nav:disabled,
+        .kanban-scroll-nav-group:hover .kanban-scroll-nav.is-disabled,
+        .kanban-scroll-nav:disabled:hover,
+        .kanban-scroll-nav.is-disabled:hover {
+            transform: none;
+            color: #94a3b8;
+            background: rgba(241, 245, 249, 0.92);
+            border-color: rgba(203, 213, 225, 1);
+            box-shadow: none;
+            opacity: 0.92;
+        }
+
+        .kanban-scroll-nav i {
+            font-size: 14px;
+            pointer-events: none;
+        }
+
         .sidebar-nav {
             overflow-y: auto;
             overflow-x: visible;
@@ -750,6 +981,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             background: #eff6ff;
             border-color: #93c5fd;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08), 0 12px 28px rgba(96, 165, 250, 0.16);
+        }
+
+        #sidebarToggleIcon {
+            transform: translateX(1.5px);
         }
 
         .nav-tooltip {
@@ -973,6 +1208,26 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
         .member-link.is-active .member-name {
             font-weight: 700;
+        }
+
+        .member-group-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0 0.2rem;
+            padding-left: 1rem;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .member-group-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(148, 163, 184, 0.45) 0%, rgba(148, 163, 184, 0.08) 100%);
         }
 
         .member-count {
@@ -1426,12 +1681,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             <div class="p-6">
                 <div class="sidebar-header flex items-center gap-3">
                     <div class="sidebar-header-main flex items-center gap-3 min-w-0 pr-12">
-                        <div class="p-2 bg-blue-600 rounded-lg text-white shadow-lg shadow-blue-200 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                        </div>
-                        <span class="sidebar-brand font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap">Elite Tracking</span>
+                        <span class="sidebar-brand font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap">PWS Workspace</span>
                     </div>
                     <div class="sidebar-toggle-wrap flex justify-end">
                         <button onclick="toggleSidebar()" class="sidebar-toggle-btn" aria-label="Thu gọn menu">
@@ -1642,8 +1892,18 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             </div>
         </div>
 
-        <div class="flex-1 overflow-x-auto pb-8">
-            <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
+        <div class="kanban-scroll-shell">
+            <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
+                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+            <div id="kanbanScrollArea" class="kanban-scroll-area">
+                <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
+            </div>
         </div>
                 </div>
             </div>
@@ -1669,12 +1929,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 legacyStorageKey: 'kanban_inprogress'
             },
             {
-                stateCode: 'PENDING',
-                stateName: 'Pending',
-                description: 'Công việc đang bị tạm dừng hoặc chờ phụ thuộc.',
+                stateCode: 'IN_REVIEW',
+                stateName: 'In Review',
+                description: 'Công việc đã làm xong và đang chờ review hoặc xác nhận.',
                 orderIndex: 3,
-                colorTheme: 'orange',
-                legacyStorageKey: 'kanban_pending'
+                colorTheme: 'indigo',
+                legacyStorageKey: 'kanban_inreview'
             },
             {
                 stateCode: 'DONE',
@@ -1685,17 +1945,26 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 legacyStorageKey: 'kanban_done'
             },
             {
+                stateCode: 'PENDING',
+                stateName: 'Pending',
+                description: 'Công việc đang bị tạm dừng hoặc chờ phụ thuộc.',
+                orderIndex: 5,
+                colorTheme: 'orange',
+                legacyStorageKey: 'kanban_pending'
+            },
+            {
                 stateCode: 'CANCEL',
                 stateName: 'Cancel',
                 description: 'Công việc đã bị hủy bỏ, không tiếp tục thực hiện.',
-                orderIndex: 5,
+                orderIndex: 6,
                 colorTheme: 'red',
                 legacyStorageKey: 'kanban_cancel'
             }
         ].sort((a, b) => a.orderIndex - b.orderIndex);
 
-        const BOARD_STORAGE_KEY = 'kanban_board_state_v2';
+        const BOARD_STORAGE_KEY = 'kanban_board_state_v3';
         let sortableInstances = [];
+        let boardTickets = [];
 
         const INLINE_FORM_HTML = `
             <div id="inlineAddForm" class="hidden po-modal relative z-20">
@@ -1789,6 +2058,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             return KANBAN_STATES[0];
         }
 
+        function getDefaultStateCode() {
+            return getFirstStateConfig();
+        }
+
         function renderKanbanBoard() {
             const board = document.getElementById('kanbanBoard');
             if (!board) return;
@@ -1823,6 +2096,50 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     </div>
                 `;
             }).join('');
+
+            updateKanbanScrollNavState();
+        }
+
+        function updateKanbanScrollNavState() {
+            const scrollArea = document.getElementById('kanbanScrollArea');
+            const leftBtn = document.getElementById('kanbanScrollLeft');
+            const rightBtn = document.getElementById('kanbanScrollRight');
+            if (!scrollArea || !leftBtn || !rightBtn) return;
+
+            const maxScrollLeft = Math.max(0, scrollArea.scrollWidth - scrollArea.clientWidth);
+            const canScroll = maxScrollLeft > 12;
+            const isAtStart = scrollArea.scrollLeft <= 8;
+            const isAtEnd = scrollArea.scrollLeft >= maxScrollLeft - 8;
+
+            leftBtn.disabled = !canScroll || isAtStart;
+            rightBtn.disabled = !canScroll || isAtEnd;
+            leftBtn.classList.toggle('is-disabled', leftBtn.disabled);
+            rightBtn.classList.toggle('is-disabled', rightBtn.disabled);
+        }
+
+        function scrollKanbanBoard(direction) {
+            const scrollArea = document.getElementById('kanbanScrollArea');
+            if (!scrollArea) return;
+
+            const step = Math.max(280, Math.floor(scrollArea.clientWidth * 0.72));
+            scrollArea.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+
+        function initializeKanbanScrollNav() {
+            const scrollArea = document.getElementById('kanbanScrollArea');
+            const leftBtn = document.getElementById('kanbanScrollLeft');
+            const rightBtn = document.getElementById('kanbanScrollRight');
+            if (!scrollArea || !leftBtn || !rightBtn) return;
+
+            if (!scrollArea.dataset.navInitialized) {
+                scrollArea.addEventListener('scroll', updateKanbanScrollNavState, { passive: true });
+                leftBtn.addEventListener('click', () => scrollKanbanBoard(-1));
+                rightBtn.addEventListener('click', () => scrollKanbanBoard(1));
+                window.addEventListener('resize', updateKanbanScrollNavState);
+                scrollArea.dataset.navInitialized = 'true';
+            }
+
+            requestAnimationFrame(updateKanbanScrollNavState);
         }
 
         // Lấy giá trị true/false từ thẻ Select
@@ -1971,20 +2288,30 @@ function togglePersonalMode(select) {
         // DANH SÁCH USER (TÍCH HỢP CẤU TRÚC PHÒNG BAN & PHÂN QUYỀN)
         // ==========================================
         const USERS = {
-            U0001: { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title: 'Head of Digital', color: '#D97A2B', is_active: true, sort: 1 },
-            U0002: { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title: 'Product Owner', color: '#EA2264', is_active: true, sort: 2 },
-            U0003: { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title: 'Senior Developer', color: '#6FAF4F', is_active: true, sort: 3 },
-            U0004: { id: 'U0004', username: 'van.le', email: 'van.le@vib.com.vn', full_name: 'Vân', job_title: 'Fresher Tester', color: '#003049', is_active: true, sort: 4 },
-            U0005: { id: 'U0005', username: 'quynh.pham', email: 'quynh.pham@vib.com.vn', full_name: 'Quỳnh', job_title: 'Business Analyst', color: '#8b5cf6', is_active: true, sort: 5 },
-            U0006: { id: 'U0006', username: 'thang.vu', email: 'thang.vu@vib.com.vn', full_name: 'Thắng', job_title: 'Mobile Developer', color: '#3852B4', is_active: true, sort: 6 },
-            U0007: { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title: 'UI/UX Designer', color: '#F59E0B', is_active: false, sort: 7 },
-            U0008: { id: 'U0008', username: 'nga', email: 'nga@vib.com.vn', full_name: 'Nga', job_title: 'QA', color: '#94A3B8', is_active: true, sort: 8 },
-            U0009: { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title: 'BE developer', color: '#D97A2B', is_active: true, sort: 9 },
-            U0010: { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title: 'FE developer', color: '#EA2264', is_active: true, sort: 10 },
-            U0011: { id: 'U0011', username: 'thanh', email: 'thanh@vib.com.vn', full_name: 'Thành', job_title: 'QA', color: '#6FAF4F', is_active: true, sort: 11 },
-            U0012: { id: 'U0012', username: 'phuc', email: 'phuc@vib.com.vn', full_name: 'Phúc', job_title: 'QA', color: '#003049', is_active: true, sort: 12 },
-            U0013: { id: 'U0013', username: 'thuong', email: 'thuong@vib.com.vn', full_name: 'Thương', job_title: 'FE developer', color: '#8b5cf6', is_active: true, sort: 13 },
-            U0014: { id: 'U0014', username: 'thien', email: 'thien@vib.com.vn', full_name: 'Thiện', job_title: 'FE developer', color: '#3852B4', is_active: true, sort: 14 }
+            U0001: { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'HEAD', color: '#2563EB', is_active: true, sort: 1 },
+            U0002: { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'PO', color: '#DB2777', is_active: true, sort: 2 },
+            U0003: { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'UX', color: '#16A34A', is_active: true, sort: 3 },
+            U0004: { id: 'U0004', username: 'van.le', email: 'van.le@vib.com.vn', full_name: 'Vân', job_title_id: 'PO', color: '#7C3AED', is_active: true, sort: 4 },
+            U0005: { id: 'U0005', username: 'quynh.pham', email: 'quynh.pham@vib.com.vn', full_name: 'Quỳnh', job_title_id: 'PO', color: '#EA580C', is_active: true, sort: 5 },
+            U0006: { id: 'U0006', username: 'thang.vu', email: 'thang.vu@vib.com.vn', full_name: 'Thắng', job_title_id: 'UX', color: '#0F766E', is_active: true, sort: 6 },
+            U0007: { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'DEV_MANAGER', color: '#B45309', is_active: true, sort: 7 },
+            U0008: { id: 'U0008', username: 'nga', email: 'nga@vib.com.vn', full_name: 'Nga', job_title_id: 'QC', color: '#475569', is_active: true, sort: 8 },
+            U0009: { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'BE', color: '#DC2626', is_active: true, sort: 9 },
+            U0010: { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'FE', color: '#0284C7', is_active: true, sort: 10 },
+            U0011: { id: 'U0011', username: 'thanh', email: 'thanh@vib.com.vn', full_name: 'Thành', job_title_id: 'QC', color: '#65A30D', is_active: true, sort: 11 },
+            U0012: { id: 'U0012', username: 'phuc', email: 'phuc@vib.com.vn', full_name: 'Phúc', job_title_id: 'BE', color: '#C2410C', is_active: true, sort: 12 },
+            U0013: { id: 'U0013', username: 'thuong', email: 'thuong@vib.com.vn', full_name: 'Thương', job_title_id: 'FE', color: '#BE185D', is_active: true, sort: 13 },
+            U0014: { id: 'U0014', username: 'thien', email: 'thien@vib.com.vn', full_name: 'Thiện', job_title_id: 'FE', color: '#4338CA', is_active: true, sort: 14 }
+        };
+
+        const JOB_TITLES = {
+            HEAD: { code: 'HEAD', name: 'Head', sort: 1 },
+            PO: { code: 'PO', name: 'PO', sort: 2 },
+            UX: { code: 'UX', name: 'UX', sort: 3 },
+            DEV_MANAGER: { code: 'DEV_MANAGER', name: 'DEV Manager', sort: 4 },
+            BE: { code: 'BE', name: 'BE', sort: 5 },
+            FE: { code: 'FE', name: 'FE', sort: 6 },
+            QC: { code: 'QC', name: 'QC', sort: 7 }
         };
 
         const LEGACY_USER_KEY_MAP = {
@@ -2007,6 +2334,14 @@ function togglePersonalMode(select) {
         function normalizeUserKey(userKey) {
             if (!userKey) return userKey;
             return USERS[userKey] ? userKey : (LEGACY_USER_KEY_MAP[userKey] || userKey);
+        }
+
+        function getJobTitleMetaById(jobTitleId) {
+            return JOB_TITLES[jobTitleId] || null;
+        }
+
+        function getJobTitleName(jobTitleId) {
+            return getJobTitleMetaById(jobTitleId)?.name || jobTitleId || 'Khác';
         }
 
         const ROLES = {
@@ -2041,16 +2376,12 @@ function togglePersonalMode(select) {
             { user_id: 'U0001', role_id: 'SUPER_ADMIN', team_code: null },
             { user_id: 'U0001', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
             { user_id: 'U0001', role_id: 'MANAGER', team_code: 'DB.WEB.DEV' },
-            { user_id: 'U0002', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
-            { user_id: 'U0002', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0002', role_id: 'MEMBER', team_code: 'DB.WEB.PO' },
             { user_id: 'U0003', role_id: 'MEMBER', team_code: 'DB.WEB.PO' },
-            { user_id: 'U0003', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
             { user_id: 'U0004', role_id: 'INTERN', team_code: 'DB.WEB.PO' },
-            { user_id: 'U0004', role_id: 'INTERN', team_code: 'DB.WEB.QA' },
             { user_id: 'U0005', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
-            { user_id: 'U0005', role_id: 'MANAGER', team_code: 'DB.WEB.BA' },
-            { user_id: 'U0006', role_id: 'VIEWER', team_code: 'DB.APP.DEV' },
-            { user_id: 'U0007', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0006', role_id: 'VIEWER', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0007', role_id: 'MANAGER', team_code: 'DB.WEB.DEV' },
             { user_id: 'U0008', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
             { user_id: 'U0009', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
             { user_id: 'U0010', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
@@ -2063,6 +2394,10 @@ function togglePersonalMode(select) {
         function getUserRoleRows(userKey) {
             const normalizedUserKey = normalizeUserKey(userKey);
             return USER_ROLES_TEAM.filter((row) => normalizeUserKey(row.user_id) === normalizedUserKey);
+        }
+
+        function isAdminUser(userKey) {
+            return getUserRoleRows(userKey).some((row) => ['ADMIN', 'SUPER_ADMIN'].includes(row.role_id));
         }
 
         function getEffectiveRoles(userKey, teamCode = null) {
@@ -2092,7 +2427,7 @@ function togglePersonalMode(select) {
 
         function getAvailableTeamCodesForUser(userKey) {
             const rows = getUserRoleRows(userKey);
-            if (rows.some((row) => row.team_code === null)) {
+            if (isAdminUser(userKey)) {
                 return getAvailableTeamCodes();
             }
 
@@ -2102,6 +2437,7 @@ function togglePersonalMode(select) {
         }
 
         function getUsersByTeamCode(teamCode) {
+            if (!teamCode) return [];
             const teamUserIds = USER_ROLES_TEAM
                 .filter((row) => row.team_code === teamCode)
                 .map((row) => normalizeUserKey(row.user_id));
@@ -2119,19 +2455,142 @@ function togglePersonalMode(select) {
             return getUsersByTeamCode(getCurrentTeamCode());
         }
 
-        function getAssignedUserKeysFromCard(card) {
+        const ASSIGNEE_STATUSES = {
+            TODO: { id: 'TODO', label: 'Chua xu ly', dotColor: '#ef4444' },
+            IN_PROGRESS: { id: 'IN_PROGRESS', label: 'Dang xu ly', dotColor: '#f59e0b' },
+            DONE: { id: 'DONE', label: 'Hoan thanh', dotColor: '#22c55e' }
+        };
+        const DEFAULT_ASSIGNEE_STATUS = 'TODO';
+        const ASSIGNEE_STATUS_FLOW = ['TODO', 'IN_PROGRESS', 'DONE'];
+
+        function getAssigneeStatusMeta(statusId) {
+            return ASSIGNEE_STATUSES[statusId] || ASSIGNEE_STATUSES[DEFAULT_ASSIGNEE_STATUS];
+        }
+
+        function getAssigneeStatusClass(statusId) {
+            const normalizedStatusId = getAssigneeStatusMeta(statusId).id;
+            if (normalizedStatusId === 'IN_PROGRESS') return 'assignee-status-in-progress';
+            if (normalizedStatusId === 'DONE') return 'assignee-status-done';
+            return 'assignee-status-todo';
+        }
+
+        function getWorkflowStateClass(stateCode) {
+            const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
+            if (normalizedStateCode === 'IN_PROGRESS') return 'workflow-in-progress';
+            if (normalizedStateCode === 'IN_REVIEW') return 'workflow-in-review';
+            if (normalizedStateCode === 'PENDING') return 'workflow-pending';
+            if (normalizedStateCode === 'DONE') return 'workflow-done';
+            if (normalizedStateCode === 'CANCEL') return 'workflow-cancel';
+            return 'workflow-backlog';
+        }
+
+        function normalizeAssigneeRecord(record) {
+            if (!record) return null;
+            if (typeof record === 'string') {
+                const normalizedUserKey = normalizeUserKey(record);
+                return normalizedUserKey && USERS[normalizedUserKey]
+                    ? { user_key: normalizedUserKey, status: DEFAULT_ASSIGNEE_STATUS, workflow_state: getDefaultStateCode().stateCode }
+                    : null;
+            }
+
+            const normalizedUserKey = normalizeUserKey(record.user_key || record.userKey);
+            if (!normalizedUserKey || !USERS[normalizedUserKey]) return null;
+
+            return {
+                user_key: normalizedUserKey,
+                status: getAssigneeStatusMeta(record.status).id,
+                workflow_state: getStateConfig(record.workflow_state || record.workflowState)?.stateCode || getDefaultStateCode().stateCode
+            };
+        }
+
+        function buildAssigneeRecordsFromUserKeys(userKeys, existingAssignees = []) {
+            const existingStatusMap = new Map(
+                existingAssignees
+                    .map((record) => normalizeAssigneeRecord(record))
+                    .filter(Boolean)
+                    .map((record) => [record.user_key, { status: record.status, workflow_state: record.workflow_state }])
+            );
+
+            return userKeys
+                .map((userKey) => normalizeUserKey(userKey))
+                .filter((userKey) => userKey && USERS[userKey])
+                .map((userKey) => ({
+                    user_key: userKey,
+                    status: existingStatusMap.get(userKey)?.status || DEFAULT_ASSIGNEE_STATUS,
+                    workflow_state: existingStatusMap.get(userKey)?.workflow_state || getDefaultStateCode().stateCode
+                }));
+        }
+
+        function getCardAssignees(card) {
+            if (!card) return [];
+
+            if (card.dataset.assignees) {
+                try {
+                    const parsedAssignees = JSON.parse(card.dataset.assignees);
+                    if (Array.isArray(parsedAssignees)) {
+                        return parsedAssignees.map((record) => normalizeAssigneeRecord(record)).filter(Boolean);
+                    }
+                } catch (error) {
+                }
+            }
+
             return (card.dataset.userKeys || '')
                 .split(',')
-                .map((key) => normalizeUserKey(key.trim()))
-                .filter((key) => key && USERS[key]);
+                .map((key) => normalizeAssigneeRecord(key.trim()))
+                .filter(Boolean);
+        }
+
+        function setCardAssignees(card, assignees) {
+            const normalizedAssignees = assignees.map((record) => normalizeAssigneeRecord(record)).filter(Boolean);
+            card.dataset.assignees = JSON.stringify(normalizedAssignees);
+            card.dataset.userKeys = normalizedAssignees.map((record) => record.user_key).join(',');
+        }
+
+        function getAssignedUserKeysFromCard(card) {
+            return getCardAssignees(card).map((record) => record.user_key);
+        }
+
+        function getBoardTrackingUserKey() {
+            return activeTrackingUserKey || CURRENT_USER_ID;
+        }
+
+        function getTicketAssignee(ticketState, userKey = getBoardTrackingUserKey()) {
+            const normalizedUserKey = normalizeUserKey(userKey);
+            return (ticketState?.assignees || []).find((record) => record.user_key === normalizedUserKey) || null;
+        }
+
+        function getTicketWorkflowState(ticketState, userKey = getBoardTrackingUserKey()) {
+            return getTicketAssignee(ticketState, userKey)?.workflow_state || getDefaultStateCode().stateCode;
+        }
+
+        function setTicketWorkflowState(ticketState, userKey, stateCode) {
+            const normalizedUserKey = normalizeUserKey(userKey);
+            const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
+            return {
+                ...ticketState,
+                assignees: (ticketState.assignees || []).map((record) => (
+                    record.user_key === normalizedUserKey
+                        ? { ...record, workflow_state: normalizedStateCode }
+                        : record
+                ))
+            };
+        }
+
+        function updateBoardTicket(ticketId, updater) {
+            boardTickets = boardTickets.map((ticketState) => {
+                if (ticketState.ticket_id !== ticketId) return ticketState;
+                const nextState = typeof updater === 'function' ? updater(ticketState) : updater;
+                return normalizeTicketState(nextState) || ticketState;
+            });
         }
 
         function getTaskCountForUser(userKey) {
-            return Array.from(document.querySelectorAll('.task-card')).filter((card) => {
-                if (card.dataset.isPersonal === 'true') {
+            const normalizedUserKey = normalizeUserKey(userKey);
+            return boardTickets.filter((ticketState) => {
+                if (ticketState.is_personal) {
                     return false;
                 }
-                return getAssignedUserKeysFromCard(card).includes(userKey);
+                return (ticketState.assignees || []).some((record) => record.user_key === normalizedUserKey);
             }).length;
         }
 
@@ -2142,22 +2601,28 @@ function togglePersonalMode(select) {
             return teamUsers[0];
         }
 
-        function applyBoardFilter() {
-            const teamUsers = getUsersByTeamCode(getCurrentTeamCode());
-            const activeUser = teamUsers.includes(activeTrackingUserKey) ? activeTrackingUserKey : null;
+        function getSortedTrackingUsers(teamUsers) {
+            return [...teamUsers].sort((userKeyA, userKeyB) => {
+                const userA = USERS[userKeyA];
+                const userB = USERS[userKeyB];
+                const titleA = getJobTitleMetaById(userA.job_title_id);
+                const titleB = getJobTitleMetaById(userB.job_title_id);
+                const titleSortA = titleA?.sort ?? Number.MAX_SAFE_INTEGER;
+                const titleSortB = titleB?.sort ?? Number.MAX_SAFE_INTEGER;
 
-            document.querySelectorAll('.task-card').forEach((card) => {
-                let shouldShow = true;
+                if (titleSortA !== titleSortB) return titleSortA - titleSortB;
 
-                if (activeUser) {
-                    const assignedKeys = getAssignedUserKeysFromCard(card);
-                    shouldShow = assignedKeys.includes(activeUser);
+                if (!titleA && !titleB) {
+                    const titleCompare = getJobTitleName(userA.job_title_id).localeCompare(getJobTitleName(userB.job_title_id), 'vi');
+                    if (titleCompare !== 0) return titleCompare;
                 }
 
-                card.style.display = shouldShow ? '' : 'none';
+                return (userA.sort ?? Number.MAX_SAFE_INTEGER) - (userB.sort ?? Number.MAX_SAFE_INTEGER);
             });
+        }
 
-            updateCounts();
+        function applyBoardFilter() {
+            renderBoardTickets();
         }
 
         function refreshTrackingSidebarAndBoard() {
@@ -2203,11 +2668,326 @@ function togglePersonalMode(select) {
             });
         }
 
-        function createTagHtml(userKey) {
-            const normalizedUserKey = normalizeUserKey(userKey);
-            const user = USERS[normalizedUserKey];
+        function applyAssigneeTagPresentation(tag, assigneeRecord) {
+            if (!tag || !assigneeRecord) return;
+            const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
+            if (!normalizedAssignee) return;
+            const user = USERS[normalizedAssignee.user_key];
             if (!user) return '';
-            return `<div class="tag-name" data-user-key="${normalizedUserKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.full_name}</div>`;
+            const statusMeta = getAssigneeStatusMeta(normalizedAssignee.status);
+            const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
+            tag.dataset.userKey = normalizedAssignee.user_key;
+            tag.dataset.status = statusMeta.id;
+            tag.dataset.workflowState = workflowMeta.stateCode;
+            tag.setAttribute('onclick', 'openAssigneeStatusLov(this, event)');
+            tag.setAttribute('title', `${user.full_name} - ${workflowMeta.stateName}`);
+            tag.style.backgroundColor = user.color;
+            tag.style.borderColor = user.color;
+            tag.style.color = '#ffffff';
+            tag.className = `tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}`;
+            tag.innerHTML = `<span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span>`;
+        }
+
+        function createTagHtml(assigneeRecord) {
+            const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
+            if (!normalizedAssignee) return '';
+            const user = USERS[normalizedAssignee.user_key];
+            if (!user) return '';
+            const statusMeta = getAssigneeStatusMeta(normalizedAssignee.status);
+            const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
+            return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}" data-user-key="${normalizedAssignee.user_key}" data-status="${statusMeta.id}" data-workflow-state="${workflowMeta.stateCode}" onclick="openAssigneeStatusLov(this, event)" title="${user.full_name} - ${workflowMeta.stateName}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;"><span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span></div>`;
+        }
+
+        function renderAssigneeTags(assignees) {
+            if (!assignees.length) {
+                return `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
+            }
+            return assignees.map((record) => createTagHtml(record)).join('');
+        }
+
+        function getTaskDateMeta(dateRaw) {
+            if (!dateRaw) {
+                return {
+                    dateStr: 'Chưa có hạn',
+                    statusTextHtml: ''
+                };
+            }
+
+            const parts = dateRaw.split('-');
+            const dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const taskDate = new Date(dateRaw);
+            taskDate.setHours(0, 0, 0, 0);
+            const diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
+
+            let statusTextHtml = '';
+            if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
+            else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
+            else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
+
+            return { dateStr, statusTextHtml };
+        }
+
+        function normalizeTicketState(state) {
+            if (!state) return null;
+
+            const isPersonal = state.is_personal === true || state.isPersonal === true || state.is_personal === 'true' || state.isPersonal === 'true';
+            const assignees = isPersonal
+                ? []
+                : (Array.isArray(state.assignees) ? state.assignees.map((record) => normalizeAssigneeRecord(record)).filter(Boolean) : []);
+
+            return {
+                ticket_id: state.ticket_id || state.ticketId || '',
+                title: state.title || '',
+                desc: state.desc || '',
+                note: state.note || state.progress_note || state.progressNote || '',
+                date_raw: state.date_raw || state.dateRaw || '',
+                is_personal: isPersonal,
+                assignees
+            };
+        }
+
+        function getCardState(card) {
+            if (!card) return null;
+
+            if (card.dataset.ticketState) {
+                try {
+                    const parsedState = JSON.parse(card.dataset.ticketState);
+                    const normalizedState = normalizeTicketState(parsedState);
+                    if (normalizedState) return normalizedState;
+                } catch (error) {
+                }
+            }
+
+            const titleEl = card.querySelector('.task-title');
+            const descEl = card.querySelector('.task-desc');
+            const noteEl = card.querySelector('.task-note-text');
+            const dateLabelEl = card.querySelector('.task-date-label');
+            let dateRaw = '';
+            if (dateLabelEl) {
+                const dateText = dateLabelEl.textContent.trim();
+                if (dateText && dateText !== 'Chưa có hạn') {
+                    const parts = dateText.split('/');
+                    if (parts.length === 3) dateRaw = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                }
+            }
+
+            return normalizeTicketState({
+                ticket_id: card.dataset.ticketId || '',
+                title: titleEl ? titleEl.innerText.replace(/^\d+\.\s/, '') : '',
+                desc: descEl ? descEl.innerText : '',
+                note: noteEl ? noteEl.innerText : '',
+                date_raw: dateRaw,
+                is_personal: card.dataset.isPersonal === 'true',
+                assignees: getCardAssignees(card)
+            });
+        }
+
+        function setCardState(card, state) {
+            const normalizedState = normalizeTicketState(state);
+            if (!card || !normalizedState) return;
+
+            card.dataset.ticketId = normalizedState.ticket_id;
+            card.dataset.isPersonal = normalizedState.is_personal ? 'true' : 'false';
+            card.dataset.ticketState = JSON.stringify(normalizedState);
+            setCardAssignees(card, normalizedState.assignees);
+        }
+
+        function renderTaskCardInnerHtml(state) {
+            const normalizedState = normalizeTicketState(state);
+            if (!normalizedState) return '';
+
+            const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
+            const picsHtml = normalizedState.is_personal
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`
+                : renderAssigneeTags(normalizedState.assignees);
+            const noteHtml = normalizedState.note
+                ? `
+                <div class="mt-1.5 pt-1 border-t border-dashed border-slate-200">
+                    <p class="task-note-text text-left text-[11px] light text-slate-500 leading-snug whitespace-pre-wrap break-words">*${normalizedState.note}</p>
+                </div>`
+                : '';
+
+            return `
+<div class="card-actions-wrap">
+                    ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
+                        ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
+                            <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            <span class="delete-text">Xóa</span>
+                           </button>` 
+                        : ''}
+                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    </button>
+                </div>
+                <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${normalizedState.title}</h4>
+                <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${normalizedState.desc ? 'mb-4' : 'hidden'}">${normalizedState.desc}</p>
+                <div class="flex justify-between items-start pt-3 border-t border-slate-100">
+                    <div class="flex flex-col gap-0.5">
+                        <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
+                            <i class="fa-regular fa-calendar"></i> <span class="task-date-label">${dateStr}</span>
+                        </div>
+                        ${statusTextHtml}
+                    </div>
+                    <div class="task-assignees flex gap-1.5 flex-wrap justify-end mt-1">
+                        ${picsHtml}
+                    </div>
+                </div>
+                ${noteHtml}
+            `;
+        }
+
+        function renderTaskCard(card, state) {
+            if (!card) return;
+            setCardState(card, state);
+            card.innerHTML = renderTaskCardInnerHtml(state);
+        }
+
+        function createTaskCardElement(state) {
+            const card = document.createElement('div');
+            card.className = 'task-card animate-in relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]';
+            renderTaskCard(card, state);
+            return card;
+        }
+
+        function renderBoardTickets() {
+            document.querySelectorAll('.kanban-list .task-card').forEach((card) => card.remove());
+
+            const boardUserKey = getBoardTrackingUserKey();
+            const visibleTickets = boardTickets.filter((ticketState) => {
+                if (ticketState.is_personal) {
+                    return boardUserKey === CURRENT_USER_ID;
+                }
+                return !!getTicketAssignee(ticketState, boardUserKey);
+            });
+
+            visibleTickets.forEach((ticketState) => {
+                const stateCode = ticketState.is_personal
+                    ? getDefaultStateCode().stateCode
+                    : getTicketWorkflowState(ticketState, boardUserKey);
+                const columnEl = document.getElementById(getStateColumnId(stateCode));
+                if (!columnEl) return;
+                columnEl.appendChild(createTaskCardElement(ticketState));
+            });
+
+            updateCounts();
+        }
+
+        function closeAssigneeStatusLov() {
+            document.querySelectorAll('.assignee-status-menu').forEach((menu) => menu.remove());
+        }
+
+        function getWorkflowStateLovDotColor(stateCode) {
+            const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
+            if (normalizedStateCode === 'IN_PROGRESS') return '#3b82f6';
+            if (normalizedStateCode === 'IN_REVIEW') return '#8b5cf6';
+            if (normalizedStateCode === 'PENDING') return '#f97316';
+            if (normalizedStateCode === 'DONE') return '#10b981';
+            if (normalizedStateCode === 'CANCEL') return '#ef4444';
+            return '#94a3b8';
+        }
+
+        function getAssigneeStatusMenuHtml(currentWorkflowState) {
+            return KANBAN_STATES.map((state) => {
+                const isActive = state.stateCode === currentWorkflowState;
+                return `
+                    <button type="button" class="assignee-status-option ${isActive ? 'is-active' : ''}" data-state-code="${state.stateCode}">
+                        <span class="assignee-status-meta">
+                            <span class="assignee-status-dot" style="background:${getWorkflowStateLovDotColor(state.stateCode)};"></span>
+                            <span>${state.stateName}</span>
+                        </span>
+                        <svg class="assignee-status-check" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function positionAssigneeStatusLov(menu, tag) {
+            const tagRect = tag.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            const viewportPadding = 12;
+
+            let left = tagRect.left;
+            let top = tagRect.bottom + 8;
+
+            if (left + menuRect.width > window.innerWidth - viewportPadding) {
+                left = window.innerWidth - menuRect.width - viewportPadding;
+            }
+
+            if (top + menuRect.height > window.innerHeight - viewportPadding) {
+                top = tagRect.top - menuRect.height - 8;
+            }
+
+            menu.style.left = `${Math.max(viewportPadding, left)}px`;
+            menu.style.top = `${Math.max(viewportPadding, top)}px`;
+        }
+
+        function setAssigneeStatus(tag, stateCode) {
+            const card = tag.closest('.task-card');
+            const userKey = normalizeUserKey(tag.dataset.userKey);
+            if (!card || !userKey) return;
+
+            const ticketState = getCardState(card);
+            if (!ticketState || ticketState.is_personal) return;
+
+            const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
+            const updatedAssignees = ticketState.assignees.map((record) => (
+                record.user_key !== userKey
+                    ? record
+                    : { ...record, workflow_state: normalizedStateCode }
+            ));
+
+            updateBoardTicket(ticketState.ticket_id, {
+                ...ticketState,
+                assignees: updatedAssignees
+            });
+            renderBoardTickets();
+            saveBoardState();
+        }
+
+        function openAssigneeStatusLov(tag, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            const card = tag.closest('.task-card');
+            const userKey = normalizeUserKey(tag.dataset.userKey);
+            if (!card || !userKey) return;
+
+            const ticketState = getCardState(card);
+            if (!ticketState || ticketState.is_personal) return;
+
+            const existingMenu = document.querySelector('.assignee-status-menu');
+            if (existingMenu && existingMenu.dataset.userKey === userKey && existingMenu.dataset.ticketId === ticketState.ticket_id) {
+                closeAssigneeStatusLov();
+                return;
+            }
+
+            closeAssigneeStatusLov();
+
+            const currentAssignee = ticketState.assignees.find((record) => record.user_key === userKey);
+            const currentWorkflowState = getStateConfig(currentAssignee?.workflow_state)?.stateCode || getDefaultStateCode().stateCode;
+            const menu = document.createElement('div');
+            menu.className = 'assignee-status-menu';
+            menu.dataset.userKey = userKey;
+            menu.dataset.ticketId = ticketState.ticket_id;
+            menu.innerHTML = getAssigneeStatusMenuHtml(currentWorkflowState);
+
+            menu.querySelectorAll('.assignee-status-option').forEach((option) => {
+                option.addEventListener('click', (clickEvent) => {
+                    clickEvent.preventDefault();
+                    clickEvent.stopPropagation();
+                    setAssigneeStatus(tag, option.dataset.stateCode);
+                    closeAssigneeStatusLov();
+                });
+            });
+
+            document.body.appendChild(menu);
+            positionAssigneeStatusLov(menu, tag);
         }
 
         function generateTicketId() {
@@ -2235,16 +3015,8 @@ function togglePersonalMode(select) {
         }
 
         function syncTagNames() {
-            document.querySelectorAll('.tag-name').forEach(tag => {
-                const key = normalizeUserKey(tag.dataset.userKey);
-                if (key && USERS[key]) {
-                    tag.dataset.userKey = key;
-                    tag.innerText = USERS[key].full_name;
-                    tag.style.backgroundColor = USERS[key].color;
-                    tag.style.borderColor = USERS[key].color;
-                    tag.style.color = '#ffffff';
-                }
-            });
+            boardTickets = boardTickets.map((ticketState) => normalizeTicketState(ticketState)).filter(Boolean);
+            renderBoardTickets();
         }
 
         // ==========================================
@@ -2262,20 +3034,7 @@ function togglePersonalMode(select) {
         }
 
         function saveBoardState() {
-            const boardState = {};
-
-            KANBAN_STATES.forEach(state => {
-                const columnEl = document.getElementById(getStateColumnId(state.stateCode));
-                boardState[state.stateCode] = columnEl
-                    ? Array.from(columnEl.querySelectorAll('.task-card')).map(card => {
-                        const cleanCard = card.cloneNode(true);
-                        cleanCard.style.display = '';
-                        return cleanCard.outerHTML;
-                    })
-                    : [];
-            });
-
-            localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardState));
+            localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardTickets));
             refreshTrackingSidebarAndBoard();
         }
 
@@ -2314,24 +3073,31 @@ function togglePersonalMode(select) {
                 loadedFromLegacyStorage = !!boardState;
             }
 
-            if (boardState) {
-                document.querySelectorAll('.task-card').forEach(el => el.remove());
-
-                KANBAN_STATES.forEach((state, index) => {
-                    const columnEl = document.getElementById(getStateColumnId(state.stateCode));
+            boardTickets = [];
+            if (Array.isArray(boardState)) {
+                boardTickets = boardState.map((ticketState) => normalizeTicketState(ticketState)).filter(Boolean);
+            } else if (boardState && typeof boardState === 'object') {
+                KANBAN_STATES.forEach((state) => {
                     const tasks = Array.isArray(boardState[state.stateCode]) ? boardState[state.stateCode] : [];
-                    if (!columnEl || tasks.length === 0) return;
-
-                    if (index === 0) {
-                        const form = document.getElementById('inlineAddForm');
-                        tasks.slice().reverse().forEach(html => form.insertAdjacentHTML('afterend', html));
-                    } else {
-                        tasks.forEach(html => columnEl.insertAdjacentHTML('beforeend', html));
-                    }
+                    tasks.forEach((html) => {
+                        const template = document.createElement('template');
+                        template.innerHTML = html.trim();
+                        const card = template.content.firstElementChild;
+                        if (!card) return;
+                        const ticketState = getCardState(card);
+                        if (!ticketState) return;
+                        const migratedTicketState = {
+                            ...ticketState,
+                            assignees: (ticketState.assignees || []).map((record) => ({
+                                ...record,
+                                workflow_state: state.stateCode
+                            }))
+                        };
+                        boardTickets.push(normalizeTicketState(migratedTicketState));
+                    });
                 });
             }
 
-            updateCounts();
             renderInlinePicSelection();
             syncTagNames();
             refreshTrackingSidebarAndBoard();
@@ -2351,7 +3117,16 @@ function togglePersonalMode(select) {
             dragClass: 'sortable-drag',
             easing: "cubic-bezier(0.25, 1, 0.5, 1)",
             onEnd: function (evt) {
-                updateCounts();
+                const card = evt.item;
+                const ticketId = card?.dataset.ticketId;
+                const targetStateCode = evt.to?.closest('.kanban-column')?.dataset.stateCode;
+                const boardUserKey = getBoardTrackingUserKey();
+
+                if (ticketId && targetStateCode && boardUserKey) {
+                    updateBoardTicket(ticketId, (ticketState) => setTicketWorkflowState(ticketState, boardUserKey, targetStateCode));
+                }
+
+                renderBoardTickets();
                 saveBoardState();
             }
         };
@@ -2400,7 +3175,7 @@ function openInlineForm() {
 
             applyDefaultInlinePicSelection();
         }
-  function hideInlineForm() {
+        function hideInlineForm() {
             const form = document.getElementById('inlineAddForm');
             form.classList.add('hidden');
             document.getElementById('inlineTitle').value = '';
@@ -2467,71 +3242,23 @@ function openInlineForm() {
             }
 
             const dateRaw = document.getElementById('inlineDate').value;
-            let dateStr = "Chưa có hạn";
-            let statusTextHtml = "";
-            if (dateRaw) {
-                let parts = dateRaw.split('-');
-                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
-                let today = new Date(); today.setHours(0, 0, 0, 0);
-                let taskDate = new Date(dateRaw); taskDate.setHours(0, 0, 0, 0);
-                let diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
-
-                if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
-                else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
-                else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
-            }
 
             const isPersonalSelect = document.getElementById('inlineIsPersonal');
             // Lấy logic True/False từ Select thay vì Checkbox
             const isPersonal = isPersonalSelect ? (isPersonalSelect.value === 'true') : false;
 
-            let picsHtml = '';
-            if (isPersonal) {
-                picsHtml = `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
-            } else {
-                if (inlineSelectedPICs.length === 0) {
-                    picsHtml = `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
-                } else {
-                    inlineSelectedPICs.forEach(key => {
-                        picsHtml += createTagHtml(key);
-                    });
-                }
-            }
-
             const ticketId = typeof generateTicketId === 'function' ? generateTicketId() : '';
-            const userKeysString = isPersonal ? '' : inlineSelectedPICs.join(',');
+            const ticketState = normalizeTicketState({
+                ticket_id: ticketId,
+                title,
+                desc,
+                date_raw: dateRaw,
+                is_personal: isPersonal,
+                assignees: buildAssigneeRecordsFromUserKeys(inlineSelectedPICs)
+            });
 
-            const cardHTML = `
-                <div class="task-card animate-in relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]" data-ticket-id="${ticketId}" data-is-personal="${isPersonal}" data-user-keys="${userKeysString}">
-<div class="card-actions-wrap">
-                    ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
-                        ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
-                            <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            <span class="delete-text">Xóa</span>
-                           </button>` 
-                        : ''}
-                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    </button>
-                </div>
-                    <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
-                    <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
-                    <div class="flex justify-between items-start pt-3 border-t border-slate-100">
-                        <div class="flex flex-col gap-0.5">
-                            <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
-                                <i class="fa-regular fa-calendar"></i> ${dateStr}
-                            </div>
-                            ${statusTextHtml}
-                        </div>
-                        <div class="flex gap-1.5 flex-wrap justify-end mt-1">
-                            ${picsHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('inlineAddForm').insertAdjacentHTML('afterend', cardHTML);
-            updateCounts();
+            boardTickets.unshift(ticketState);
+            renderBoardTickets();
             saveBoardState();
             hideInlineForm();
         }
@@ -2542,37 +3269,17 @@ function openInlineForm() {
         // ==========================================
         function editTask(btn) {
             const card = btn.closest('.task-card');
-            const titleEl = card.querySelector('.task-title');
-            const oldTitle = titleEl ? titleEl.innerText.replace(/^\d+\.\s/, '') : '';
-            const descEl = card.querySelector('.task-desc');
-            const oldDesc = descEl ? descEl.innerText : '';
+            const ticketState = getCardState(card);
+            if (!ticketState) return;
+            const oldTitle = ticketState.title;
+            const oldDesc = ticketState.desc;
+            const oldNote = ticketState.note || '';
+            const oldDateVal = ticketState.date_raw;
+            const isPersonal = ticketState.is_personal;
+            const oldAssignees = ticketState.assignees;
+            const oldPicsKeys = oldAssignees.map((record) => record.user_key);
 
-            const dateEl = card.querySelector('.fa-calendar');
-            let oldDateVal = '';
-            if (dateEl) {
-                const dateText = dateEl.parentElement.innerText.trim();
-                if (dateText && dateText !== 'Chưa có hạn') {
-                    const parts = dateText.split('/');
-                    if (parts.length === 3) oldDateVal = `${parts[2]}-${parts[1]}-${parts[0]}`;
-                }
-            }
-
-            const isPersonal = card.dataset.isPersonal === "true";
-
-            let oldPicsKeys = [];
-            card.querySelectorAll('.tag-name, .justify-end > div').forEach(el => {
-                const key = normalizeUserKey(el.dataset.userKey);
-                const text = el.innerText.trim();
-
-                if (key) {
-                    oldPicsKeys.push(key);
-                } else if (text !== 'Chưa giao' && text !== '') {
-                    const foundKey = Object.keys(USERS).find((k) => USERS[k].full_name === text || USERS[k].full_name.includes(text));
-                    if (foundKey) oldPicsKeys.push(foundKey);
-                }
-            });
-
-            card.dataset.originalHtml = card.innerHTML;
+            card.dataset.originalTicketState = JSON.stringify(ticketState);
 
             // Render Tags với CSS mới
             let picButtonsHtml = '';
@@ -2594,7 +3301,6 @@ function openInlineForm() {
                     <div class="form-group">
                         <textarea class="edit-desc po-textarea" placeholder="Mô tả công việc...">${oldDesc}</textarea>
                     </div>
-                    
 <div class="form-group row-flex">
 <div class="po-datepicker editDateWrapper">
                           <input type="hidden" class="edit-date hidden-date-input" value="${oldDateVal}">
@@ -2649,6 +3355,10 @@ function openInlineForm() {
                             ${picButtonsHtml}
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <textarea class="edit-note po-textarea" placeholder="Note cập nhật tiến độ, blocker, lý do pending...">${oldNote}</textarea>
+                    </div>
                     
                     <div class="modal-actions">
                         <button type="button" onclick="cancelEditTask(this)" class="btn-cancel">Hủy</button>
@@ -2662,6 +3372,11 @@ function openInlineForm() {
                 autoResize(editArea);
                 editArea.addEventListener('input', function () { autoResize(this); });
             }
+            const editNoteArea = card.querySelector('.edit-note');
+            if (editNoteArea) {
+                autoResize(editNoteArea);
+                editNoteArea.addEventListener('input', function () { autoResize(this); });
+            }
             initCustomSelect(card.querySelector('.editPrivacyWrapper'));
             initCustomDatePicker(card.querySelector('.editDateWrapper'));
         }
@@ -2672,13 +3387,18 @@ function openInlineForm() {
 
         function cancelEditTask(btn) {
             const card = btn.closest('.task-card');
-            card.innerHTML = card.dataset.originalHtml;
+            if (!card?.dataset.originalTicketState) return;
+            try {
+                renderTaskCard(card, JSON.parse(card.dataset.originalTicketState));
+            } catch (error) {
+            }
         }
 
         function saveEditedTask(btn) {
             const card = btn.closest('.task-card');
             const title = card.querySelector('.edit-title').value.trim();
             const desc = card.querySelector('.edit-desc').value.trim();
+            const note = card.querySelector('.edit-note').value.trim();
 
             if (!title) {
                 const editInput = card.querySelector('.edit-title');
@@ -2689,73 +3409,26 @@ function openInlineForm() {
                 return;
             }
 
+            const previousState = getCardState(card);
             const dateRaw = card.querySelector('.edit-date').value;
-            let dateStr = "Chưa có hạn";
-            let statusTextHtml = "";
-            if (dateRaw) {
-                let parts = dateRaw.split('-');
-                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
-                let today = new Date(); today.setHours(0, 0, 0, 0);
-                let taskDate = new Date(dateRaw); taskDate.setHours(0, 0, 0, 0);
-                let diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
-
-                if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
-                else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
-                else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
-            }
 
             // Đọc Select Value thay vì Checkbox
             const isPersonal = card.querySelector('.edit-is-personal').value === 'true';
-            card.dataset.isPersonal = isPersonal;
+            const picEls = card.querySelectorAll('.po-tag-active');
+            const selectedKeys = Array.from(picEls).map((el) => el.dataset.pic);
+            const assignees = isPersonal ? [] : buildAssigneeRecordsFromUserKeys(selectedKeys, previousState?.assignees || []);
+            const nextState = normalizeTicketState({
+                ticket_id: previousState?.ticket_id || card.dataset.ticketId || '',
+                title,
+                desc,
+                note,
+                date_raw: dateRaw,
+                is_personal: isPersonal,
+                assignees
+            });
 
-            let picsHtml = '';
-            let selectedKeys = [];
-
-            if (isPersonal) {
-                picsHtml = `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
-            } else {
-                // Lấy các Tag đang có class Active
-                const picEls = card.querySelectorAll('.po-tag-active');
-                if (picEls.length === 0) {
-                    picsHtml = `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
-                } else {
-                    picEls.forEach(el => {
-                        selectedKeys.push(el.dataset.pic);
-                        picsHtml += createTagHtml(el.dataset.pic);
-                    });
-                }
-            }
-            card.dataset.userKeys = selectedKeys.join(',');
-
-            // RENDER VIEW CARD
-            card.innerHTML = `
-<div class="card-actions-wrap">
-                    ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
-                        ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
-                            <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            <span class="delete-text">Xóa</span>
-                           </button>` 
-                        : ''}
-                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    </button>
-                </div>
-                <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${title}</h4>
-                <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${desc ? 'mb-4' : 'hidden'}">${desc}</p>
-                <div class="flex justify-between items-start pt-3 border-t border-slate-100">
-                    <div class="flex flex-col gap-0.5">
-                        <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
-                            <i class="fa-regular fa-calendar"></i> ${dateStr}
-                        </div>
-                        ${statusTextHtml}
-                    </div>
-                    <div class="flex gap-1.5 flex-wrap justify-end mt-1">
-                        ${picsHtml}
-                    </div>
-                </div>
-            `;
-
-            updateCounts();
+            updateBoardTicket(nextState.ticket_id, nextState);
+            renderBoardTickets();
             saveBoardState();
         }
 // ==========================================
@@ -2774,11 +3447,12 @@ function openInlineForm() {
             } else {
                 // Bấm lần 2 -> Thực hiện xóa
                 const card = btn.closest('.task-card');
+                const ticketId = card?.dataset.ticketId;
                 card.classList.add('deleting'); // Chạy CSS thu nhỏ, mờ đi
                 
                 setTimeout(() => {
-                    card.remove(); // Xóa khỏi HTML
-                    updateCounts(); // Cập nhật lại số lượng
+                    boardTickets = boardTickets.filter((ticketState) => ticketState.ticket_id !== ticketId);
+                    renderBoardTickets();
                     saveBoardState(); // Lưu vào DB / LocalStorage
                 }, 300); // Đợi 300ms cho animation chạy xong
             }
@@ -2791,7 +3465,15 @@ function openInlineForm() {
                     btn.classList.remove('confirm-mode');
                 }
             });
+
+            const statusMenu = document.querySelector('.assignee-status-menu');
+            if (statusMenu && !statusMenu.contains(e.target) && !e.target.closest('.tag-name[data-user-key]')) {
+                closeAssigneeStatusLov();
+            }
         });
+
+        window.addEventListener('resize', closeAssigneeStatusLov);
+        window.addEventListener('scroll', closeAssigneeStatusLov, { passive: true });
 
         const TEAM_STORAGE_KEY = 'elite-tracking-selected-team';
         const DOCUMENT_PAGES_STORAGE_KEY = 'elite-tracking-document-pages';
@@ -3124,7 +3806,7 @@ function openInlineForm() {
 
         function renderTrackingList(teamKey) {
             const trackingList = document.getElementById('trackingList');
-            const members = getUsersByTeamCode(teamKey);
+            const members = getSortedTrackingUsers(getUsersByTeamCode(teamKey));
 
             if (!members.length) {
                 activeTrackingUserKey = null;
@@ -3141,7 +3823,10 @@ function openInlineForm() {
                 const isSelected = userKey === activeTrackingUserKey;
                 const currentIndexClass = isLoggedInUser ? 'member-index member-index-current' : 'member-index';
                 const activeClass = isSelected ? 'member-link is-active' : 'member-link';
+                const previousUser = index > 0 ? USERS[members[index - 1]] : null;
+                const shouldRenderDivider = !previousUser || previousUser.job_title_id !== user.job_title_id;
                 return `
+                    ${shouldRenderDivider ? `<li class="member-group-divider">${getJobTitleName(user.job_title_id)}</li>` : ''}
                     <li>
                         <a href="#" class="${activeClass}" data-member-group="tracking" data-tracking-current="${isLoggedInUser ? 'true' : 'false'}" data-user-key="${userKey}">
                             <span class="${currentIndexClass}">${index + 1}</span>
@@ -3165,11 +3850,15 @@ function openInlineForm() {
 
         function applySelectedTeam(teamKey) {
             selectedTeamCode = teamKey;
-            document.getElementById('teamSelectorValue').textContent = teamKey;
+            document.getElementById('teamSelectorValue').textContent = teamKey || 'Không có phòng ban';
             document.querySelectorAll('.team-option').forEach((option) => {
                 option.classList.toggle('is-active', option.dataset.teamValue === teamKey);
             });
-            localStorage.setItem(TEAM_STORAGE_KEY, teamKey);
+            if (teamKey) {
+                localStorage.setItem(TEAM_STORAGE_KEY, teamKey);
+            } else {
+                localStorage.removeItem(TEAM_STORAGE_KEY);
+            }
             renderInlinePicSelection();
             renderTrackingList(teamKey);
             initializeCurrentUserProfile();
@@ -3193,7 +3882,12 @@ function openInlineForm() {
             `).join('');
 
             const teamOptions = teamSelectorMenu.querySelectorAll('.team-option');
-            if (!defaultTeam) return;
+            if (!defaultTeam) {
+                teamSelectorButton.style.display = 'none';
+                applySelectedTeam(null);
+                return;
+            }
+            teamSelectorButton.style.display = '';
             applySelectedTeam(defaultTeam);
 
             teamSelectorButton.addEventListener('click', () => {
@@ -3387,7 +4081,7 @@ function openInlineForm() {
 
             if (title) {
                 const roles = getEffectiveRoles(CURRENT_USER_ID, getCurrentTeamCode());
-                title.textContent = `${currentUser.job_title} / ${roles.join(', ') || 'USER'}`;
+                title.textContent = `${getJobTitleName(currentUser.job_title_id)} / ${roles.join(', ') || 'USER'}`;
             }
         }
 
@@ -3435,6 +4129,7 @@ function openInlineForm() {
         // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
         // ==========================================
         renderKanbanBoard();
+        initializeKanbanScrollNav();
         applyUIPermissions();
         initSortableColumns();
         loadBoardState();
