@@ -442,11 +442,12 @@
         }
 
         .tag-name {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 18px;
-            padding: 0 6px;
+            min-height: 20px;
+            padding: 0 10px 0 8px;
             border-radius: 4px;
             font-size: 9px;
             font-weight: 800;
@@ -455,6 +456,19 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             white-space: nowrap;
             line-height: 1;
+        }
+
+        .tag-name::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 7px;
+            height: 7px;
+            border-radius: 9999px;
+            background: #ef4444;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.08);
         }
 /* --- BỔ SUNG MÀU CHO DATE PICKER --- */
         :root {
@@ -657,12 +671,939 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             opacity: 0.5;
             pointer-events: none;
         }
+
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+
+        .app-main {
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow: auto;
+        }
+
+        .app-main-body {
+            min-height: 100%;
+            padding: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .app-main-body {
+                padding: 2rem;
+            }
+        }
+
+        .accordion-content {
+            overflow: hidden;
+            transition: max-height 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .sidebar-nav {
+            overflow-y: auto;
+            overflow-x: visible;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sidebar {
+            flex-shrink: 0;
+            transition: width 0.28s ease, box-shadow 0.28s ease;
+            overflow-x: visible;
+            overflow-y: hidden;
+        }
+
+        .sidebar-header {
+            position: relative;
+            min-height: 2.5rem;
+        }
+
+        .sidebar-toggle-wrap {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .sidebar-toggle-btn {
+            height: 2.25rem;
+            width: 2.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 0.75rem;
+            border: 1px solid #bfdbfe;
+            color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.06), 0 10px 24px rgba(148, 163, 184, 0.12);
+            transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: #eff6ff;
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08), 0 12px 28px rgba(96, 165, 250, 0.16);
+        }
+
+        .nav-tooltip {
+            position: relative;
+        }
+
+        .nav-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: calc(100% + 0.75rem);
+            top: 50%;
+            transform: translateY(-50%) translateX(-4px);
+            padding: 0.45rem 0.65rem;
+            border-radius: 0.75rem;
+            background: #0f172a;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            z-index: 30;
+        }
+
+        .tooltip-top::after {
+            left: 50%;
+            top: auto;
+            bottom: calc(100% + 0.6rem);
+            transform: translateX(-50%) translateY(4px);
+        }
+
+        .tooltip-top:hover::after {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .sidebar-label,
+        .sidebar-brand,
+        .sidebar-meta,
+        .sidebar-accordion {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .profile-context {
+            position: relative;
+            margin-top: 0.65rem;
+        }
+
+        .profile-team-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: 0.95rem;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            border: 1px solid #dbeafe;
+            color: #334155;
+            box-shadow: 0 6px 16px rgba(148, 163, 184, 0.12);
+            transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, transform 0.22s ease;
+        }
+
+        .profile-team-button:hover {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f7ff 100%);
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.14);
+            transform: translateY(-1px);
+        }
+
+        .profile-team-button.is-open {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+            box-shadow: 0 14px 28px rgba(59, 130, 246, 0.16);
+        }
+
+        .profile-team-copy {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+        }
+
+        .profile-team-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+
+        .profile-team-value {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .profile-team-chevron {
+            flex-shrink: 0;
+            color: #94a3b8;
+            transition: transform 0.24s ease, color 0.2s ease;
+        }
+
+        .profile-team-button.is-open .profile-team-chevron {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .profile-team-menu {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: calc(100% + 0.55rem);
+            overflow: hidden;
+            border: 1px solid #dbeafe;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
+            opacity: 0;
+            transform: translateY(8px);
+            max-height: 0;
+            pointer-events: none;
+            z-index: 40;
+            transition: max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, transform 0.22s ease;
+        }
+
+        .profile-team-menu.is-open {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 8rem;
+            pointer-events: auto;
+        }
+
+        .team-option {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.72rem 0.9rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            transition: background-color 0.18s ease, color 0.18s ease;
+        }
+
+        .team-option:hover,
+        .team-option.is-active {
+            background: #eef5ff;
+            color: #1d4ed8;
+        }
+
+        .team-option-check {
+            width: 0.95rem;
+            height: 0.95rem;
+            flex-shrink: 0;
+            color: #2563eb;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+
+        .team-option.is-active .team-option-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .member-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.375rem 0 0.375rem 1rem;
+            font-size: 0.875rem;
+            color: #64748b;
+            border-left: 1px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .member-link:hover {
+            color: #2563eb;
+            border-left-color: #60a5fa;
+        }
+
+        .member-link.is-active {
+            color: #1d4ed8;
+            border-left-color: #2563eb;
+            background: linear-gradient(90deg, rgba(239, 246, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .member-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.15rem;
+            height: 1.15rem;
+            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1;
+            color: #cbd5e1;
+        }
+
+        .member-index-current {
+            border-radius: 9999px;
+            background: #fff7ed;
+            color: #f97316;
+            box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.3);
+        }
+
+        .member-name {
+            min-width: 0;
+            white-space: nowrap;
+        }
+
+        .member-link.is-active .member-name {
+            font-weight: 700;
+        }
+
+        .member-count {
+            margin-left: auto;
+            min-width: 1.75rem;
+            padding: 0.35rem 0.45rem;
+            border-radius: 9999px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .menu-action-btn {
+            height: 1.75rem;
+            width: 1.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            color: #94a3b8;
+            transition: background-color 0.18s ease, color 0.18s ease;
+        }
+
+        .menu-action-btn:hover {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .menu-action-btn.delete:hover {
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .document-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            opacity: 1;
+        }
+
+        .document-add-btn {
+            opacity: 0;
+            transform: scale(0.92);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+        }
+
+        .nav-item:hover .document-add-btn,
+        .nav-item.is-active .document-add-btn,
+        .nav-item.is-parent-active .document-add-btn {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .document-chevron-btn {
+            height: 1.25rem;
+            width: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .document-page-row {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            overflow: hidden;
+            transform-origin: left center;
+            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+        }
+
+        .document-page-row.is-entering {
+            animation: documentRowReveal 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .document-page-row .member-link {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .document-page-row.is-editing {
+            align-items: stretch;
+        }
+
+        .document-page-row.is-removing {
+            opacity: 0;
+            transform: translateX(10px) scale(0.985);
+            max-height: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
+        }
+
+        .document-page-row.is-edit-transitioning {
+            opacity: 0;
+            transform: translateX(-10px) scale(0.985);
+            pointer-events: none;
+        }
+
+        .document-page-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-shrink: 0;
+            gap: 0.15rem;
+            opacity: 0;
+            transition: opacity 0.12s ease;
+        }
+
+        .document-page-row:hover .document-page-actions {
+            opacity: 1;
+        }
+
+        .document-delete-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.75rem;
+            width: 1.75rem;
+            min-width: 1.75rem;
+            padding: 0;
+            border-radius: 9999px;
+            overflow: hidden;
+            color: #94a3b8;
+            flex-shrink: 0;
+            transition: background-color 0.12s ease, color 0.12s ease;
+        }
+
+        .document-delete-toggle:hover {
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .document-delete-toggle.is-confirming {
+            width: 3.55rem;
+            min-width: 3.55rem;
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .document-delete-icon,
+        .document-delete-label {
+            position: absolute;
+            inset: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.18s ease;
+        }
+
+        .document-delete-label {
+            opacity: 0;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .document-delete-toggle.is-confirming .document-delete-icon {
+            opacity: 0;
+        }
+
+        .document-delete-toggle.is-confirming .document-delete-label {
+            opacity: 1;
+        }
+
+        .document-inline-form {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0 0.35rem 1rem;
+            border-left: 1px solid #bfdbfe;
+            animation: documentInlineReveal 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .branch-menu-stack {
+            padding-top: 0.15rem;
+            padding-bottom: 0.35rem;
+        }
+
+        .branch-menu-stack .document-page-row + .document-page-row {
+            margin-top: 0.25rem;
+        }
+
+        .branch-menu-stack .member-link {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .branch-menu-stack .document-inline-form {
+            padding-top: 0.55rem;
+            padding-bottom: 0.45rem;
+        }
+
+        .document-inline-input {
+            flex: 1;
+            min-width: 0;
+            height: 2rem;
+            border-radius: 0;
+            border: 0;
+            border-bottom: 1.5px solid #bfdbfe;
+            background: transparent;
+            padding: 0 0 0.1rem;
+            font-size: 0.875rem;
+            color: #334155;
+            outline: none;
+            box-shadow: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .document-inline-input:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 1px 0 0 #60a5fa;
+        }
+
+        .document-inline-input.is-invalid {
+            border-color: #ef4444;
+            color: #b91c1c;
+            box-shadow: 0 1px 0 0 #ef4444;
+            animation: documentInputInvalid 0.38s ease;
+        }
+
+        .document-inline-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .nav-item.is-active,
+        .nav-item.is-parent-active {
+            background: #eff6ff;
+            color: #1d4ed8;
+            box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.22);
+        }
+
+        .sidebar.collapsed {
+            width: 5.5rem;
+            --collapsed-icon-size: 3rem;
+            --collapsed-toggle-size: 2.25rem;
+            --collapsed-icon-gap: 1rem;
+        }
+
+        .sidebar.collapsed > .p-6,
+        .sidebar.collapsed > .p-4 {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .sidebar.collapsed .sidebar-brand,
+        .sidebar.collapsed .sidebar-label,
+        .sidebar.collapsed .sidebar-meta,
+        .sidebar.collapsed .sidebar-accordion,
+        .sidebar.collapsed .profile-context {
+            opacity: 0;
+            transform: translateX(-6px);
+            pointer-events: none;
+            width: 0;
+            min-width: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-label,
+        .sidebar.collapsed .sidebar-accordion {
+            display: none;
+        }
+
+        .sidebar.collapsed .accordion-content {
+            display: none;
+            max-height: 0 !important;
+        }
+
+        .sidebar.collapsed .sidebar-header {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .sidebar-header-main {
+            width: 0;
+            overflow: hidden;
+            padding-right: 0;
+            gap: 0;
+        }
+
+        .sidebar.collapsed .sidebar-toggle-wrap {
+            position: static;
+            transform: none;
+        }
+
+        .sidebar.collapsed .sidebar-nav {
+            display: grid;
+            justify-items: center;
+            align-content: start;
+            row-gap: var(--collapsed-icon-gap);
+            padding-top: 0;
+        }
+
+        .sidebar.collapsed .sidebar-nav > * {
+            width: var(--collapsed-icon-size);
+            min-height: var(--collapsed-icon-size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0 !important;
+        }
+
+        .sidebar.collapsed .nav-item {
+            width: var(--collapsed-icon-size);
+            height: var(--collapsed-icon-size);
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            gap: 0;
+            border-radius: 1rem;
+        }
+
+        .sidebar.collapsed .nav-item > div {
+            width: 100%;
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+        }
+
+        .sidebar.collapsed .nav-item-branch {
+            position: relative;
+        }
+
+        .sidebar.collapsed .nav-item-branch > div:first-child {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: auto;
+            min-width: 0;
+            display: block;
+            transform: translate(-50%, -50%);
+        }
+
+        .sidebar.collapsed .document-header-actions {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-item-leading {
+            width: 1.35rem;
+            height: 1.35rem;
+            display: block;
+            margin-right: 0;
+        }
+
+        .sidebar.collapsed .nav-tooltip::after {
+            left: 50%;
+            top: auto;
+            bottom: calc(100% + 0.45rem);
+            transform: translateX(-50%) translateY(4px);
+        }
+
+        .sidebar.collapsed .nav-item:hover::after,
+        .sidebar.collapsed a.nav-item:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .sidebar.collapsed .profile-card {
+            width: 3rem;
+            min-width: 3rem;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            background: transparent;
+        }
+
+        .profile-wrap {
+            align-items: flex-start;
+        }
+
+        .profile-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-card {
+            padding-right: 3rem;
+        }
+
+        .profile-logout {
+            height: 2.25rem;
+            width: 2.25rem;
+            flex-shrink: 0;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .profile-logout:hover {
+            color: #e11d48;
+            border-color: #fecdd3;
+            background: #fff1f2;
+        }
+
+        @keyframes documentInputInvalid {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-2px); }
+        }
+
+        @keyframes documentInlineReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes documentRowReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
-<body class="p-4 md:p-8 min-h-screen selection:bg-blue-100 selection:text-blue-900">
+<body class="selection:bg-blue-100 selection:text-blue-900">
+    <div class="app-shell">
+        <aside id="sidebar" class="sidebar w-64 h-screen bg-white border-r border-slate-200 flex flex-col shadow-sm">
+            <div class="p-6">
+                <div class="sidebar-header flex items-center gap-3">
+                    <div class="sidebar-header-main flex items-center gap-3 min-w-0 pr-12">
+                        <div class="p-2 bg-blue-600 rounded-lg text-white shadow-lg shadow-blue-200 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </div>
+                        <span class="sidebar-brand font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap">Elite Tracking</span>
+                    </div>
+                    <div class="sidebar-toggle-wrap flex justify-end">
+                        <button onclick="toggleSidebar()" class="sidebar-toggle-btn" aria-label="Thu gọn menu">
+                            <svg id="sidebarToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-    <div class="w-full px-6 flex flex-col h-screen">
+            <nav class="sidebar-nav flex-1 px-4 space-y-1">
+                <div>
+                    <button onclick="toggleAccordion('trackingMenu', 'trackingChevron')" class="nav-item nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tracking task" data-nav-target="trackingMenu">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            <span class="sidebar-label font-semibold text-sm whitespace-nowrap">Tracking task</span>
+                        </div>
+                        <svg id="trackingChevron" xmlns="http://www.w3.org/2000/svg" class="sidebar-accordion h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div id="trackingMenu" class="accordion-content max-h-0">
+                        <ul id="trackingList" class="py-2 space-y-1 pl-9 border-l border-slate-100"></ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="documentNavItem" class="nav-item nav-item-branch nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tài liệu" data-nav-target="documentMenu" data-menu-id="documentMenu" data-chevron-id="documentChevron">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="sidebar-label font-semibold text-sm whitespace-nowrap" data-nav-target="documentMenu">Tài liệu</button>
+                        </div>
+                        <div class="document-header-actions">
+                            <button type="button" id="documentAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="Tạo page tài liệu">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="document-chevron-btn sidebar-label" aria-label="Mở tài liệu">
+                                <svg id="documentChevron" xmlns="http://www.w3.org/2000/svg" class="sidebar-accordion h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="documentMenu" class="accordion-content max-h-0">
+                        <div class="branch-menu-stack space-y-1 pl-9">
+                            <div id="documentCreateForm" class="document-inline-form hidden">
+                                <input id="documentCreateInput" type="text" class="document-inline-input" placeholder="Tên page mới..." maxlength="60">
+                                <div class="document-inline-actions">
+                                    <button type="button" id="documentCreateSaveBtn" class="menu-action-btn" aria-label="Lưu page">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" id="documentCreateCancelBtn" class="menu-action-btn" aria-label="Hủy tạo page">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="documentList" class="space-y-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="guideNavItem" class="nav-item nav-item-branch nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="HDSD" data-nav-target="guideMenu" data-menu-id="guideMenu" data-chevron-id="guideChevron">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <button type="button" onclick="toggleAccordion('guideMenu', 'guideChevron')" class="sidebar-label font-semibold text-sm whitespace-nowrap" data-nav-target="guideMenu">HDSD</button>
+                        </div>
+                        <div class="document-header-actions">
+                            <button type="button" id="guideAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="Tạo page hướng dẫn">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                            <button type="button" onclick="toggleAccordion('guideMenu', 'guideChevron')" class="document-chevron-btn sidebar-label" aria-label="Mở hướng dẫn">
+                                <svg id="guideChevron" xmlns="http://www.w3.org/2000/svg" class="sidebar-accordion h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="guideMenu" class="accordion-content max-h-0">
+                        <div class="branch-menu-stack space-y-1 pl-9">
+                            <div id="guideCreateForm" class="document-inline-form hidden">
+                                <input id="guideCreateInput" type="text" class="document-inline-input" placeholder="Tên page mới..." maxlength="60">
+                                <div class="document-inline-actions">
+                                    <button type="button" id="guideCreateSaveBtn" class="menu-action-btn" aria-label="Lưu page hướng dẫn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" id="guideCreateCancelBtn" class="menu-action-btn" aria-label="Hủy tạo page hướng dẫn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="guideList" class="space-y-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="nav-item nav-tooltip tooltip-top flex items-center gap-3 p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all" data-tooltip="Admin" data-nav-link="admin">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span class="sidebar-label font-semibold text-sm whitespace-nowrap">Admin</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-slate-100">
+                <div class="profile-wrap relative flex items-center gap-2">
+                    <div class="profile-main">
+                        <div id="profileCard" class="profile-card flex items-center gap-3 p-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer min-w-0">
+                            <div id="profileAvatar" class="h-9 w-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">HP</div>
+                            <div class="sidebar-meta flex-1 min-w-0">
+                                <p id="profileName" class="text-sm font-bold text-slate-800 truncate">Hiếu Phan</p>
+                                <p id="profileTitle" class="text-[10px] text-slate-500 truncate">Admin / Team Lead</p>
+                            </div>
+                        </div>
+                        <div class="profile-context">
+                            <button id="teamSelectorButton" type="button" class="profile-team-button sidebar-label">
+                                <span class="profile-team-copy">
+                                    <span class="profile-team-label">Phòng ban</span>
+                                    <span id="teamSelectorValue" class="profile-team-value">DB.WEB.PO</span>
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="profile-team-chevron h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div id="teamSelectorMenu" class="profile-team-menu">
+                                <button type="button" class="team-option" data-team-value="DB.WEB.PO">
+                                    <span class="team-option-label">DB.WEB.PO</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="team-option-check" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="team-option" data-team-value="DB.DB.WEB">
+                                    <span class="team-option-label">DB.DB.WEB</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="team-option-check" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="profile-logout nav-tooltip tooltip-top flex items-center justify-center" data-tooltip="Log out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <div class="app-main-body">
+                <div class="w-full px-6 flex flex-col h-screen">
 
         <div
             class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
@@ -704,6 +1645,9 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         <div class="flex-1 overflow-x-auto pb-8">
             <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
         </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
@@ -1027,102 +1971,20 @@ function togglePersonalMode(select) {
         // DANH SÁCH USER (TÍCH HỢP CẤU TRÚC PHÒNG BAN & PHÂN QUYỀN)
         // ==========================================
         const USERS = {
-            'U0001': { 
-                name: 'a.AN', 
-                color: '#D97A2B',
-                username: 'an.nguyen',
-                email: 'an.nguyen@vib.com.vn',
-                jobTitle: 'Head of Digital',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.BOD', deptName: 'Ban Giám đốc',
-                teamCode: 'DB.BOD', teamName: 'Ban Giám đốc',
-                systemRoles: ['SUPER_ADMIN'], // Toàn quyền hệ thống
-                isActive: true
-            },
-            'U0002': { 
-                name: 'HIẾU PHAN', 
-                color: '#EA2264',
-                username: 'hieu.phan',
-                email: 'hieu.phan@vib.com.vn',
-                jobTitle: 'Product Owner',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.PO', teamName: 'Team PO UX',
-                systemRoles: ['MANAGER', 'MEMBER'], // Quản lý nội dung dự án
-                isActive: true
-            },
-            'U0003': { 
-                name: 'ĐỊNH', 
-                color: '#6FAF4F',
-                username: 'dinh.tran',
-                email: 'dinh.tran@vib.com.vn',
-                jobTitle: 'Senior Developer',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.DEV', teamName: 'Team Dev',
-                systemRoles: ['MEMBER'], // Thành viên code trực tiếp
-                isActive: true
-            },
-            'U0004': { 
-                name: 'VÂN', 
-                color: '#003049',
-                username: 'van.le',
-                email: 'van.le@vib.com.vn',
-                jobTitle: 'Fresher Tester',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.QA', teamName: 'Team QA',
-                systemRoles: ['INTERN'], // Role dị biệt: Được tạo task nhưng cấm sửa/cấm kéo thả
-                isActive: true
-            },
-            'U0005': { 
-                name: 'QUỲNH', 
-                color: '#8b5cf6',
-                username: 'quynh.pham',
-                email: 'quynh.pham@vib.com.vn',
-                jobTitle: 'Business Analyst',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.BA', teamName: 'Team BA',
-                systemRoles: ['MANAGER'], // Quản lý luồng nghiệp vụ
-                isActive: true
-            },
-            'U0006': { 
-                name: 'THẮNG', 
-                color: '#3852B4',
-                username: 'thang.vu',
-                email: 'thang.vu@vib.com.vn',
-                jobTitle: 'Mobile Developer',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.APP', deptName: 'Phòng Giải pháp Mobile App', // Lưu ý: Team App, không phải team Web
-                teamCode: 'DB.APP.DEV', teamName: 'Team App Dev',
-                systemRoles: ['VIEWER'], // Khách từ phòng khác vào xem tiến độ, không có quyền thao tác
-                isActive: true
-            },
-            'U0007': {
-                name: 'TUẤN',
-                color: '#F59E0B',
-                username: 'tuan.le2',
-                email: 'tuan.le2@vib.com.vn',
-                jobTitle: 'UI/UX Designer',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.PO', teamName: 'Team PO UX',
-                systemRoles: ['VIEWER'],
-                isActive: false
-            },
-            'U0008': {
-                name: 'LINH',
-                color: '#94A3B8',
-                username: 'linh.ngo',
-                email: 'linh.ngo@vib.com.vn',
-                jobTitle: 'Ex-Employee',
-                blockCode: 'DB', blockName: 'Trung tâm ngân hàng số',
-                deptCode: 'DB.WEB', deptName: 'Phòng Giải pháp Web',
-                teamCode: 'DB.WEB.DEV', teamName: 'Team Dev',
-                systemRoles: ['VIEWER'],
-                isActive: false
-            }
+            U0001: { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title: 'Head of Digital', color: '#D97A2B', is_active: true, sort: 1 },
+            U0002: { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title: 'Product Owner', color: '#EA2264', is_active: true, sort: 2 },
+            U0003: { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title: 'Senior Developer', color: '#6FAF4F', is_active: true, sort: 3 },
+            U0004: { id: 'U0004', username: 'van.le', email: 'van.le@vib.com.vn', full_name: 'Vân', job_title: 'Fresher Tester', color: '#003049', is_active: true, sort: 4 },
+            U0005: { id: 'U0005', username: 'quynh.pham', email: 'quynh.pham@vib.com.vn', full_name: 'Quỳnh', job_title: 'Business Analyst', color: '#8b5cf6', is_active: true, sort: 5 },
+            U0006: { id: 'U0006', username: 'thang.vu', email: 'thang.vu@vib.com.vn', full_name: 'Thắng', job_title: 'Mobile Developer', color: '#3852B4', is_active: true, sort: 6 },
+            U0007: { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title: 'UI/UX Designer', color: '#F59E0B', is_active: false, sort: 7 },
+            U0008: { id: 'U0008', username: 'nga', email: 'nga@vib.com.vn', full_name: 'Nga', job_title: 'QA', color: '#94A3B8', is_active: true, sort: 8 },
+            U0009: { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title: 'BE developer', color: '#D97A2B', is_active: true, sort: 9 },
+            U0010: { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title: 'FE developer', color: '#EA2264', is_active: true, sort: 10 },
+            U0011: { id: 'U0011', username: 'thanh', email: 'thanh@vib.com.vn', full_name: 'Thành', job_title: 'QA', color: '#6FAF4F', is_active: true, sort: 11 },
+            U0012: { id: 'U0012', username: 'phuc', email: 'phuc@vib.com.vn', full_name: 'Phúc', job_title: 'QA', color: '#003049', is_active: true, sort: 12 },
+            U0013: { id: 'U0013', username: 'thuong', email: 'thuong@vib.com.vn', full_name: 'Thương', job_title: 'FE developer', color: '#8b5cf6', is_active: true, sort: 13 },
+            U0014: { id: 'U0014', username: 'thien', email: 'thien@vib.com.vn', full_name: 'Thiện', job_title: 'FE developer', color: '#3852B4', is_active: true, sort: 14 }
         };
 
         const LEGACY_USER_KEY_MAP = {
@@ -1131,7 +1993,15 @@ function togglePersonalMode(select) {
             'U03': 'U0003',
             'U04': 'U0004',
             'U05': 'U0005',
-            'U06': 'U0006'
+            'U06': 'U0006',
+            'U07': 'U0007',
+            'U08': 'U0008',
+            'U09': 'U0009',
+            'U10': 'U0010',
+            'U11': 'U0011',
+            'U12': 'U0012',
+            'U13': 'U0013',
+            'U14': 'U0014'
         };
 
         function normalizeUserKey(userKey) {
@@ -1139,40 +2009,170 @@ function togglePersonalMode(select) {
             return USERS[userKey] ? userKey : (LEGACY_USER_KEY_MAP[userKey] || userKey);
         }
 
-        // ĐỊNH NGHĨA QUYỀN HẠN CHO TỪNG ROLE
-        const ROLES_CONFIG = {
-            'SUPER_ADMIN': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK', 'DELETE_TASK'],
-            'MANAGER': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK', 'DELETE_TASK'],
-            'MEMBER': ['VIEW_BOARD', 'CREATE_TASK', 'EDIT_TASK', 'MOVE_TASK'],
-            'INTERN': ['VIEW_BOARD', 'CREATE_TASK'], 
-            'VIEWER': ['VIEW_BOARD']
+        const ROLES = {
+            SUPER_ADMIN: { id: 'SUPER_ADMIN', name: 'Super Admin' },
+            MANAGER: { id: 'MANAGER', name: 'Manager' },
+            MEMBER: { id: 'MEMBER', name: 'Member' },
+            INTERN: { id: 'INTERN', name: 'Intern' },
+            VIEWER: { id: 'VIEWER', name: 'Viewer' }
         };
 
-        // Hàm kiểm tra quyền dùng chung
-        function checkPermission(userKey, action) {
-            const normalizedUserKey = normalizeUserKey(userKey);
-            const user = USERS[normalizedUserKey];
-            if (!user || !user.systemRoles) return false;
-            
-            let userActions = [];
-            user.systemRoles.forEach(role => {
-                const actions = ROLES_CONFIG[role] || [];
-                userActions = [...userActions, ...actions];
-            });
+        const ROLE_PERMISSIONS = [
+            { role_id: 'SUPER_ADMIN', permission_id: 'VIEW_BOARD' },
+            { role_id: 'SUPER_ADMIN', permission_id: 'CREATE_TASK' },
+            { role_id: 'SUPER_ADMIN', permission_id: 'EDIT_TASK' },
+            { role_id: 'SUPER_ADMIN', permission_id: 'MOVE_TASK' },
+            { role_id: 'SUPER_ADMIN', permission_id: 'DELETE_TASK' },
+            { role_id: 'MANAGER', permission_id: 'VIEW_BOARD' },
+            { role_id: 'MANAGER', permission_id: 'CREATE_TASK' },
+            { role_id: 'MANAGER', permission_id: 'EDIT_TASK' },
+            { role_id: 'MANAGER', permission_id: 'MOVE_TASK' },
+            { role_id: 'MANAGER', permission_id: 'DELETE_TASK' },
+            { role_id: 'MEMBER', permission_id: 'VIEW_BOARD' },
+            { role_id: 'MEMBER', permission_id: 'CREATE_TASK' },
+            { role_id: 'MEMBER', permission_id: 'EDIT_TASK' },
+            { role_id: 'MEMBER', permission_id: 'MOVE_TASK' },
+            { role_id: 'INTERN', permission_id: 'VIEW_BOARD' },
+            { role_id: 'INTERN', permission_id: 'CREATE_TASK' },
+            { role_id: 'VIEWER', permission_id: 'VIEW_BOARD' }
+        ];
 
-            return userActions.includes(action);
+        const USER_ROLES_TEAM = [
+            { user_id: 'U0001', role_id: 'SUPER_ADMIN', team_code: null },
+            { user_id: 'U0001', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0001', role_id: 'MANAGER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0002', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0002', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0003', role_id: 'MEMBER', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0003', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0004', role_id: 'INTERN', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0004', role_id: 'INTERN', team_code: 'DB.WEB.QA' },
+            { user_id: 'U0005', role_id: 'MANAGER', team_code: 'DB.WEB.PO' },
+            { user_id: 'U0005', role_id: 'MANAGER', team_code: 'DB.WEB.BA' },
+            { user_id: 'U0006', role_id: 'VIEWER', team_code: 'DB.APP.DEV' },
+            { user_id: 'U0007', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0008', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0009', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0010', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0011', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0012', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0013', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
+            { user_id: 'U0014', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' }
+        ];
+
+        function getUserRoleRows(userKey) {
+            const normalizedUserKey = normalizeUserKey(userKey);
+            return USER_ROLES_TEAM.filter((row) => normalizeUserKey(row.user_id) === normalizedUserKey);
+        }
+
+        function getEffectiveRoles(userKey, teamCode = null) {
+            return Array.from(new Set(
+                getUserRoleRows(userKey)
+                    .filter((row) => row.team_code === null || teamCode === null || row.team_code === teamCode)
+                    .map((row) => row.role_id)
+            ));
+        }
+
+        function checkPermission(userKey, action, teamCode = getCurrentTeamCode()) {
+            const roles = getEffectiveRoles(userKey, teamCode);
+            return ROLE_PERMISSIONS.some((item) => roles.includes(item.role_id) && item.permission_id === action);
         }
 
         const ALL_USER_KEYS = Object.keys(USERS);
-        const ACTIVE_USER_KEYS = ALL_USER_KEYS.filter(key => USERS[key].isActive);
+        const ACTIVE_USER_KEYS = ALL_USER_KEYS.filter((key) => USERS[key].is_active);
         const DEFAULT_INLINE_PIC_ID = 'U0002';
 
+        function getAvailableTeamCodes() {
+            return Array.from(new Set(
+                USER_ROLES_TEAM
+                    .map((row) => row.team_code)
+                    .filter(Boolean)
+            )).sort((a, b) => a.localeCompare(b));
+        }
+
+        function getAvailableTeamCodesForUser(userKey) {
+            const rows = getUserRoleRows(userKey);
+            if (rows.some((row) => row.team_code === null)) {
+                return getAvailableTeamCodes();
+            }
+
+            return Array.from(new Set(
+                rows.map((row) => row.team_code).filter(Boolean)
+            )).sort((a, b) => a.localeCompare(b));
+        }
+
+        function getUsersByTeamCode(teamCode) {
+            const teamUserIds = USER_ROLES_TEAM
+                .filter((row) => row.team_code === teamCode)
+                .map((row) => normalizeUserKey(row.user_id));
+
+            return Array.from(new Set(teamUserIds))
+                .filter((key) => key && USERS[key] && USERS[key].is_active)
+                .sort((a, b) => USERS[a].sort - USERS[b].sort);
+        }
+
+        function getCurrentTeamCode() {
+            return selectedTeamCode || getAvailableTeamCodesForUser(CURRENT_USER_ID)[0] || null;
+        }
+
+        function getAssignableUserKeys() {
+            return getUsersByTeamCode(getCurrentTeamCode());
+        }
+
+        function getAssignedUserKeysFromCard(card) {
+            return (card.dataset.userKeys || '')
+                .split(',')
+                .map((key) => normalizeUserKey(key.trim()))
+                .filter((key) => key && USERS[key]);
+        }
+
+        function getTaskCountForUser(userKey) {
+            return Array.from(document.querySelectorAll('.task-card')).filter((card) => {
+                if (card.dataset.isPersonal === 'true') {
+                    return false;
+                }
+                return getAssignedUserKeysFromCard(card).includes(userKey);
+            }).length;
+        }
+
+        function getPreferredTrackingUserKey(teamUsers) {
+            if (!teamUsers.length) return null;
+            if (activeTrackingUserKey && teamUsers.includes(activeTrackingUserKey)) return activeTrackingUserKey;
+            if (teamUsers.includes(CURRENT_USER_ID)) return CURRENT_USER_ID;
+            return teamUsers[0];
+        }
+
+        function applyBoardFilter() {
+            const teamUsers = getUsersByTeamCode(getCurrentTeamCode());
+            const activeUser = teamUsers.includes(activeTrackingUserKey) ? activeTrackingUserKey : null;
+
+            document.querySelectorAll('.task-card').forEach((card) => {
+                let shouldShow = true;
+
+                if (activeUser) {
+                    const assignedKeys = getAssignedUserKeysFromCard(card);
+                    shouldShow = assignedKeys.includes(activeUser);
+                }
+
+                card.style.display = shouldShow ? '' : 'none';
+            });
+
+            updateCounts();
+        }
+
+        function refreshTrackingSidebarAndBoard() {
+            if (!selectedTeamCode) return;
+            renderTrackingList(selectedTeamCode);
+            applyBoardFilter();
+        }
+
         function applyDefaultInlinePicSelection() {
-            const defaultPicBtn = document.querySelector(`#inlinePicSelection button[data-user-key="${DEFAULT_INLINE_PIC_ID}"]`);
+            const defaultUserKey = getPreferredTrackingUserKey(getAssignableUserKeys()) || DEFAULT_INLINE_PIC_ID;
+            const defaultPicBtn = document.querySelector(`#inlinePicSelection button[data-user-key="${defaultUserKey}"]`);
             if (!defaultPicBtn) return;
 
-            if (!inlineSelectedPICs.includes(DEFAULT_INLINE_PIC_ID)) {
-                inlineSelectedPICs.push(DEFAULT_INLINE_PIC_ID);
+            if (!inlineSelectedPICs.includes(defaultUserKey)) {
+                inlineSelectedPICs.push(defaultUserKey);
             }
             defaultPicBtn.classList.add('po-tag-active');
         }
@@ -1197,9 +2197,9 @@ function togglePersonalMode(select) {
             const container = document.getElementById('inlinePicSelection');
             if (!container) return;
             container.innerHTML = '';
-            ACTIVE_USER_KEYS.forEach(key => {
+            getAssignableUserKeys().forEach(key => {
                 const user = USERS[key];
-                container.innerHTML += `<button type="button" onclick="toggleInlinePic(this, '${key}')" class="po-tag" data-user-key="${key}">${user.name}</button>`;
+                container.innerHTML += `<button type="button" onclick="toggleInlinePic(this, '${key}')" class="po-tag" data-user-key="${key}">${user.full_name}</button>`;
             });
         }
 
@@ -1207,7 +2207,7 @@ function togglePersonalMode(select) {
             const normalizedUserKey = normalizeUserKey(userKey);
             const user = USERS[normalizedUserKey];
             if (!user) return '';
-            return `<div class="tag-name" data-user-key="${normalizedUserKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.name}</div>`;
+            return `<div class="tag-name" data-user-key="${normalizedUserKey}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;">${user.full_name}</div>`;
         }
 
         function generateTicketId() {
@@ -1239,7 +2239,7 @@ function togglePersonalMode(select) {
                 const key = normalizeUserKey(tag.dataset.userKey);
                 if (key && USERS[key]) {
                     tag.dataset.userKey = key;
-                    tag.innerText = USERS[key].name;
+                    tag.innerText = USERS[key].full_name;
                     tag.style.backgroundColor = USERS[key].color;
                     tag.style.borderColor = USERS[key].color;
                     tag.style.color = '#ffffff';
@@ -1255,7 +2255,8 @@ function togglePersonalMode(select) {
                 const countEl = document.getElementById(getStateCountId(state.stateCode));
                 const columnEl = document.getElementById(getStateColumnId(state.stateCode));
                 if (countEl && columnEl) {
-                    countEl.innerText = columnEl.querySelectorAll('.task-card').length;
+                    countEl.innerText = Array.from(columnEl.querySelectorAll('.task-card'))
+                        .filter((card) => card.style.display !== 'none').length;
                 }
             });
         }
@@ -1266,11 +2267,16 @@ function togglePersonalMode(select) {
             KANBAN_STATES.forEach(state => {
                 const columnEl = document.getElementById(getStateColumnId(state.stateCode));
                 boardState[state.stateCode] = columnEl
-                    ? Array.from(columnEl.querySelectorAll('.task-card')).map(card => card.outerHTML)
+                    ? Array.from(columnEl.querySelectorAll('.task-card')).map(card => {
+                        const cleanCard = card.cloneNode(true);
+                        cleanCard.style.display = '';
+                        return cleanCard.outerHTML;
+                    })
                     : [];
             });
 
             localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardState));
+            refreshTrackingSidebarAndBoard();
         }
 
         function loadLegacyBoardState() {
@@ -1328,6 +2334,7 @@ function togglePersonalMode(select) {
             updateCounts();
             renderInlinePicSelection();
             syncTagNames();
+            refreshTrackingSidebarAndBoard();
 
             if (loadedFromLegacyStorage) {
                 saveBoardState();
@@ -1560,7 +2567,7 @@ function openInlineForm() {
                 if (key) {
                     oldPicsKeys.push(key);
                 } else if (text !== 'Chưa giao' && text !== '') {
-                    const foundKey = Object.keys(USERS).find(k => USERS[k].name === text || USERS[k].name.includes(text));
+                    const foundKey = Object.keys(USERS).find((k) => USERS[k].full_name === text || USERS[k].full_name.includes(text));
                     if (foundKey) oldPicsKeys.push(foundKey);
                 }
             });
@@ -1569,11 +2576,11 @@ function openInlineForm() {
 
             // Render Tags với CSS mới
             let picButtonsHtml = '';
-            const selectableUserKeys = Array.from(new Set([...ACTIVE_USER_KEYS, ...oldPicsKeys]));
+            const selectableUserKeys = Array.from(new Set([...getAssignableUserKeys(), ...oldPicsKeys]));
             selectableUserKeys.forEach(userKey => {
                 const isSelected = oldPicsKeys.includes(userKey);
                 const btnClass = isSelected ? "po-tag po-tag-active" : "po-tag";
-                picButtonsHtml += `<button type="button" onclick="toggleEditPic(this)" class="${btnClass}" data-pic="${userKey}">${USERS[userKey].name}</button>`;
+                picButtonsHtml += `<button type="button" onclick="toggleEditPic(this)" class="${btnClass}" data-pic="${userKey}">${USERS[userKey].full_name}</button>`;
             });
 
             // Giao diện Edit được chuyển sang CSS mới của bạn
@@ -1785,6 +2792,645 @@ function openInlineForm() {
                 }
             });
         });
+
+        const TEAM_STORAGE_KEY = 'elite-tracking-selected-team';
+        const DOCUMENT_PAGES_STORAGE_KEY = 'elite-tracking-document-pages';
+        const GUIDE_PAGES_STORAGE_KEY = 'elite-tracking-guide-pages';
+        let isSidebarCollapsed = false;
+        let selectedTeamCode = null;
+        let activeTrackingUserKey = null;
+        let preferredNavTarget = 'trackingMenu';
+        let preferredNavLink = null;
+        const accordionState = { trackingMenu: false, documentMenu: false, guideMenu: false };
+        const branchConfigs = {
+            document: {
+                storageKey: DOCUMENT_PAGES_STORAGE_KEY,
+                menuId: 'documentMenu',
+                chevronId: 'documentChevron',
+                listId: 'documentList',
+                createFormId: 'documentCreateForm',
+                createInputId: 'documentCreateInput',
+                addBtnId: 'documentAddBtn',
+                createSaveBtnId: 'documentCreateSaveBtn',
+                createCancelBtnId: 'documentCreateCancelBtn',
+                pageIdPrefix: 'doc',
+                memberGroup: 'document',
+                rowAttr: 'data-document-row-id',
+                defaultPages: [{ id: 'doc-po', name: 'PO' }, { id: 'doc-dev', name: 'DEV' }]
+            },
+            guide: {
+                storageKey: GUIDE_PAGES_STORAGE_KEY,
+                menuId: 'guideMenu',
+                chevronId: 'guideChevron',
+                listId: 'guideList',
+                createFormId: 'guideCreateForm',
+                createInputId: 'guideCreateInput',
+                addBtnId: 'guideAddBtn',
+                createSaveBtnId: 'guideCreateSaveBtn',
+                createCancelBtnId: 'guideCreateCancelBtn',
+                pageIdPrefix: 'guide',
+                memberGroup: 'guide',
+                rowAttr: 'data-guide-row-id',
+                defaultPages: [{ id: 'guide-po', name: 'PO' }, { id: 'guide-dev', name: 'DEV' }]
+            }
+        };
+        const branchState = {
+            document: { pages: [], editingId: null, activeId: 'doc-po', deleteConfirmId: null, removingId: null, animatingId: null, invalidTimeouts: { create: null, edit: null } },
+            guide: { pages: [], editingId: null, activeId: 'guide-po', deleteConfirmId: null, removingId: null, animatingId: null, invalidTimeouts: { create: null, edit: null } }
+        };
+
+        function getBranchConfig(branchKey) { return branchConfigs[branchKey]; }
+        function getBranchState(branchKey) { return branchState[branchKey]; }
+
+        function loadBranchPages(branchKey) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const savedPages = localStorage.getItem(config.storageKey);
+            if (savedPages) {
+                try {
+                    const parsedPages = JSON.parse(savedPages);
+                    if (Array.isArray(parsedPages) && parsedPages.length > 0) {
+                        state.pages = parsedPages;
+                        return;
+                    }
+                } catch (error) {
+                }
+            }
+            state.pages = config.defaultPages.map((page) => ({ ...page }));
+        }
+
+        function saveBranchPages(branchKey) {
+            const config = getBranchConfig(branchKey);
+            localStorage.setItem(config.storageKey, JSON.stringify(getBranchState(branchKey).pages));
+        }
+
+        function syncBranchMenuHeight(branchKey) {
+            const config = getBranchConfig(branchKey);
+            if (accordionState[config.menuId] && !isSidebarCollapsed) {
+                const menu = document.getElementById(config.menuId);
+                menu.style.maxHeight = menu.scrollHeight + 'px';
+            }
+        }
+
+        function clearBranchInvalidState(branchKey, mode) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const input = mode === 'create' ? document.getElementById(config.createInputId) : document.querySelector(`.${branchKey}-edit-input`);
+            if (input) input.classList.remove('is-invalid');
+            if (state.invalidTimeouts[mode]) {
+                clearTimeout(state.invalidTimeouts[mode]);
+                state.invalidTimeouts[mode] = null;
+            }
+        }
+
+        function showBranchInvalidInputState(branchKey, mode, input) {
+            const state = getBranchState(branchKey);
+            clearBranchInvalidState(branchKey, mode);
+            input.classList.remove('is-invalid');
+            void input.offsetWidth;
+            input.classList.add('is-invalid');
+            input.focus();
+            state.invalidTimeouts[mode] = setTimeout(() => {
+                input.classList.remove('is-invalid');
+                state.invalidTimeouts[mode] = null;
+            }, 700);
+        }
+
+        function animateBranchRowExit(branchKey, pageId, className, callback, duration = 220) {
+            const config = getBranchConfig(branchKey);
+            const row = document.querySelector(`[${config.rowAttr}="${pageId}"]`);
+            if (!row) {
+                callback();
+                return;
+            }
+            row.style.maxHeight = row.offsetHeight + 'px';
+            row.style.marginTop = '0px';
+            row.style.marginBottom = '0px';
+            requestAnimationFrame(() => row.classList.add(className));
+            setTimeout(callback, duration);
+        }
+
+        function renderBranchPages(branchKey) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const list = document.getElementById(config.listId);
+
+            list.innerHTML = state.pages.map((page, index) => {
+                if (page.id === state.editingId) {
+                    return `
+                        <div class="document-page-row is-editing">
+                            <div class="document-inline-form w-full">
+                                <input type="text" class="document-inline-input ${branchKey}-edit-input" data-page-id="${page.id}" value="${page.name.replace(/"/g, '&quot;')}" maxlength="60">
+                                <div class="document-inline-actions">
+                                    <button type="button" class="menu-action-btn ${branchKey}-edit-save-btn" data-page-id="${page.id}" aria-label="Lưu tên page">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="menu-action-btn ${branchKey}-edit-cancel-btn" data-page-id="${page.id}" aria-label="Hủy sửa page">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const activeClass = state.activeId === page.id ? 'member-link is-active' : 'member-link';
+                const deleteButtonClass = state.deleteConfirmId === page.id
+                    ? `menu-action-btn delete document-delete-toggle is-confirming ${branchKey}-delete-toggle`
+                    : `menu-action-btn delete document-delete-toggle ${branchKey}-delete-toggle`;
+                const rowClass = ['document-page-row', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
+
+                return `
+                    <div class="${rowClass}" ${config.rowAttr}="${page.id}">
+                        <a href="#" class="${activeClass}" data-member-group="${config.memberGroup}" data-page-id="${page.id}">
+                            <span class="member-index">${index + 1}</span>
+                            <span class="member-name">${page.name}</span>
+                        </a>
+                        <div class="document-page-actions">
+                            <button type="button" class="menu-action-btn ${branchKey}-edit-btn" data-page-id="${page.id}" aria-label="Sửa tên page">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </button>
+                            <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa page">
+                                <span class="document-delete-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
+                                    </svg>
+                                </span>
+                                <span class="document-delete-label">Xóa</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll(`.${branchKey}-edit-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    startEditBranchPage(branchKey, button.dataset.pageId);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-delete-toggle`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const pageId = button.dataset.pageId;
+                    if (state.deleteConfirmId === pageId) {
+                        deleteBranchPage(branchKey, pageId);
+                        return;
+                    }
+                    state.deleteConfirmId = pageId;
+                    renderBranchPages(branchKey);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-edit-save-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    saveEditedBranchPage(branchKey, button.dataset.pageId);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-edit-cancel-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    cancelEditBranchPage(branchKey);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-edit-input`).forEach((input) => {
+                input.addEventListener('input', () => clearBranchInvalidState(branchKey, 'edit'));
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        saveEditedBranchPage(branchKey, input.dataset.pageId);
+                    }
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        cancelEditBranchPage(branchKey);
+                    }
+                });
+                setTimeout(() => {
+                    input.focus();
+                    input.select();
+                }, 0);
+            });
+
+            initializeSelectableMembers();
+            syncBranchMenuHeight(branchKey);
+        }
+
+        function openBranchCreateForm(branchKey) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const createForm = document.getElementById(config.createFormId);
+            const createInput = document.getElementById(config.createInputId);
+            state.editingId = null;
+            state.deleteConfirmId = null;
+            createForm.classList.remove('hidden');
+            createInput.value = '';
+            clearBranchInvalidState(branchKey, 'create');
+            if (!accordionState[config.menuId]) toggleAccordion(config.menuId, config.chevronId);
+            syncBranchMenuHeight(branchKey);
+            setTimeout(() => createInput.focus(), 0);
+        }
+
+        function closeBranchCreateForm(branchKey) {
+            const config = getBranchConfig(branchKey);
+            document.getElementById(config.createFormId).classList.add('hidden');
+            document.getElementById(config.createInputId).value = '';
+            clearBranchInvalidState(branchKey, 'create');
+            syncBranchMenuHeight(branchKey);
+        }
+
+        function createBranchPage(branchKey) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const createInput = document.getElementById(config.createInputId);
+            const trimmedName = createInput.value.trim();
+            if (!trimmedName) {
+                showBranchInvalidInputState(branchKey, 'create', createInput);
+                return;
+            }
+            const newPage = { id: `${config.pageIdPrefix}-${Date.now()}`, name: trimmedName };
+            state.pages.push(newPage);
+            state.activeId = newPage.id;
+            state.animatingId = newPage.id;
+            saveBranchPages(branchKey);
+            closeBranchCreateForm(branchKey);
+            renderBranchPages(branchKey);
+            setTimeout(() => { state.animatingId = null; }, 320);
+        }
+
+        function startEditBranchPage(branchKey, pageId) {
+            const state = getBranchState(branchKey);
+            closeBranchCreateForm(branchKey);
+            state.deleteConfirmId = null;
+            animateBranchRowExit(branchKey, pageId, 'is-edit-transitioning', () => {
+                state.editingId = pageId;
+                renderBranchPages(branchKey);
+            });
+        }
+
+        function cancelEditBranchPage(branchKey) {
+            const state = getBranchState(branchKey);
+            const pageId = state.editingId;
+            state.editingId = null;
+            state.animatingId = pageId;
+            renderBranchPages(branchKey);
+            setTimeout(() => { state.animatingId = null; }, 320);
+        }
+
+        function saveEditedBranchPage(branchKey, pageId) {
+            const state = getBranchState(branchKey);
+            const page = state.pages.find((item) => item.id === pageId);
+            const editInput = document.querySelector(`.${branchKey}-edit-input[data-page-id="${pageId}"]`);
+            if (!page || !editInput) return;
+            const trimmedName = editInput.value.trim();
+            if (!trimmedName) {
+                showBranchInvalidInputState(branchKey, 'edit', editInput);
+                return;
+            }
+            page.name = trimmedName;
+            state.editingId = null;
+            state.animatingId = pageId;
+            saveBranchPages(branchKey);
+            renderBranchPages(branchKey);
+            setTimeout(() => { state.animatingId = null; }, 320);
+        }
+
+        function deleteBranchPage(branchKey, pageId) {
+            const state = getBranchState(branchKey);
+            state.deleteConfirmId = null;
+            state.removingId = pageId;
+            animateBranchRowExit(branchKey, pageId, 'is-removing', () => {
+                state.pages = state.pages.filter((item) => item.id !== pageId);
+                if (state.activeId === pageId) state.activeId = state.pages[0]?.id || null;
+                if (state.editingId === pageId) state.editingId = null;
+                state.removingId = null;
+                saveBranchPages(branchKey);
+                renderBranchPages(branchKey);
+            }, 300);
+        }
+
+        function renderTrackingList(teamKey) {
+            const trackingList = document.getElementById('trackingList');
+            const members = getUsersByTeamCode(teamKey);
+
+            if (!members.length) {
+                activeTrackingUserKey = null;
+                trackingList.innerHTML = '<li class="pl-4 py-2 text-xs text-slate-400">Không có user trong team</li>';
+                syncActiveNavState();
+                return;
+            }
+
+            activeTrackingUserKey = getPreferredTrackingUserKey(members);
+
+            trackingList.innerHTML = members.map((userKey, index) => {
+                const user = USERS[userKey];
+                const isLoggedInUser = userKey === CURRENT_USER_ID;
+                const isSelected = userKey === activeTrackingUserKey;
+                const currentIndexClass = isLoggedInUser ? 'member-index member-index-current' : 'member-index';
+                const activeClass = isSelected ? 'member-link is-active' : 'member-link';
+                return `
+                    <li>
+                        <a href="#" class="${activeClass}" data-member-group="tracking" data-tracking-current="${isLoggedInUser ? 'true' : 'false'}" data-user-key="${userKey}">
+                            <span class="${currentIndexClass}">${index + 1}</span>
+                            <span class="member-name">${user.full_name}</span>
+                            <span class="member-count">${getTaskCountForUser(userKey)}</span>
+                        </a>
+                    </li>
+                `;
+            }).join('');
+            if (accordionState.trackingMenu && !isSidebarCollapsed) {
+                const trackingMenu = document.getElementById('trackingMenu');
+                trackingMenu.style.maxHeight = trackingMenu.scrollHeight + 'px';
+            }
+            initializeSelectableMembers();
+        }
+
+        function setTeamDropdownOpen(isOpen) {
+            document.getElementById('teamSelectorButton').classList.toggle('is-open', isOpen);
+            document.getElementById('teamSelectorMenu').classList.toggle('is-open', isOpen);
+        }
+
+        function applySelectedTeam(teamKey) {
+            selectedTeamCode = teamKey;
+            document.getElementById('teamSelectorValue').textContent = teamKey;
+            document.querySelectorAll('.team-option').forEach((option) => {
+                option.classList.toggle('is-active', option.dataset.teamValue === teamKey);
+            });
+            localStorage.setItem(TEAM_STORAGE_KEY, teamKey);
+            renderInlinePicSelection();
+            renderTrackingList(teamKey);
+            initializeCurrentUserProfile();
+            applyBoardFilter();
+        }
+
+        function initializeTeamSelector() {
+            const teamSelectorButton = document.getElementById('teamSelectorButton');
+            const teamSelectorMenu = document.getElementById('teamSelectorMenu');
+            const availableTeams = getAvailableTeamCodesForUser(CURRENT_USER_ID);
+            const savedTeam = localStorage.getItem(TEAM_STORAGE_KEY);
+            const defaultTeam = availableTeams.includes(savedTeam) ? savedTeam : (availableTeams[0] || null);
+
+            teamSelectorMenu.innerHTML = availableTeams.map((teamCode) => `
+                <button type="button" class="team-option" data-team-value="${teamCode}">
+                    <span class="team-option-label">${teamCode}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="team-option-check" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
+                    </svg>
+                </button>
+            `).join('');
+
+            const teamOptions = teamSelectorMenu.querySelectorAll('.team-option');
+            if (!defaultTeam) return;
+            applySelectedTeam(defaultTeam);
+
+            teamSelectorButton.addEventListener('click', () => {
+                setTeamDropdownOpen(!document.getElementById('teamSelectorMenu').classList.contains('is-open'));
+            });
+
+            teamOptions.forEach((option) => {
+                option.addEventListener('click', () => {
+                    applySelectedTeam(option.dataset.teamValue);
+                    setTeamDropdownOpen(false);
+                });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.profile-context')) setTeamDropdownOpen(false);
+                if (!event.target.closest('.document-page-actions')) {
+                    Object.keys(branchConfigs).forEach((branchKey) => {
+                        const state = getBranchState(branchKey);
+                        if (state.deleteConfirmId !== null) {
+                            state.deleteConfirmId = null;
+                            renderBranchPages(branchKey);
+                        }
+                    });
+                }
+            });
+        }
+
+        function initializeBranchManager(branchKey) {
+            const config = getBranchConfig(branchKey);
+            loadBranchPages(branchKey);
+            renderBranchPages(branchKey);
+            document.getElementById(config.addBtnId).addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                openBranchCreateForm(branchKey);
+            });
+            document.getElementById(config.createSaveBtnId).addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                createBranchPage(branchKey);
+            });
+            document.getElementById(config.createCancelBtnId).addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                closeBranchCreateForm(branchKey);
+            });
+            document.getElementById(config.createInputId).addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    createBranchPage(branchKey);
+                }
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeBranchCreateForm(branchKey);
+                }
+            });
+            document.getElementById(config.createInputId).addEventListener('input', () => clearBranchInvalidState(branchKey, 'create'));
+        }
+
+        function clearNavActiveStates() {
+            document.querySelectorAll('[data-nav-target], [data-nav-link]').forEach((item) => {
+                item.classList.remove('is-active');
+                item.classList.remove('is-parent-active');
+            });
+        }
+
+        function clearMemberActiveStates() {
+            document.querySelectorAll('.member-link[data-member-group]').forEach((item) => item.classList.remove('is-active'));
+        }
+
+        function syncActiveNavState() {
+            clearNavActiveStates();
+            const activeMember = document.querySelector('.member-link[data-member-group].is-active');
+            if (activeMember) {
+                const menuId = { tracking: 'trackingMenu', document: 'documentMenu', guide: 'guideMenu' }[activeMember.dataset.memberGroup];
+                const navItem = document.querySelector(`[data-nav-target="${menuId}"]`);
+                if (navItem) navItem.classList.add('is-active');
+                return;
+            }
+            if (preferredNavLink) {
+                const navLink = document.querySelector(`[data-nav-link="${preferredNavLink}"]`);
+                if (navLink) navLink.classList.add('is-active');
+                return;
+            }
+            if (preferredNavTarget) {
+                const navItem = document.querySelector(`[data-nav-target="${preferredNavTarget}"]`);
+                if (navItem) navItem.classList.add('is-active');
+            }
+        }
+
+        function setActiveNavByMenu(menuId) {
+            preferredNavTarget = menuId;
+            preferredNavLink = null;
+            syncActiveNavState();
+        }
+
+        function setActiveNavByLink(navLink) {
+            preferredNavLink = navLink;
+            preferredNavTarget = null;
+            syncActiveNavState();
+        }
+
+        function setActiveChildLink(link) {
+            clearMemberActiveStates();
+            link.classList.add('is-active');
+            if (link.dataset.memberGroup === 'tracking') {
+                activeTrackingUserKey = normalizeUserKey(link.dataset.userKey) || null;
+                applyBoardFilter();
+            }
+            if (link.dataset.memberGroup === 'document') getBranchState('document').activeId = link.dataset.pageId || null;
+            if (link.dataset.memberGroup === 'guide') getBranchState('guide').activeId = link.dataset.pageId || null;
+            syncActiveNavState();
+        }
+
+        function initializeSelectableMembers() {
+            document.querySelectorAll('.member-link[data-member-group]').forEach((link) => {
+                if (link.dataset.activeBound === 'true') return;
+                link.dataset.activeBound = 'true';
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    setActiveChildLink(link);
+                });
+            });
+            syncActiveNavState();
+        }
+
+        function initializeSelectableNav() {
+            document.querySelectorAll('[data-nav-target]').forEach((button) => {
+                button.addEventListener('click', () => setActiveNavByMenu(button.dataset.navTarget));
+            });
+            document.querySelectorAll('.nav-item-branch').forEach((branchItem) => {
+                branchItem.addEventListener('click', (event) => {
+                    if (!isSidebarCollapsed) return;
+                    const menuId = branchItem.dataset.menuId;
+                    const chevronId = branchItem.dataset.chevronId;
+                    if (!menuId || !chevronId) return;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    toggleSidebar();
+                    setActiveNavByMenu(menuId);
+                    if (!accordionState[menuId]) toggleAccordion(menuId, chevronId);
+                });
+            });
+            document.querySelectorAll('[data-nav-link]').forEach((link) => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (isSidebarCollapsed) toggleSidebar();
+                    clearMemberActiveStates();
+                    setActiveNavByLink(link.dataset.navLink);
+                });
+            });
+        }
+
+        function initializeProfileCard() {
+            const profileCard = document.getElementById('profileCard');
+            if (!profileCard) return;
+            profileCard.addEventListener('click', (event) => {
+                event.preventDefault();
+                const currentTrackingLink = document.querySelector('.member-link[data-member-group="tracking"][data-tracking-current="true"]')
+                    || document.querySelector('.member-link[data-member-group="tracking"]');
+                clearMemberActiveStates();
+                if (currentTrackingLink) {
+                    setActiveChildLink(currentTrackingLink);
+                    return;
+                }
+                setActiveNavByMenu('trackingMenu');
+            });
+        }
+
+        function initializeCurrentUserProfile() {
+            const currentUser = USERS[CURRENT_USER_ID];
+            if (!currentUser) return;
+
+            const avatar = document.getElementById('profileAvatar');
+            const name = document.getElementById('profileName');
+            const title = document.getElementById('profileTitle');
+
+            if (avatar) {
+                const initials = currentUser.full_name
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((part) => part[0]?.toUpperCase() || '')
+                    .join('');
+                avatar.textContent = initials || 'US';
+            }
+
+            if (name) {
+                name.textContent = currentUser.full_name;
+            }
+
+            if (title) {
+                const roles = getEffectiveRoles(CURRENT_USER_ID, getCurrentTeamCode());
+                title.textContent = `${currentUser.job_title} / ${roles.join(', ') || 'USER'}`;
+            }
+        }
+
+        function toggleAccordion(menuId, chevronId) {
+            if (isSidebarCollapsed) toggleSidebar();
+            const menu = document.getElementById(menuId);
+            const chevron = document.getElementById(chevronId);
+            if (!accordionState[menuId]) {
+                menu.style.maxHeight = menu.scrollHeight + 'px';
+                chevron.style.transform = 'rotate(180deg)';
+                accordionState[menuId] = true;
+            } else {
+                menu.style.maxHeight = '0px';
+                chevron.style.transform = 'rotate(0deg)';
+                accordionState[menuId] = false;
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const icon = document.getElementById('sidebarToggleIcon');
+            isSidebarCollapsed = !isSidebarCollapsed;
+            sidebar.classList.toggle('collapsed', isSidebarCollapsed);
+            icon.style.transform = isSidebarCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+            if (isSidebarCollapsed) {
+                setTeamDropdownOpen(false);
+                Object.keys(accordionState).forEach((menuId) => {
+                    const menu = document.getElementById(menuId);
+                    const chevronId = menuId === 'trackingMenu' ? 'trackingChevron' : menuId === 'documentMenu' ? 'documentChevron' : 'guideChevron';
+                    document.getElementById(chevronId).style.transform = 'rotate(0deg)';
+                    menu.style.maxHeight = '0px';
+                });
+            } else {
+                Object.keys(accordionState).forEach((menuId) => {
+                    if (accordionState[menuId]) {
+                        const menu = document.getElementById(menuId);
+                        const chevronId = menuId === 'trackingMenu' ? 'trackingChevron' : menuId === 'documentMenu' ? 'documentChevron' : 'guideChevron';
+                        document.getElementById(chevronId).style.transform = 'rotate(180deg)';
+                        menu.style.maxHeight = menu.scrollHeight + 'px';
+                    }
+                });
+            }
+        }
         // ==========================================
         // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
         // ==========================================
@@ -1792,6 +3438,14 @@ function openInlineForm() {
         applyUIPermissions();
         initSortableColumns();
         loadBoardState();
+        initializeBranchManager('document');
+        initializeBranchManager('guide');
+        initializeTeamSelector();
+        initializeSelectableNav();
+        initializeSelectableMembers();
+        initializeProfileCard();
+        initializeCurrentUserProfile();
+        toggleAccordion('trackingMenu', 'trackingChevron');
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
