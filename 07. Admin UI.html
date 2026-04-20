@@ -185,6 +185,7 @@
             border: 1px solid rgba(148, 163, 184, 0.25);
             box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
             transition: background-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+            --toggle-shift: 20px;
         }
 
         .admin-toggle::after {
@@ -194,7 +195,8 @@
             border-radius: 9999px;
             background: linear-gradient(180deg, #ffffff, #f8fafc);
             box-shadow: 0 3px 10px rgba(15, 23, 42, 0.18);
-            transition: transform 0.22s cubic-bezier(.22, 1, .36, 1), box-shadow 0.22s ease;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            will-change: transform;
         }
 
         .admin-toggle:hover {
@@ -212,7 +214,7 @@
         }
 
         .admin-toggle.is-on::after {
-            transform: translateX(20px);
+            transform: translateX(var(--toggle-shift));
             box-shadow: 0 4px 12px rgba(22, 163, 74, 0.22);
         }
 
@@ -229,6 +231,7 @@
             width: 42px;
             height: 24px;
             padding: 2px;
+            --toggle-shift: 18px;
         }
 
         .admin-toggle.is-compact::after {
@@ -237,7 +240,213 @@
         }
 
         .admin-toggle.is-compact.is-on::after {
-            transform: translateX(18px);
+            transform: translateX(var(--toggle-shift));
+        }
+
+        @keyframes adminPressPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(0.96);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        [data-admin-panel="roles"] .admin-toggle:active {
+            animation: adminPressPulse 0.22s ease;
+            transform: scale(0.94);
+        }
+
+        [data-admin-panel="roles"] .org-action-btn:active,
+        [data-admin-panel="roles"] .member-lov-trigger:active,
+        [data-admin-panel="roles"] button[class*="bg-blue-600"]:active,
+        [data-admin-panel="roles"] button[class*="border-slate-200"]:active {
+            transform: scale(0.97);
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+        }
+
+        [data-admin-panel="roles"] .org-action-btn,
+        [data-admin-panel="roles"] .member-lov-trigger,
+        [data-admin-panel="roles"] button[class*="bg-blue-600"],
+        [data-admin-panel="roles"] button[class*="border-slate-200"] {
+            transition: transform 0.16s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+            will-change: transform;
+        }
+
+        [data-admin-panel="roles"] .role-system-item {
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid transparent;
+            transition:
+                background 0.18s ease,
+                border-color 0.18s ease;
+        }
+
+        [data-admin-panel="roles"] .role-system-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.10), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity 0.18s ease;
+            pointer-events: none;
+        }
+
+        [data-admin-panel="roles"] .role-system-item:hover,
+        [data-admin-panel="roles"] .role-system-item:focus-visible {
+            background: linear-gradient(180deg, rgba(248, 251, 255, 0.78) 0%, rgba(239, 246, 255, 0.78) 100%);
+            border-left-color: rgba(59, 130, 246, 0.18);
+            outline: none;
+        }
+
+        [data-admin-panel="roles"] .role-system-item:hover::before,
+        [data-admin-panel="roles"] .role-system-item:focus-visible::before {
+            opacity: 1;
+        }
+
+        [data-admin-panel="roles"] .role-system-item.is-active {
+            background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+            border-left-color: #2563eb;
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+        }
+
+        [data-admin-panel="roles"] .role-system-item.is-active .role-system-name {
+            color: #1d4ed8;
+        }
+
+        [data-admin-panel="roles"] .role-system-item.is-active .role-system-code {
+            color: #1e40af;
+        }
+
+        [data-admin-panel="states"] .state-order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.9rem;
+            width: 100%;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            background: #ffffff;
+            padding: 0.9rem 1rem;
+            transition: border-color 0.16s ease, background-color 0.16s ease, opacity 0.16s ease;
+            cursor: grab;
+            user-select: none;
+        }
+
+        [data-admin-panel="states"] .state-order-item:hover {
+            border-color: #bfdbfe;
+            background: #f8fbff;
+        }
+
+        [data-admin-panel="states"] .state-order-item.is-active {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #f8fbff, #eff6ff);
+        }
+
+        [data-admin-panel="states"] .state-order-item.is-dragging:not(.is-floating) {
+            opacity: 0;
+        }
+
+        [data-admin-panel="states"] .state-order-item.is-floating {
+            position: fixed;
+            z-index: 80;
+            cursor: grabbing;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+            border-color: #93c5fd;
+            background: #ffffff;
+            pointer-events: none;
+        }
+
+        [data-admin-panel="states"] .state-order-placeholder {
+            height: 58px;
+            border: 1.5px dashed #93c5fd;
+            border-radius: 1rem;
+            background: linear-gradient(180deg, rgba(239, 246, 255, 0.9), rgba(219, 234, 254, 0.9));
+        }
+
+        [data-admin-panel="states"] .state-order-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 3rem;
+            min-height: 2.25rem;
+            border: none;
+            background: transparent;
+            padding: 0.35rem 0.75rem;
+            color: #cbd5e1;
+            transition: color 0.16s ease;
+            cursor: grab;
+            border-radius: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .state-color-lov .member-lov-trigger:hover {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #ffffff, #eef6ff);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .state-color-lov .member-lov-trigger,
+        .state-color-lov .member-lov-trigger.is-open {
+            transform: none;
+            box-shadow: none;
+            transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+        }
+
+        .state-color-lov .member-lov-trigger.is-open {
+            border-color: #60a5fa;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .state-color-lov .member-lov-trigger i {
+            transition: transform 0.18s ease, color 0.16s ease;
+        }
+
+        .state-color-lov .member-lov-trigger.is-open i {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .state-color-lov .member-single-lov-panel {
+            animation: roleScopeLovFadeIn 0.16s ease;
+        }
+
+        .state-color-lov .member-single-lov-list {
+            padding: 0.35rem;
+        }
+
+        .state-color-lov .member-single-lov-item {
+            border-radius: 0.85rem;
+            transition: background-color 0.12s ease, color 0.12s ease;
+        }
+
+        .state-color-lov .member-single-lov-item:hover,
+        .state-color-lov .member-single-lov-item:focus-visible {
+            background: linear-gradient(180deg, #f8fbff, #eef6ff);
+            color: #1d4ed8;
+        }
+
+        [data-admin-panel="states"] #stateDescription {
+            min-height: 0;
+            font-weight: 400;
+            line-height: 1.55;
+        }
+
+        [data-admin-panel="states"] .state-order-handle:hover {
+            background: #eff6ff;
+            color: #60a5fa;
+        }
+
+        [data-admin-panel="states"] .state-order-item:hover .state-order-handle,
+        [data-admin-panel="states"] .state-order-item.is-active .state-order-handle {
+            color: #60a5fa;
         }
 
         .admin-user-tree-card {
@@ -499,10 +708,13 @@
             -webkit-appearance: none;
             padding-right: 3rem;
             background-image: none;
+            cursor: pointer;
         }
 
         .org-select-wrap {
             position: relative;
+            border-radius: var(--admin-field-radius);
+            transition: transform 0.16s ease, box-shadow 0.2s ease;
         }
 
         .org-select-wrap::after {
@@ -516,6 +728,28 @@
             background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%230f172a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             pointer-events: none;
             opacity: 0.85;
+            transition: transform 0.2s ease, opacity 0.18s ease;
+        }
+
+        .org-select-wrap:hover {
+            transform: translateY(-1px);
+        }
+
+        .org-select-wrap:hover .org-field-select {
+            border-color: #bfdbfe;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.08);
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .org-select-wrap:focus-within .org-field-select {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 14px 28px rgba(37, 99, 235, 0.12);
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .org-select-wrap:focus-within::after {
+            transform: translateY(-50%) rotate(180deg);
+            opacity: 1;
         }
 
         .member-color-input {
@@ -704,6 +938,51 @@
             position: relative;
         }
 
+        .role-scope-lov .member-lov-trigger:hover {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #ffffff, #eef6ff);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .role-scope-lov .member-lov-trigger,
+        .role-scope-lov .member-lov-trigger.is-open {
+            transform: none;
+            box-shadow: none;
+            transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+        }
+
+        .role-scope-lov .member-lov-trigger.is-open {
+            border-color: #60a5fa;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .role-scope-lov .member-lov-trigger i {
+            transition: transform 0.18s ease, color 0.16s ease;
+        }
+
+        .role-scope-lov .member-lov-trigger.is-open i {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .role-scope-lov .member-lov-trigger:focus-visible,
+        .role-scope-lov .member-lov-trigger:focus,
+        .role-scope-lov .member-lov-trigger:active {
+            transform: none;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .role-scope-lov .member-lov-trigger:hover .member-lov-value,
+        .role-scope-lov .member-lov-trigger:hover i {
+            color: #1d4ed8;
+        }
+
+        .role-scope-lov .member-single-lov-list {
+            padding: 0.35rem;
+        }
+
         .member-single-lov-panel {
             position: absolute;
             top: calc(100% + 0.65rem);
@@ -717,6 +996,10 @@
             overflow: hidden;
             transform-origin: top center;
             animation: memberLovFadeIn 0.18s ease;
+        }
+
+        .role-scope-lov .member-single-lov-panel {
+            animation: roleScopeLovFadeIn 0.16s ease;
         }
 
         .member-single-lov-list {
@@ -755,6 +1038,35 @@
             background: #eff6ff;
             color: #1d4ed8;
             font-weight: 600;
+        }
+
+        .role-scope-lov .member-single-lov-item:hover,
+        .role-scope-lov .member-single-lov-item:focus-visible {
+            background: linear-gradient(180deg, #f8fbff, #eef6ff);
+            border-radius: 0.85rem;
+            transition: none;
+            color: #1d4ed8;
+        }
+
+        .role-scope-lov .member-single-lov-item {
+            border-radius: 0.85rem;
+            transition: background-color 0.12s ease, color 0.12s ease;
+        }
+
+        .role-scope-lov .member-single-lov-item:active {
+            transform: none;
+        }
+
+        @keyframes roleScopeLovFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .member-single-lov-item::after {
@@ -839,10 +1151,23 @@
         }
 
         @keyframes memberFieldShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            50% { transform: translateX(4px); }
-            75% { transform: translateX(-2px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            50% {
+                transform: translateX(4px);
+            }
+
+            75% {
+                transform: translateX(-2px);
+            }
         }
 
         .org-field-textarea {
@@ -1225,10 +1550,15 @@
                 <div class="rounded-[28px] border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
                     <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-500">Standalone Mockup</p>
                     <div class="mt-4 flex flex-wrap gap-3">
-                        <button type="button" class="admin-tab-btn is-active rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="org">Khối / Phòng / Nhóm / Users</button>
-                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="roles">Vai trò & quyền</button>
-                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="states">Workflow / State</button>
-                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="logs">Nhật ký hệ thống</button>
+                        <button type="button"
+                            class="admin-tab-btn is-active rounded-2xl px-4 py-3 text-sm font-extrabold"
+                            data-admin-tab="org">Khối / Phòng / Nhóm / Users</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
+                            data-admin-tab="roles">Vai trò & quyền</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
+                            data-admin-tab="states">Workflow / State</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
+                            data-admin-tab="logs">Nhật ký hệ thống</button>
                     </div>
                 </div>
 
@@ -1245,7 +1575,7 @@
     </div>
 
     <script>
-let currentAdminTab = 'org';
+        let currentAdminTab = 'org';
         let currentOrgSelection = { type: 'block', id: 'blk_db' };
         let currentOrgDetailMode = 'view';
         let currentOrgRightPanel = 'members';
@@ -1260,6 +1590,19 @@ let currentAdminTab = 'org';
         let shouldAnimateMemberDrawer = false;
         let isCreatingOrgSelection = false;
         let currentOrgDraft = null;
+        let currentRoleSelectionId = 'role_manager';
+        let currentRoleDetailMode = 'view';
+        let currentRoleDraft = null;
+        let previousRoleSelectionId = 'role_manager';
+        let isRoleScopeLovOpen = false;
+        let currentStateSelectionId = 'st_in_review';
+        let currentStateDetailMode = 'view';
+        let currentStateDraft = null;
+        let isStateColorLovOpen = false;
+        let currentStateDragId = null;
+        let currentStatePlaceholderEl = null;
+        let currentStateDraggedEl = null;
+        let currentStateDragOffsetY = 0;
 
         const ADMIN_SEED = {
             blocks: [
@@ -1328,6 +1671,8 @@ let currentAdminTab = 'org';
                 { id: 'perm_edit_task', code: 'EDIT_TASK', name: 'Edit Task' },
                 { id: 'perm_move_task', code: 'MOVE_TASK', name: 'Move Task' },
                 { id: 'perm_delete_task', code: 'DELETE_TASK', name: 'Delete Task' },
+                { id: 'perm_view_admin', code: 'VIEW_ADMIN', name: 'View Admin' },
+
                 { id: 'perm_manage_users', code: 'MANAGE_USERS', name: 'Manage Users' },
                 { id: 'perm_manage_org', code: 'MANAGE_ORG', name: 'Manage Org' },
                 { id: 'perm_manage_roles', code: 'MANAGE_ROLES', name: 'Manage Roles' },
@@ -1336,6 +1681,7 @@ let currentAdminTab = 'org';
             ],
             rolePermissions: [
                 { role_id: 'role_super_admin', permission_id: 'perm_view_board' },
+                { role_id: 'role_super_admin', permission_id: 'perm_view_admin' },
                 { role_id: 'role_super_admin', permission_id: 'perm_create_task' },
                 { role_id: 'role_super_admin', permission_id: 'perm_edit_task' },
                 { role_id: 'role_super_admin', permission_id: 'perm_move_task' },
@@ -1495,6 +1841,12 @@ let currentAdminTab = 'org';
             if (type === 'block') return 'Khối';
             if (type === 'department') return 'Phòng';
             return 'Nhóm';
+        }
+
+        function getOrgEntityToastLabel(selection) {
+            if (!selection?.entity) return getOrgTypeLabel(selection?.type || 'team');
+            const typeLabel = getOrgTypeLabel(selection.type);
+            return `${typeLabel} ${selection.entity.code || selection.entity.name || ''}`.trim();
         }
 
         function getOrgCreatePlaceholders(type) {
@@ -1796,8 +2148,8 @@ let currentAdminTab = 'org';
             const padded = String(nextNum).padStart(4, '0');
             return {
                 id: `U${padded}`,
-                username: `user.${padded}`,
-                email: `user.${padded}@vib.com.vn`,
+                username: '',
+                email: '',
                 full_name: '',
                 job_title_id: '',
                 team_id: '',
@@ -1817,6 +2169,8 @@ let currentAdminTab = 'org';
         function saveMemberForm() {
             const userId = document.getElementById('memberUserId')?.value;
             const fullName = document.getElementById('memberFullName');
+            const username = document.getElementById('memberUsername');
+            const email = document.getElementById('memberEmail');
             const jobTitleId = document.getElementById('memberJobTitleId');
             const teamId = document.getElementById('memberTeamId');
             const roleId = document.getElementById('memberRoleId');
@@ -1825,12 +2179,16 @@ let currentAdminTab = 'org';
             const active = document.getElementById('memberActive');
             const isCreatingMember = !currentMemberEditId;
             const trimmedFullName = fullName?.value.trim() || '';
+            const trimmedUsername = username?.value.trim() || '';
+            const trimmedEmail = email?.value.trim() || '';
             let user = isCreatingMember ? null : getSeedUserById(userId);
 
             clearCreateMemberValidation();
             if (isCreatingMember) {
                 const invalidFields = [];
                 if (!trimmedFullName) invalidFields.push('fullName');
+                if (!trimmedUsername) invalidFields.push('username');
+                if (!trimmedEmail) invalidFields.push('email');
                 if (!(jobTitleId?.value || '').trim()) invalidFields.push('jobTitle');
                 if (!(teamId?.value || '').trim()) invalidFields.push('team');
                 if (invalidFields.length) {
@@ -1843,8 +2201,8 @@ let currentAdminTab = 'org';
                 const draft = currentMemberDraft || createMemberDraft();
                 const newUser = {
                     id: draft.id,
-                    username: draft.username,
-                    email: draft.email,
+                    username: trimmedUsername,
+                    email: trimmedEmail,
                     full_name: trimmedFullName,
                     job_title_id: jobTitleId?.value || '',
                     color: color?.value.trim() || draft.color,
@@ -1858,6 +2216,8 @@ let currentAdminTab = 'org';
             if (!user) return;
 
             if (fullName) user.full_name = trimmedFullName;
+            if (username && !username.disabled) user.username = trimmedUsername || user.username;
+            if (email && !email.disabled) user.email = trimmedEmail || user.email;
             if (jobTitleId) user.job_title_id = jobTitleId.value || user.job_title_id;
             if (color) user.color = color.value.trim() || user.color;
             if (sortOrder) user.sort_order = Number(sortOrder.value) || user.sort_order;
@@ -1913,12 +2273,16 @@ let currentAdminTab = 'org';
             renderAdminOrgPanel();
             if (isCreatingMember) {
                 showAdminToast(`Tạo mới thành viên ${user.full_name || user.id}`);
+            } else {
+                showAdminToast(`Đã lưu thay đổi cho ${user.full_name || user.id}.`);
             }
         }
 
         function markCreateMemberFieldError(fieldKey) {
             const config = {
                 fullName: document.getElementById('memberFullName'),
+                username: document.getElementById('memberUsername'),
+                email: document.getElementById('memberEmail'),
                 jobTitle: document.querySelector('[data-member-single-lov-trigger="jobTitle"]'),
                 team: document.querySelector('[data-member-team-lov-trigger]')
             };
@@ -1935,6 +2299,8 @@ let currentAdminTab = 'org';
         function clearCreateMemberFieldError(fieldKey) {
             const config = {
                 fullName: document.getElementById('memberFullName'),
+                username: document.getElementById('memberUsername'),
+                email: document.getElementById('memberEmail'),
                 jobTitle: document.querySelector('[data-member-single-lov-trigger="jobTitle"]'),
                 team: document.querySelector('[data-member-team-lov-trigger]')
             };
@@ -1945,7 +2311,7 @@ let currentAdminTab = 'org';
         }
 
         function clearCreateMemberValidation() {
-            ['fullName', 'jobTitle', 'team'].forEach(clearCreateMemberFieldError);
+            ['fullName', 'username', 'email', 'jobTitle', 'team'].forEach(clearCreateMemberFieldError);
         }
 
         function showAdminToast(message) {
@@ -1960,13 +2326,16 @@ let currentAdminTab = 'org';
             }, 2600);
         }
 
-        function toggleMemberActive() {
+        function toggleMemberActive(event) {
             const checkbox = document.getElementById('memberActive');
             const toggle = document.getElementById('memberActiveToggle');
             const label = document.getElementById('memberActiveLabel');
             if (!checkbox || !toggle || !label) return;
 
             checkbox.checked = !checkbox.checked;
+            const button = event?.currentTarget || toggle;
+            button.classList.toggle('is-on', checkbox.checked);
+            button.classList.toggle('is-off', !checkbox.checked);
             toggle.classList.toggle('is-on', checkbox.checked);
             toggle.classList.toggle('is-off', !checkbox.checked);
             label.textContent = checkbox.checked ? 'Active' : 'Inactive';
@@ -2299,11 +2668,19 @@ let currentAdminTab = 'org';
             createOrgEntity('team', targetDepartmentId || ADMIN_SEED.departments[0]?.id || null);
         }
 
-        function toggleOrgSelectionStatus() {
+        function toggleOrgSelectionStatus(event) {
             const selection = getOrgSelectionMeta();
             if (!selection) return;
             selection.entity.is_active = !selection.entity.is_active;
-            renderAdminOrgPanel();
+            const button = event?.currentTarget;
+            if (button) {
+                button.classList.toggle('is-on', selection.entity.is_active);
+                button.classList.toggle('is-off', !selection.entity.is_active);
+            }
+            showAdminToast(`${selection.entity.is_active ? 'Đã kích hoạt' : 'Đã ngưng'} ${getOrgEntityToastLabel(selection)}.`);
+            window.setTimeout(() => {
+                renderAdminOrgPanel();
+            }, 180);
         }
 
         function markCreateOrgFieldError(fieldKey) {
@@ -2380,6 +2757,9 @@ let currentAdminTab = 'org';
                 }
                 currentOrgSelection = { type: selection.type, id: entityToSave.id };
                 currentOrgDraft = null;
+                showAdminToast(`Đã tạo ${getOrgEntityToastLabel({ type: selection.type, entity: entityToSave })}.`);
+            } else {
+                showAdminToast(`Đã lưu thay đổi cho ${getOrgEntityToastLabel(selection)}.`);
             }
 
             isCreatingOrgSelection = false;
@@ -2400,6 +2780,45 @@ let currentAdminTab = 'org';
             if (textarea.dataset.autosizeBound === 'true') return;
             textarea.dataset.autosizeBound = 'true';
             textarea.addEventListener('input', () => autoResizeOrgTextarea(textarea));
+        }
+
+        function initializeStateDescriptionInput() {
+            const textarea = document.getElementById('stateDescription');
+            if (!textarea) return;
+            autoResizeOrgTextarea(textarea);
+            if (textarea.dataset.autosizeBound === 'true') return;
+            textarea.dataset.autosizeBound = 'true';
+            textarea.addEventListener('input', () => autoResizeOrgTextarea(textarea));
+        }
+
+        function markStateFieldError(fieldKey) {
+            const config = {
+                code: document.getElementById('stateCode'),
+                label: document.getElementById('stateLabel')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            const wrapper = field.closest('label');
+            wrapper?.classList.add('member-field-error');
+            field.classList.remove('is-error-shake');
+            void field.offsetWidth;
+            field.classList.add('is-error', 'is-error-shake');
+            window.setTimeout(() => field.classList.remove('is-error-shake'), 320);
+        }
+
+        function clearStateFieldError(fieldKey) {
+            const config = {
+                code: document.getElementById('stateCode'),
+                label: document.getElementById('stateLabel')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            field.closest('label')?.classList.remove('member-field-error');
+            field.classList.remove('is-error', 'is-error-shake');
+        }
+
+        function clearStateValidation() {
+            ['code', 'label'].forEach(clearStateFieldError);
         }
 
         function initializeMemberDrawerAnimation() {
@@ -2457,6 +2876,428 @@ let currentAdminTab = 'org';
             return ADMIN_SEED.userRoleAssignments.filter((item) => item.role_id === roleId && item.is_active);
         }
 
+        function getSeedStateById(stateId) {
+            return ADMIN_SEED.states.find((item) => item.id === stateId) || null;
+        }
+
+        function getStateBySelection() {
+            if (currentStateDraft && currentStateDraft.id === currentStateSelectionId) {
+                return currentStateDraft;
+            }
+            return getSeedStateById(currentStateSelectionId) || ADMIN_SEED.states[0] || null;
+        }
+
+        function buildStateDraft(state) {
+            if (!state) return null;
+            return {
+                id: state.id,
+                code: state.code,
+                label: state.label,
+                description: state.description || '',
+                color_theme: state.color_theme,
+                display_order: state.display_order,
+                is_active: state.is_active,
+                is_new: false
+            };
+        }
+
+        function createStateDraft() {
+            const nextIndex = ADMIN_SEED.states.filter((state) => state.id.startsWith('st_custom_')).length + 1;
+            const stateId = `st_custom_${String(nextIndex).padStart(3, '0')}`;
+            currentStateDraft = {
+                id: stateId,
+                code: '',
+                label: '',
+                description: '',
+                color_theme: 'blue',
+                display_order: ADMIN_SEED.states.length + 1,
+                is_active: true,
+                is_new: true
+            };
+            currentStateSelectionId = stateId;
+            currentStateDetailMode = 'edit';
+            isStateColorLovOpen = false;
+            renderAdminStatesPanel();
+        }
+
+        function getRoleBySelection() {
+            if (currentRoleDraft && currentRoleDraft.id === currentRoleSelectionId) {
+                return currentRoleDraft;
+            }
+            return getSeedRoleById(currentRoleSelectionId) || ADMIN_SEED.roles[0] || null;
+        }
+
+        function buildRoleDraft(role) {
+            if (!role) return null;
+            return {
+                id: role.id,
+                code: role.code,
+                name: role.name,
+                scope_type: role.scope_type,
+                is_system: role.is_system,
+                is_active: role.is_active,
+                is_new: false,
+                permission_ids: getRolePermissions(role.id).map((item) => item.id)
+            };
+        }
+
+        function formatAdminLogTime() {
+            const now = new Date();
+            const day = String(now.getUTCDate()).padStart(2, '0');
+            const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            return `${day}/${month} ${hours}:${minutes}`;
+        }
+
+        function addAuditLog(module, action, detail) {
+            ADMIN_SEED.auditLogs.unshift({
+                id: `log_${String(ADMIN_SEED.auditLogs.length + 1).padStart(3, '0')}`,
+                time: formatAdminLogTime(),
+                user: 'demo.admin',
+                module,
+                action,
+                detail
+            });
+        }
+
+        function setActiveRole(roleId) {
+            if (!getSeedRoleById(roleId) && !(currentRoleDraft && currentRoleDraft.id === roleId)) return;
+            isRoleScopeLovOpen = false;
+            currentRoleDraft = null;
+            currentRoleDetailMode = 'view';
+            currentRoleSelectionId = roleId;
+            renderAdminRolesPanel();
+        }
+
+        function setRoleDetailMode(mode) {
+            currentRoleDetailMode = mode === 'edit' ? 'edit' : 'view';
+            if (currentRoleDetailMode === 'edit') {
+                const role = getSeedRoleById(currentRoleSelectionId);
+                if (role) currentRoleDraft = buildRoleDraft(role);
+            } else {
+                currentRoleDraft = null;
+                isRoleScopeLovOpen = false;
+            }
+            renderAdminRolesPanel();
+        }
+
+        function updateRoleField(roleId, field, value) {
+            const role = currentRoleDetailMode === 'edit' ? currentRoleDraft : getSeedRoleById(roleId);
+            if (!role) return;
+            const nextValue = String(value ?? '').trim();
+            if (!nextValue) {
+                showAdminToast('Thông tin role không được để trống.');
+                renderAdminRolesPanel();
+                return;
+            }
+            if (field === 'code') {
+                const normalizedCode = nextValue.toUpperCase().replace(/\s+/g, '_');
+                const duplicatedRole = ADMIN_SEED.roles.find((item) => item.id !== roleId && item.code === normalizedCode);
+                if (duplicatedRole) {
+                    showAdminToast(`Code ${normalizedCode} đã tồn tại.`);
+                    renderAdminRolesPanel();
+                    return;
+                }
+                role.code = normalizedCode;
+            } else {
+                role[field] = nextValue;
+            }
+            if (currentRoleDetailMode === 'edit') {
+                currentRoleDraft = { ...role };
+                return;
+            }
+            addAuditLog('Permission', 'UPDATE_ROLE', `Cập nhật ${field} cho ${role.code}`);
+            renderAdminRolesPanel();
+        }
+
+        function updateRoleScope(roleId, scopeType) {
+            const role = currentRoleDetailMode === 'edit' ? currentRoleDraft : getSeedRoleById(roleId);
+            if (!role) return;
+            role.scope_type = scopeType === 'GLOBAL' ? 'GLOBAL' : 'TEAM';
+            isRoleScopeLovOpen = false;
+            if (role.scope_type === 'GLOBAL') {
+                currentRoleDraft = { ...role };
+            }
+            if (currentRoleDetailMode === 'edit') {
+                renderAdminRolesPanel();
+                return;
+            }
+            ADMIN_SEED.userRoleAssignments.forEach((assignment) => {
+                if (assignment.role_id === role.id) assignment.team_id = null;
+            });
+            addAuditLog('Permission', 'UPDATE_ROLE_SCOPE', `Đổi phạm vi role ${role.code} sang ${role.scope_type}`);
+            renderAdminRolesPanel();
+        }
+
+        function toggleRoleStatus(roleId, event) {
+            const role = currentRoleDetailMode === 'edit' ? currentRoleDraft : getSeedRoleById(roleId);
+            if (!role) return;
+            role.is_active = !role.is_active;
+            const button = event?.currentTarget;
+            if (button) {
+                button.classList.toggle('is-on', role.is_active);
+                button.classList.toggle('is-off', !role.is_active);
+            }
+            if (currentRoleDetailMode === 'edit') {
+                currentRoleDraft = { ...role };
+                window.setTimeout(() => {
+                    renderAdminRolesPanel();
+                }, 180);
+                return;
+            }
+            addAuditLog('Permission', 'TOGGLE_ROLE', `${role.is_active ? 'Kích hoạt' : 'Ngưng'} role ${role.code}`);
+            showAdminToast(`${role.is_active ? 'Đã kích hoạt' : 'Đã ngưng'} role ${role.code}.`);
+            window.setTimeout(() => {
+                renderAdminRolesPanel();
+            }, 180);
+        }
+
+        function toggleRolePermission(roleId, permissionId, event) {
+            const role = currentRoleDetailMode === 'edit' ? currentRoleDraft : getSeedRoleById(roleId);
+            const permission = getSeedPermissionById(permissionId);
+            if (!role || !permission) return;
+            const button = event?.currentTarget;
+            if (currentRoleDetailMode === 'edit' && currentRoleDraft) {
+                const nextPermissionIds = new Set(currentRoleDraft.permission_ids || []);
+                if (nextPermissionIds.has(permissionId)) {
+                    nextPermissionIds.delete(permissionId);
+                } else {
+                    nextPermissionIds.add(permissionId);
+                }
+                currentRoleDraft = {
+                    ...currentRoleDraft,
+                    permission_ids: Array.from(nextPermissionIds)
+                };
+                if (button) {
+                    button.classList.toggle('is-on', nextPermissionIds.has(permissionId));
+                    button.classList.toggle('is-off', !nextPermissionIds.has(permissionId));
+                }
+                window.setTimeout(() => {
+                    renderAdminRolesPanel();
+                }, 180);
+                return;
+            }
+            const itemIndex = ADMIN_SEED.rolePermissions.findIndex((item) => item.role_id === roleId && item.permission_id === permissionId);
+            if (itemIndex >= 0) {
+                ADMIN_SEED.rolePermissions.splice(itemIndex, 1);
+                if (button) {
+                    button.classList.remove('is-on');
+                    button.classList.add('is-off');
+                }
+                showAdminToast(`Đã tắt quyền ${permission.code} cho ${role.code}.`);
+            } else {
+                ADMIN_SEED.rolePermissions.push({ role_id: roleId, permission_id: permissionId });
+                if (button) {
+                    button.classList.remove('is-off');
+                    button.classList.add('is-on');
+                }
+                showAdminToast(`Đã bật quyền ${permission.code} cho ${role.code}.`);
+            }
+            addAuditLog('Permission', 'UPDATE_ROLE', `Cập nhật permission ${permission.code} cho ${role.code}`);
+            window.setTimeout(() => {
+                renderAdminRolesPanel();
+            }, 180);
+        }
+
+        function createRoleDraft() {
+            const nextIndex = ADMIN_SEED.roles.filter((role) => role.id.startsWith('role_custom_')).length + 1;
+            const roleId = `role_custom_${String(nextIndex).padStart(3, '0')}`;
+            const code = `CUSTOM_ROLE_${String(nextIndex).padStart(2, '0')}`;
+            previousRoleSelectionId = currentRoleSelectionId;
+            currentRoleDraft = {
+                id: roleId,
+                code,
+                name: `Custom Role ${nextIndex}`,
+                scope_type: 'TEAM',
+                is_system: false,
+                is_active: true,
+                is_new: true,
+                permission_ids: []
+            };
+            isRoleScopeLovOpen = false;
+            currentRoleDetailMode = 'edit';
+            currentRoleSelectionId = roleId;
+            renderAdminRolesPanel();
+        }
+
+        function toggleRoleScopeLov(event) {
+            event?.stopPropagation?.();
+            isRoleScopeLovOpen = !isRoleScopeLovOpen;
+            renderAdminRolesPanel();
+        }
+
+        function closeRoleScopeLov() {
+            if (!isRoleScopeLovOpen) return;
+            isRoleScopeLovOpen = false;
+            renderAdminRolesPanel();
+        }
+
+        function selectRoleScopeLov(roleId, scopeType, event) {
+            event?.stopPropagation?.();
+            updateRoleScope(roleId, scopeType);
+        }
+
+        function cancelRoleChanges() {
+            isRoleScopeLovOpen = false;
+            if (currentRoleDraft?.is_new) {
+                currentRoleSelectionId = previousRoleSelectionId || ADMIN_SEED.roles[0]?.id || '';
+            }
+            currentRoleDraft = null;
+            currentRoleDetailMode = 'view';
+            renderAdminRolesPanel();
+        }
+
+        function saveRoleChanges() {
+            if (!currentRoleDraft) return;
+            const draft = {
+                ...currentRoleDraft,
+                code: String(currentRoleDraft.code || '').trim().toUpperCase().replace(/\s+/g, '_'),
+                name: String(currentRoleDraft.name || '').trim(),
+                permission_ids: Array.from(new Set(currentRoleDraft.permission_ids || []))
+            };
+            if (!draft.name || !draft.code) {
+                showAdminToast('Tên role và mã role không được để trống.');
+                return;
+            }
+            const duplicatedRole = ADMIN_SEED.roles.find((item) => item.id !== draft.id && item.code === draft.code);
+            if (duplicatedRole) {
+                showAdminToast(`Code ${draft.code} đã tồn tại.`);
+                return;
+            }
+
+            const nextRole = {
+                id: draft.id,
+                code: draft.code,
+                name: draft.name,
+                scope_type: draft.scope_type,
+                is_system: draft.is_system,
+                is_active: draft.is_active
+            };
+
+            if (draft.is_new) {
+                ADMIN_SEED.roles.push(nextRole);
+                addAuditLog('Permission', 'CREATE_ROLE', `Tạo role ${draft.code}`);
+                showAdminToast(`Đã tạo role ${draft.code}.`);
+            } else {
+                const role = getSeedRoleById(draft.id);
+                if (!role) return;
+                Object.assign(role, nextRole);
+                addAuditLog('Permission', 'UPDATE_ROLE', `Lưu thay đổi cho ${draft.code}`);
+                showAdminToast(`Đã lưu thay đổi cho ${draft.code}.`);
+            }
+
+            ADMIN_SEED.rolePermissions = ADMIN_SEED.rolePermissions.filter((item) => item.role_id !== draft.id);
+            draft.permission_ids.forEach((permissionId) => {
+                ADMIN_SEED.rolePermissions.push({ role_id: draft.id, permission_id: permissionId });
+            });
+
+            if (draft.scope_type === 'GLOBAL') {
+                ADMIN_SEED.userRoleAssignments.forEach((assignment) => {
+                    if (assignment.role_id === draft.id) assignment.team_id = null;
+                });
+            }
+
+            currentRoleSelectionId = draft.id;
+            currentRoleDraft = null;
+            currentRoleDetailMode = 'view';
+            isRoleScopeLovOpen = false;
+            renderAdminRolesPanel();
+        }
+
+        function getAvailableUsersForRole(role) {
+            return ADMIN_SEED.users
+                .filter((user) => user.is_active && (role?.scope_type === 'GLOBAL' || getUserPrimaryTeam(user.id)))
+                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+        }
+
+        function createRoleAssignment(roleId) {
+            const role = getSeedRoleById(roleId);
+            if (!role) return;
+            const availableUsers = getAvailableUsersForRole(role);
+            if (!availableUsers.length) {
+                showAdminToast('Không có user phù hợp để gán role.');
+                return;
+            }
+            const candidate = availableUsers.find((user) => {
+                const teamId = role.scope_type === 'TEAM' ? (getUserPrimaryTeam(user.id)?.id || null) : null;
+                return !ADMIN_SEED.userRoleAssignments.some((item) => (
+                    item.role_id === role.id &&
+                    item.user_id === user.id &&
+                    item.team_id === teamId &&
+                    item.is_active
+                ));
+            });
+            if (!candidate) {
+                showAdminToast('Tất cả user phù hợp đã được gán role này rồi.');
+                return;
+            }
+            const defaultUser = candidate;
+            const defaultTeam = role.scope_type === 'TEAM' ? getUserPrimaryTeam(defaultUser.id) : null;
+            ADMIN_SEED.userRoleAssignments.push({
+                id: `ura_${String(ADMIN_SEED.userRoleAssignments.length + 1).padStart(3, '0')}`,
+                user_id: defaultUser.id,
+                role_id: role.id,
+                team_id: defaultTeam?.id || null,
+                is_active: true
+            });
+            addAuditLog('Permission', 'CREATE_ASSIGNMENT', `Gán role ${role.code} cho ${defaultUser.full_name}`);
+            showAdminToast(`Đã thêm gán quyền cho ${defaultUser.full_name}.`);
+            renderAdminRolesPanel();
+        }
+
+        function updateRoleAssignmentField(assignmentId, field, value) {
+            const assignment = ADMIN_SEED.userRoleAssignments.find((item) => item.id === assignmentId);
+            if (!assignment) return;
+            const role = getSeedRoleById(assignment.role_id);
+            if (!role) return;
+            const previousValue = {
+                user_id: assignment.user_id,
+                team_id: assignment.team_id,
+                is_active: assignment.is_active
+            };
+            if (field === 'user_id') {
+                assignment.user_id = value;
+                if (role.scope_type === 'TEAM') {
+                    assignment.team_id = getUserPrimaryTeam(value)?.id || null;
+                }
+            } else if (field === 'team_id') {
+                assignment.team_id = value || null;
+            } else if (field === 'is_active') {
+                assignment.is_active = Boolean(value);
+            }
+            const duplicated = ADMIN_SEED.userRoleAssignments.find((item) => (
+                item.id !== assignment.id &&
+                item.role_id === assignment.role_id &&
+                item.user_id === assignment.user_id &&
+                item.team_id === assignment.team_id &&
+                item.is_active
+            ));
+            if (duplicated) {
+                assignment.user_id = previousValue.user_id;
+                assignment.team_id = previousValue.team_id;
+                assignment.is_active = previousValue.is_active;
+                showAdminToast('Role này đã được gán cho user ở phạm vi đã chọn.');
+                renderAdminRolesPanel();
+                return;
+            }
+            const user = getSeedUserById(assignment.user_id);
+            addAuditLog('Permission', 'UPDATE_ASSIGNMENT', `Cập nhật gán role ${role.code} cho ${user?.full_name || assignment.user_id}`);
+            renderAdminRolesPanel();
+        }
+
+        function removeRoleAssignment(assignmentId) {
+            const assignmentIndex = ADMIN_SEED.userRoleAssignments.findIndex((item) => item.id === assignmentId);
+            if (assignmentIndex < 0) return;
+            const assignment = ADMIN_SEED.userRoleAssignments[assignmentIndex];
+            const role = getSeedRoleById(assignment.role_id);
+            const user = getSeedUserById(assignment.user_id);
+            ADMIN_SEED.userRoleAssignments.splice(assignmentIndex, 1);
+            addAuditLog('Permission', 'DELETE_ASSIGNMENT', `Gỡ role ${role?.code || assignment.role_id} khỏi ${user?.full_name || assignment.user_id}`);
+            showAdminToast('Đã gỡ gán quyền.');
+            renderAdminRolesPanel();
+        }
+
         function setActiveAdminTab(tabKey) {
             currentAdminTab = tabKey;
             document.querySelectorAll('[data-admin-tab]').forEach((button) => {
@@ -2474,7 +3315,7 @@ let currentAdminTab = 'org';
             setActiveAdminTab(currentAdminTab);
         }
 
-function renderAdminOrgPanel() {
+        function renderAdminOrgPanel() {
             const panel = document.querySelector('[data-admin-panel="org"]');
             if (!panel) return;
             const selection = getOrgSelectionMeta() || {
@@ -2536,7 +3377,7 @@ function renderAdminOrgPanel() {
                         <div class="org-status-edit-card">
                             <div class="org-status-edit-row">
                                 <p class="org-view-value text-base">${activeLabel}</p>
-                                <button type="button" class="admin-toggle is-compact ${entity?.is_active ? 'is-on' : 'is-off'}" onclick="toggleOrgSelectionStatus()"></button>
+                                <button type="button" class="admin-toggle is-compact ${entity?.is_active ? 'is-on' : 'is-off'}" onclick="toggleOrgSelectionStatus(event)"></button>
                             </div>
                         </div>
                     </div>
@@ -2738,11 +3579,11 @@ function renderAdminOrgPanel() {
                                 </label>
                                 <label>
                                     <span class="org-field-label">Username</span>
-                                    <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.username || '')}" disabled>
+                                    <input id="memberUsername" class="org-field-input" type="text" value="${escapeHtml(memberRecord.username || '')}" oninput="if (this.value.trim()) clearCreateMemberFieldError('username')">
                                 </label>
                                 <label>
                                     <span class="org-field-label">Email</span>
-                                    <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.email || '')}" disabled>
+                                    <input id="memberEmail" class="org-field-input" type="text" value="${escapeHtml(memberRecord.email || '')}" oninput="if (this.value.trim()) clearCreateMemberFieldError('email')">
                                 </label>
                                 <label>
                                     <span class="org-field-label">Title</span>
@@ -2856,7 +3697,7 @@ function renderAdminOrgPanel() {
                                         <div class="flex w-full items-center gap-4">
                                             <p id="memberActiveLabel" class="org-view-value text-base">${memberRecord.is_active ? 'Active' : 'Inactive'}</p>
                                             <input id="memberActive" type="checkbox" class="hidden" ${memberRecord.is_active ? 'checked' : ''}>
-                                            <button id="memberActiveToggle" type="button" class="ml-auto admin-toggle is-compact ${memberRecord.is_active ? 'is-on' : 'is-off'}" onclick="toggleMemberActive()"></button>
+                                            <button id="memberActiveToggle" type="button" class="ml-auto admin-toggle is-compact ${memberRecord.is_active ? 'is-on' : 'is-off'}" onclick="toggleMemberActive(event)"></button>
                                         </div>
                                     </div>
                                 </label>
@@ -2907,9 +3748,9 @@ function renderAdminOrgPanel() {
                             </thead>
                             <tbody>
                                 ${members.map((member) => {
-                                    const jobTitle = getSeedJobTitleById(member.job_title_id);
-                                    const teamRole = getUserRoleForTeam(member.id, member.team_id);
-                                    return `
+                const jobTitle = getSeedJobTitleById(member.job_title_id);
+                const teamRole = getUserRoleForTeam(member.id, member.team_id);
+                return `
                                         <tr class="is-clickable" onclick="shouldAnimateMemberDrawer = true; setMemberFormMode('view', '${escapeHtml(member.id)}')">
                                             <td><code>${escapeHtml(member.id)}</code></td>
                                             <td class="font-bold" style="color:${escapeHtml(member.color || '#334155')}">${escapeHtml(member.full_name)}</td>
@@ -2929,7 +3770,7 @@ function renderAdminOrgPanel() {
                                             </td>
                                         </tr>
                                     `;
-                                }).join('') || `
+            }).join('') || `
                                     <tr>
                                         <td colspan="8" class="py-8 text-center text-sm text-slate-400">Chưa có thành viên trong cấu trúc đang chọn.</td>
                                     </tr>
@@ -3107,15 +3948,15 @@ function renderAdminOrgPanel() {
                                                         </div>
                                                         <div class="mt-4 flex flex-wrap gap-2">
                                                             ${getUsersForTeam(team.id).map((user) => {
-                                                                const jobTitle = getSeedJobTitleById(user.job_title_id);
-                                                                return `
+                const jobTitle = getSeedJobTitleById(user.job_title_id);
+                return `
                                                                     <div class="admin-user-pill">
                                                                         <span class="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</span>
                                                                         <span>${escapeHtml(user.full_name)}</span>
                                                                         <span class="text-[11px] text-slate-400">${escapeHtml(jobTitle?.name || 'Khác')}</span>
                                                                     </div>
                                                                 `;
-                                                            }).join('') || '<div class="text-sm text-slate-400">Chưa có user trong nhóm này</div>'}
+            }).join('') || '<div class="text-sm text-slate-400">Chưa có user trong nhóm này</div>'}
                                                         </div>
                                                     </div>
                                                 `).join('')}
@@ -3131,9 +3972,9 @@ function renderAdminOrgPanel() {
                             <thead><tr><th>User</th><th>Chức danh</th><th>Team chính</th><th>Role hiện tại</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
                             <tbody class="bg-white">
                                 ${ADMIN_SEED.users.slice().sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((user) => {
-                                    const jobTitle = getSeedJobTitleById(user.job_title_id);
-                                    const primaryTeam = getUserPrimaryTeam(user.id);
-                                    return `
+                const jobTitle = getSeedJobTitleById(user.job_title_id);
+                const primaryTeam = getUserPrimaryTeam(user.id);
+                return `
                                         <tr>
                                             <td>
                                                 <div class="flex items-center gap-3">
@@ -3151,7 +3992,7 @@ function renderAdminOrgPanel() {
                                             <td class="text-sm font-bold text-blue-700">View Edit</td>
                                         </tr>
                                     `;
-                                }).join('')}
+            }).join('')}
                             </tbody>
                         </table>
                     </div>
@@ -3162,9 +4003,112 @@ function renderAdminOrgPanel() {
         function renderAdminRolesPanel() {
             const panel = document.querySelector('[data-admin-panel="roles"]');
             if (!panel) return;
-            const selectedRole = ADMIN_SEED.roles.find((role) => role.code === 'MANAGER') || ADMIN_SEED.roles[0];
-            const permissions = getRolePermissions(selectedRole.id);
-            const assignments = getRoleAssignments(selectedRole.id);
+            const selectedRole = getRoleBySelection();
+            if (!selectedRole) {
+                panel.innerHTML = '<div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm text-sm text-slate-500">Chưa có role nào để cấu hình.</div>';
+                return;
+            }
+            const isRoleEditMode = currentRoleDetailMode === 'edit';
+            const permissions = isRoleEditMode && currentRoleDraft
+                ? (currentRoleDraft.permission_ids || []).map((permissionId) => getSeedPermissionById(permissionId)).filter(Boolean)
+                : getRolePermissions(selectedRole.id);
+            const assignments = ADMIN_SEED.userRoleAssignments.filter((item) => item.role_id === selectedRole.id);
+            const roleList = currentRoleDraft?.is_new
+                ? [...ADMIN_SEED.roles, currentRoleDraft]
+                : ADMIN_SEED.roles;
+            const roleInfoHtml = isRoleEditMode ? `
+                <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                    <label>
+                        <span class="org-field-label">Tên role</span>
+                        <input type="text" class="org-field-input" value="${escapeHtml(selectedRole.name)}" onchange="updateRoleField('${escapeHtml(selectedRole.id)}', 'name', this.value)">
+                    </label>
+                    <label>
+                        <span class="org-field-label">Mã role</span>
+                        <input type="text" class="org-field-input" value="${escapeHtml(selectedRole.code)}" onchange="updateRoleField('${escapeHtml(selectedRole.id)}', 'code', this.value)">
+                    </label>
+                    <label>
+                        <span class="org-field-label">Phạm vi quyền</span>
+                        <div class="member-single-lov role-scope-lov">
+                            <button type="button" class="org-field-input member-lov-trigger ${isRoleScopeLovOpen ? 'is-open' : ''}" onclick="toggleRoleScopeLov(event)">
+                                <span class="member-lov-copy">
+                                    <span class="member-lov-value font-medium">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'Toàn hệ thống'}</span>
+                                </span>
+                                <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
+                            </button>
+                            <div class="member-single-lov-panel ${isRoleScopeLovOpen ? '' : 'hidden'}" onclick="event.stopPropagation()">
+                                <div class="member-single-lov-list">
+                                    <button type="button" class="member-single-lov-item ${selectedRole.scope_type === 'TEAM' ? 'is-active' : ''}" onclick="selectRoleScopeLov('${escapeHtml(selectedRole.id)}', 'TEAM', event)">
+                                        <span>Theo team</span>
+                                    </button>
+                                    <button type="button" class="member-single-lov-item ${selectedRole.scope_type === 'GLOBAL' ? 'is-active' : ''}" onclick="selectRoleScopeLov('${escapeHtml(selectedRole.id)}', 'GLOBAL', event)">
+                                        <span>Toàn hệ thống</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                    <div>
+                        <span class="org-field-label">Trạng thái</span>
+                        <div class="flex items-center gap-4 rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-semibold text-slate-600">
+                            <span class="min-w-0">${selectedRole.is_active ? 'Active' : 'Inactive'}</span>
+                            <button type="button" class="ml-auto admin-toggle is-compact ${selectedRole.is_active ? 'is-on' : 'is-off'}" onclick="toggleRoleStatus('${escapeHtml(selectedRole.id)}', event)" aria-label="${selectedRole.is_active ? 'Active' : 'Inactive'}"></button>
+                        </div>
+                    </div>
+                </div>
+            ` : `
+                <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                    <div>
+                        <span class="org-field-label">Tên role</span>
+                        <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${escapeHtml(selectedRole.name)}</div>
+                    </div>
+                    <div>
+                        <span class="org-field-label">Mã role</span>
+                        <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${escapeHtml(selectedRole.code)}</div>
+                    </div>
+                    <div>
+                        <span class="org-field-label">Phạm vi quyền</span>
+                        <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'Toàn hệ thống'}</div>
+                    </div>
+                    <div>
+                        <span class="org-field-label">Trạng thái</span>
+                        <div class="flex items-center gap-3 rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">
+                            <span class="org-status-dot ${selectedRole.is_active ? 'is-active' : 'is-inactive'}"></span>
+                            <span>${selectedRole.is_active ? 'Active' : 'Inactive'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            const permissionsHtml = isRoleEditMode ? `
+                <div class="mt-4 divide-y divide-slate-200 text-sm font-bold text-slate-700">
+                    ${ADMIN_SEED.permissions.map((permission) => {
+                const isEnabled = permissions.some((item) => item.id === permission.id);
+                return `
+                        <div class="flex items-center justify-between gap-4 bg-white px-1 py-3">
+                            <span class="min-w-0">
+                                <span class="block text-sm font-semibold text-slate-900">${escapeHtml(permission.name)}</span>
+                                <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">${escapeHtml(permission.code)}</span>
+                            </span>
+                            <button type="button" class="admin-toggle is-compact ${isEnabled ? 'is-on' : 'is-off'}" onclick="toggleRolePermission('${escapeHtml(selectedRole.id)}', '${escapeHtml(permission.id)}', event)" aria-label="${isEnabled ? 'Tắt' : 'Bật'} quyền ${escapeHtml(permission.name)}"></button>
+                        </div>
+                    `;
+            }).join('')}
+                </div>
+            ` : `
+                <div class="mt-4 divide-y divide-slate-200 text-sm text-slate-700">
+                    ${ADMIN_SEED.permissions.map((permission) => {
+                const isEnabled = permissions.some((item) => item.id === permission.id);
+                return `
+                        <div class="flex items-center justify-between gap-4 bg-white px-1 py-3">
+                            <span class="min-w-0">
+                                <span class="block text-sm font-semibold ${isEnabled ? 'text-slate-900' : 'text-slate-400'}">${escapeHtml(permission.name)}</span>
+                                <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] ${isEnabled ? 'text-slate-400' : 'text-slate-300'}">${escapeHtml(permission.code)}</span>
+                            </span>
+                            <span class="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] ${isEnabled ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}">${isEnabled ? 'On' : 'Off'}</span>
+                        </div>
+                    `;
+            }).join('')}
+                </div>
+            `;
             panel.innerHTML = `
                 <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
                     <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
@@ -3173,75 +4117,77 @@ function renderAdminOrgPanel() {
                                 <h2 class="text-xl font-bold text-slate-900">Vai trò hệ thống</h2>
                                 <p class="mt-1 text-sm text-slate-500">Không cho xóa cứng role hệ thống.</p>
                             </div>
-                            <button type="button" class="rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20">+ Tạo role</button>
+                            <button type="button" class="rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20" onclick="createRoleDraft()">+ Tạo role</button>
                         </div>
                         <div class="mt-5 -mx-6 divide-y divide-slate-200">
-                            ${ADMIN_SEED.roles.map((role) => {
-                                const isActive = role.id === selectedRole.id;
-                                return `
-                                    <div class="${isActive ? 'bg-blue-50/50' : 'bg-white'} px-6 py-4">
+                            ${roleList.map((role) => {
+                const isActive = role.id === selectedRole.id;
+                return `
+                                    <button type="button" class="role-system-item block w-full ${isActive ? 'is-active bg-blue-50/50' : 'bg-white'} px-6 py-4 text-left" onclick="setActiveRole('${escapeHtml(role.id)}')">
                                         <div class="flex items-start justify-between gap-3">
                                             <div class="min-w-0">
-                                                <p class="font-bold ${isActive ? 'text-blue-900' : 'text-slate-900'}">${escapeHtml(role.name)}</p>
-                                                <p class="mt-1 text-sm ${isActive ? 'text-blue-800' : 'text-slate-600'}">${escapeHtml(role.code)}</p>
+                                                <p class="role-system-name font-bold ${isActive ? 'text-blue-900' : 'text-slate-900'}">${escapeHtml(role.name)}</p>
+                                                <p class="role-system-code mt-1 text-sm ${isActive ? 'text-blue-800' : 'text-slate-600'}">${escapeHtml(role.code)}</p>
                                             </div>
                                             <div class="flex flex-col items-end gap-2 text-right">
                                                 <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(role.scope_type)}</span>
                                                 <span class="text-xs font-medium text-slate-400">${getRolePermissions(role.id).length} permissions</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </button>
                                 `;
-                            }).join('')}
+            }).join('')}
                         </div>
                     </div>
                     <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
                         <div class="flex items-center justify-between gap-3">
                             <div>
                                 <h2 class="text-xl font-bold text-slate-900">Chi tiết role \`${escapeHtml(selectedRole.code)}\`</h2>
-                                <p class="mt-1 text-sm text-slate-500">Kiểm soát permission và user assignment theo team.</p>
+                                <p class="mt-1 text-sm text-slate-500">${isRoleEditMode ? 'Chế độ chỉnh sửa role.' : 'Thông tin xem nhanh của role đang chọn.'}</p>
                             </div>
-                            <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(selectedRole.scope_type)} scope</span>
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(selectedRole.scope_type)} scope</span>
+                                ${isRoleEditMode
+                    ? `
+                                        <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelRoleChanges()">Hủy</button>
+                                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveRoleChanges()">Lưu</button>
+                                    `
+                    : `<button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa role" onclick="setRoleDetailMode('edit')"><i class="fa-solid fa-pen-to-square"></i></button>`}
+                            </div>
                         </div>
+                        ${roleInfoHtml}
                         <div class="mt-6 grid gap-6 lg:grid-cols-2">
-                            <div class="border border-slate-200 bg-white p-5">
+                            <div class="rounded-[24px] border border-slate-200 bg-white p-5">
                                 <div class="flex items-center justify-between gap-3">
                                     <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Permissions</p>
-                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${permissions.length} quyền</span>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${permissions.length}/${ADMIN_SEED.permissions.length} quyền</span>
                                 </div>
-                                <div class="mt-4 divide-y divide-slate-200 text-sm font-bold text-slate-700">
-                                    ${permissions.map((permission) => `
-                                        <div class="flex items-center justify-between gap-4 bg-white px-1 py-3">
-                                            <span class="min-w-0">
-                                                <span class="block text-sm font-semibold text-slate-900">${escapeHtml(permission.name)}</span>
-                                                <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">${escapeHtml(permission.code)}</span>
-                                            </span>
-                                            <button type="button" class="admin-toggle is-compact is-on" aria-label="Bật quyền ${escapeHtml(permission.name)}"></button>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                                ${permissionsHtml}
                             </div>
-                            <div class="border border-slate-200 bg-white p-5">
+                            <div class="rounded-[24px] border border-slate-200 bg-white p-5">
                                 <div class="flex items-center justify-between gap-3">
                                     <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Assignments</p>
-                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${assignments.length} user</span>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${assignments.filter((item) => item.is_active).length} active</span>
                                 </div>
                                 <div class="mt-4 divide-y divide-slate-200">
                                     ${assignments.map((assignment) => {
-                                        const user = getSeedUserById(assignment.user_id);
-                                        const teamCode = assignment.team_id ? getTeamFullCode(assignment.team_id) : 'GLOBAL';
-                                        return `
+                        const user = getSeedUserById(assignment.user_id);
+                        const teamLabel = selectedRole.scope_type === 'GLOBAL'
+                            ? 'GLOBAL'
+                            : (assignment.team_id ? getTeamFullCode(assignment.team_id) : 'Chưa gán team');
+                        return `
                                             <div class="bg-white px-1 py-3">
                                                 <div class="flex items-center gap-3">
                                                     <span class="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold text-white" style="background:${escapeHtml(user?.color || '#64748b')}">${escapeHtml(adminUserInitials(user?.full_name || assignment.user_id))}</span>
                                                     <div class="min-w-0">
                                                         <p class="text-sm font-semibold text-slate-900">${escapeHtml(user?.full_name || assignment.user_id)}</p>
-                                                        <p class="mt-1 text-xs text-slate-500">${escapeHtml(teamCode)} • Active</p>
+                                                        <p class="mt-1 text-xs text-slate-500">${escapeHtml(teamLabel)} • ${assignment.is_active ? 'Active' : 'Inactive'}</p>
                                                     </div>
+                                                    <span class="ml-auto text-xs font-medium text-slate-400">${escapeHtml(assignment.user_id)}</span>
                                                 </div>
                                             </div>
                                         `;
-                                    }).join('') || '<div class="bg-white px-1 py-6 text-sm text-slate-400">Chưa có user nào được gán vào role này.</div>'}
+                    }).join('') || '<div class="rounded-[20px] border border-dashed border-slate-300 bg-white px-4 py-6 text-sm text-slate-400">Chưa có user nào được gán vào role này.</div>'}
                                 </div>
                             </div>
                         </div>
@@ -3253,7 +4199,12 @@ function renderAdminOrgPanel() {
         function renderAdminStatesPanel() {
             const panel = document.querySelector('[data-admin-panel="states"]');
             if (!panel) return;
-            const selectedState = ADMIN_SEED.states.find((state) => state.code === 'IN_REVIEW') || ADMIN_SEED.states[0];
+            const sortedStates = (currentStateDraft?.is_new
+                ? [...ADMIN_SEED.states, currentStateDraft]
+                : ADMIN_SEED.states
+            ).slice().sort((a, b) => a.display_order - b.display_order);
+            const selectedState = getStateBySelection() || sortedStates[0];
+            const isStateEditMode = currentStateDetailMode === 'edit';
             const colorOptions = [
                 { id: 'slate', hex: '#94a3b8' }, { id: 'gray', hex: '#6b7280' }, { id: 'zinc', hex: '#71717a' },
                 { id: 'stone', hex: '#78716c' }, { id: 'red', hex: '#ef4444' }, { id: 'rose', hex: '#f43f5e' },
@@ -3270,53 +4221,336 @@ function renderAdminOrgPanel() {
                             <h2 class="text-xl font-extrabold text-slate-900">Workflow / State</h2>
                             <p class="mt-1 text-sm text-slate-500">Chỉ hỗ trợ đổi thứ tự, chỉnh wording và thêm state mới.</p>
                         </div>
-                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo state</button>
+                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white" onclick="createStateDraft()">+ Tạo state</button>
                     </div>
                     <div class="mt-6 grid gap-4 lg:grid-cols-2">
                         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                             <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thứ tự hiện tại</p>
-                            <div class="mt-4 space-y-3">
-                                ${ADMIN_SEED.states.slice().sort((a, b) => a.display_order - b.display_order).map((state) => {
-                                    const colorMeta = getColorOptionMeta(state.color_theme);
-                                    return `
-                                        <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
+                            <div class="state-order-list mt-4 space-y-3">
+                                ${sortedStates.map((state) => {
+                const colorMeta = getColorOptionMeta(state.color_theme);
+                const isActive = selectedState?.id === state.id;
+                return `
+                                        <div
+                                            class="state-order-item ${isActive ? 'is-active' : ''}"
+                                            data-state-id="${escapeHtml(state.id)}"
+                                            onclick="setActiveState('${escapeHtml(state.id)}')"
+                                        >
                                             <span class="font-bold" style="color:${colorMeta.hex}">${state.display_order}. ${escapeHtml(state.label)}</span>
-                                            <i class="fa-solid fa-grip-vertical text-slate-300"></i>
+                                            <button type="button" class="state-order-handle" onmousedown="startStatePointerDrag(event, '${escapeHtml(state.id)}')" aria-label="Kéo thả state">
+                                                <i class="fa-solid fa-grip-vertical"></i>
+                                            </button>
                                         </div>
                                     `;
-                                }).join('')}
+            }).join('')}
                             </div>
                         </div>
                         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                            <div class="flex items-center justify-between gap-3">
+                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                                ${isStateEditMode
+                    ? `
+                                        <div class="flex justify-end gap-3">
+                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelStateChanges()">Hủy</button>
+                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveStateChanges()">Lưu</button>
+                                        </div>
+                                    `
+                    : `
+                                        <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa state" onclick="setStateDetailMode('edit')">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    `}
+                            </div>
                             <div class="mt-4 space-y-4">
-                                <label class="block text-sm font-bold text-slate-700">Mã state<input type="text" value="${escapeHtml(selectedState.code)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
-                                <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input type="text" value="${escapeHtml(selectedState.label)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
-                                <label class="block text-sm font-bold text-slate-700">Description<textarea class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none" rows="4">${escapeHtml(selectedState.description || '')}</textarea></label>
-                                <div>
-                                    <p class="block text-sm font-bold text-slate-700">Màu cột</p>
-                                    <p class="mt-1 text-xs text-slate-500">Chọn nhanh từ danh sách màu sẵn có.</p>
-                                    <div class="admin-color-grid mt-3">
-                                        ${colorOptions.map((option) => `
-                                            <button type="button" class="admin-color-chip ${selectedState.color_theme === option.id ? 'is-active' : ''}">
-                                                <span class="admin-color-chip-swatch" style="background:${option.hex}"></span>
-                                                <span class="admin-color-chip-copy">
-                                                    <span class="admin-color-chip-name">${escapeHtml(option.id)}</span>
-                                                    <span class="admin-color-chip-code">${escapeHtml(option.hex)}</span>
+                                ${isStateEditMode ? `
+                                    <label class="block text-sm font-bold text-slate-700">Mã state<input id="stateCode" type="text" value="${escapeHtml(selectedState.code)}" placeholder="Nhập mã state" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('code')"></label>
+                                    <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input id="stateLabel" type="text" value="${escapeHtml(selectedState.label)}" placeholder="Nhập wording hiển thị" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('label')"></label>
+                                    <label class="block text-sm font-bold text-slate-700">Description<textarea id="stateDescription" class="org-field-input org-field-textarea mt-2 w-full text-sm font-normal" rows="1" placeholder="Nhập mô tả state">${escapeHtml(selectedState.description || '')}</textarea></label>
+                                    <div>
+                                        <span class="block text-sm font-bold text-slate-700">Màu cột</span>
+                                        <div class="member-single-lov state-color-lov mt-2">
+                                            <button type="button" class="org-field-input member-lov-trigger ${isStateColorLovOpen ? 'is-open' : ''}" onclick="toggleStateColorLov(event)">
+                                                <span class="member-lov-copy">
+                                                    <span class="member-lov-value font-medium inline-flex items-center gap-3">
+                                                        <span class="admin-color-chip-swatch" style="background:${getColorOptionMeta(selectedState.color_theme).hex}"></span>
+                                                        <span>${escapeHtml(selectedState.color_theme)}</span>
+                                                    </span>
                                                 </span>
+                                                <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
                                             </button>
-                                        `).join('')}
+                                            <div class="member-single-lov-panel ${isStateColorLovOpen ? '' : 'hidden'}" onclick="event.stopPropagation()">
+                                                <div class="member-single-lov-list">
+                                                    ${colorOptions.map((option) => `
+                                                        <button type="button" class="member-single-lov-item ${selectedState.color_theme === option.id ? 'is-active' : ''}" onclick="updateStateDraftColor('${escapeHtml(option.id)}')">
+                                                            <span class="member-color-lov-item">
+                                                                <span class="member-color-lov-swatch" style="background:${option.hex}"></span>
+                                                                <span>${escapeHtml(option.id)}</span>
+                                                            </span>
+                                                        </button>
+                                                    `).join('')}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="flex justify-end gap-3">
-                                    <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Hủy</button>
-                                    <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">Lưu state</button>
-                                </div>
+                                ` : `
+                                    <div class="grid gap-4">
+                                        <div>
+                                            <span class="block text-sm font-bold text-slate-700">Mã state</span>
+                                            <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">${escapeHtml(selectedState.code)}</div>
+                                        </div>
+                                        <div>
+                                            <span class="block text-sm font-bold text-slate-700">Wording hiển thị</span>
+                                            <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">${escapeHtml(selectedState.label)}</div>
+                                        </div>
+                                        <div>
+                                            <span class="block text-sm font-bold text-slate-700">Description</span>
+                                            <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">${escapeHtml(selectedState.description || 'Chưa có mô tả')}</div>
+                                        </div>
+                                        <div>
+                                            <span class="block text-sm font-bold text-slate-700">Màu cột</span>
+                                            <div class="mt-2 inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">
+                                                <span class="admin-color-chip-swatch" style="background:${getColorOptionMeta(selectedState.color_theme).hex}"></span>
+                                                <span>${escapeHtml(selectedState.color_theme)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `}
                             </div>
                         </div>
                     </div>
                 </div>
             `;
+            if (isStateEditMode) {
+                initializeStateDescriptionInput();
+            }
+        }
+
+        function setActiveState(stateId) {
+            if (!getSeedStateById(stateId)) return;
+            currentStateSelectionId = stateId;
+            currentStateDetailMode = 'view';
+            currentStateDraft = null;
+            isStateColorLovOpen = false;
+            renderAdminStatesPanel();
+        }
+
+        function setStateDetailMode(mode) {
+            currentStateDetailMode = mode === 'edit' ? 'edit' : 'view';
+            if (currentStateDetailMode === 'edit') {
+                const state = getStateBySelection();
+                currentStateDraft = buildStateDraft(state);
+            } else {
+                currentStateDraft = null;
+                isStateColorLovOpen = false;
+            }
+            renderAdminStatesPanel();
+        }
+
+        function toggleStateColorLov(event) {
+            event?.stopPropagation?.();
+            isStateColorLovOpen = !isStateColorLovOpen;
+            renderAdminStatesPanel();
+        }
+
+        function closeStateColorLov() {
+            if (!isStateColorLovOpen) return;
+            isStateColorLovOpen = false;
+            renderAdminStatesPanel();
+        }
+
+        function updateStateDraftColor(colorId) {
+            if (!currentStateDraft) return;
+            currentStateDraft = {
+                ...currentStateDraft,
+                color_theme: colorId
+            };
+            isStateColorLovOpen = false;
+            renderAdminStatesPanel();
+        }
+
+        function cancelStateChanges() {
+            if (currentStateDraft?.is_new) {
+                currentStateSelectionId = ADMIN_SEED.states[0]?.id || '';
+            }
+            currentStateDraft = null;
+            currentStateDetailMode = 'view';
+            isStateColorLovOpen = false;
+            renderAdminStatesPanel();
+        }
+
+        function saveStateChanges() {
+            const state = getSeedStateById(currentStateSelectionId);
+            if (!currentStateDraft) return;
+
+            const nextCode = String(document.getElementById('stateCode')?.value || '').trim().toUpperCase().replace(/\s+/g, '_');
+            const nextLabel = String(document.getElementById('stateLabel')?.value || '').trim();
+            const nextDescription = String(document.getElementById('stateDescription')?.value || '').trim();
+
+            clearStateValidation();
+            if (!nextCode || !nextLabel) {
+                if (!nextCode) markStateFieldError('code');
+                if (!nextLabel) markStateFieldError('label');
+                showAdminToast('Mã state và wording không được để trống.');
+                return;
+            }
+
+            const duplicatedState = ADMIN_SEED.states.find((item) => item.id !== currentStateDraft.id && item.code === nextCode);
+            if (duplicatedState) {
+                markStateFieldError('code');
+                showAdminToast(`Code ${nextCode} đã tồn tại.`);
+                return;
+            }
+
+            const nextState = {
+                id: currentStateDraft.id,
+                code: nextCode,
+                label: nextLabel,
+                description: nextDescription,
+                color_theme: currentStateDraft.color_theme,
+                display_order: currentStateDraft.display_order,
+                is_active: true
+            };
+
+            if (currentStateDraft.is_new) {
+                ADMIN_SEED.states.push(nextState);
+                showAdminToast(`Đã tạo state ${nextState.code}.`);
+            } else if (state) {
+                state.code = nextCode;
+                state.label = nextLabel;
+                state.description = nextDescription;
+                state.color_theme = currentStateDraft.color_theme;
+                showAdminToast(`Đã lưu thay đổi cho state ${state.code}.`);
+            } else {
+                return;
+            }
+
+            currentStateDraft = null;
+            currentStateDetailMode = 'view';
+            isStateColorLovOpen = false;
+            currentStateSelectionId = nextState.id;
+            renderAdminStatesPanel();
+        }
+
+        function ensureStatePlaceholder() {
+            if (currentStatePlaceholderEl?.isConnected) return currentStatePlaceholderEl;
+            const placeholder = document.createElement('div');
+            placeholder.className = 'state-order-placeholder';
+            currentStatePlaceholderEl = placeholder;
+            return placeholder;
+        }
+
+        function getStatePlaceholderInsertIndex(container) {
+            if (!container || !currentStatePlaceholderEl?.isConnected) return -1;
+            const siblings = Array.from(container.children);
+            const placeholderIndex = siblings.indexOf(currentStatePlaceholderEl);
+            if (placeholderIndex < 0) return -1;
+            return siblings
+                .slice(0, placeholderIndex)
+                .filter((item) => item.classList.contains('state-order-item') && !item.classList.contains('is-dragging'))
+                .length;
+        }
+
+        function startStatePointerDrag(event, stateId) {
+            if (event.button !== 0) return;
+            event.preventDefault();
+            event.stopPropagation();
+            const item = event.currentTarget.closest('.state-order-item');
+            const container = item?.parentNode;
+            if (!item || !container) return;
+
+            currentStateDragId = stateId;
+            currentStateDraggedEl = item;
+            const rect = item.getBoundingClientRect();
+            currentStateDragOffsetY = event.clientY - rect.top;
+            const placeholder = ensureStatePlaceholder();
+            placeholder.style.height = `${rect.height}px`;
+            container.insertBefore(placeholder, item.nextSibling);
+
+            item.classList.add('is-dragging', 'is-floating');
+            item.style.width = `${rect.width}px`;
+            item.style.left = `${rect.left}px`;
+            item.style.top = `${event.clientY - currentStateDragOffsetY}px`;
+        }
+
+        function handleStatePointerDragMove(event) {
+            if (!currentStateDragId || !currentStateDraggedEl) return;
+            event.preventDefault();
+
+            currentStateDraggedEl.style.top = `${event.clientY - currentStateDragOffsetY}px`;
+            const placeholder = ensureStatePlaceholder();
+            const container = document.querySelector('[data-admin-panel="states"] .state-order-list');
+            if (!container) return;
+
+            const items = Array.from(container.querySelectorAll('.state-order-item:not(.is-dragging)'));
+            if (!items.length) {
+                container.appendChild(placeholder);
+                return;
+            }
+
+            let inserted = false;
+            for (const item of items) {
+                const rect = item.getBoundingClientRect();
+                if (event.clientY < rect.top + rect.height / 2) {
+                    container.insertBefore(placeholder, item);
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if (!inserted) {
+                container.appendChild(placeholder);
+            }
+        }
+
+        function finishStatePointerDrag() {
+            if (!currentStateDragId || !currentStateDraggedEl) {
+                handleStateDragEnd();
+                return;
+            }
+
+            const container = document.querySelector('[data-admin-panel="states"] .state-order-list');
+            const sourceStateId = currentStateDragId;
+            if (!container) {
+                handleStateDragEnd();
+                return;
+            }
+
+            const sortedStates = ADMIN_SEED.states.slice().sort((a, b) => a.display_order - b.display_order);
+            const sourceIndex = sortedStates.findIndex((state) => state.id === sourceStateId);
+            const insertIndex = getStatePlaceholderInsertIndex(container);
+            if (sourceIndex < 0 || insertIndex < 0) {
+                handleStateDragEnd();
+                renderAdminStatesPanel();
+                return;
+            }
+
+            const [movedState] = sortedStates.splice(sourceIndex, 1);
+            sortedStates.splice(insertIndex, 0, movedState);
+            sortedStates.forEach((state, index) => {
+                state.display_order = index + 1;
+            });
+
+            currentStateSelectionId = movedState.id;
+            showAdminToast(`Đã cập nhật thứ tự state ${movedState.label}.`);
+            handleStateDragEnd();
+            renderAdminStatesPanel();
+        }
+
+        function handleStateDragEnd() {
+            currentStateDragId = null;
+            currentStateDraggedEl?.classList.remove('is-dragging', 'is-floating');
+            if (currentStateDraggedEl) {
+                currentStateDraggedEl.style.width = '';
+                currentStateDraggedEl.style.left = '';
+                currentStateDraggedEl.style.top = '';
+            }
+            currentStateDraggedEl = null;
+            currentStateDragOffsetY = 0;
+            currentStatePlaceholderEl?.remove();
+            currentStatePlaceholderEl = null;
+            document.querySelectorAll('[data-admin-panel="states"] .state-order-item').forEach((item) => {
+                item.classList.remove('is-dragging', 'is-drop-target', 'is-floating');
+            });
         }
 
         function renderAdminLogsPanel() {
@@ -3355,6 +4589,14 @@ function renderAdminOrgPanel() {
 
         renderAdminView();
         initializeAdminTabs();
+        document.addEventListener('mousemove', handleStatePointerDragMove);
+        document.addEventListener('mouseup', finishStatePointerDrag);
+        document.addEventListener('click', () => {
+            closeMemberTeamLov();
+            closeMemberSingleLov();
+            closeRoleScopeLov();
+            closeStateColorLov();
+        });
     </script>
 </body>
 
