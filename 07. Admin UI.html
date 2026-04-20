@@ -1,0 +1,3361 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07. Admin UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --admin-ink: #334155;
+            --admin-field-height: 52px;
+            --admin-field-radius: 1rem;
+            --admin-field-py: 0.9rem;
+            --admin-field-px: 1rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 24%),
+                linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+            color: var(--admin-ink);
+        }
+
+        .text-slate-900,
+        .text-black {
+            color: var(--admin-ink) !important;
+        }
+
+        .admin-shell {
+            min-height: 100vh;
+        }
+
+        .admin-tab-btn {
+            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.92);
+            color: #475569;
+            transition: all 0.18s ease;
+        }
+
+        .admin-tab-btn:hover {
+            border-color: #93c5fd;
+            color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .admin-tab-btn.is-active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .admin-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #64748b;
+            font-weight: 800;
+            background: #f8fafc;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.32rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .admin-badge.is-green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .admin-badge.is-blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .admin-badge.is-amber {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .admin-badge.is-slate {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .admin-color-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .admin-color-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            padding: 0.6rem 0.7rem;
+            background: #ffffff;
+            transition: all 0.18s ease;
+        }
+
+        .admin-color-chip:hover {
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-color-chip.is-active {
+            border-color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .admin-color-chip-swatch {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.35);
+        }
+
+        .admin-color-chip-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 0;
+        }
+
+        .admin-color-chip-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--admin-ink);
+            text-transform: capitalize;
+            line-height: 1.1;
+        }
+
+        .admin-color-chip-code {
+            font-size: 10px;
+            color: #64748b;
+            line-height: 1.1;
+        }
+
+        .admin-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 48px;
+            height: 28px;
+            border-radius: 9999px;
+            padding: 3px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+            transition: background-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+        }
+
+        .admin-toggle::after {
+            content: "";
+            width: 22px;
+            height: 22px;
+            border-radius: 9999px;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.18);
+            transition: transform 0.22s cubic-bezier(.22, 1, .36, 1), box-shadow 0.22s ease;
+        }
+
+        .admin-toggle:hover {
+            transform: translateY(-1px);
+        }
+
+        .admin-toggle.is-compact:hover {
+            transform: none;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+        }
+
+        .admin-toggle.is-on {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 18px rgba(34, 197, 94, 0.18);
+        }
+
+        .admin-toggle.is-on::after {
+            transform: translateX(20px);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.22);
+        }
+
+        .admin-toggle.is-off {
+            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+        }
+
+        .admin-toggle:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+        }
+
+        .admin-toggle.is-compact {
+            width: 42px;
+            height: 24px;
+            padding: 2px;
+        }
+
+        .admin-toggle.is-compact::after {
+            width: 18px;
+            height: 18px;
+        }
+
+        .admin-toggle.is-compact.is-on::after {
+            transform: translateX(18px);
+        }
+
+        .admin-user-tree-card {
+            border: 1px solid #e2e8f0;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+        }
+
+        .admin-user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.is-active {
+            display: block;
+        }
+
+        .org-tree-card {
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+        }
+
+        .org-tree-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .org-tree-node {
+            border: 1px solid #dbe4f0;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .org-node-trigger {
+            width: 100%;
+            text-align: left;
+            border: 1px solid transparent;
+            border-radius: 1rem;
+            background: transparent;
+            transition: all 0.18s ease;
+        }
+
+        .org-node-trigger:hover {
+            background: #f8fbff;
+            border-color: #c7d8f7;
+        }
+
+        .org-node-trigger.is-active {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-color: #93c5fd;
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.15);
+        }
+
+        .org-node-row {
+            position: relative;
+        }
+
+        .org-node-row .org-node-trigger {
+            padding-right: 2.9rem;
+        }
+
+        .org-node-actions {
+            position: absolute;
+            right: 0.65rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.16s ease;
+            z-index: 2;
+            min-width: 2rem;
+            justify-content: flex-end;
+        }
+
+        .org-node-row:hover .org-node-actions,
+        .org-node-row:focus-within .org-node-actions {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .org-icon-btn {
+            width: 1.9rem;
+            height: 1.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.7rem;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #64748b;
+            box-shadow: none;
+            transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+            position: relative;
+        }
+
+        .org-icon-btn:hover {
+            border-color: #93c5fd;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .org-icon-btn i {
+            font-size: 0.82rem;
+            line-height: 1;
+        }
+
+        .tooltip-btn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%) translateX(4px);
+            padding: 0.42rem 0.6rem;
+            border-radius: 0.65rem;
+            background: rgba(15, 23, 42, 0.92);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+            z-index: 5;
+        }
+
+        .tooltip-btn:hover::after,
+        .tooltip-btn:focus-visible::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .org-node-indent {
+            margin-left: 0.45rem;
+            padding-left: 0.45rem;
+            border-left: 1px dashed #cbd5e1;
+        }
+
+        .org-add-inline {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: 2px dashed #c7d2fe;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.88);
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 0.85rem 1rem;
+            transition: all 0.18s ease;
+        }
+
+        .org-add-inline:hover {
+            background: #eef2ff;
+            border-color: #818cf8;
+        }
+
+        .org-action-btn {
+            border: 1px solid #e8eef7;
+            background: #ffffff;
+            color: #475569;
+            transition: all 0.18s ease;
+        }
+
+        .org-action-btn.is-icon {
+            width: 3.25rem;
+            height: 3.25rem;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .org-action-btn.is-icon i {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .org-action-btn:hover {
+            border-color: #93c5fd;
+            color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .org-action-btn.is-primary {
+            border-color: #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 14px 24px rgba(37, 99, 235, 0.2);
+        }
+
+        .org-detail-card {
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
+        }
+
+        .org-field-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .org-field-input,
+        .org-field-textarea {
+            width: 100%;
+            border: 1px solid #dbe4f0;
+            border-radius: var(--admin-field-radius);
+            padding: var(--admin-field-py) var(--admin-field-px);
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--admin-ink);
+            background: #ffffff;
+            outline: none;
+            transition: all 0.18s ease;
+        }
+
+        .org-field-input,
+        .member-lov-trigger {
+            box-sizing: border-box;
+            height: var(--admin-field-height);
+        }
+
+        .org-field-input:disabled {
+            background: #f8fafc;
+            color: #94a3b8;
+            font-weight: 500;
+            cursor: not-allowed;
+            opacity: 1;
+        }
+
+        .org-field-select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 3rem;
+            background-image: none;
+        }
+
+        .org-select-wrap {
+            position: relative;
+        }
+
+        .org-select-wrap::after {
+            content: "";
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            width: 1rem;
+            height: 1rem;
+            transform: translateY(-50%);
+            background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%230f172a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .member-color-input {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .member-color-preview {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.96);
+            box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.35);
+        }
+
+        .member-group-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .member-lov {
+            position: relative;
+        }
+
+        .member-lov-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.16s ease, background-color 0.2s ease;
+        }
+
+        .member-lov-trigger:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.08);
+        }
+
+        .member-lov-trigger.is-open {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 14px 28px rgba(37, 99, 235, 0.12);
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .member-lov-trigger i {
+            transition: transform 0.22s ease, color 0.18s ease;
+        }
+
+        .member-lov-trigger.is-open i {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .member-lov-copy {
+            min-width: 0;
+        }
+
+        .member-lov-value {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--admin-ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-lov-placeholder {
+            color: #94a3b8;
+        }
+
+        .member-lov-panel {
+            position: absolute;
+            top: calc(100% + 0.65rem);
+            left: 0;
+            right: 0;
+            z-index: 20;
+            border: 1px solid #dbe4f0;
+            border-radius: 1.2rem;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.99));
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16);
+            overflow: hidden;
+            transform-origin: top center;
+            animation: memberLovFadeIn 0.18s ease;
+        }
+
+        .member-lov-columns {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .member-lov-column {
+            min-width: 0;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .member-lov-column:last-child {
+            border-right: none;
+        }
+
+        .member-lov-column-head {
+            padding: 0.9rem 1rem 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+        }
+
+        .member-lov-column-title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+
+        .member-lov-list {
+            max-height: 220px;
+            overflow: auto;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .member-lov-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            padding: 0.95rem 1rem;
+            transition: background-color 0.16s ease, color 0.16s ease;
+        }
+
+        .member-lov-item:hover {
+            background: #f8fafc;
+        }
+
+        .member-lov-item.is-active {
+            background: #eff6ff;
+        }
+
+        .member-lov-item:focus-visible {
+            outline: none;
+            background: #f8fafc;
+        }
+
+        .member-lov-item-code {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .member-lov-item.is-active .member-lov-item-code {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .member-lov-item-name {
+            display: block;
+            margin-top: 0.2rem;
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.45;
+        }
+
+        .member-lov-item-name.is-hidden {
+            display: none;
+        }
+
+        .member-lov-empty {
+            padding: 1rem;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .member-single-lov {
+            position: relative;
+        }
+
+        .member-single-lov-panel {
+            position: absolute;
+            top: calc(100% + 0.65rem);
+            left: 0;
+            right: 0;
+            z-index: 22;
+            border: 1px solid #dbe4f0;
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
+            overflow: hidden;
+            transform-origin: top center;
+            animation: memberLovFadeIn 0.18s ease;
+        }
+
+        .member-single-lov-list {
+            max-height: 240px;
+            overflow: auto;
+            padding: 0.4rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .member-single-lov-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: transparent;
+            padding: 0.8rem 1rem;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #334155;
+            transition: background-color 0.16s ease, color 0.16s ease;
+        }
+
+        .member-single-lov-item:hover,
+        .member-single-lov-item:focus-visible {
+            background: #f8fafc;
+            outline: none;
+            color: var(--admin-ink);
+        }
+
+        .member-single-lov-item.is-active {
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+
+        .member-single-lov-item::after {
+            content: "✓";
+            font-size: 14px;
+            font-weight: 700;
+            color: #2563eb;
+            opacity: 0;
+            transition: opacity 0.16s ease;
+        }
+
+        .member-single-lov-item.is-active::after {
+            opacity: 1;
+        }
+
+        .member-color-lov-value {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .member-color-lov-swatch {
+            width: 1.05rem;
+            height: 1.05rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.96);
+            box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.35);
+        }
+
+        .member-color-lov-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .member-inline-field {
+            box-sizing: border-box;
+            height: var(--admin-field-height);
+            display: flex;
+            align-items: center;
+        }
+
+        @keyframes memberLovFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .org-field-input:focus,
+        .org-field-textarea:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+        }
+
+        .member-field-error .org-field-label {
+            color: #dc2626;
+        }
+
+        .org-field-input.is-error,
+        .member-lov-trigger.is-error {
+            border-color: #fca5a5;
+            color: #dc2626;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+            background: linear-gradient(180deg, #ffffff, #fef2f2);
+        }
+
+        .member-field-error .member-lov-value,
+        .member-field-error .member-lov-trigger i,
+        .org-field-input.is-error::placeholder {
+            color: #dc2626;
+        }
+
+        .is-error-shake {
+            animation: memberFieldShake 0.28s ease;
+        }
+
+        @keyframes memberFieldShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-2px); }
+        }
+
+        .org-field-textarea {
+            min-height: 120px;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        .org-status-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12);
+        }
+
+        .org-status-dot.is-active {
+            background: #22c55e;
+        }
+
+        .org-status-dot.is-inactive {
+            background: #94a3b8;
+        }
+
+        .org-view-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .org-view-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .org-view-card {
+            box-sizing: border-box;
+            border: 1px solid #dbe4f0;
+            border-radius: var(--admin-field-radius);
+            background: #ffffff;
+            height: var(--admin-field-height);
+            display: flex;
+            align-items: center;
+            padding: var(--admin-field-py) var(--admin-field-px);
+        }
+
+        .org-status-edit-card {
+            box-sizing: border-box;
+            height: var(--admin-field-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid #dbe4f0;
+            border-radius: var(--admin-field-radius);
+            padding: 0.55rem var(--admin-field-px);
+            background: #ffffff;
+        }
+
+        .org-status-edit-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .org-view-value {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--admin-ink);
+            margin: 0;
+        }
+
+        .org-view-value.text-base {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .org-view-value.is-readonly,
+        .org-view-text.is-readonly {
+            color: #64748b;
+        }
+
+        .org-view-text {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+
+        .member-panel-card {
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+        }
+
+        .member-panel-stack {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-detail-drawer-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            pointer-events: none;
+        }
+
+        .member-detail-drawer-layer.is-open {
+            pointer-events: auto;
+        }
+
+        .member-detail-drawer-layer.is-closing {
+            pointer-events: none;
+        }
+
+        .member-detail-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(241, 245, 249, 0.68);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.26s ease;
+        }
+
+        .member-detail-drawer-layer.is-open .member-detail-backdrop {
+            opacity: 1;
+        }
+
+        .member-detail-drawer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: min(760px, 100vw);
+            height: 100vh;
+            overflow: auto;
+            padding: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.99));
+            border-left: 1px solid #dbe4f0;
+            box-shadow: -24px 0 48px rgba(15, 23, 42, 0.08);
+            transform: translateX(100%);
+            transition: transform 0.34s cubic-bezier(.22, 1, .36, 1);
+            will-change: transform;
+        }
+
+        .member-detail-drawer-layer.is-open .member-detail-drawer {
+            transform: translateX(0);
+        }
+
+        .member-detail-close-btn {
+            position: absolute;
+            top: 50%;
+            right: calc(min(760px, 100vw) + 1rem);
+            transform: translateY(-50%);
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.48);
+            transition: opacity 0.08s ease;
+        }
+
+        .member-detail-drawer-layer.is-closing .member-detail-close-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .member-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .member-table th {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #6b7c93;
+            font-weight: 700;
+            background: linear-gradient(180deg, #fbfdff, #f8fafc);
+        }
+
+        .member-table th,
+        .member-table td {
+            padding: 1.05rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .member-table td {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.45;
+            color: var(--admin-ink);
+        }
+
+        .member-table tbody td:nth-child(2) {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .member-table tbody td:nth-child(3),
+        .member-table tbody td:nth-child(5) {
+            font-size: 15px;
+            color: #475569;
+            font-weight: 400;
+        }
+
+        .member-table tbody td:nth-child(6) {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .member-table tbody td:nth-child(7) {
+            font-variant-numeric: tabular-nums;
+            color: var(--admin-ink);
+            font-weight: 500;
+        }
+
+        .member-table th:last-child,
+        .member-table td:last-child {
+            width: 3.5rem;
+            padding-left: 0.45rem;
+            padding-right: 0.65rem;
+            text-align: right;
+        }
+
+        .member-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .member-table tbody tr {
+            transition: background-color 0.16s ease;
+        }
+
+        .member-table tbody tr.is-clickable {
+            cursor: pointer;
+        }
+
+        .member-table tbody tr.is-clickable:hover {
+            background: #fbfdff;
+        }
+
+        .member-table code {
+            display: inline-flex;
+            align-items: center;
+            min-height: 1.8rem;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--admin-ink);
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border: 1px solid #dbe4f0;
+            border-radius: 9999px;
+            padding: 0.18rem 0.58rem;
+        }
+
+        .member-color-chip {
+            width: 1.15rem;
+            height: 1.15rem;
+            border-radius: 9999px;
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.35);
+            vertical-align: middle;
+        }
+
+        .member-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .member-inline-btn {
+            border: 1px solid transparent;
+            background: transparent;
+            color: #475569;
+            transition: all 0.18s ease;
+        }
+
+        .member-inline-btn:hover {
+            border-color: #93c5fd;
+            border-radius: 1rem;
+            color: #1d4ed8;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .admin-toast {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: min(420px, calc(100vw - 2rem));
+            border: 1px solid #bfdbfe;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 0.95rem 1rem;
+            color: #1e3a8a;
+            box-shadow: 0 18px 42px rgba(37, 99, 235, 0.18);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .admin-toast.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .admin-toast-icon {
+            width: 2rem;
+            height: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background: #dbeafe;
+            color: #2563eb;
+            flex-shrink: 0;
+        }
+
+        .admin-toast-copy {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .member-row-actions .member-inline-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: none;
+            transition: none;
+        }
+
+        .member-table tbody tr:hover .member-row-actions .member-inline-btn,
+        .member-table tbody tr:focus-within .member-row-actions .member-inline-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .org-code-input {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            border: 1px solid #dbe4f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .org-code-prefix {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.9rem 1rem;
+            background: #f1f5f9;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 700;
+            border-right: 1px solid #dbe4f0;
+            white-space: nowrap;
+        }
+
+        .org-code-suffix {
+            border: 0;
+            border-radius: 0;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="admin-shell">
+        <div class="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
+            <section class="space-y-6">
+                <div class="rounded-[28px] border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-500">Standalone Mockup</p>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button type="button" class="admin-tab-btn is-active rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="org">Khối / Phòng / Nhóm / Users</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="roles">Vai trò & quyền</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="states">Workflow / State</button>
+                        <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="logs">Nhật ký hệ thống</button>
+                    </div>
+                </div>
+
+                <div class="admin-panel" data-admin-panel="org"></div>
+                <div class="admin-panel" data-admin-panel="roles"></div>
+                <div class="admin-panel" data-admin-panel="states"></div>
+                <div class="admin-panel" data-admin-panel="logs"></div>
+            </section>
+        </div>
+    </main>
+    <div id="adminToast" class="admin-toast" aria-live="polite" aria-atomic="true">
+        <span class="admin-toast-icon"><i class="fa-solid fa-check"></i></span>
+        <span id="adminToastCopy" class="admin-toast-copy"></span>
+    </div>
+
+    <script>
+let currentAdminTab = 'org';
+        let currentOrgSelection = { type: 'block', id: 'blk_db' };
+        let currentOrgDetailMode = 'view';
+        let currentOrgRightPanel = 'members';
+        let currentMemberEditId = null;
+        let currentMemberDraft = null;
+        let currentMemberMode = 'view';
+        let isMemberTeamLovOpen = false;
+        let suppressMemberTeamLovToggle = false;
+        let openMemberSingleLov = null;
+        let adminToastTimeout = null;
+        let memberDrawerCloseTimeout = null;
+        let shouldAnimateMemberDrawer = false;
+        let isCreatingOrgSelection = false;
+        let currentOrgDraft = null;
+
+        const ADMIN_SEED = {
+            blocks: [
+                { id: 'blk_db', code: 'DB', name: 'Digital Banking', display_order: 1, is_active: true },
+                { id: 'blk_rb', code: 'RB', name: 'Retail Banking', display_order: 2, is_active: true }
+            ],
+            departments: [
+                { id: 'dep_web', block_id: 'blk_db', code: 'WEB', name: 'Website', display_order: 1, is_active: true },
+                { id: 'dep_app', block_id: 'blk_db', code: 'APP', name: 'Mobile App', display_order: 2, is_active: true },
+                { id: 'dep_sales', block_id: 'blk_rb', code: 'SALES', name: 'Sales Portal', display_order: 1, is_active: true }
+            ],
+            teams: [
+                { id: 'team_po_001', department_id: 'dep_web', code: 'PO', name: 'Product Owner', leader_user_id: 'U0001', display_order: 1, is_active: true },
+                { id: 'team_dev_001', department_id: 'dep_web', code: 'DEV', name: 'Developer', leader_user_id: 'U0007', display_order: 2, is_active: true },
+                { id: 'team_app_001', department_id: 'dep_app', code: 'UX', name: 'App Experience', leader_user_id: 'U0003', display_order: 1, is_active: true },
+                { id: 'team_sales_001', department_id: 'dep_sales', code: 'OPS', name: 'Sales Ops', leader_user_id: 'U0016', display_order: 1, is_active: true }
+            ],
+            states: [
+                { id: 'st_backlog', code: 'BACKLOG', label: 'Backlog', description: 'Cong viec moi tao, chua duoc xu ly.', color_theme: 'slate', display_order: 1, is_active: true },
+                { id: 'st_in_progress', code: 'IN_PROGRESS', label: 'In Progress', description: 'Cong viec dang duoc phan cong va thuc hien.', color_theme: 'blue', display_order: 2, is_active: true },
+                { id: 'st_in_review', code: 'IN_REVIEW', label: 'In Review', description: 'Cong viec da lam xong va dang cho review hoac xac nhan.', color_theme: 'indigo', display_order: 3, is_active: true },
+                { id: 'st_done', code: 'DONE', label: 'Done', description: 'Cong viec da hoan thanh va ban giao.', color_theme: 'emerald', display_order: 4, is_active: true },
+                { id: 'st_pending', code: 'PENDING', label: 'Pending', description: 'Cong viec dang bi tam dung hoac cho phu thuoc.', color_theme: 'orange', display_order: 5, is_active: true },
+                { id: 'st_cancel', code: 'CANCEL', label: 'Cancel', description: 'Cong viec da bi huy bo, khong tiep tuc thuc hien.', color_theme: 'red', display_order: 6, is_active: true }
+            ],
+            jobTitles: [
+                { id: 'job_head', code: 'HEAD', name: 'Head', display_order: 1, is_active: true },
+                { id: 'job_po', code: 'PO', name: 'PO', display_order: 2, is_active: true },
+                { id: 'job_ux', code: 'UX', name: 'UX', display_order: 3, is_active: true },
+                { id: 'job_dev_manager', code: 'DEV_MANAGER', name: 'DEV Manager', display_order: 4, is_active: true },
+                { id: 'job_be', code: 'BE', name: 'BE', display_order: 5, is_active: true },
+                { id: 'job_fe', code: 'FE', name: 'FE', display_order: 6, is_active: true },
+                { id: 'job_qc', code: 'QC', name: 'QC', display_order: 7, is_active: true }
+            ],
+            users: [
+                { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'job_head', color: '#2563EB', sort_order: 1, is_active: true },
+                { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'job_po', color: '#DB2777', sort_order: 2, is_active: true },
+                { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'job_ux', color: '#16A34A', sort_order: 3, is_active: true },
+                { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'job_dev_manager', color: '#B45309', sort_order: 7, is_active: true },
+                { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'job_be', color: '#DC2626', sort_order: 9, is_active: true },
+                { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'job_fe', color: '#0284C7', sort_order: 10, is_active: true },
+                { id: 'U0015', username: 'linh.nguyen', email: 'linh.nguyen@vib.com.vn', full_name: 'Linh', job_title_id: 'job_qc', color: '#7C3AED', sort_order: 15, is_active: false },
+                { id: 'U0016', username: 'mai.tran', email: 'mai.tran@vib.com.vn', full_name: 'Mai', job_title_id: 'job_po', color: '#0f766e', sort_order: 16, is_active: true },
+                { id: 'U0017', username: 'son.ngo', email: 'son.ngo@vib.com.vn', full_name: 'Sơn', job_title_id: 'job_fe', color: '#9333ea', sort_order: 17, is_active: true }
+            ],
+            userTeams: [
+                { id: 'ut_001', user_id: 'U0001', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_002', user_id: 'U0002', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_003', user_id: 'U0003', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_004', user_id: 'U0007', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_005', user_id: 'U0009', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_006', user_id: 'U0010', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_007', user_id: 'U0016', team_id: 'team_sales_001', is_primary: true, is_active: true },
+                { id: 'ut_008', user_id: 'U0017', team_id: 'team_app_001', is_primary: true, is_active: true }
+            ],
+            roles: [
+                { id: 'role_super_admin', code: 'SUPER_ADMIN', name: 'Super Admin', scope_type: 'GLOBAL', is_system: true, is_active: true },
+                { id: 'role_manager', code: 'MANAGER', name: 'Manager', scope_type: 'TEAM', is_system: true, is_active: true },
+                { id: 'role_member', code: 'MEMBER', name: 'Member', scope_type: 'TEAM', is_system: true, is_active: true },
+                { id: 'role_intern', code: 'INTERN', name: 'Intern', scope_type: 'TEAM', is_system: true, is_active: true },
+                { id: 'role_viewer', code: 'VIEWER', name: 'Viewer', scope_type: 'TEAM', is_system: true, is_active: true }
+            ],
+            permissions: [
+                { id: 'perm_view_board', code: 'VIEW_BOARD', name: 'View Board' },
+                { id: 'perm_create_task', code: 'CREATE_TASK', name: 'Create Task' },
+                { id: 'perm_edit_task', code: 'EDIT_TASK', name: 'Edit Task' },
+                { id: 'perm_move_task', code: 'MOVE_TASK', name: 'Move Task' },
+                { id: 'perm_delete_task', code: 'DELETE_TASK', name: 'Delete Task' },
+                { id: 'perm_manage_users', code: 'MANAGE_USERS', name: 'Manage Users' },
+                { id: 'perm_manage_org', code: 'MANAGE_ORG', name: 'Manage Org' },
+                { id: 'perm_manage_roles', code: 'MANAGE_ROLES', name: 'Manage Roles' },
+                { id: 'perm_manage_states', code: 'MANAGE_STATES', name: 'Manage States' },
+                { id: 'perm_view_audit_log', code: 'VIEW_AUDIT_LOG', name: 'View Audit Log' }
+            ],
+            rolePermissions: [
+                { role_id: 'role_super_admin', permission_id: 'perm_view_board' },
+                { role_id: 'role_super_admin', permission_id: 'perm_create_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_edit_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_move_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_delete_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_users' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_org' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_roles' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_states' },
+                { role_id: 'role_super_admin', permission_id: 'perm_view_audit_log' },
+                { role_id: 'role_manager', permission_id: 'perm_view_board' },
+                { role_id: 'role_manager', permission_id: 'perm_create_task' },
+                { role_id: 'role_manager', permission_id: 'perm_edit_task' },
+                { role_id: 'role_manager', permission_id: 'perm_move_task' },
+                { role_id: 'role_manager', permission_id: 'perm_delete_task' },
+                { role_id: 'role_member', permission_id: 'perm_view_board' },
+                { role_id: 'role_member', permission_id: 'perm_create_task' },
+                { role_id: 'role_member', permission_id: 'perm_edit_task' },
+                { role_id: 'role_member', permission_id: 'perm_move_task' },
+                { role_id: 'role_intern', permission_id: 'perm_view_board' },
+                { role_id: 'role_intern', permission_id: 'perm_create_task' },
+                { role_id: 'role_viewer', permission_id: 'perm_view_board' }
+            ],
+            userRoleAssignments: [
+                { id: 'ura_001', user_id: 'U0001', role_id: 'role_super_admin', team_id: null, is_active: true },
+                { id: 'ura_002', user_id: 'U0001', role_id: 'role_manager', team_id: 'team_po_001', is_active: true },
+                { id: 'ura_003', user_id: 'U0007', role_id: 'role_manager', team_id: 'team_dev_001', is_active: true },
+                { id: 'ura_004', user_id: 'U0002', role_id: 'role_member', team_id: 'team_po_001', is_active: true },
+                { id: 'ura_005', user_id: 'U0003', role_id: 'role_member', team_id: 'team_po_001', is_active: true },
+                { id: 'ura_006', user_id: 'U0009', role_id: 'role_member', team_id: 'team_dev_001', is_active: true },
+                { id: 'ura_007', user_id: 'U0010', role_id: 'role_member', team_id: 'team_dev_001', is_active: true }
+            ],
+            auditLogs: [
+                { id: 'log_001', time: '19/04 09:20', user: 'an.nguyen', module: 'Workflow', action: 'UPDATE_STATE', detail: 'Đổi wording In Review thành Review' },
+                { id: 'log_002', time: '19/04 09:05', user: 'hieu.phan', module: 'User', action: 'CREATE_USER', detail: 'Tạo user U0015' },
+                { id: 'log_003', time: '19/04 08:30', user: 'an.nguyen', module: 'Permission', action: 'UPDATE_ROLE', detail: 'Cập nhật permission cho MANAGER' }
+            ]
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function adminUserInitials(fullName) {
+            return (fullName || '')
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((part) => part[0]?.toUpperCase() || '')
+                .join('') || 'US';
+        }
+
+        function getSeedBlockById(blockId) {
+            return ADMIN_SEED.blocks.find((item) => item.id === blockId) || null;
+        }
+
+        function getSeedDepartmentById(departmentId) {
+            return ADMIN_SEED.departments.find((item) => item.id === departmentId) || null;
+        }
+
+        function getSeedTeamById(teamId) {
+            return ADMIN_SEED.teams.find((item) => item.id === teamId) || null;
+        }
+
+        function getSeedUserById(userId) {
+            return ADMIN_SEED.users.find((item) => item.id === userId) || null;
+        }
+
+        function getSeedRoleById(roleId) {
+            return ADMIN_SEED.roles.find((item) => item.id === roleId) || null;
+        }
+
+        function getSeedPermissionById(permissionId) {
+            return ADMIN_SEED.permissions.find((item) => item.id === permissionId) || null;
+        }
+
+        function getSeedJobTitleById(jobTitleId) {
+            return ADMIN_SEED.jobTitles.find((item) => item.id === jobTitleId) || null;
+        }
+
+        function getTeamScopedRoles() {
+            return ADMIN_SEED.roles
+                .filter((role) => role.is_active && role.scope_type === 'TEAM');
+        }
+
+        function getTeamRoleAssignmentForUser(userId, teamId) {
+            if (!userId || !teamId) return null;
+            return ADMIN_SEED.userRoleAssignments.find((assignment) => (
+                assignment.user_id === userId &&
+                assignment.team_id === teamId &&
+                assignment.is_active
+            )) || null;
+        }
+
+        function getUserRoleForTeam(userId, teamId) {
+            const assignment = getTeamRoleAssignmentForUser(userId, teamId);
+            return assignment ? getSeedRoleById(assignment.role_id) : null;
+        }
+
+        function getNextDisplayOrder(items, parentKey = null, parentId = null) {
+            const scopedItems = parentKey
+                ? items.filter((item) => item[parentKey] === parentId)
+                : items;
+            return scopedItems.reduce((maxValue, item) => {
+                return Math.max(maxValue, Number(item.display_order) || 0);
+            }, 0) + 1;
+        }
+
+        function setActiveOrgSelection(type, id) {
+            if (memberDrawerCloseTimeout) {
+                clearTimeout(memberDrawerCloseTimeout);
+                memberDrawerCloseTimeout = null;
+            }
+            isCreatingOrgSelection = false;
+            currentOrgDraft = null;
+            currentOrgSelection = { type, id };
+            currentOrgRightPanel = 'info';
+            currentOrgDetailMode = 'view';
+            currentMemberEditId = null;
+            currentMemberDraft = null;
+            currentMemberMode = 'view';
+            renderAdminOrgPanel();
+        }
+
+        function openOrgMembersPanel(type, id) {
+            if (memberDrawerCloseTimeout) {
+                clearTimeout(memberDrawerCloseTimeout);
+                memberDrawerCloseTimeout = null;
+            }
+            isCreatingOrgSelection = false;
+            currentOrgDraft = null;
+            currentOrgSelection = { type, id };
+            currentOrgRightPanel = 'members';
+            currentMemberEditId = null;
+            currentMemberDraft = null;
+            currentMemberMode = 'view';
+            renderAdminOrgPanel();
+        }
+
+        function openOrgMembersFromTree(type, id) {
+            openOrgMembersPanel(type, id);
+        }
+
+        function setOrgDetailMode(mode) {
+            isCreatingOrgSelection = false;
+            currentOrgDraft = null;
+            currentOrgDetailMode = mode;
+            currentOrgRightPanel = 'info';
+            renderAdminOrgPanel();
+        }
+
+        function getOrgTypeLabel(type) {
+            if (type === 'block') return 'Khối';
+            if (type === 'department') return 'Phòng';
+            return 'Nhóm';
+        }
+
+        function getOrgCreatePlaceholders(type) {
+            const typeLabel = getOrgTypeLabel(type).toLowerCase();
+            return {
+                code: `Nhập mã ${typeLabel}`,
+                name: `Nhập tên ${typeLabel}`,
+                order: 'Tự động tăng dần',
+                description: `Nhập mô tả cho ${typeLabel}...`
+            };
+        }
+
+        function buildOrgDraftMeta(type, parentId = null) {
+            if (type === 'block') {
+                return {
+                    type,
+                    entity: {
+                        id: `draft_blk_${Date.now()}`,
+                        code: '',
+                        name: '',
+                        description: '',
+                        display_order: getNextDisplayOrder(ADMIN_SEED.blocks),
+                        is_active: true
+                    },
+                    title: 'Tạo khối mới',
+                    subtitle: '',
+                    parentLabel: 'Root',
+                    stats: '0 phòng'
+                };
+            }
+
+            if (type === 'department') {
+                const block = getSeedBlockById(parentId) || ADMIN_SEED.blocks[0];
+                if (!block) return null;
+                return {
+                    type,
+                    entity: {
+                        id: `draft_dep_${Date.now()}`,
+                        block_id: block.id,
+                        code: '',
+                        name: '',
+                        description: '',
+                        display_order: getNextDisplayOrder(ADMIN_SEED.departments, 'block_id', block.id),
+                        is_active: true
+                    },
+                    title: 'Tạo phòng mới',
+                    subtitle: '',
+                    parentLabel: `${block.code} - ${block.name}`,
+                    stats: '0 nhóm'
+                };
+            }
+
+            const department = getSeedDepartmentById(parentId) || ADMIN_SEED.departments[0];
+            if (!department) return null;
+            const block = getSeedBlockById(department.block_id);
+            return {
+                type,
+                entity: {
+                    id: `draft_team_${Date.now()}`,
+                    department_id: department.id,
+                    code: '',
+                    name: '',
+                    description: '',
+                    leader_user_id: null,
+                    display_order: getNextDisplayOrder(ADMIN_SEED.teams, 'department_id', department.id),
+                    is_active: true
+                },
+                title: 'Tạo nhóm mới',
+                subtitle: '',
+                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'Chưa có phòng',
+                stats: '0 thành viên'
+            };
+        }
+
+        function getDepartmentFullCode(departmentId) {
+            const department = getSeedDepartmentById(departmentId);
+            if (!department) return '';
+            const block = getSeedBlockById(department.block_id);
+            return [block?.code, department.code].filter(Boolean).join('.');
+        }
+
+        function getTeamCodeMeta(teamId) {
+            const team = getSeedTeamById(teamId);
+            if (!team) return { prefix: '', full: '' };
+            const department = getSeedDepartmentById(team.department_id);
+            const block = department ? getSeedBlockById(department.block_id) : null;
+            const prefix = [block?.code, department?.code].filter(Boolean).join('.');
+            return {
+                prefix,
+                full: [prefix, team.code].filter(Boolean).join('.')
+            };
+        }
+
+        function getOrgEntityCodeMeta(selection) {
+            if (!selection?.entity) return { label: '', full: '', prefix: '', suffix: '' };
+            if (selection.type === 'block') {
+                return {
+                    label: 'Mã khối',
+                    full: selection.entity.code || '',
+                    prefix: '',
+                    suffix: selection.entity.code || ''
+                };
+            }
+
+            if (selection.type === 'department') {
+                const blockCode = getSeedBlockById(selection.entity.block_id)?.code || '';
+                const prefix = blockCode ? `${blockCode}.` : '';
+                return {
+                    label: 'Mã phòng hiển thị',
+                    full: getDepartmentFullCode(selection.entity.id),
+                    prefix,
+                    suffix: selection.entity.code || ''
+                };
+            }
+
+            const draftDepartment = getSeedDepartmentById(selection.entity.department_id);
+            const draftBlock = draftDepartment ? getSeedBlockById(draftDepartment.block_id) : null;
+            const draftPrefix = [draftBlock?.code, draftDepartment?.code].filter(Boolean).join('.');
+            const teamMeta = selection.entity.id && !String(selection.entity.id).startsWith('draft_')
+                ? getTeamCodeMeta(selection.entity.id)
+                : {
+                    prefix: draftPrefix,
+                    full: [draftPrefix, selection.entity.code || ''].filter(Boolean).join('.')
+                };
+            return {
+                label: 'Mã nhóm hiển thị',
+                full: teamMeta.full,
+                prefix: teamMeta.prefix ? `${teamMeta.prefix}.` : '',
+                suffix: selection.entity.code || ''
+            };
+        }
+
+        function getUsersForOrgNode(type, id) {
+            if (type === 'team') {
+                return ADMIN_SEED.userTeams
+                    .filter((row) => row.team_id === id && row.is_active)
+                    .map((row) => getSeedUserById(row.user_id))
+                    .filter(Boolean);
+            }
+
+            if (type === 'department') {
+                const teamIds = ADMIN_SEED.teams
+                    .filter((team) => team.department_id === id && team.is_active)
+                    .map((team) => team.id);
+                return ADMIN_SEED.userTeams
+                    .filter((row) => teamIds.includes(row.team_id) && row.is_active)
+                    .map((row) => getSeedUserById(row.user_id))
+                    .filter(Boolean);
+            }
+
+            const departmentIds = ADMIN_SEED.departments
+                .filter((department) => department.block_id === id && department.is_active)
+                .map((department) => department.id);
+            const teamIds = ADMIN_SEED.teams
+                .filter((team) => departmentIds.includes(team.department_id) && team.is_active)
+                .map((team) => team.id);
+            return ADMIN_SEED.userTeams
+                .filter((row) => teamIds.includes(row.team_id) && row.is_active)
+                .map((row) => getSeedUserById(row.user_id))
+                .filter(Boolean);
+        }
+
+        function getScopeTeamIds(type, id) {
+            if (type === 'team') return [id];
+            if (type === 'department') {
+                return ADMIN_SEED.teams
+                    .filter((team) => team.department_id === id && team.is_active)
+                    .map((team) => team.id);
+            }
+            const departmentIds = ADMIN_SEED.departments
+                .filter((department) => department.block_id === id && department.is_active)
+                .map((department) => department.id);
+            return ADMIN_SEED.teams
+                .filter((team) => departmentIds.includes(team.department_id) && team.is_active)
+                .map((team) => team.id);
+        }
+
+        function getMembersForCurrentSelection() {
+            const teamIds = getScopeTeamIds(currentOrgSelection.type, currentOrgSelection.id);
+            return ADMIN_SEED.userTeams
+                .filter((row) => teamIds.includes(row.team_id) && row.is_active)
+                .map((row) => {
+                    const user = getSeedUserById(row.user_id);
+                    return user ? { ...user, team_id: row.team_id, assignment_id: row.id } : null;
+                })
+                .filter(Boolean)
+                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+        }
+
+        function getAvailableTeamsForCurrentSelection() {
+            return getScopeTeamIds(currentOrgSelection.type, currentOrgSelection.id)
+                .map((teamId) => getSeedTeamById(teamId))
+                .filter(Boolean)
+                .sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+        }
+
+        function getAvailableBlocksForCurrentMemberSelection() {
+            const blockIds = [...new Set(
+                getAvailableTeamsForCurrentSelection()
+                    .map((team) => getSeedDepartmentById(team.department_id))
+                    .filter(Boolean)
+                    .map((department) => department.block_id)
+            )];
+
+            return blockIds
+                .map((blockId) => getSeedBlockById(blockId))
+                .filter(Boolean)
+                .sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+        }
+
+        function getAvailableDepartmentsForCurrentMemberSelection(blockId) {
+            const departmentIds = [...new Set(
+                getAvailableTeamsForCurrentSelection()
+                    .map((team) => getSeedDepartmentById(team.department_id))
+                    .filter((department) => department && (!blockId || department.block_id === blockId))
+                    .map((department) => department.id)
+            )];
+
+            return departmentIds
+                .map((departmentId) => getSeedDepartmentById(departmentId))
+                .filter(Boolean)
+                .sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+        }
+
+        function getAvailableScopedTeamsForMemberSelection(blockId, departmentId) {
+            return getAvailableTeamsForCurrentSelection()
+                .filter((team) => {
+                    const department = getSeedDepartmentById(team.department_id);
+                    if (!department) return false;
+                    if (blockId && department.block_id !== blockId) return false;
+                    if (departmentId && department.id !== departmentId) return false;
+                    return true;
+                })
+                .sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+        }
+
+        function setMemberFormMode(mode, userId = null) {
+            if (memberDrawerCloseTimeout) {
+                clearTimeout(memberDrawerCloseTimeout);
+                memberDrawerCloseTimeout = null;
+            }
+            currentMemberMode = mode;
+            currentMemberEditId = userId;
+            if (mode !== 'edit' || userId) currentMemberDraft = null;
+            isMemberTeamLovOpen = false;
+            openMemberSingleLov = null;
+            renderAdminOrgPanel();
+        }
+
+        function closeMemberDetailsDrawer() {
+            const drawerLayer = document.querySelector('.member-detail-drawer-layer.is-open');
+            if (!drawerLayer) {
+                shouldAnimateMemberDrawer = false;
+                currentMemberEditId = null;
+                currentMemberDraft = null;
+                currentMemberMode = 'view';
+                isMemberTeamLovOpen = false;
+                openMemberSingleLov = null;
+                renderAdminOrgPanel();
+                return;
+            }
+            drawerLayer.classList.remove('is-open');
+            drawerLayer.classList.add('is-closing');
+            if (memberDrawerCloseTimeout) clearTimeout(memberDrawerCloseTimeout);
+            memberDrawerCloseTimeout = window.setTimeout(() => {
+                shouldAnimateMemberDrawer = false;
+                currentMemberEditId = null;
+                currentMemberDraft = null;
+                currentMemberMode = 'view';
+                isMemberTeamLovOpen = false;
+                openMemberSingleLov = null;
+                memberDrawerCloseTimeout = null;
+                renderAdminOrgPanel();
+            }, 340);
+        }
+
+        function getMemberRecordById(userId) {
+            const user = getSeedUserById(userId);
+            if (!user) return null;
+            const assignment = ADMIN_SEED.userTeams.find((row) => row.user_id === userId && row.is_active);
+            const roleAssignment = assignment ? getTeamRoleAssignmentForUser(userId, assignment.team_id) : null;
+            return {
+                ...user,
+                team_id: assignment?.team_id || null,
+                assignment_id: assignment?.id || null,
+                role_id: roleAssignment?.role_id || ''
+            };
+        }
+
+        function getNextUserSequence() {
+            return ADMIN_SEED.users.reduce((maxValue, user) => {
+                const numeric = Number(String(user.id || '').replace(/\D/g, '')) || 0;
+                return Math.max(maxValue, numeric);
+            }, 0) + 1;
+        }
+
+        function createMemberDraft() {
+            const nextNum = getNextUserSequence();
+            const padded = String(nextNum).padStart(4, '0');
+            return {
+                id: `U${padded}`,
+                username: `user.${padded}`,
+                email: `user.${padded}@vib.com.vn`,
+                full_name: '',
+                job_title_id: '',
+                team_id: '',
+                assignment_id: null,
+                role_id: 'role_member',
+                color: '#2563EB',
+                sort_order: nextNum,
+                is_active: true
+            };
+        }
+
+        function createMemberForSelection() {
+            currentMemberDraft = createMemberDraft();
+            setMemberFormMode('edit');
+        }
+
+        function saveMemberForm() {
+            const userId = document.getElementById('memberUserId')?.value;
+            const fullName = document.getElementById('memberFullName');
+            const jobTitleId = document.getElementById('memberJobTitleId');
+            const teamId = document.getElementById('memberTeamId');
+            const roleId = document.getElementById('memberRoleId');
+            const color = document.getElementById('memberColor');
+            const sortOrder = document.getElementById('memberSortOrder');
+            const active = document.getElementById('memberActive');
+            const isCreatingMember = !currentMemberEditId;
+            const trimmedFullName = fullName?.value.trim() || '';
+            let user = isCreatingMember ? null : getSeedUserById(userId);
+
+            clearCreateMemberValidation();
+            if (isCreatingMember) {
+                const invalidFields = [];
+                if (!trimmedFullName) invalidFields.push('fullName');
+                if (!(jobTitleId?.value || '').trim()) invalidFields.push('jobTitle');
+                if (!(teamId?.value || '').trim()) invalidFields.push('team');
+                if (invalidFields.length) {
+                    invalidFields.forEach(markCreateMemberFieldError);
+                    return;
+                }
+            }
+
+            if (isCreatingMember) {
+                const draft = currentMemberDraft || createMemberDraft();
+                const newUser = {
+                    id: draft.id,
+                    username: draft.username,
+                    email: draft.email,
+                    full_name: trimmedFullName,
+                    job_title_id: jobTitleId?.value || '',
+                    color: color?.value.trim() || draft.color,
+                    sort_order: Number(sortOrder?.value) || draft.sort_order,
+                    is_active: active ? active.checked : true
+                };
+                ADMIN_SEED.users.push(newUser);
+                user = newUser;
+            }
+
+            if (!user) return;
+
+            if (fullName) user.full_name = trimmedFullName;
+            if (jobTitleId) user.job_title_id = jobTitleId.value || user.job_title_id;
+            if (color) user.color = color.value.trim() || user.color;
+            if (sortOrder) user.sort_order = Number(sortOrder.value) || user.sort_order;
+            if (active) user.is_active = active.checked;
+
+            const selectedTeamId = teamId?.value || null;
+            const selectedRoleId = roleId?.value || '';
+            let assignment = ADMIN_SEED.userTeams.find((row) => row.user_id === userId && row.is_active);
+            const previousTeamId = assignment?.team_id || null;
+            if (assignment && selectedTeamId) {
+                assignment.team_id = selectedTeamId;
+            } else if (!assignment && selectedTeamId) {
+                ADMIN_SEED.userTeams.push({
+                    id: `ut_${Date.now()}`,
+                    user_id: userId,
+                    team_id: selectedTeamId,
+                    is_primary: true,
+                    is_active: true
+                });
+            }
+
+            const teamAssignments = ADMIN_SEED.userRoleAssignments.filter((row) => row.user_id === userId && row.is_active && row.team_id);
+            if (previousTeamId && selectedTeamId && previousTeamId !== selectedTeamId) {
+                teamAssignments
+                    .filter((row) => row.team_id === previousTeamId)
+                    .forEach((row) => { row.is_active = false; });
+            }
+
+            const targetRoleAssignment = getTeamRoleAssignmentForUser(userId, selectedTeamId);
+            if (selectedRoleId && selectedTeamId) {
+                if (targetRoleAssignment) {
+                    targetRoleAssignment.role_id = selectedRoleId;
+                } else {
+                    ADMIN_SEED.userRoleAssignments.push({
+                        id: `ura_${Date.now()}`,
+                        user_id: userId,
+                        role_id: selectedRoleId,
+                        team_id: selectedTeamId,
+                        is_active: true
+                    });
+                }
+            } else if (selectedTeamId) {
+                teamAssignments
+                    .filter((row) => row.team_id === selectedTeamId)
+                    .forEach((row) => { row.is_active = false; });
+            }
+
+            currentOrgRightPanel = 'members';
+            currentMemberMode = 'view';
+            currentMemberEditId = user.id;
+            currentMemberDraft = null;
+            shouldAnimateMemberDrawer = false;
+            renderAdminOrgPanel();
+            if (isCreatingMember) {
+                showAdminToast(`Tạo mới thành viên ${user.full_name || user.id}`);
+            }
+        }
+
+        function markCreateMemberFieldError(fieldKey) {
+            const config = {
+                fullName: document.getElementById('memberFullName'),
+                jobTitle: document.querySelector('[data-member-single-lov-trigger="jobTitle"]'),
+                team: document.querySelector('[data-member-team-lov-trigger]')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            const wrapper = field.closest('label');
+            wrapper?.classList.add('member-field-error');
+            field.classList.remove('is-error-shake');
+            void field.offsetWidth;
+            field.classList.add('is-error', 'is-error-shake');
+            window.setTimeout(() => field.classList.remove('is-error-shake'), 320);
+        }
+
+        function clearCreateMemberFieldError(fieldKey) {
+            const config = {
+                fullName: document.getElementById('memberFullName'),
+                jobTitle: document.querySelector('[data-member-single-lov-trigger="jobTitle"]'),
+                team: document.querySelector('[data-member-team-lov-trigger]')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            field.closest('label')?.classList.remove('member-field-error');
+            field.classList.remove('is-error', 'is-error-shake');
+        }
+
+        function clearCreateMemberValidation() {
+            ['fullName', 'jobTitle', 'team'].forEach(clearCreateMemberFieldError);
+        }
+
+        function showAdminToast(message) {
+            const toast = document.getElementById('adminToast');
+            const copy = document.getElementById('adminToastCopy');
+            if (!toast || !copy) return;
+            copy.textContent = message;
+            toast.classList.add('is-visible');
+            if (adminToastTimeout) clearTimeout(adminToastTimeout);
+            adminToastTimeout = setTimeout(() => {
+                toast.classList.remove('is-visible');
+            }, 2600);
+        }
+
+        function toggleMemberActive() {
+            const checkbox = document.getElementById('memberActive');
+            const toggle = document.getElementById('memberActiveToggle');
+            const label = document.getElementById('memberActiveLabel');
+            if (!checkbox || !toggle || !label) return;
+
+            checkbox.checked = !checkbox.checked;
+            toggle.classList.toggle('is-on', checkbox.checked);
+            toggle.classList.toggle('is-off', !checkbox.checked);
+            label.textContent = checkbox.checked ? 'Active' : 'Inactive';
+        }
+
+        function syncMemberColorPreview() {
+            const colorInput = document.getElementById('memberColor');
+            const colorPreview = document.getElementById('memberColorPreview');
+            const colorValueNode = document.getElementById('memberColorValue');
+            if (!colorInput || !colorPreview) return;
+
+            const colorValue = colorInput.value.trim() || '#94a3b8';
+            colorPreview.style.background = colorValue;
+            if (colorValueNode) {
+                colorValueNode.textContent = colorValue;
+                colorValueNode.style.color = colorValue;
+            }
+        }
+
+        function getMemberTeamLovValue(teamId) {
+            if (!teamId) return 'Chọn khối / phòng / nhóm';
+            return getTeamFullCode(teamId);
+        }
+
+        function getMemberColorOptions() {
+            return [...new Set(ADMIN_SEED.users.map((user) => user.color).filter(Boolean))]
+                .map((color) => ({ id: color, code: color }))
+                .sort((a, b) => a.code.localeCompare(b.code));
+        }
+
+        function syncMemberRoleByTeam(teamId) {
+            const roleSelect = document.getElementById('memberRoleId');
+            const roleValue = document.getElementById('memberRoleValue');
+            const userId = document.getElementById('memberUserId')?.value;
+            if (!roleSelect || !roleValue || !userId) return;
+
+            const roleAssignment = getTeamRoleAssignmentForUser(userId, teamId);
+            if (currentMemberMode === 'edit' && !currentMemberEditId && currentMemberDraft) {
+                roleSelect.value = roleAssignment?.role_id || currentMemberDraft.role_id || 'role_member';
+                currentMemberDraft.role_id = roleSelect.value;
+                roleValue.textContent = getSeedRoleById(roleSelect.value)?.name || 'Member';
+                roleValue.classList.remove('member-lov-placeholder');
+                return;
+            }
+
+            roleSelect.value = roleAssignment?.role_id || '';
+            roleValue.textContent = getSeedRoleById(roleSelect.value)?.name || 'Chưa gán quyền';
+            roleValue.classList.toggle('member-lov-placeholder', !roleSelect.value);
+        }
+
+        function syncMemberGroupSelectors(preferredTeamId = null, options = {}) {
+            const blockInput = document.getElementById('memberBlockId');
+            const departmentInput = document.getElementById('memberDepartmentId');
+            const teamInput = document.getElementById('memberTeamId');
+            const triggerValue = document.getElementById('memberTeamLovValue');
+            const triggerButton = document.querySelector('[data-member-team-lov-trigger]');
+            const blockList = document.getElementById('memberTeamLovBlocks');
+            const departmentList = document.getElementById('memberTeamLovDepartments');
+            const teamList = document.getElementById('memberTeamLovTeams');
+            const panel = document.getElementById('memberTeamLovPanel');
+            if (!blockInput || !departmentInput || !teamInput || !triggerValue || !triggerButton || !blockList || !departmentList || !teamList || !panel) return;
+
+            const { keepTeamSelection = true } = options;
+            const isCreatingMember = currentMemberMode === 'edit' && !currentMemberEditId;
+            const availableBlocks = getAvailableBlocksForCurrentMemberSelection();
+            const scopedTeams = getAvailableTeamsForCurrentSelection();
+            const activeTeam = scopedTeams.find((team) => team.id === preferredTeamId)
+                || scopedTeams.find((team) => team.id === teamInput.value)
+                || (isCreatingMember ? null : scopedTeams[0] || null);
+            const activeDepartment = activeTeam ? getSeedDepartmentById(activeTeam.department_id) : null;
+
+            let selectedBlockId = blockInput.value || activeDepartment?.block_id || availableBlocks[0]?.id || '';
+            if (!availableBlocks.some((block) => block.id === selectedBlockId)) {
+                selectedBlockId = activeDepartment?.block_id || availableBlocks[0]?.id || '';
+            }
+            blockInput.value = selectedBlockId;
+
+            const availableDepartments = getAvailableDepartmentsForCurrentMemberSelection(selectedBlockId);
+            let selectedDepartmentId = departmentInput.value || activeDepartment?.id || availableDepartments[0]?.id || '';
+            if (!availableDepartments.some((department) => department.id === selectedDepartmentId)) {
+                selectedDepartmentId = activeDepartment?.id || availableDepartments[0]?.id || '';
+            }
+            departmentInput.value = selectedDepartmentId;
+
+            const availableTeams = getAvailableScopedTeamsForMemberSelection(selectedBlockId, selectedDepartmentId);
+            let selectedTeamId = keepTeamSelection
+                ? (preferredTeamId || teamInput.value || activeTeam?.id || (isCreatingMember ? '' : availableTeams[0]?.id || ''))
+                : (preferredTeamId || teamInput.value || '');
+            if (!availableTeams.some((team) => team.id === selectedTeamId)) {
+                selectedTeamId = keepTeamSelection ? (activeTeam?.id || (isCreatingMember ? '' : availableTeams[0]?.id || '')) : '';
+            }
+            teamInput.value = selectedTeamId;
+
+            triggerValue.textContent = getMemberTeamLovValue(selectedTeamId);
+            triggerValue.classList.toggle('member-lov-placeholder', !selectedTeamId);
+            panel.classList.toggle('hidden', !isMemberTeamLovOpen);
+            triggerButton.classList.toggle('is-open', isMemberTeamLovOpen);
+
+            blockList.innerHTML = availableBlocks.map((block) => `
+                <button type="button" class="member-lov-item ${selectedBlockId === block.id ? 'is-active' : ''}" onclick="selectMemberLovBlock('${escapeHtml(block.id)}', event)">
+                    <span class="member-lov-item-code">${escapeHtml(block.code)}</span>
+                    <span class="member-lov-item-name is-hidden"></span>
+                </button>
+            `).join('') || '<div class="member-lov-empty">Chưa có khối khả dụng</div>';
+
+            departmentList.innerHTML = availableDepartments.map((department) => `
+                <button type="button" class="member-lov-item ${selectedDepartmentId === department.id ? 'is-active' : ''}" onclick="selectMemberLovDepartment('${escapeHtml(department.id)}', event)">
+                    <span class="member-lov-item-code">${escapeHtml(department.code)}</span>
+                    <span class="member-lov-item-name is-hidden"></span>
+                </button>
+            `).join('') || '<div class="member-lov-empty">Chưa có phòng khả dụng</div>';
+
+            teamList.innerHTML = availableTeams.map((team) => `
+                <button type="button" class="member-lov-item ${selectedTeamId === team.id ? 'is-active' : ''}" onclick="selectMemberLovTeam('${escapeHtml(team.id)}', event)">
+                    <span class="member-lov-item-code">${escapeHtml(team.code)}</span>
+                    <span class="member-lov-item-name is-hidden"></span>
+                </button>
+            `).join('') || '<div class="member-lov-empty">Chưa có nhóm khả dụng</div>';
+
+            syncMemberRoleByTeam(selectedTeamId);
+        }
+
+        function toggleMemberTeamLov(event) {
+            event?.stopPropagation?.();
+            if (suppressMemberTeamLovToggle) return;
+            const selectedTeamId = document.getElementById('memberTeamId')?.value || '';
+            if (isMemberTeamLovOpen && !selectedTeamId) {
+                isMemberTeamLovOpen = true;
+            } else {
+                isMemberTeamLovOpen = !isMemberTeamLovOpen;
+            }
+            syncMemberGroupSelectors();
+        }
+
+        function closeMemberTeamLov() {
+            isMemberTeamLovOpen = false;
+            document.getElementById('memberTeamLovPanel')?.classList.add('hidden');
+            document.querySelector('[data-member-team-lov-trigger]')?.classList.remove('is-open');
+        }
+
+        function toggleMemberSingleLov(kind, event) {
+            event?.stopPropagation?.();
+            openMemberSingleLov = openMemberSingleLov === kind ? null : kind;
+            syncMemberSingleLovState();
+        }
+
+        function closeMemberSingleLov() {
+            openMemberSingleLov = null;
+            syncMemberSingleLovState();
+        }
+
+        function syncMemberSingleLovState() {
+            ['jobTitle', 'role', 'color'].forEach((kind) => {
+                const trigger = document.querySelector(`[data-member-single-lov-trigger="${kind}"]`);
+                const panel = document.querySelector(`[data-member-single-lov-panel="${kind}"]`);
+                if (!trigger || !panel) return;
+                const isOpen = openMemberSingleLov === kind;
+                trigger.classList.toggle('is-open', isOpen);
+                panel.classList.toggle('hidden', !isOpen);
+                syncMemberSingleLovSelection(kind);
+            });
+        }
+
+        function syncMemberSingleLovSelection(kind) {
+            const inputId = kind === 'jobTitle' ? 'memberJobTitleId' : kind === 'role' ? 'memberRoleId' : 'memberColor';
+            const input = document.getElementById(inputId);
+            if (!input) return;
+
+            const selectedValue = input.value || '';
+            document.querySelectorAll(`[data-member-single-lov-option="${kind}"]`).forEach((option) => {
+                option.classList.toggle('is-active', option.dataset.value === selectedValue);
+            });
+        }
+
+        function selectMemberSingleLov(kind, value, label, event) {
+            event?.stopPropagation?.();
+            const input = document.getElementById(kind === 'jobTitle' ? 'memberJobTitleId' : 'memberRoleId');
+            const valueNode = document.getElementById(kind === 'jobTitle' ? 'memberJobTitleValue' : 'memberRoleValue');
+            if (!input || !valueNode) return;
+
+            input.value = value;
+            valueNode.textContent = label;
+            valueNode.classList.toggle('member-lov-placeholder', !value);
+            if (kind === 'jobTitle' && value) clearCreateMemberFieldError('jobTitle');
+            syncMemberSingleLovSelection(kind);
+            closeMemberSingleLov();
+        }
+
+        function selectMemberColorLov(colorValue, event) {
+            event?.stopPropagation?.();
+            const input = document.getElementById('memberColor');
+            const preview = document.getElementById('memberColorPreview');
+            const valueNode = document.getElementById('memberColorValue');
+            if (!input || !preview || !valueNode) return;
+
+            input.value = colorValue;
+            preview.style.background = colorValue;
+            valueNode.textContent = colorValue;
+            valueNode.style.color = colorValue;
+            syncMemberSingleLovSelection('color');
+            closeMemberSingleLov();
+        }
+
+        function selectMemberLovBlock(blockId, event) {
+            event?.stopPropagation?.();
+            const blockInput = document.getElementById('memberBlockId');
+            const departmentInput = document.getElementById('memberDepartmentId');
+            const teamInput = document.getElementById('memberTeamId');
+            if (!blockInput || !departmentInput || !teamInput) return;
+
+            blockInput.value = blockId;
+            departmentInput.value = '';
+            teamInput.value = '';
+            isMemberTeamLovOpen = true;
+            syncMemberGroupSelectors(null, { keepTeamSelection: false });
+        }
+
+        function selectMemberLovDepartment(departmentId, event) {
+            event?.stopPropagation?.();
+            const departmentInput = document.getElementById('memberDepartmentId');
+            const teamInput = document.getElementById('memberTeamId');
+            if (!departmentInput || !teamInput) return;
+
+            departmentInput.value = departmentId;
+            teamInput.value = '';
+            isMemberTeamLovOpen = true;
+            syncMemberGroupSelectors(null, { keepTeamSelection: false });
+        }
+
+        function selectMemberLovTeam(teamId, event) {
+            event?.stopPropagation?.();
+            event?.preventDefault?.();
+            const teamInput = document.getElementById('memberTeamId');
+            if (!teamInput) return;
+
+            suppressMemberTeamLovToggle = true;
+            teamInput.value = teamId;
+            if (teamId) clearCreateMemberFieldError('team');
+            closeMemberTeamLov();
+            syncMemberGroupSelectors(teamId);
+            window.setTimeout(() => {
+                suppressMemberTeamLovToggle = false;
+            }, 0);
+        }
+
+        function openOrgMembersPage(type, id) {
+            const url = new URL('./08. Org Members.html', window.location.href);
+            url.searchParams.set('type', type);
+            url.searchParams.set('id', id);
+            window.open(url.toString(), '_blank', 'noopener');
+        }
+
+        function getOrgSelectionMeta() {
+            if (isCreatingOrgSelection && currentOrgDraft) {
+                return currentOrgDraft;
+            }
+            const { type, id } = currentOrgSelection;
+            if (type === 'block') {
+                const block = getSeedBlockById(id);
+                if (!block) return null;
+                return {
+                    type,
+                    entity: block,
+                    title: 'Thông tin khối',
+                    subtitle: 'Chỉnh sửa thông tin khối và định hướng các phòng ban trực thuộc.',
+                    parentLabel: 'Root',
+                    stats: `${ADMIN_SEED.departments.filter((item) => item.block_id === id).length} phòng`
+                };
+            }
+
+            if (type === 'department') {
+                const department = getSeedDepartmentById(id);
+                if (!department) return null;
+                const block = getSeedBlockById(department.block_id);
+                return {
+                    type,
+                    entity: department,
+                    title: 'Thông tin phòng',
+                    subtitle: 'Cập nhật phòng ban và quản lý các nhóm trực thuộc.',
+                    parentLabel: block ? `${block.code} - ${block.name}` : 'Chưa có khối',
+                    stats: `${ADMIN_SEED.teams.filter((item) => item.department_id === id).length} nhóm`
+                };
+            }
+
+            const team = getSeedTeamById(id);
+            if (!team) return null;
+            const department = getSeedDepartmentById(team.department_id);
+            const block = department ? getSeedBlockById(department.block_id) : null;
+            return {
+                type,
+                entity: team,
+                title: 'Thông tin nhóm',
+                subtitle: 'Điều chỉnh nhóm, người phụ trách và cấu trúc triển khai.',
+                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'Chưa có phòng',
+                stats: `${ADMIN_SEED.userTeams.filter((item) => item.team_id === id && item.is_active).length} thành viên`
+            };
+        }
+
+        function createOrgEntity(type, parentId = null) {
+            const draftMeta = buildOrgDraftMeta(type, parentId);
+            if (!draftMeta) return;
+            currentOrgDraft = draftMeta;
+            currentOrgRightPanel = 'info';
+            currentOrgDetailMode = 'edit';
+            isCreatingOrgSelection = true;
+            renderAdminOrgPanel();
+        }
+
+        function createOrgEntityFromSelection(type) {
+            if (type === 'block') {
+                createOrgEntity('block');
+                return;
+            }
+
+            if (type === 'department') {
+                const targetBlockId = currentOrgSelection.type === 'block'
+                    ? currentOrgSelection.id
+                    : currentOrgSelection.type === 'department'
+                        ? getSeedDepartmentById(currentOrgSelection.id)?.block_id
+                        : getSeedDepartmentById(getSeedTeamById(currentOrgSelection.id)?.department_id)?.block_id;
+                createOrgEntity('department', targetBlockId || ADMIN_SEED.blocks[0]?.id || null);
+                return;
+            }
+
+            const targetDepartmentId = currentOrgSelection.type === 'department'
+                ? currentOrgSelection.id
+                : currentOrgSelection.type === 'team'
+                    ? getSeedTeamById(currentOrgSelection.id)?.department_id
+                    : ADMIN_SEED.departments[0]?.id;
+            createOrgEntity('team', targetDepartmentId || ADMIN_SEED.departments[0]?.id || null);
+        }
+
+        function toggleOrgSelectionStatus() {
+            const selection = getOrgSelectionMeta();
+            if (!selection) return;
+            selection.entity.is_active = !selection.entity.is_active;
+            renderAdminOrgPanel();
+        }
+
+        function markCreateOrgFieldError(fieldKey) {
+            const config = {
+                code: document.getElementById('orgDetailCode') || document.getElementById('orgDetailCodeSuffix'),
+                name: document.getElementById('orgDetailName')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            const wrapper = field.closest('label');
+            wrapper?.classList.add('member-field-error');
+            field.classList.remove('is-error-shake');
+            void field.offsetWidth;
+            field.classList.add('is-error', 'is-error-shake');
+            window.setTimeout(() => field.classList.remove('is-error-shake'), 320);
+        }
+
+        function clearCreateOrgFieldError(fieldKey) {
+            const config = {
+                code: document.getElementById('orgDetailCode') || document.getElementById('orgDetailCodeSuffix'),
+                name: document.getElementById('orgDetailName')
+            };
+            const field = config[fieldKey];
+            if (!field) return;
+            field.closest('label')?.classList.remove('member-field-error');
+            field.classList.remove('is-error', 'is-error-shake');
+        }
+
+        function clearCreateOrgValidation() {
+            ['code', 'name'].forEach(clearCreateOrgFieldError);
+        }
+
+        function saveOrgSelectionChanges() {
+            const selection = getOrgSelectionMeta();
+            if (!selection) return;
+
+            const codeInput = document.getElementById('orgDetailCode');
+            const codeSuffixInput = document.getElementById('orgDetailCodeSuffix');
+            const nameInput = document.getElementById('orgDetailName');
+            const orderInput = document.getElementById('orgDetailOrder');
+            const descriptionInput = document.getElementById('orgDetailDescription');
+            const leaderInput = document.getElementById('orgDetailLeader');
+            const trimmedCode = (codeSuffixInput?.value || codeInput?.value || '').trim();
+            const trimmedName = nameInput?.value.trim() || '';
+
+            clearCreateOrgValidation();
+            if (isCreatingOrgSelection) {
+                const invalidFields = [];
+                if (!trimmedCode) invalidFields.push('code');
+                if (!trimmedName) invalidFields.push('name');
+                if (invalidFields.length) {
+                    invalidFields.forEach(markCreateOrgFieldError);
+                    return;
+                }
+            }
+
+            selection.entity.code = trimmedCode || selection.entity.code;
+            selection.entity.name = trimmedName || selection.entity.name;
+            if (orderInput) selection.entity.display_order = Number(orderInput.value) || 1;
+            if (descriptionInput) selection.entity.description = descriptionInput.value;
+            if (leaderInput && selection.type === 'team') selection.entity.leader_user_id = leaderInput.value;
+
+            if (isCreatingOrgSelection && currentOrgDraft) {
+                const entityToSave = { ...selection.entity };
+                if (selection.type === 'block') {
+                    entityToSave.id = `blk_${Date.now()}`;
+                    ADMIN_SEED.blocks.push(entityToSave);
+                } else if (selection.type === 'department') {
+                    entityToSave.id = `dep_${Date.now()}`;
+                    ADMIN_SEED.departments.push(entityToSave);
+                } else {
+                    entityToSave.id = `team_${Date.now()}`;
+                    ADMIN_SEED.teams.push(entityToSave);
+                }
+                currentOrgSelection = { type: selection.type, id: entityToSave.id };
+                currentOrgDraft = null;
+            }
+
+            isCreatingOrgSelection = false;
+            currentOrgDetailMode = 'view';
+            renderAdminOrgPanel();
+        }
+
+        function autoResizeOrgTextarea(textarea) {
+            if (!textarea) return;
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+
+        function initializeOrgDetailInputs() {
+            const textarea = document.getElementById('orgDetailDescription');
+            if (!textarea) return;
+            autoResizeOrgTextarea(textarea);
+            if (textarea.dataset.autosizeBound === 'true') return;
+            textarea.dataset.autosizeBound = 'true';
+            textarea.addEventListener('input', () => autoResizeOrgTextarea(textarea));
+        }
+
+        function initializeMemberDrawerAnimation() {
+            const drawerLayer = document.querySelector('.member-detail-drawer-layer');
+            if (!drawerLayer || drawerLayer.classList.contains('is-open')) return;
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    drawerLayer.classList.add('is-open');
+                });
+            });
+        }
+
+        function getColorOptionMeta(colorId) {
+            const colorOptions = [
+                { id: 'slate', hex: '#94a3b8' }, { id: 'gray', hex: '#6b7280' }, { id: 'zinc', hex: '#71717a' },
+                { id: 'stone', hex: '#78716c' }, { id: 'red', hex: '#ef4444' }, { id: 'rose', hex: '#f43f5e' },
+                { id: 'orange', hex: '#f97316' }, { id: 'amber', hex: '#f59e0b' }, { id: 'yellow', hex: '#eab308' },
+                { id: 'lime', hex: '#84cc16' }, { id: 'green', hex: '#22c55e' }, { id: 'emerald', hex: '#10b981' },
+                { id: 'teal', hex: '#14b8a6' }, { id: 'cyan', hex: '#06b6d4' }, { id: 'sky', hex: '#0ea5e9' },
+                { id: 'blue', hex: '#3b82f6' }, { id: 'indigo', hex: '#6366f1' }, { id: 'violet', hex: '#8b5cf6' },
+                { id: 'purple', hex: '#a855f7' }, { id: 'pink', hex: '#ec4899' }
+            ];
+            return colorOptions.find((item) => item.id === colorId) || colorOptions[0];
+        }
+
+        function getTeamFullCode(teamId) {
+            const team = getSeedTeamById(teamId);
+            if (!team) return 'Chưa gán team';
+            const department = getSeedDepartmentById(team.department_id);
+            const block = department ? getSeedBlockById(department.block_id) : null;
+            return [block?.code, department?.code, team.code].filter(Boolean).join('.');
+        }
+
+        function getUserPrimaryTeam(userId) {
+            const assignment = ADMIN_SEED.userTeams.find((item) => item.user_id === userId && item.is_primary && item.is_active);
+            return assignment ? getSeedTeamById(assignment.team_id) : null;
+        }
+
+        function getUserRolesSummary(userId) {
+            return ADMIN_SEED.userRoleAssignments
+                .filter((item) => item.user_id === userId && item.is_active)
+                .map((item) => getSeedRoleById(item.role_id)?.name)
+                .filter(Boolean)
+                .join(', ') || 'Chưa gán role';
+        }
+
+        function getRolePermissions(roleId) {
+            return ADMIN_SEED.rolePermissions
+                .filter((item) => item.role_id === roleId)
+                .map((item) => getSeedPermissionById(item.permission_id))
+                .filter(Boolean);
+        }
+
+        function getRoleAssignments(roleId) {
+            return ADMIN_SEED.userRoleAssignments.filter((item) => item.role_id === roleId && item.is_active);
+        }
+
+        function setActiveAdminTab(tabKey) {
+            currentAdminTab = tabKey;
+            document.querySelectorAll('[data-admin-tab]').forEach((button) => {
+                button.classList.toggle('is-active', button.dataset.adminTab === tabKey);
+            });
+            document.querySelectorAll('[data-admin-panel]').forEach((panel) => {
+                panel.classList.toggle('is-active', panel.dataset.adminPanel === tabKey);
+            });
+        }
+
+        function initializeAdminTabs() {
+            document.querySelectorAll('[data-admin-tab]').forEach((button) => {
+                button.addEventListener('click', () => setActiveAdminTab(button.dataset.adminTab));
+            });
+            setActiveAdminTab(currentAdminTab);
+        }
+
+function renderAdminOrgPanel() {
+            const panel = document.querySelector('[data-admin-panel="org"]');
+            if (!panel) return;
+            const selection = getOrgSelectionMeta() || {
+                type: 'block',
+                entity: ADMIN_SEED.blocks[0],
+                title: 'Thông tin khối',
+                subtitle: '',
+                parentLabel: 'Root',
+                stats: ''
+            };
+            const entity = selection.entity;
+            const typeLabel = getOrgTypeLabel(selection.type);
+            const activeLabel = entity?.is_active ? 'Active' : 'Inactive';
+            const codeMeta = getOrgEntityCodeMeta(selection);
+            const placeholders = getOrgCreatePlaceholders(selection.type);
+            const leaderOptions = ADMIN_SEED.users
+                .filter((item) => item.is_active)
+                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
+                .map((user) => `<option value="${escapeHtml(user.id)}" ${entity?.leader_user_id === user.id ? 'selected' : ''}>${escapeHtml(user.full_name)}</option>`)
+                .join('');
+            const leaderName = entity?.leader_user_id ? (getSeedUserById(entity.leader_user_id)?.full_name || 'Chưa có') : 'Chưa có';
+            const members = getMembersForCurrentSelection();
+            const memberRecord = currentMemberEditId
+                ? getMemberRecordById(currentMemberEditId)
+                : (currentMemberMode === 'edit' ? currentMemberDraft : null);
+            const availableTeams = getAvailableTeamsForCurrentSelection();
+            const availableMemberRoles = getTeamScopedRoles();
+            const orgPanelTitle = currentOrgDetailMode === 'edit' && isCreatingOrgSelection
+                ? `Tạo ${typeLabel.toLowerCase()} mới`
+                : `${typeLabel} ${entity?.code || ''}`.trim();
+            const orgPanelName = currentOrgDetailMode === 'edit' && isCreatingOrgSelection
+                ? ''
+                : (entity?.name || '');
+            const infoBody = currentOrgDetailMode === 'edit' ? `
+                <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                    <label>
+                        <span class="org-field-label">${escapeHtml(codeMeta.label)}</span>
+                        ${selection.type === 'block' ? `
+                            <input id="orgDetailCode" class="org-field-input" type="text" value="${escapeHtml(entity?.code || '')}" placeholder="${escapeHtml(placeholders.code)}" oninput="if (this.value.trim()) clearCreateOrgFieldError('code')">
+                        ` : `
+                            <div class="org-code-input">
+                                <span class="org-code-prefix">${escapeHtml(codeMeta.prefix)}</span>
+                                <input id="orgDetailCodeSuffix" class="org-field-input org-code-suffix" type="text" value="${escapeHtml(codeMeta.suffix)}" placeholder="${escapeHtml(placeholders.code)}" oninput="if (this.value.trim()) clearCreateOrgFieldError('code')">
+                            </div>
+                        `}
+                    </label>
+                    <label>
+                        <span class="org-field-label">Tên hiển thị</span>
+                        <input id="orgDetailName" class="org-field-input" type="text" value="${escapeHtml(entity?.name || '')}" placeholder="${escapeHtml(placeholders.name)}" oninput="if (this.value.trim()) clearCreateOrgFieldError('name')">
+                    </label>
+                </div>
+                <div class="mt-5 grid gap-5 lg:grid-cols-2">
+                    <label>
+                        <span class="org-field-label">Thứ tự hiển thị</span>
+                        <input id="orgDetailOrder" class="org-field-input" type="number" min="1" value="${escapeHtml(entity?.display_order ?? 1)}" placeholder="${escapeHtml(placeholders.order)}">
+                    </label>
+                    <div>
+                        <span class="org-field-label">Trạng thái</span>
+                        <div class="org-status-edit-card">
+                            <div class="org-status-edit-row">
+                                <p class="org-view-value text-base">${activeLabel}</p>
+                                <button type="button" class="admin-toggle is-compact ${entity?.is_active ? 'is-on' : 'is-off'}" onclick="toggleOrgSelectionStatus()"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <label>
+                        <span class="org-field-label">Mô tả / Ghi chú</span>
+                        <textarea id="orgDetailDescription" class="org-field-textarea" placeholder="${escapeHtml(placeholders.description)}">${escapeHtml(entity?.description || '')}</textarea>
+                    </label>
+                </div>
+            ` : `
+                <div class="mt-6 org-view-grid">
+                    <div class="org-view-field">
+                        <p class="org-field-label">${escapeHtml(codeMeta.label)}</p>
+                        <div class="org-view-card">
+                            <p class="org-view-value is-readonly text-base">${escapeHtml(codeMeta.full || entity?.code || '')}</p>
+                        </div>
+                    </div>
+                    <div class="org-view-field">
+                        <p class="org-field-label">Tên hiển thị</p>
+                        <div class="org-view-card">
+                            <p class="org-view-value is-readonly text-base">${escapeHtml(entity?.name || '')}</p>
+                        </div>
+                    </div>
+                    <div class="org-view-field">
+                        <p class="org-field-label">Thứ tự hiển thị</p>
+                        <div class="org-view-card">
+                            <p class="org-view-value is-readonly text-base">${escapeHtml(entity?.display_order ?? 1)}</p>
+                        </div>
+                    </div>
+                    <div class="org-view-field">
+                        <p class="org-field-label">Trạng thái</p>
+                        <div class="org-view-card">
+                            <div class="flex items-center gap-3">
+                                <span class="org-status-dot ${entity?.is_active ? 'is-active' : 'is-inactive'}"></span>
+                                <p class="org-view-value is-readonly text-base">${escapeHtml(activeLabel)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 org-view-field">
+                    <p class="org-field-label">Mô tả / Ghi chú</p>
+                    <div class="org-view-card">
+                        <p class="org-view-text is-readonly">${escapeHtml(entity?.description || 'Chưa có mô tả cho đối tượng này.')}</p>
+                    </div>
+                </div>
+            `;
+            const infoPanelHtml = `
+                <div class="org-detail-card rounded-[28px] px-5 py-6 shadow-sm">
+                    <div class="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:items-start lg:justify-between">
+                        <div class="min-w-0">
+                            <h3 class="mt-2 text-xl font-extrabold tracking-tight text-slate-900">
+                                ${escapeHtml(orgPanelTitle)}
+                                ${orgPanelName ? `
+                                    <span class="mx-2 text-slate-300">|</span>
+                                    <span>${escapeHtml(orgPanelName)}</span>
+                                ` : ''}
+                            </h3>
+                            <div class="mt-3 flex flex-wrap items-center gap-2">
+                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `Thuộc: ${escapeHtml(selection.parentLabel)}`}</span>
+                                <span class="admin-badge is-blue">${escapeHtml(selection.stats)}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-start gap-3 lg:justify-end">
+                            ${currentOrgDetailMode === 'view' ? `
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thành viên" onclick="openOrgMembersPanel('${selection.type}', '${selection.entity.id}')">
+                                    <i class="fa-solid fa-users"></i>
+                                </button>
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa thông tin" onclick="setOrgDetailMode('edit')">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            ` : `
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="setOrgDetailMode('view')">Hủy</button>
+                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveOrgSelectionChanges()">${isCreatingOrgSelection ? 'Lưu tạo mới' : 'Lưu thay đổi'}</button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                    ${infoBody}
+                </div>
+            `;
+            const memberViewHtml = currentMemberMode === 'view' && memberRecord ? `
+                <div class="member-detail-drawer-layer ${shouldAnimateMemberDrawer ? '' : 'is-open'}">
+                    <div class="member-detail-backdrop" onclick="closeMemberDetailsDrawer()"></div>
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Đóng" onclick="closeMemberDetailsDrawer()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="member-detail-drawer">
+                        <div class="member-panel-card min-h-full rounded-none border-0 border-l border-slate-200 p-6 shadow-none">
+                            <div class="flex items-start justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thông tin thành viên</p>
+                                    <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(memberRecord.full_name)}</h3>
+                                </div>
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa thành viên" onclick="shouldAnimateMemberDrawer = false; setMemberFormMode('edit', '${escapeHtml(memberRecord.id)}')">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                            <div class="member-form-grid mt-5">
+                                <div class="org-view-field">
+                                    <p class="org-field-label">ID</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base text-slate-400">${escapeHtml(memberRecord.id)}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Họ tên</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.full_name)}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Username</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.username || 'Chưa có')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Email</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.email || 'Chưa có')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Title</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'Chưa gán')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Mã nhóm</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getTeamFullCode(memberRecord.team_id) || 'Chưa có')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Phân quyền tại nhóm</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getUserRoleForTeam(memberRecord.id, memberRecord.team_id)?.name || 'Chưa gán quyền')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Sort Order</p>
+                                    <div class="org-view-card">
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.sort_order ?? '')}</p>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Color</p>
+                                    <div class="org-view-card">
+                                        <div class="member-color-lov-value">
+                                            <span class="member-color-lov-swatch" style="background:${escapeHtml(memberRecord.color || '#94a3b8')}"></span>
+                                            <p class="org-view-value is-readonly text-base" style="color:${escapeHtml(memberRecord.color || '#64748b')}">${escapeHtml(memberRecord.color || '')}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="org-view-field">
+                                    <p class="org-field-label">Trạng thái</p>
+                                    <div class="org-view-card">
+                                        <div class="flex items-center gap-3">
+                                            <span class="org-status-dot ${memberRecord.is_active ? 'is-active' : 'is-inactive'}"></span>
+                                            <p class="org-view-value is-readonly text-base">${memberRecord.is_active ? 'Active' : 'Inactive'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ` : '';
+            const memberFormHtml = currentMemberMode === 'edit' && memberRecord ? `
+                <div class="member-detail-drawer-layer ${shouldAnimateMemberDrawer ? '' : 'is-open'}">
+                    <div class="member-detail-backdrop" onclick="closeMemberDetailsDrawer()"></div>
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Đóng" onclick="closeMemberDetailsDrawer()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="member-detail-drawer">
+                        <div class="member-panel-card min-h-full rounded-none border-0 border-l border-slate-200 p-6 shadow-none">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">${currentMemberEditId ? 'Edit Member' : 'Tạo mới thành viên'}</p>
+                                    <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(currentMemberEditId ? memberRecord.full_name : 'Tạo mới thành viên')}</h3>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="${currentMemberEditId ? `setMemberFormMode('view', '${escapeHtml(memberRecord.id)}')` : `closeMemberDetailsDrawer()`}">Hủy</button>
+                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveMemberForm()">${currentMemberEditId ? 'Lưu thay đổi' : 'Lưu'}</button>
+                                </div>
+                            </div>
+                            <input id="memberUserId" type="hidden" value="${escapeHtml(memberRecord.id)}">
+                            <div class="member-form-grid mt-5">
+                                <label>
+                                    <span class="org-field-label">ID</span>
+                                    <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.id)}" disabled>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Họ tên</span>
+                                    <input id="memberFullName" class="org-field-input" type="text" value="${escapeHtml(memberRecord.full_name || '')}" oninput="if (this.value.trim()) clearCreateMemberFieldError('fullName')">
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Username</span>
+                                    <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.username || '')}" disabled>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Email</span>
+                                    <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.email || '')}" disabled>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Title</span>
+                                    <div class="member-single-lov">
+                                        <input id="memberJobTitleId" type="hidden" value="${escapeHtml(memberRecord.job_title_id || '')}">
+                                        <button type="button" class="org-field-input member-lov-trigger" data-member-single-lov-trigger="jobTitle" onclick="toggleMemberSingleLov('jobTitle', event)">
+                                            <span class="member-lov-copy">
+                                                <span id="memberJobTitleValue" class="member-lov-value font-medium ${memberRecord.job_title_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'Chọn title')}</span>
+                                            </span>
+                                            <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
+                                        </button>
+                                        <div class="member-single-lov-panel hidden" data-member-single-lov-panel="jobTitle" onclick="event.stopPropagation()">
+                                            <div class="member-single-lov-list">
+                                                ${ADMIN_SEED.jobTitles.filter((jobTitle) => jobTitle.is_active).map((jobTitle) => `
+                                                    <button type="button" class="member-single-lov-item ${memberRecord.job_title_id === jobTitle.id ? 'is-active' : ''}" data-member-single-lov-option="jobTitle" data-value="${escapeHtml(jobTitle.id)}" onclick="selectMemberSingleLov('jobTitle', '${escapeHtml(jobTitle.id)}', '${escapeHtml(jobTitle.name)}', event)"><span>${escapeHtml(jobTitle.name)}</span></button>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Mã nhóm</span>
+                                    <div class="member-lov">
+                                        <input id="memberBlockId" type="hidden" value="">
+                                        <input id="memberDepartmentId" type="hidden" value="">
+                                        <input id="memberTeamId" type="hidden" value="${escapeHtml(memberRecord.team_id || '')}">
+                                        <button type="button" class="org-field-input member-lov-trigger" data-member-team-lov-trigger onclick="toggleMemberTeamLov(event)">
+                                            <span class="member-lov-copy">
+                                                <span id="memberTeamLovValue" class="member-lov-value member-lov-placeholder">Chọn khối / phòng / nhóm</span>
+                                            </span>
+                                            <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
+                                        </button>
+                                        <div id="memberTeamLovPanel" class="member-lov-panel hidden" onclick="event.stopPropagation()">
+                                            <div class="member-lov-columns">
+                                                <div class="member-lov-column">
+                                                    <div class="member-lov-column-head">
+                                                        <p class="member-lov-column-title">Khối</p>
+                                                    </div>
+                                                    <div id="memberTeamLovBlocks" class="member-lov-list"></div>
+                                                </div>
+                                                <div class="member-lov-column">
+                                                    <div class="member-lov-column-head">
+                                                        <p class="member-lov-column-title">Phòng</p>
+                                                    </div>
+                                                    <div id="memberTeamLovDepartments" class="member-lov-list"></div>
+                                                </div>
+                                                <div class="member-lov-column">
+                                                    <div class="member-lov-column-head">
+                                                        <p class="member-lov-column-title">Nhóm</p>
+                                                    </div>
+                                                    <div id="memberTeamLovTeams" class="member-lov-list"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Phân quyền tại nhóm</span>
+                                    <div class="member-single-lov">
+                                        <input id="memberRoleId" type="hidden" value="${escapeHtml(memberRecord.role_id || '')}">
+                                        <button type="button" class="org-field-input member-lov-trigger" data-member-single-lov-trigger="role" onclick="toggleMemberSingleLov('role', event)">
+                                            <span class="member-lov-copy">
+                                                <span id="memberRoleValue" class="member-lov-value font-medium ${memberRecord.role_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedRoleById(memberRecord.role_id)?.name || 'Chưa gán quyền')}</span>
+                                            </span>
+                                            <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
+                                        </button>
+                                        <div class="member-single-lov-panel hidden" data-member-single-lov-panel="role" onclick="event.stopPropagation()">
+                                            <div class="member-single-lov-list">
+                                                <button type="button" class="member-single-lov-item ${memberRecord.role_id ? '' : 'is-active'}" data-member-single-lov-option="role" data-value="" onclick="selectMemberSingleLov('role', '', 'Chưa gán quyền', event)"><span>Chưa gán quyền</span></button>
+                                                ${availableMemberRoles.map((role) => `
+                                                    <button type="button" class="member-single-lov-item ${memberRecord.role_id === role.id ? 'is-active' : ''}" data-member-single-lov-option="role" data-value="${escapeHtml(role.id)}" onclick="selectMemberSingleLov('role', '${escapeHtml(role.id)}', '${escapeHtml(role.name)}', event)"><span>${escapeHtml(role.name)}</span></button>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Sort Order</span>
+                                    <input id="memberSortOrder" class="org-field-input" type="number" min="1" value="${escapeHtml(memberRecord.sort_order ?? 1)}">
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Color</span>
+                                    <div class="member-single-lov">
+                                        <input id="memberColor" type="hidden" value="${escapeHtml(memberRecord.color || '')}">
+                                        <button type="button" class="org-field-input member-lov-trigger" data-member-single-lov-trigger="color" onclick="toggleMemberSingleLov('color', event)">
+                                            <span class="member-lov-copy">
+                                                <span class="member-color-lov-value">
+                                                    <span id="memberColorPreview" class="member-color-lov-swatch" style="background:${escapeHtml(memberRecord.color || '#94a3b8')}"></span>
+                                                    <span id="memberColorValue" class="member-lov-value font-medium" style="color:${escapeHtml(memberRecord.color || '#334155')}">${escapeHtml(memberRecord.color || '')}</span>
+                                                </span>
+                                            </span>
+                                            <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
+                                        </button>
+                                        <div class="member-single-lov-panel hidden" data-member-single-lov-panel="color" onclick="event.stopPropagation()">
+                                            <div class="member-single-lov-list">
+                                                ${getMemberColorOptions().map((colorOption) => `
+                                                    <button type="button" class="member-single-lov-item ${memberRecord.color === colorOption.code ? 'is-active' : ''}" data-member-single-lov-option="color" data-value="${escapeHtml(colorOption.code)}" onclick="selectMemberColorLov('${escapeHtml(colorOption.code)}', event)">
+                                                        <span class="member-color-lov-item">
+                                                            <span class="member-color-lov-swatch" style="background:${escapeHtml(colorOption.code)}"></span>
+                                                            <span>${escapeHtml(colorOption.code)}</span>
+                                                        </span>
+                                                    </button>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="org-field-label">Trạng thái</span>
+                                    <div class="member-inline-field rounded-[20px] border border-slate-200 bg-white px-5">
+                                        <div class="flex w-full items-center gap-4">
+                                            <p id="memberActiveLabel" class="org-view-value text-base">${memberRecord.is_active ? 'Active' : 'Inactive'}</p>
+                                            <input id="memberActive" type="checkbox" class="hidden" ${memberRecord.is_active ? 'checked' : ''}>
+                                            <button id="memberActiveToggle" type="button" class="ml-auto admin-toggle is-compact ${memberRecord.is_active ? 'is-on' : 'is-off'}" onclick="toggleMemberActive()"></button>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ` : '';
+            const memberPanelHtml = `
+                <div class="member-panel-card member-panel-stack rounded-[28px] px-5 py-6 shadow-sm">
+                    <div class="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:items-start lg:justify-between">
+                        <div class="min-w-0">
+                            <h3 class="mt-2 text-[20px] font-extrabold tracking-tight text-slate-900">
+                                Nhân viên của ${typeLabel} ${escapeHtml(entity?.code || '')}
+                                <span class="mx-2 text-slate-300">|</span>
+                                <span>${escapeHtml(entity?.name || '')}</span>
+                            </h3>
+                            <div class="mt-3 flex flex-wrap items-center gap-2">
+                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `Thuộc: ${escapeHtml(selection.parentLabel)}`}</span>
+                                <span class="admin-badge is-blue">${escapeHtml(selection.stats)}</span>
+                                ${selection.type === 'team' ? '' : `<span class="admin-badge is-slate">${members.length} thành viên</span>`}
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thông tin" onclick="setActiveOrgSelection('${selection.type}', '${selection.entity.id}')">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Thêm thành viên" onclick="createMemberForSelection()">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    ${memberViewHtml}
+                    ${memberFormHtml}
+                    <div class="mt-6 overflow-hidden rounded-[24px] border border-slate-200 bg-white">
+                        <table class="member-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Họ tên</th>
+                                    <th>Title</th>
+                                    <th>Mã nhóm</th>
+                                    <th>Phân quyền</th>
+                                    <th>Sort Order</th>
+                                    <th>Active</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${members.map((member) => {
+                                    const jobTitle = getSeedJobTitleById(member.job_title_id);
+                                    const teamRole = getUserRoleForTeam(member.id, member.team_id);
+                                    return `
+                                        <tr class="is-clickable" onclick="shouldAnimateMemberDrawer = true; setMemberFormMode('view', '${escapeHtml(member.id)}')">
+                                            <td><code>${escapeHtml(member.id)}</code></td>
+                                            <td class="font-bold" style="color:${escapeHtml(member.color || '#334155')}">${escapeHtml(member.full_name)}</td>
+                                            <td>${escapeHtml(jobTitle?.name || 'Chưa gán')}</td>
+                                            <td><code>${escapeHtml(getTeamFullCode(member.team_id))}</code></td>
+                                            <td>${escapeHtml(teamRole?.name || 'Chưa gán')}</td>
+                                            <td>${escapeHtml(member.sort_order ?? '')}</td>
+                                            <td>
+                                                <span class="inline-flex items-center">
+                                                    <span class="org-status-dot ${member.is_active ? 'is-active' : 'is-inactive'}"></span>
+                                                </span>
+                                            </td>
+                                            <td class="text-right member-row-actions">
+                                                <button type="button" class="member-inline-btn tooltip-btn rounded-2xl px-3 py-2 text-sm font-bold" data-tooltip="Chỉnh sửa thành viên" onclick="event.stopPropagation(); shouldAnimateMemberDrawer = true; setMemberFormMode('edit', '${escapeHtml(member.id)}')">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('') || `
+                                    <tr>
+                                        <td colspan="8" class="py-8 text-center text-sm text-slate-400">Chưa có thành viên trong cấu trúc đang chọn.</td>
+                                    </tr>
+                                `}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            panel.innerHTML = `
+                <div class="grid gap-3 xl:grid-cols-[minmax(400px,430px)_minmax(0,1fr)]">
+                    <div class="org-tree-card rounded-[24px] p-5 shadow-sm">
+                        <div>
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Cây cấu trúc</p>
+                            <h2 class="mt-1 text-lg font-extrabold text-slate-900">Khối / Phòng / Nhóm</h2>
+                        </div>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('block')">
+                                <i class="fa-solid fa-plus mr-1.5"></i>Khối
+                            </button>
+                            <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('department')">
+                                <i class="fa-solid fa-plus mr-1.5"></i>Phòng
+                            </button>
+                            <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('team')">
+                                <i class="fa-solid fa-plus mr-1.5"></i>Nhóm
+                            </button>
+                        </div>
+                        <div class="org-tree-list mt-3">
+                            ${ADMIN_SEED.blocks.slice().sort((a, b) => a.display_order - b.display_order).map((block) => `
+                                <div class="org-tree-node p-2.5">
+                                    <div class="org-node-row">
+                                        <button type="button" class="org-node-trigger ${currentOrgSelection.type === 'block' && currentOrgSelection.id === block.id ? 'is-active' : ''} px-3 py-2.5" onclick="openOrgMembersFromTree('block', '${escapeHtml(block.id)}')">
+                                            <div>
+                                                <div>
+                                                    <p class="text-[13px] font-extrabold text-slate-900">
+                                                        <span class="text-[11px] uppercase tracking-[0.16em] text-blue-500">Khối</span>
+                                                        <span class="ml-2">${escapeHtml(block.code)}</span>
+                                                        <span class="mx-2 text-slate-300">|</span>
+                                                        <span class="font-medium text-slate-500">${escapeHtml(block.name)}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </button>
+                                        <div class="org-node-actions">
+                                            <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('block', '${escapeHtml(block.id)}')">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="org-node-indent mt-2 space-y-2">
+                                        ${ADMIN_SEED.departments.filter((department) => department.block_id === block.id).sort((a, b) => a.display_order - b.display_order).map((department) => `
+                                            <div>
+                                                <div class="org-node-row">
+                                                    <button type="button" class="org-node-trigger ${currentOrgSelection.type === 'department' && currentOrgSelection.id === department.id ? 'is-active' : ''} px-3 py-2.5" onclick="openOrgMembersFromTree('department', '${escapeHtml(department.id)}')">
+                                                        <div>
+                                                            <div>
+                                                                <p class="text-[13px] font-extrabold text-slate-900">
+                                                                    <span class="text-[11px] uppercase tracking-[0.16em] text-sky-500">Phòng</span>
+                                                                    <span class="ml-2">${escapeHtml(department.code)}</span>
+                                                                    <span class="mx-2 text-slate-300">|</span>
+                                                                    <span class="font-medium text-slate-500">${escapeHtml(department.name)}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                    <div class="org-node-actions">
+                                                        <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('department', '${escapeHtml(department.id)}')">
+                                                            <i class="fa-solid fa-circle-info"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="org-node-indent mt-2 space-y-1.5">
+                                                    ${ADMIN_SEED.teams.filter((team) => team.department_id === department.id).sort((a, b) => a.display_order - b.display_order).map((team) => `
+                                                        <div class="org-node-row">
+                                                            <button type="button" class="org-node-trigger ${currentOrgSelection.type === 'team' && currentOrgSelection.id === team.id ? 'is-active' : ''} px-3 py-2.5" onclick="openOrgMembersFromTree('team', '${escapeHtml(team.id)}')">
+                                                                <div>
+                                                                    <div>
+                                                                        <p class="text-[13px] font-extrabold text-slate-900">
+                                                                            <span class="text-[11px] uppercase tracking-[0.16em] text-violet-500">Nhóm</span>
+                                                                            <span class="ml-2">${escapeHtml(team.code)}</span>
+                                                                            <span class="mx-2 text-slate-300">|</span>
+                                                                            <span class="font-medium text-slate-500">${escapeHtml(team.name)}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                            <div class="org-node-actions">
+                                                                <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('team', '${escapeHtml(team.id)}')">
+                                                                    <i class="fa-solid fa-circle-info"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    `).join('') || '<div class="rounded-2xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">Chưa có nhóm trong phòng này</div>'}
+                                                </div>
+                                            </div>
+                                        `).join('') || '<div class="rounded-2xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">Chưa có phòng trong khối này</div>'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ${currentOrgRightPanel === 'members' ? memberPanelHtml : infoPanelHtml}
+                </div>
+            `;
+            if (currentOrgRightPanel === 'info' && currentOrgDetailMode === 'edit') {
+                initializeOrgDetailInputs();
+            }
+            if (currentOrgRightPanel === 'members' && currentMemberMode === 'edit' && memberRecord) {
+                syncMemberGroupSelectors(memberRecord.team_id);
+                syncMemberColorPreview();
+                syncMemberSingleLovState();
+                if (shouldAnimateMemberDrawer) {
+                    initializeMemberDrawerAnimation();
+                    shouldAnimateMemberDrawer = false;
+                }
+            }
+            if (currentOrgRightPanel === 'members' && currentMemberMode === 'view' && memberRecord && shouldAnimateMemberDrawer) {
+                initializeMemberDrawerAnimation();
+                shouldAnimateMemberDrawer = false;
+            }
+        }
+
+        function renderAdminUsersPanel() {
+            const panel = document.querySelector('[data-admin-panel="users"]');
+            if (!panel) return;
+            const getUsersForTeam = (teamId) => {
+                return ADMIN_SEED.userTeams
+                    .filter((row) => row.team_id === teamId && row.is_active)
+                    .map((row) => getSeedUserById(row.user_id))
+                    .filter(Boolean)
+                    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+            };
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Người dùng</h2>
+                            <p class="mt-1 text-sm text-slate-500">Phân cấp theo \`Khối > Phòng ban > Nhóm\`, và tại mỗi nhóm có thao tác thêm user.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <input type="text" placeholder="Tìm user theo tên hoặc email" class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-blue-400 focus:bg-white">
+                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Import</button>
+                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo user</button>
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-5">
+                        ${ADMIN_SEED.blocks.slice().sort((a, b) => a.display_order - b.display_order).map((block) => `
+                            <div class="admin-user-tree-card rounded-[24px] p-5 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Khối</p>
+                                        <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(block.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(block.name)}</span></h3>
+                                    </div>
+                                    <span class="admin-badge is-slate">${ADMIN_SEED.departments.filter((item) => item.block_id === block.id).length} phòng</span>
+                                </div>
+                                <div class="mt-4 space-y-4">
+                                    ${ADMIN_SEED.departments.filter((department) => department.block_id === block.id).sort((a, b) => a.display_order - b.display_order).map((department) => `
+                                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Phòng ban</p>
+                                                    <p class="mt-1 text-base font-extrabold text-slate-900">${escapeHtml(department.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(department.name)}</span></p>
+                                                </div>
+                                                <span class="admin-badge is-blue">${ADMIN_SEED.teams.filter((item) => item.department_id === department.id).length} nhóm</span>
+                                            </div>
+                                            <div class="mt-4 grid gap-4 lg:grid-cols-2">
+                                                ${ADMIN_SEED.teams.filter((team) => team.department_id === department.id).sort((a, b) => a.display_order - b.display_order).map((team) => `
+                                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                                        <div class="flex items-center justify-between gap-3">
+                                                            <div>
+                                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Nhóm</p>
+                                                                <p class="mt-1 text-sm font-extrabold text-slate-900">${escapeHtml(team.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(team.name)}</span></p>
+                                                            </div>
+                                                            <button type="button" class="rounded-xl bg-blue-600 px-3 py-2 text-sm font-bold text-white">+ Thêm vào</button>
+                                                        </div>
+                                                        <div class="mt-4 flex flex-wrap gap-2">
+                                                            ${getUsersForTeam(team.id).map((user) => {
+                                                                const jobTitle = getSeedJobTitleById(user.job_title_id);
+                                                                return `
+                                                                    <div class="admin-user-pill">
+                                                                        <span class="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</span>
+                                                                        <span>${escapeHtml(user.full_name)}</span>
+                                                                        <span class="text-[11px] text-slate-400">${escapeHtml(jobTitle?.name || 'Khác')}</span>
+                                                                    </div>
+                                                                `;
+                                                            }).join('') || '<div class="text-sm text-slate-400">Chưa có user trong nhóm này</div>'}
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                        <table class="admin-table">
+                            <thead><tr><th>User</th><th>Chức danh</th><th>Team chính</th><th>Role hiện tại</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                            <tbody class="bg-white">
+                                ${ADMIN_SEED.users.slice().sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((user) => {
+                                    const jobTitle = getSeedJobTitleById(user.job_title_id);
+                                    const primaryTeam = getUserPrimaryTeam(user.id);
+                                    return `
+                                        <tr>
+                                            <td>
+                                                <div class="flex items-center gap-3">
+                                                    <div class="flex h-10 w-10 items-center justify-center rounded-xl text-xs font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</div>
+                                                    <div>
+                                                        <p class="font-extrabold text-slate-900">${escapeHtml(user.full_name)}</p>
+                                                        <p class="text-xs text-slate-500">${escapeHtml(user.email)}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>${escapeHtml(jobTitle?.name || 'Khác')}</td>
+                                            <td>${escapeHtml(primaryTeam ? getTeamFullCode(primaryTeam.id) : 'Chưa gán team')}</td>
+                                            <td>${escapeHtml(getUserRolesSummary(user.id))}</td>
+                                            <td><button type="button" class="admin-toggle ${user.is_active ? 'is-on' : 'is-off'}" aria-label="${user.is_active ? 'Active' : 'Inactive'}"></button></td>
+                                            <td class="text-sm font-bold text-blue-700">View Edit</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminRolesPanel() {
+            const panel = document.querySelector('[data-admin-panel="roles"]');
+            if (!panel) return;
+            const selectedRole = ADMIN_SEED.roles.find((role) => role.code === 'MANAGER') || ADMIN_SEED.roles[0];
+            const permissions = getRolePermissions(selectedRole.id);
+            const assignments = getRoleAssignments(selectedRole.id);
+            panel.innerHTML = `
+                <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Vai trò hệ thống</h2>
+                                <p class="mt-1 text-sm text-slate-500">Không cho xóa cứng role hệ thống.</p>
+                            </div>
+                            <button type="button" class="rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20">+ Tạo role</button>
+                        </div>
+                        <div class="mt-5 -mx-6 divide-y divide-slate-200">
+                            ${ADMIN_SEED.roles.map((role) => {
+                                const isActive = role.id === selectedRole.id;
+                                return `
+                                    <div class="${isActive ? 'bg-blue-50/50' : 'bg-white'} px-6 py-4">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div class="min-w-0">
+                                                <p class="font-bold ${isActive ? 'text-blue-900' : 'text-slate-900'}">${escapeHtml(role.name)}</p>
+                                                <p class="mt-1 text-sm ${isActive ? 'text-blue-800' : 'text-slate-600'}">${escapeHtml(role.code)}</p>
+                                            </div>
+                                            <div class="flex flex-col items-end gap-2 text-right">
+                                                <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(role.scope_type)}</span>
+                                                <span class="text-xs font-medium text-slate-400">${getRolePermissions(role.id).length} permissions</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Chi tiết role \`${escapeHtml(selectedRole.code)}\`</h2>
+                                <p class="mt-1 text-sm text-slate-500">Kiểm soát permission và user assignment theo team.</p>
+                            </div>
+                            <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(selectedRole.scope_type)} scope</span>
+                        </div>
+                        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                            <div class="border border-slate-200 bg-white p-5">
+                                <div class="flex items-center justify-between gap-3">
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Permissions</p>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${permissions.length} quyền</span>
+                                </div>
+                                <div class="mt-4 divide-y divide-slate-200 text-sm font-bold text-slate-700">
+                                    ${permissions.map((permission) => `
+                                        <div class="flex items-center justify-between gap-4 bg-white px-1 py-3">
+                                            <span class="min-w-0">
+                                                <span class="block text-sm font-semibold text-slate-900">${escapeHtml(permission.name)}</span>
+                                                <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">${escapeHtml(permission.code)}</span>
+                                            </span>
+                                            <button type="button" class="admin-toggle is-compact is-on" aria-label="Bật quyền ${escapeHtml(permission.name)}"></button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="border border-slate-200 bg-white p-5">
+                                <div class="flex items-center justify-between gap-3">
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Assignments</p>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${assignments.length} user</span>
+                                </div>
+                                <div class="mt-4 divide-y divide-slate-200">
+                                    ${assignments.map((assignment) => {
+                                        const user = getSeedUserById(assignment.user_id);
+                                        const teamCode = assignment.team_id ? getTeamFullCode(assignment.team_id) : 'GLOBAL';
+                                        return `
+                                            <div class="bg-white px-1 py-3">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold text-white" style="background:${escapeHtml(user?.color || '#64748b')}">${escapeHtml(adminUserInitials(user?.full_name || assignment.user_id))}</span>
+                                                    <div class="min-w-0">
+                                                        <p class="text-sm font-semibold text-slate-900">${escapeHtml(user?.full_name || assignment.user_id)}</p>
+                                                        <p class="mt-1 text-xs text-slate-500">${escapeHtml(teamCode)} • Active</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('') || '<div class="bg-white px-1 py-6 text-sm text-slate-400">Chưa có user nào được gán vào role này.</div>'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminStatesPanel() {
+            const panel = document.querySelector('[data-admin-panel="states"]');
+            if (!panel) return;
+            const selectedState = ADMIN_SEED.states.find((state) => state.code === 'IN_REVIEW') || ADMIN_SEED.states[0];
+            const colorOptions = [
+                { id: 'slate', hex: '#94a3b8' }, { id: 'gray', hex: '#6b7280' }, { id: 'zinc', hex: '#71717a' },
+                { id: 'stone', hex: '#78716c' }, { id: 'red', hex: '#ef4444' }, { id: 'rose', hex: '#f43f5e' },
+                { id: 'orange', hex: '#f97316' }, { id: 'amber', hex: '#f59e0b' }, { id: 'yellow', hex: '#eab308' },
+                { id: 'lime', hex: '#84cc16' }, { id: 'green', hex: '#22c55e' }, { id: 'emerald', hex: '#10b981' },
+                { id: 'teal', hex: '#14b8a6' }, { id: 'cyan', hex: '#06b6d4' }, { id: 'sky', hex: '#0ea5e9' },
+                { id: 'blue', hex: '#3b82f6' }, { id: 'indigo', hex: '#6366f1' }, { id: 'violet', hex: '#8b5cf6' },
+                { id: 'purple', hex: '#a855f7' }, { id: 'pink', hex: '#ec4899' }
+            ];
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Workflow / State</h2>
+                            <p class="mt-1 text-sm text-slate-500">Chỉ hỗ trợ đổi thứ tự, chỉnh wording và thêm state mới.</p>
+                        </div>
+                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo state</button>
+                    </div>
+                    <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thứ tự hiện tại</p>
+                            <div class="mt-4 space-y-3">
+                                ${ADMIN_SEED.states.slice().sort((a, b) => a.display_order - b.display_order).map((state) => {
+                                    const colorMeta = getColorOptionMeta(state.color_theme);
+                                    return `
+                                        <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
+                                            <span class="font-bold" style="color:${colorMeta.hex}">${state.display_order}. ${escapeHtml(state.label)}</span>
+                                            <i class="fa-solid fa-grip-vertical text-slate-300"></i>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                            <div class="mt-4 space-y-4">
+                                <label class="block text-sm font-bold text-slate-700">Mã state<input type="text" value="${escapeHtml(selectedState.code)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input type="text" value="${escapeHtml(selectedState.label)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                <label class="block text-sm font-bold text-slate-700">Description<textarea class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none" rows="4">${escapeHtml(selectedState.description || '')}</textarea></label>
+                                <div>
+                                    <p class="block text-sm font-bold text-slate-700">Màu cột</p>
+                                    <p class="mt-1 text-xs text-slate-500">Chọn nhanh từ danh sách màu sẵn có.</p>
+                                    <div class="admin-color-grid mt-3">
+                                        ${colorOptions.map((option) => `
+                                            <button type="button" class="admin-color-chip ${selectedState.color_theme === option.id ? 'is-active' : ''}">
+                                                <span class="admin-color-chip-swatch" style="background:${option.hex}"></span>
+                                                <span class="admin-color-chip-copy">
+                                                    <span class="admin-color-chip-name">${escapeHtml(option.id)}</span>
+                                                    <span class="admin-color-chip-code">${escapeHtml(option.hex)}</span>
+                                                </span>
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div class="flex justify-end gap-3">
+                                    <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Hủy</button>
+                                    <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">Lưu state</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminLogsPanel() {
+            const panel = document.querySelector('[data-admin-panel="logs"]');
+            if (!panel) return;
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <h2 class="text-xl font-extrabold text-slate-900">Nhật ký hệ thống</h2>
+                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                        <table class="admin-table">
+                            <thead><tr><th>Thời gian</th><th>User</th><th>Module</th><th>Hành động</th><th>Chi tiết</th></tr></thead>
+                            <tbody class="bg-white">
+                                ${ADMIN_SEED.auditLogs.map((log) => `
+                                    <tr>
+                                        <td>${escapeHtml(log.time)}</td>
+                                        <td>${escapeHtml(log.user)}</td>
+                                        <td>${escapeHtml(log.module)}</td>
+                                        <td>${escapeHtml(log.action)}</td>
+                                        <td>${escapeHtml(log.detail)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminView() {
+            renderAdminOrgPanel();
+            renderAdminRolesPanel();
+            renderAdminStatesPanel();
+            renderAdminLogsPanel();
+            setActiveAdminTab(currentAdminTab);
+        }
+
+        renderAdminView();
+        initializeAdminTabs();
+    </script>
+</body>
+
+</html>

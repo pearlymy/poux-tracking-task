@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08. Org Members</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 24%),
+                linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+            color: #0f172a;
+        }
+
+        .member-shell {
+            border: 1px solid #dbe4f0;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .member-card {
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .member-avatar {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .member-badge.is-slate {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .member-badge.is-blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <section class="member-shell rounded-[32px] p-6 sm:p-8">
+            <div class="flex flex-col gap-5 border-b border-slate-200 pb-6 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-500">Org Members</p>
+                    <h1 id="pageTitle" class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">Danh sách thành viên</h1>
+                    <div id="pageMeta" class="mt-3 flex flex-wrap items-center gap-2"></div>
+                </div>
+                <a href="./07. Admin UI.html" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-blue-200 hover:text-blue-700">
+                    <i class="fa-solid fa-arrow-left"></i>Quay lại Admin UI
+                </a>
+            </div>
+
+            <div id="memberList" class="mt-6 grid gap-4 md:grid-cols-2"></div>
+        </section>
+    </main>
+
+    <script>
+        const ADMIN_SEED = {
+            blocks: [
+                { id: 'blk_db', code: 'DB', name: 'Digital Banking', display_order: 1, is_active: true },
+                { id: 'blk_rb', code: 'RB', name: 'Retail Banking', display_order: 2, is_active: true }
+            ],
+            departments: [
+                { id: 'dep_web', block_id: 'blk_db', code: 'WEB', name: 'Website', display_order: 1, is_active: true },
+                { id: 'dep_app', block_id: 'blk_db', code: 'APP', name: 'Mobile App', display_order: 2, is_active: true },
+                { id: 'dep_sales', block_id: 'blk_rb', code: 'SALES', name: 'Sales Portal', display_order: 1, is_active: true }
+            ],
+            teams: [
+                { id: 'team_po_001', department_id: 'dep_web', code: 'PO', name: 'Product Owner', leader_user_id: 'U0001', display_order: 1, is_active: true },
+                { id: 'team_dev_001', department_id: 'dep_web', code: 'DEV', name: 'Developer', leader_user_id: 'U0007', display_order: 2, is_active: true },
+                { id: 'team_app_001', department_id: 'dep_app', code: 'UX', name: 'App Experience', leader_user_id: 'U0003', display_order: 1, is_active: true },
+                { id: 'team_sales_001', department_id: 'dep_sales', code: 'OPS', name: 'Sales Ops', leader_user_id: 'U0016', display_order: 1, is_active: true }
+            ],
+            jobTitles: [
+                { id: 'job_head', code: 'HEAD', name: 'Head', display_order: 1, is_active: true },
+                { id: 'job_po', code: 'PO', name: 'PO', display_order: 2, is_active: true },
+                { id: 'job_ux', code: 'UX', name: 'UX', display_order: 3, is_active: true },
+                { id: 'job_dev_manager', code: 'DEV_MANAGER', name: 'DEV Manager', display_order: 4, is_active: true },
+                { id: 'job_be', code: 'BE', name: 'BE', display_order: 5, is_active: true },
+                { id: 'job_fe', code: 'FE', name: 'FE', display_order: 6, is_active: true },
+                { id: 'job_qc', code: 'QC', name: 'QC', display_order: 7, is_active: true }
+            ],
+            users: [
+                { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'job_head', color: '#2563EB', sort_order: 1, is_active: true },
+                { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'job_po', color: '#DB2777', sort_order: 2, is_active: true },
+                { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'job_ux', color: '#16A34A', sort_order: 3, is_active: true },
+                { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'job_dev_manager', color: '#B45309', sort_order: 7, is_active: true },
+                { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'job_be', color: '#DC2626', sort_order: 9, is_active: true },
+                { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'job_fe', color: '#0284C7', sort_order: 10, is_active: true },
+                { id: 'U0016', username: 'mai.tran', email: 'mai.tran@vib.com.vn', full_name: 'Mai', job_title_id: 'job_po', color: '#0f766e', sort_order: 16, is_active: true },
+                { id: 'U0017', username: 'son.ngo', email: 'son.ngo@vib.com.vn', full_name: 'Sơn', job_title_id: 'job_fe', color: '#9333ea', sort_order: 17, is_active: true }
+            ],
+            userTeams: [
+                { id: 'ut_001', user_id: 'U0001', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_002', user_id: 'U0002', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_003', user_id: 'U0003', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_004', user_id: 'U0007', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_005', user_id: 'U0009', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_006', user_id: 'U0010', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_007', user_id: 'U0016', team_id: 'team_sales_001', is_primary: true, is_active: true },
+                { id: 'ut_008', user_id: 'U0017', team_id: 'team_app_001', is_primary: true, is_active: true }
+            ]
+        };
+
+        function getQueryParam(name) {
+            return new URLSearchParams(window.location.search).get(name);
+        }
+
+        function getBlockById(id) {
+            return ADMIN_SEED.blocks.find((item) => item.id === id) || null;
+        }
+
+        function getDepartmentById(id) {
+            return ADMIN_SEED.departments.find((item) => item.id === id) || null;
+        }
+
+        function getTeamById(id) {
+            return ADMIN_SEED.teams.find((item) => item.id === id) || null;
+        }
+
+        function getJobTitleById(id) {
+            return ADMIN_SEED.jobTitles.find((item) => item.id === id) || null;
+        }
+
+        function getUserById(id) {
+            return ADMIN_SEED.users.find((item) => item.id === id) || null;
+        }
+
+        function initials(fullName) {
+            return (fullName || '')
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((item) => item[0]?.toUpperCase() || '')
+                .join('') || 'US';
+        }
+
+        function getTeamFullCode(teamId) {
+            const team = getTeamById(teamId);
+            if (!team) return '';
+            const department = getDepartmentById(team.department_id);
+            const block = department ? getBlockById(department.block_id) : null;
+            return [block?.code, department?.code, team.code].filter(Boolean).join('.');
+        }
+
+        function getDepartmentFullCode(departmentId) {
+            const department = getDepartmentById(departmentId);
+            if (!department) return '';
+            const block = getBlockById(department.block_id);
+            return [block?.code, department.code].filter(Boolean).join('.');
+        }
+
+        function getUsersForScope(type, id) {
+            let teamIds = [];
+            if (type === 'team') {
+                teamIds = [id];
+            } else if (type === 'department') {
+                teamIds = ADMIN_SEED.teams.filter((team) => team.department_id === id && team.is_active).map((team) => team.id);
+            } else {
+                const departmentIds = ADMIN_SEED.departments.filter((department) => department.block_id === id && department.is_active).map((department) => department.id);
+                teamIds = ADMIN_SEED.teams.filter((team) => departmentIds.includes(team.department_id) && team.is_active).map((team) => team.id);
+            }
+
+            return ADMIN_SEED.userTeams
+                .filter((row) => teamIds.includes(row.team_id) && row.is_active)
+                .map((row) => {
+                    const user = getUserById(row.user_id);
+                    return user ? { ...user, team_id: row.team_id } : null;
+                })
+                .filter(Boolean)
+                .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+        }
+
+        function getScopeMeta(type, id) {
+            if (type === 'team') {
+                const team = getTeamById(id);
+                return team ? {
+                    label: 'Nhóm',
+                    title: `Nhóm ${getTeamFullCode(id)} | ${team.name}`,
+                    breadcrumbs: [`Team: ${getTeamFullCode(id)}`]
+                } : null;
+            }
+
+            if (type === 'department') {
+                const department = getDepartmentById(id);
+                return department ? {
+                    label: 'Phòng',
+                    title: `Phòng ${getDepartmentFullCode(id)} | ${department.name}`,
+                    breadcrumbs: [`Department: ${getDepartmentFullCode(id)}`]
+                } : null;
+            }
+
+            const block = getBlockById(id);
+            return block ? {
+                label: 'Khối',
+                title: `Khối ${block.code} | ${block.name}`,
+                breadcrumbs: [`Block: ${block.code}`]
+            } : null;
+        }
+
+        function renderPage() {
+            const type = getQueryParam('type') || 'block';
+            const id = getQueryParam('id') || 'blk_db';
+            const meta = getScopeMeta(type, id);
+            const users = getUsersForScope(type, id);
+
+            const pageTitle = document.getElementById('pageTitle');
+            const pageMeta = document.getElementById('pageMeta');
+            const memberList = document.getElementById('memberList');
+
+            if (!meta) {
+                pageTitle.textContent = 'Không tìm thấy dữ liệu';
+                pageMeta.innerHTML = '<span class="member-badge is-slate">Scope không hợp lệ</span>';
+                memberList.innerHTML = '';
+                return;
+            }
+
+            pageTitle.textContent = meta.title;
+            pageMeta.innerHTML = `
+                <span class="member-badge is-slate">${meta.label}</span>
+                <span class="member-badge is-blue">${users.length} thành viên</span>
+                ${meta.breadcrumbs.map((item) => `<span class="member-badge is-slate">${item}</span>`).join('')}
+            `;
+
+            memberList.innerHTML = users.length ? users.map((user) => {
+                const jobTitle = getJobTitleById(user.job_title_id);
+                return `
+                    <article class="member-card rounded-[24px] p-5">
+                        <div class="flex items-start gap-4">
+                            <span class="member-avatar" style="background:${user.color || '#64748b'}">${initials(user.full_name)}</span>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h2 class="text-lg font-extrabold text-slate-900">${user.full_name}</h2>
+                                    <span class="member-badge is-blue">${jobTitle?.name || 'Khác'}</span>
+                                </div>
+                                <p class="mt-1 text-sm font-medium text-slate-500">${user.email}</p>
+                                <div class="mt-4 grid gap-2 text-sm text-slate-600">
+                                    <p><span class="font-bold text-slate-900">Username:</span> ${user.username}</p>
+                                    <p><span class="font-bold text-slate-900">Team:</span> ${getTeamFullCode(user.team_id)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('') : `
+                <div class="member-card rounded-[24px] p-8 text-center text-slate-500 md:col-span-2">
+                    Chưa có thành viên trong phạm vi đã chọn.
+                </div>
+            `;
+        }
+
+        renderPage();
+    </script>
+</body>
+
+</html>
