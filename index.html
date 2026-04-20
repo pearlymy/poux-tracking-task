@@ -932,6 +932,226 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             pointer-events: none;
         }
 
+        .admin-shell {
+            min-height: calc(100vh - 3rem);
+        }
+
+        .admin-tab-btn {
+            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.92);
+            color: #475569;
+            transition: all 0.18s ease;
+        }
+
+        .admin-tab-btn:hover {
+            border-color: #93c5fd;
+            color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .admin-tab-btn.is-active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .admin-kpi-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-kpi-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -24px -24px auto;
+            width: 84px;
+            height: 84px;
+            border-radius: 9999px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 70%);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .admin-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #64748b;
+            font-weight: 800;
+            background: #f8fafc;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.32rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .admin-badge.is-green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .admin-badge.is-blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .admin-badge.is-amber {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .admin-badge.is-slate {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .admin-mini-card {
+            border: 1px solid #e2e8f0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+        }
+
+        .admin-color-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .admin-color-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            padding: 0.6rem 0.7rem;
+            background: #ffffff;
+            transition: all 0.18s ease;
+        }
+
+        .admin-color-chip:hover {
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(148, 163, 184, 0.12);
+        }
+
+        .admin-color-chip.is-active {
+            border-color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .admin-color-chip-swatch {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.35);
+        }
+
+        .admin-color-chip-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 0;
+        }
+
+        .admin-color-chip-name {
+            font-size: 11px;
+            font-weight: 800;
+            color: #0f172a;
+            text-transform: capitalize;
+            line-height: 1.1;
+        }
+
+        .admin-color-chip-code {
+            font-size: 10px;
+            color: #64748b;
+            line-height: 1.1;
+        }
+
+        .admin-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 48px;
+            height: 28px;
+            border-radius: 9999px;
+            padding: 3px;
+            transition: background-color 0.18s ease;
+        }
+
+        .admin-toggle::after {
+            content: "";
+            width: 22px;
+            height: 22px;
+            border-radius: 9999px;
+            background: #ffffff;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+            transition: transform 0.18s ease;
+        }
+
+        .admin-toggle.is-on {
+            background: #2563eb;
+        }
+
+        .admin-toggle.is-on::after {
+            transform: translateX(20px);
+        }
+
+        .admin-toggle.is-off {
+            background: #cbd5e1;
+        }
+
+        .admin-user-tree-card {
+            border: 1px solid #e2e8f0;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+        }
+
+        .admin-user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.is-active {
+            display: block;
+        }
+
         .sidebar-nav {
             overflow-y: auto;
             overflow-x: visible;
@@ -1854,57 +2074,299 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         <main class="app-main">
             <div class="app-main-body">
                 <div class="w-full px-6 flex flex-col h-screen">
+                    <section id="kanbanView" data-app-view="kanban">
+                        <div
+                            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl"></div>
 
-        <div
-            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
-            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl"></div>
+                            <div>
+                                <h1 class="text-2xl font-semibold text-slate-800 flex items-center gap-3 tracking-tight">
+                                    <div
+                                        class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
+                                        <i class="fa-solid fa-list-check text-lg"></i>
+                                    </div>
+                                    Task Tracking Elite
+                                </h1>
+                                <p class="text-slate-500 mt-2 text-[13px] font-medium flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-amber-400"></i> Bảng điều khiển tiến độ dự án 2024
+                                </p>
+                            </div>
 
-            <div>
-                <h1 class="text-2xl font-semibold text-slate-800 flex items-center gap-3 tracking-tight">
-                    <div
-                        class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 shadow-inner">
-                        <i class="fa-solid fa-list-check text-lg"></i>
-                    </div>
-                    Task Tracking Elite
-                </h1>
-                <p class="text-slate-500 mt-2 text-[13px] font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-400"></i> Bảng điều khiển tiến độ dự án 2024
-                </p>
-            </div>
+                            <div class="flex w-full md:w-auto gap-3 items-center">
+                                <div class="relative w-full md:w-64 group">
+                                    <i
+                                        class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                                    <input type="text" placeholder="Tìm kiếm Task..."
+                                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
+                                </div>
 
-            <div class="flex w-full md:w-auto gap-3 items-center">
-                <div class="relative w-full md:w-64 group">
-                    <i
-                        class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
-                    <input type="text" placeholder="Tìm kiếm Task..."
-                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
-                </div>
+                                <button type="button"
+                                    class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
+                                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
+                                </button>
 
-                <button type="button"
-                    class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
-                </button>
+                                <button type="button" onclick="openInlineForm()"
+                                    class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
+                                    <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mới</span>
+                                </button>
+                            </div>
+                        </div>
 
-                <button type="button" onclick="openInlineForm()"
-                    class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mới</span>
-                </button>
-            </div>
-        </div>
+                        <div class="kanban-scroll-shell">
+                            <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
+                                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div id="kanbanScrollArea" class="kanban-scroll-area">
+                                <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
+                            </div>
+                        </div>
+                    </section>
 
-        <div class="kanban-scroll-shell">
-            <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
-                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-            <div id="kanbanScrollArea" class="kanban-scroll-area">
-                <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
-            </div>
-        </div>
+                    <section id="adminView" data-app-view="admin" class="hidden admin-shell py-6">
+                        <div class="space-y-6">
+                            <div class="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
+                                <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                                    <div>
+                                        <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">Quản trị cấu hình vận hành cho tổ chức và phân quyền</h1>
+                                        <p class="mt-1 text-sm text-slate-500">Quản lý danh mục nền, người dùng, vai trò và workflow state trong một không gian gọn hơn.</p>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div id="adminHeroMetrics" class="flex flex-wrap gap-2"></div>
+                                        <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"><i class="fa-solid fa-file-export mr-2 text-slate-400"></i>Export</button>
+                                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700"><i class="fa-solid fa-plus mr-2"></i>Tạo mới</button>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex flex-wrap gap-3">
+                                    <button type="button" class="admin-tab-btn is-active rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="org">Khối / Phòng / Nhóm</button>
+                                    <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="users">Người dùng</button>
+                                    <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="roles">Vai trò & quyền</button>
+                                    <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="states">Workflow / State</button>
+                                    <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold" data-admin-tab="logs">Nhật ký hệ thống</button>
+                                </div>
+                            </div>
+
+                            <div class="admin-panel" data-admin-panel="org">
+                                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                                        <div>
+                                            <h2 class="text-xl font-extrabold text-slate-900">Khối / Phòng / Nhóm</h2>
+                                            <p class="mt-1 text-sm text-slate-500">CRUD 3 đối tượng độc lập theo mô hình `Block > Department > Team`.</p>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3">
+                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">+ Tạo khối</button>
+                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">+ Tạo phòng</button>
+                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo nhóm</button>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+                                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Cây cấu trúc</p>
+                                            <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+                                                <p class="font-extrabold text-slate-900">DB <span class="ml-2 text-slate-500">Digital Banking</span></p>
+                                                <div class="mt-3 ml-4 space-y-3 border-l border-dashed border-slate-300 pl-4">
+                                                    <div>
+                                                        <p class="font-bold text-slate-800">WEB <span class="ml-2 text-slate-500">Website</span></p>
+                                                        <div class="mt-2 ml-4 space-y-2 border-l border-dashed border-slate-300 pl-4">
+                                                            <p>PO <span class="ml-2 text-slate-500">Product Owner</span></p>
+                                                            <p>DEV <span class="ml-2 text-slate-500">Developer</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="overflow-hidden rounded-2xl border border-slate-200">
+                                            <table class="admin-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Loại</th>
+                                                        <th>Mã</th>
+                                                        <th>Tên</th>
+                                                        <th>Thuộc</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white">
+                                                    <tr><td>Khối</td><td class="font-extrabold text-slate-900">DB</td><td>Digital Banking</td><td>Root</td><td><span class="admin-badge is-green">Active</span></td><td class="text-sm font-bold text-blue-700">View Edit</td></tr>
+                                                    <tr><td>Phòng</td><td class="font-extrabold text-slate-900">WEB</td><td>Website</td><td>DB</td><td><span class="admin-badge is-green">Active</span></td><td class="text-sm font-bold text-blue-700">View Edit</td></tr>
+                                                    <tr><td>Nhóm</td><td class="font-extrabold text-slate-900">PO</td><td>Product Owner</td><td>DB.WEB</td><td><span class="admin-badge is-green">Active</span></td><td class="text-sm font-bold text-blue-700">View Edit</td></tr>
+                                                    <tr><td>Nhóm</td><td class="font-extrabold text-slate-900">DEV</td><td>Developer</td><td>DB.WEB</td><td><span class="admin-badge is-green">Active</span></td><td class="text-sm font-bold text-blue-700">View Edit</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="admin-panel" data-admin-panel="users">
+                                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                                        <div>
+                                            <h2 class="text-xl font-extrabold text-slate-900">Người dùng</h2>
+                                            <p class="mt-1 text-sm text-slate-500">Danh sách user bám theo schema `users`, `user_teams`, `user_role_assignments`.</p>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3">
+                                            <input type="text" placeholder="Tìm user theo tên hoặc email" class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-blue-400 focus:bg-white">
+                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Import</button>
+                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo user</button>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                                        <table class="admin-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>User</th>
+                                                    <th>Chức danh</th>
+                                                    <th>Team chính</th>
+                                                    <th>Role hiện tại</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Thao tác</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                <tr>
+                                                    <td><div class="flex items-center gap-3"><div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-xs font-extrabold text-blue-700">AN</div><div><p class="font-extrabold text-slate-900">a.AN</p><p class="text-xs text-slate-500">an.nguyen@vib.com.vn</p></div></div></td>
+                                                    <td>Head</td>
+                                                    <td><span class="admin-badge is-blue">DB.WEB.PO</span></td>
+                                                    <td>Super Admin, Manager</td>
+                                                    <td><span class="admin-badge is-green">Active</span></td>
+                                                    <td class="text-sm font-bold text-blue-700">View Edit Disable</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="flex items-center gap-3"><div class="flex h-10 w-10 items-center justify-center rounded-xl bg-pink-100 text-xs font-extrabold text-pink-700">HP</div><div><p class="font-extrabold text-slate-900">Hiếu</p><p class="text-xs text-slate-500">hieu.phan@vib.com.vn</p></div></div></td>
+                                                    <td>PO</td>
+                                                    <td><span class="admin-badge is-blue">DB.WEB.PO</span></td>
+                                                    <td>Member</td>
+                                                    <td><span class="admin-badge is-green">Active</span></td>
+                                                    <td class="text-sm font-bold text-blue-700">View Edit Disable</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="flex items-center gap-3"><div class="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xs font-extrabold text-orange-700">DL</div><div><p class="font-extrabold text-slate-900">Đắc</p><p class="text-xs text-slate-500">tuan.le2@vib.com.vn</p></div></div></td>
+                                                    <td>DEV Manager</td>
+                                                    <td><span class="admin-badge is-slate">DB.WEB.DEV</span></td>
+                                                    <td>Manager</td>
+                                                    <td><span class="admin-badge is-green">Active</span></td>
+                                                    <td class="text-sm font-bold text-blue-700">View Edit Disable</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="admin-panel" data-admin-panel="roles">
+                                <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+                                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h2 class="text-xl font-extrabold text-slate-900">Vai trò hệ thống</h2>
+                                                <p class="mt-1 text-sm text-slate-500">Không cho xóa cứng role hệ thống.</p>
+                                            </div>
+                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo role</button>
+                                        </div>
+                                        <div class="mt-5 space-y-3">
+                                            <div class="rounded-2xl border border-blue-200 bg-blue-50 p-4"><p class="font-extrabold text-blue-900">SUPER_ADMIN</p><p class="mt-1 text-sm text-blue-800">Scope `GLOBAL` • 10 permissions</p></div>
+                                            <div class="rounded-2xl border border-slate-200 bg-white p-4"><p class="font-extrabold text-slate-900">MANAGER</p><p class="mt-1 text-sm text-slate-600">Scope `TEAM` • 5 permissions</p></div>
+                                            <div class="rounded-2xl border border-slate-200 bg-white p-4"><p class="font-extrabold text-slate-900">MEMBER</p><p class="mt-1 text-sm text-slate-600">Scope `TEAM` • 4 permissions</p></div>
+                                            <div class="rounded-2xl border border-slate-200 bg-white p-4"><p class="font-extrabold text-slate-900">VIEWER</p><p class="mt-1 text-sm text-slate-600">Scope `TEAM` • 1 permission</p></div>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h2 class="text-xl font-extrabold text-slate-900">Chi tiết role `MANAGER`</h2>
+                                                <p class="mt-1 text-sm text-slate-500">Kiểm soát permission và user assignment theo team.</p>
+                                            </div>
+                                            <span class="admin-badge is-blue">TEAM scope</span>
+                                        </div>
+                                        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Permissions</p>
+                                                <div class="mt-4 space-y-3 text-sm font-bold text-slate-700">
+                                                    <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> View Board</label>
+                                                    <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> Create Task</label>
+                                                    <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> Edit Task</label>
+                                                    <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> Move Task</label>
+                                                    <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> Delete Task</label>
+                                                </div>
+                                            </div>
+                                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Assignments</p>
+                                                <div class="mt-4 space-y-3">
+                                                    <div class="rounded-xl bg-white px-4 py-3"><p class="text-sm font-extrabold text-slate-900">a.AN</p><p class="mt-1 text-xs text-slate-500">DB.WEB.PO • Active</p></div>
+                                                    <div class="rounded-xl bg-white px-4 py-3"><p class="text-sm font-extrabold text-slate-900">Đắc</p><p class="mt-1 text-xs text-slate-500">DB.WEB.DEV • Active</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="admin-panel" data-admin-panel="states">
+                                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                                        <div>
+                                            <h2 class="text-xl font-extrabold text-slate-900">Workflow / State</h2>
+                                            <p class="mt-1 text-sm text-slate-500">Chỉ hỗ trợ đổi thứ tự, chỉnh wording và thêm state mới.</p>
+                                        </div>
+                                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo state</button>
+                                    </div>
+                                    <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thứ tự hiện tại</p>
+                                            <div class="mt-4 space-y-3">
+                                                <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3"><span class="font-bold">1. Backlog</span><i class="fa-solid fa-grip-vertical text-slate-300"></i></div>
+                                                <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3"><span class="font-bold">2. In Progress</span><i class="fa-solid fa-grip-vertical text-slate-300"></i></div>
+                                                <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3"><span class="font-bold">3. In Review</span><i class="fa-solid fa-grip-vertical text-slate-300"></i></div>
+                                                <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3"><span class="font-bold">4. Done</span><i class="fa-solid fa-grip-vertical text-slate-300"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                                            <div class="mt-4 space-y-4">
+                                                <label class="block text-sm font-bold text-slate-700">Mã state<input type="text" value="IN_REVIEW" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                                <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input type="text" value="In Review" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                                <label class="block text-sm font-bold text-slate-700">Tên ngắn<input type="text" value="Review" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                                <div class="flex justify-end gap-3">
+                                                    <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Hủy</button>
+                                                    <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">Lưu state</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="admin-panel" data-admin-panel="logs">
+                                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                                    <h2 class="text-xl font-extrabold text-slate-900">Nhật ký hệ thống</h2>
+                                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                                        <table class="admin-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Thời gian</th>
+                                                    <th>User</th>
+                                                    <th>Module</th>
+                                                    <th>Hành động</th>
+                                                    <th>Chi tiết</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                <tr><td>19/04 09:20</td><td>an.nguyen</td><td>Workflow</td><td>UPDATE_STATE</td><td>Đổi wording `In Review` thành `Review`</td></tr>
+                                                <tr><td>19/04 09:05</td><td>hieu.phan</td><td>User</td><td>CREATE_USER</td><td>Tạo user `U0015`</td></tr>
+                                                <tr><td>19/04 08:30</td><td>an.nguyen</td><td>Permission</td><td>UPDATE_ROLE</td><td>Cập nhật permission cho role `MANAGER`</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </main>
@@ -1963,6 +2425,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         ].sort((a, b) => a.orderIndex - b.orderIndex);
 
         const BOARD_STORAGE_KEY = 'kanban_board_state_v3';
+        let currentAppView = 'kanban';
+        let currentAdminTab = 'org';
         let sortableInstances = [];
         let boardTickets = [];
 
@@ -2390,6 +2854,119 @@ function togglePersonalMode(select) {
             { user_id: 'U0013', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' },
             { user_id: 'U0014', role_id: 'MEMBER', team_code: 'DB.WEB.DEV' }
         ];
+
+        const ADMIN_SEED = {
+            blocks: [
+                { id: 'blk_db', code: 'DB', name: 'Digital Banking', display_order: 1, is_active: true, description: 'Khoi Digital Banking' },
+                { id: 'blk_rb', code: 'RB', name: 'Retail Banking', display_order: 2, is_active: true, description: 'Khoi Retail Banking' }
+            ],
+            departments: [
+                { id: 'dep_web', block_id: 'blk_db', code: 'WEB', name: 'Website', display_order: 1, is_active: true },
+                { id: 'dep_app', block_id: 'blk_db', code: 'APP', name: 'Mobile App', display_order: 2, is_active: true },
+                { id: 'dep_sales', block_id: 'blk_rb', code: 'SALES', name: 'Sales Portal', display_order: 1, is_active: true }
+            ],
+            teams: [
+                { id: 'team_po_001', department_id: 'dep_web', code: 'PO', name: 'Product Owner', leader_user_id: 'U0001', display_order: 1, is_active: true },
+                { id: 'team_dev_001', department_id: 'dep_web', code: 'DEV', name: 'Developer', leader_user_id: 'U0007', display_order: 2, is_active: true },
+                { id: 'team_app_001', department_id: 'dep_app', code: 'UX', name: 'App Experience', leader_user_id: 'U0003', display_order: 1, is_active: true },
+                { id: 'team_sales_001', department_id: 'dep_sales', code: 'OPS', name: 'Sales Ops', leader_user_id: 'U0016', display_order: 1, is_active: true }
+            ],
+            states: [
+                { id: 'st_backlog', code: 'BACKLOG', label: 'Backlog', description: 'Cong viec moi tao, chua duoc xu ly.', color_theme: 'slate', display_order: 1, is_active: true },
+                { id: 'st_in_progress', code: 'IN_PROGRESS', label: 'In Progress', description: 'Cong viec dang duoc phan cong va thuc hien.', color_theme: 'blue', display_order: 2, is_active: true },
+                { id: 'st_in_review', code: 'IN_REVIEW', label: 'In Review', description: 'Cong viec da lam xong va dang cho review hoac xac nhan.', color_theme: 'indigo', display_order: 3, is_active: true },
+                { id: 'st_done', code: 'DONE', label: 'Done', description: 'Cong viec da hoan thanh va ban giao.', color_theme: 'emerald', display_order: 4, is_active: true },
+                { id: 'st_pending', code: 'PENDING', label: 'Pending', description: 'Cong viec dang bi tam dung hoac cho phu thuoc.', color_theme: 'orange', display_order: 5, is_active: true },
+                { id: 'st_cancel', code: 'CANCEL', label: 'Cancel', description: 'Cong viec da bi huy bo, khong tiep tuc thuc hien.', color_theme: 'red', display_order: 6, is_active: true }
+            ],
+            jobTitles: [
+                { id: 'job_head', code: 'HEAD', name: 'Head', display_order: 1, is_active: true },
+                { id: 'job_po', code: 'PO', name: 'PO', display_order: 2, is_active: true },
+                { id: 'job_ux', code: 'UX', name: 'UX', display_order: 3, is_active: true },
+                { id: 'job_dev_manager', code: 'DEV_MANAGER', name: 'DEV Manager', display_order: 4, is_active: true },
+                { id: 'job_be', code: 'BE', name: 'BE', display_order: 5, is_active: true },
+                { id: 'job_fe', code: 'FE', name: 'FE', display_order: 6, is_active: true },
+                { id: 'job_qc', code: 'QC', name: 'QC', display_order: 7, is_active: true }
+            ],
+            users: [
+                { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'job_head', color: '#2563EB', sort_order: 1, is_active: true, last_login_at: '2026-04-19T08:30:00Z' },
+                { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'job_po', color: '#DB2777', sort_order: 2, is_active: true, last_login_at: '2026-04-19T07:45:00Z' },
+                { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'job_ux', color: '#16A34A', sort_order: 3, is_active: true, last_login_at: '2026-04-19T07:10:00Z' },
+                { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'job_dev_manager', color: '#B45309', sort_order: 7, is_active: true, last_login_at: '2026-04-18T16:00:00Z' },
+                { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'job_be', color: '#DC2626', sort_order: 9, is_active: true, last_login_at: '2026-04-18T15:20:00Z' },
+                { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'job_fe', color: '#0284C7', sort_order: 10, is_active: true, last_login_at: '2026-04-18T15:00:00Z' },
+                { id: 'U0015', username: 'linh.nguyen', email: 'linh.nguyen@vib.com.vn', full_name: 'Linh', job_title_id: 'job_qc', color: '#7C3AED', sort_order: 15, is_active: false, last_login_at: '2026-04-17T10:00:00Z' },
+                { id: 'U0016', username: 'mai.tran', email: 'mai.tran@vib.com.vn', full_name: 'Mai', job_title_id: 'job_po', color: '#0f766e', sort_order: 16, is_active: true, last_login_at: '2026-04-19T09:00:00Z' },
+                { id: 'U0017', username: 'son.ngo', email: 'son.ngo@vib.com.vn', full_name: 'Sơn', job_title_id: 'job_fe', color: '#9333ea', sort_order: 17, is_active: true, last_login_at: '2026-04-18T11:30:00Z' }
+            ],
+            userTeams: [
+                { id: 'ut_001', user_id: 'U0001', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_002', user_id: 'U0002', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_003', user_id: 'U0003', team_id: 'team_po_001', is_primary: true, is_active: true },
+                { id: 'ut_004', user_id: 'U0007', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_005', user_id: 'U0009', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_006', user_id: 'U0010', team_id: 'team_dev_001', is_primary: true, is_active: true },
+                { id: 'ut_007', user_id: 'U0016', team_id: 'team_sales_001', is_primary: true, is_active: true },
+                { id: 'ut_008', user_id: 'U0017', team_id: 'team_app_001', is_primary: true, is_active: true }
+            ],
+            roles: [
+                { id: 'role_super_admin', code: 'SUPER_ADMIN', name: 'Super Admin', description: 'Toan quyen quan tri he thong', scope_type: 'GLOBAL', display_order: 1, is_system: true, is_active: true },
+                { id: 'role_manager', code: 'MANAGER', name: 'Manager', description: 'Quan ly task va thanh vien trong nhom', scope_type: 'TEAM', display_order: 2, is_system: true, is_active: true },
+                { id: 'role_member', code: 'MEMBER', name: 'Member', description: 'Thanh vien thuc hien cong viec', scope_type: 'TEAM', display_order: 3, is_system: true, is_active: true },
+                { id: 'role_intern', code: 'INTERN', name: 'Intern', description: 'Thanh vien thuc tap', scope_type: 'TEAM', display_order: 4, is_system: true, is_active: true },
+                { id: 'role_viewer', code: 'VIEWER', name: 'Viewer', description: 'Chi co quyen xem', scope_type: 'TEAM', display_order: 5, is_system: true, is_active: true }
+            ],
+            permissions: [
+                { id: 'perm_view_board', code: 'VIEW_BOARD', name: 'View Board', module: 'TASK', display_order: 1, is_active: true },
+                { id: 'perm_create_task', code: 'CREATE_TASK', name: 'Create Task', module: 'TASK', display_order: 2, is_active: true },
+                { id: 'perm_edit_task', code: 'EDIT_TASK', name: 'Edit Task', module: 'TASK', display_order: 3, is_active: true },
+                { id: 'perm_move_task', code: 'MOVE_TASK', name: 'Move Task', module: 'TASK', display_order: 4, is_active: true },
+                { id: 'perm_delete_task', code: 'DELETE_TASK', name: 'Delete Task', module: 'TASK', display_order: 5, is_active: true },
+                { id: 'perm_manage_users', code: 'MANAGE_USERS', name: 'Manage Users', module: 'ADMIN', display_order: 6, is_active: true },
+                { id: 'perm_manage_org', code: 'MANAGE_ORG', name: 'Manage Org', module: 'ADMIN', display_order: 7, is_active: true },
+                { id: 'perm_manage_roles', code: 'MANAGE_ROLES', name: 'Manage Roles', module: 'ADMIN', display_order: 8, is_active: true },
+                { id: 'perm_manage_states', code: 'MANAGE_STATES', name: 'Manage States', module: 'WORKFLOW', display_order: 9, is_active: true },
+                { id: 'perm_view_audit_log', code: 'VIEW_AUDIT_LOG', name: 'View Audit Log', module: 'ADMIN', display_order: 10, is_active: true }
+            ],
+            rolePermissions: [
+                { role_id: 'role_super_admin', permission_id: 'perm_view_board' },
+                { role_id: 'role_super_admin', permission_id: 'perm_create_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_edit_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_move_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_delete_task' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_users' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_org' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_roles' },
+                { role_id: 'role_super_admin', permission_id: 'perm_manage_states' },
+                { role_id: 'role_super_admin', permission_id: 'perm_view_audit_log' },
+                { role_id: 'role_manager', permission_id: 'perm_view_board' },
+                { role_id: 'role_manager', permission_id: 'perm_create_task' },
+                { role_id: 'role_manager', permission_id: 'perm_edit_task' },
+                { role_id: 'role_manager', permission_id: 'perm_move_task' },
+                { role_id: 'role_manager', permission_id: 'perm_delete_task' },
+                { role_id: 'role_member', permission_id: 'perm_view_board' },
+                { role_id: 'role_member', permission_id: 'perm_create_task' },
+                { role_id: 'role_member', permission_id: 'perm_edit_task' },
+                { role_id: 'role_member', permission_id: 'perm_move_task' },
+                { role_id: 'role_intern', permission_id: 'perm_view_board' },
+                { role_id: 'role_intern', permission_id: 'perm_create_task' },
+                { role_id: 'role_viewer', permission_id: 'perm_view_board' }
+            ],
+            userRoleAssignments: [
+                { id: 'ura_001', user_id: 'U0001', role_id: 'role_super_admin', scope_type: 'GLOBAL', team_id: null, legacy_team_code: null, is_active: true },
+                { id: 'ura_002', user_id: 'U0001', role_id: 'role_manager', scope_type: 'TEAM', team_id: 'team_po_001', legacy_team_code: 'DB.WEB.PO', is_active: true },
+                { id: 'ura_003', user_id: 'U0007', role_id: 'role_manager', scope_type: 'TEAM', team_id: 'team_dev_001', legacy_team_code: 'DB.WEB.DEV', is_active: true },
+                { id: 'ura_004', user_id: 'U0002', role_id: 'role_member', scope_type: 'TEAM', team_id: 'team_po_001', legacy_team_code: 'DB.WEB.PO', is_active: true },
+                { id: 'ura_005', user_id: 'U0003', role_id: 'role_member', scope_type: 'TEAM', team_id: 'team_po_001', legacy_team_code: 'DB.WEB.PO', is_active: true },
+                { id: 'ura_006', user_id: 'U0009', role_id: 'role_member', scope_type: 'TEAM', team_id: 'team_dev_001', legacy_team_code: 'DB.WEB.DEV', is_active: true },
+                { id: 'ura_007', user_id: 'U0010', role_id: 'role_member', scope_type: 'TEAM', team_id: 'team_dev_001', legacy_team_code: 'DB.WEB.DEV', is_active: true }
+            ],
+            auditLogs: [
+                { id: 'log_001', time: '19/04 09:20', user: 'an.nguyen', module: 'Workflow', action: 'UPDATE_STATE', detail: 'Đổi wording In Review thành Review' },
+                { id: 'log_002', time: '19/04 09:05', user: 'hieu.phan', module: 'User', action: 'CREATE_USER', detail: 'Tạo user U0015' },
+                { id: 'log_003', time: '19/04 08:30', user: 'an.nguyen', module: 'Permission', action: 'UPDATE_ROLE', detail: 'Cập nhật permission cho MANAGER' }
+            ]
+        };
 
         function getUserRoleRows(userKey) {
             const normalizedUserKey = normalizeUserKey(userKey);
@@ -3982,12 +4559,14 @@ function openInlineForm() {
             preferredNavTarget = menuId;
             preferredNavLink = null;
             syncActiveNavState();
+            syncAppViewFromNav();
         }
 
         function setActiveNavByLink(navLink) {
             preferredNavLink = navLink;
             preferredNavTarget = null;
             syncActiveNavState();
+            syncAppViewFromNav();
         }
 
         function setActiveChildLink(link) {
@@ -4000,6 +4579,511 @@ function openInlineForm() {
             if (link.dataset.memberGroup === 'document') getBranchState('document').activeId = link.dataset.pageId || null;
             if (link.dataset.memberGroup === 'guide') getBranchState('guide').activeId = link.dataset.pageId || null;
             syncActiveNavState();
+            syncAppViewFromNav();
+        }
+
+        function setAppView(viewName) {
+            currentAppView = viewName === 'admin' ? 'admin' : 'kanban';
+            const kanbanView = document.getElementById('kanbanView');
+            const adminView = document.getElementById('adminView');
+            if (kanbanView) kanbanView.classList.toggle('hidden', currentAppView !== 'kanban');
+            if (adminView) adminView.classList.toggle('hidden', currentAppView !== 'admin');
+            if (currentAppView === 'kanban') {
+                requestAnimationFrame(updateKanbanScrollNavState);
+            }
+        }
+
+        function syncAppViewFromNav() {
+            setAppView(preferredNavLink === 'admin' ? 'admin' : 'kanban');
+        }
+
+        function setActiveAdminTab(tabKey) {
+            currentAdminTab = tabKey;
+            document.querySelectorAll('[data-admin-tab]').forEach((button) => {
+                button.classList.toggle('is-active', button.dataset.adminTab === tabKey);
+            });
+            document.querySelectorAll('[data-admin-panel]').forEach((panel) => {
+                panel.classList.toggle('is-active', panel.dataset.adminPanel === tabKey);
+            });
+        }
+
+        function initializeAdminTabs() {
+            document.querySelectorAll('[data-admin-tab]').forEach((button) => {
+                button.addEventListener('click', () => setActiveAdminTab(button.dataset.adminTab));
+            });
+            setActiveAdminTab(currentAdminTab);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function adminUserInitials(fullName) {
+            return (fullName || '')
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((part) => part[0]?.toUpperCase() || '')
+                .join('') || 'US';
+        }
+
+        function getSeedBlockById(blockId) {
+            return ADMIN_SEED.blocks.find((item) => item.id === blockId) || null;
+        }
+
+        function getSeedDepartmentById(departmentId) {
+            return ADMIN_SEED.departments.find((item) => item.id === departmentId) || null;
+        }
+
+        function getSeedTeamById(teamId) {
+            return ADMIN_SEED.teams.find((item) => item.id === teamId) || null;
+        }
+
+        function getSeedUserById(userId) {
+            return ADMIN_SEED.users.find((item) => item.id === userId) || null;
+        }
+
+        function getSeedRoleById(roleId) {
+            return ADMIN_SEED.roles.find((item) => item.id === roleId) || null;
+        }
+
+        function getSeedPermissionById(permissionId) {
+            return ADMIN_SEED.permissions.find((item) => item.id === permissionId) || null;
+        }
+
+        function getSeedJobTitleById(jobTitleId) {
+            return ADMIN_SEED.jobTitles.find((item) => item.id === jobTitleId) || null;
+        }
+
+        function getDepartmentBlock(departmentId) {
+            const department = getSeedDepartmentById(departmentId);
+            return department ? getSeedBlockById(department.block_id) : null;
+        }
+
+        function getColorOptionMeta(colorId) {
+            const colorOptions = [
+                { id: 'slate', hex: '#94a3b8' },
+                { id: 'gray', hex: '#6b7280' },
+                { id: 'zinc', hex: '#71717a' },
+                { id: 'stone', hex: '#78716c' },
+                { id: 'red', hex: '#ef4444' },
+                { id: 'rose', hex: '#f43f5e' },
+                { id: 'orange', hex: '#f97316' },
+                { id: 'amber', hex: '#f59e0b' },
+                { id: 'yellow', hex: '#eab308' },
+                { id: 'lime', hex: '#84cc16' },
+                { id: 'green', hex: '#22c55e' },
+                { id: 'emerald', hex: '#10b981' },
+                { id: 'teal', hex: '#14b8a6' },
+                { id: 'cyan', hex: '#06b6d4' },
+                { id: 'sky', hex: '#0ea5e9' },
+                { id: 'blue', hex: '#3b82f6' },
+                { id: 'indigo', hex: '#6366f1' },
+                { id: 'violet', hex: '#8b5cf6' },
+                { id: 'purple', hex: '#a855f7' },
+                { id: 'pink', hex: '#ec4899' }
+            ];
+            return colorOptions.find((item) => item.id === colorId) || colorOptions[0];
+        }
+
+        function getTeamFullCode(teamId) {
+            const team = getSeedTeamById(teamId);
+            if (!team) return 'Chưa gán team';
+            const department = getSeedDepartmentById(team.department_id);
+            const block = department ? getSeedBlockById(department.block_id) : null;
+            return [block?.code, department?.code, team.code].filter(Boolean).join('.');
+        }
+
+        function getUserPrimaryTeam(userId) {
+            const assignment = ADMIN_SEED.userTeams.find((item) => item.user_id === userId && item.is_primary && item.is_active);
+            return assignment ? getSeedTeamById(assignment.team_id) : null;
+        }
+
+        function getUserRolesSummary(userId) {
+            return ADMIN_SEED.userRoleAssignments
+                .filter((item) => item.user_id === userId && item.is_active)
+                .map((item) => getSeedRoleById(item.role_id)?.name)
+                .filter(Boolean)
+                .join(', ') || 'Chưa gán role';
+        }
+
+        function getRolePermissions(roleId) {
+            return ADMIN_SEED.rolePermissions
+                .filter((item) => item.role_id === roleId)
+                .map((item) => getSeedPermissionById(item.permission_id))
+                .filter(Boolean);
+        }
+
+        function getRoleAssignments(roleId) {
+            return ADMIN_SEED.userRoleAssignments.filter((item) => item.role_id === roleId && item.is_active);
+        }
+
+        function renderAdminHeroMetrics() {
+            const container = document.getElementById('adminHeroMetrics');
+            if (!container) return;
+            const activeUsers = ADMIN_SEED.users.filter((user) => user.is_active).length;
+            container.innerHTML = `
+                <div class="admin-badge is-slate px-3 py-2 text-xs">Khối / Phòng / Nhóm: ${ADMIN_SEED.blocks.length}/${ADMIN_SEED.departments.length}/${ADMIN_SEED.teams.length}</div>
+                <div class="admin-badge is-blue px-3 py-2 text-xs">User: ${activeUsers}/${ADMIN_SEED.users.length}</div>
+                <div class="admin-badge is-green px-3 py-2 text-xs">Role hệ thống: ${ADMIN_SEED.roles.length}</div>
+                <div class="admin-badge is-amber px-3 py-2 text-xs">State: ${ADMIN_SEED.states.length}</div>
+            `;
+        }
+
+        function renderAdminOrgPanel() {
+            const panel = document.querySelector('[data-admin-panel="org"]');
+            if (!panel) return;
+            const tableRows = [
+                ...ADMIN_SEED.blocks.map((item) => ({ type: 'Khối', code: item.code, name: item.name, parent: 'Root', active: item.is_active })),
+                ...ADMIN_SEED.departments.map((item) => ({ type: 'Phòng', code: item.code, name: item.name, parent: getSeedBlockById(item.block_id)?.code || '', active: item.is_active })),
+                ...ADMIN_SEED.teams.map((item) => {
+                    const department = getSeedDepartmentById(item.department_id);
+                    const block = department ? getSeedBlockById(department.block_id) : null;
+                    return { type: 'Nhóm', code: item.code, name: item.name, parent: [block?.code, department?.code].filter(Boolean).join('.'), active: item.is_active };
+                })
+            ];
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Khối / Phòng / Nhóm</h2>
+                            <p class="mt-1 text-sm text-slate-500">CRUD 3 đối tượng độc lập theo mô hình \`Block > Department > Team\`.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">+ Tạo khối</button>
+                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">+ Tạo phòng</button>
+                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo nhóm</button>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Cây cấu trúc</p>
+                            <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-700">
+                                ${ADMIN_SEED.blocks.map((block) => `
+                                    <div class="mb-3 last:mb-0">
+                                        <p class="font-extrabold text-slate-900">${escapeHtml(block.code)} <span class="ml-2 text-slate-500">${escapeHtml(block.name)}</span></p>
+                                        <div class="mt-3 ml-4 space-y-3 border-l border-dashed border-slate-300 pl-4">
+                                            ${ADMIN_SEED.departments.filter((department) => department.block_id === block.id).map((department) => `
+                                                <div>
+                                                    <p class="font-bold text-slate-800">${escapeHtml(department.code)} <span class="ml-2 text-slate-500">${escapeHtml(department.name)}</span></p>
+                                                    <div class="mt-2 ml-4 space-y-2 border-l border-dashed border-slate-300 pl-4">
+                                                        ${ADMIN_SEED.teams.filter((team) => team.department_id === department.id).map((team) => `<p>${escapeHtml(team.code)} <span class="ml-2 text-slate-500">${escapeHtml(team.name)}</span></p>`).join('')}
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="overflow-hidden rounded-2xl border border-slate-200">
+                            <table class="admin-table">
+                                <thead><tr><th>Loại</th><th>Mã</th><th>Tên</th><th>Thuộc</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                                <tbody class="bg-white">
+                                    ${tableRows.map((row) => `
+                                        <tr>
+                                            <td>${escapeHtml(row.type)}</td>
+                                            <td class="font-extrabold text-slate-900">${escapeHtml(row.code)}</td>
+                                            <td>${escapeHtml(row.name)}</td>
+                                            <td>${escapeHtml(row.parent)}</td>
+                                            <td><span class="admin-badge ${row.active ? 'is-green' : 'is-slate'}">${row.active ? 'Active' : 'Inactive'}</span></td>
+                                            <td class="text-sm font-bold text-blue-700">View Edit</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminUsersPanel() {
+            const panel = document.querySelector('[data-admin-panel="users"]');
+            if (!panel) return;
+            const getUsersForTeam = (teamId) => {
+                return ADMIN_SEED.userTeams
+                    .filter((row) => row.team_id === teamId && row.is_active)
+                    .map((row) => getSeedUserById(row.user_id))
+                    .filter(Boolean)
+                    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+            };
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Người dùng</h2>
+                            <p class="mt-1 text-sm text-slate-500">Phân cấp theo \`Khối > Phòng ban > Nhóm\`, và tại mỗi nhóm có thao tác thêm user.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <input type="text" placeholder="Tìm user theo tên hoặc email" class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-blue-400 focus:bg-white">
+                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Import</button>
+                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo user</button>
+                        </div>
+                    </div>
+                    <div class="mt-6 space-y-5">
+                        ${ADMIN_SEED.blocks.sort((a, b) => a.display_order - b.display_order).map((block) => `
+                            <div class="admin-user-tree-card rounded-[24px] p-5 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Khối</p>
+                                        <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(block.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(block.name)}</span></h3>
+                                    </div>
+                                    <span class="admin-badge is-slate">${ADMIN_SEED.departments.filter((item) => item.block_id === block.id).length} phòng</span>
+                                </div>
+                                <div class="mt-4 space-y-4">
+                                    ${ADMIN_SEED.departments.filter((department) => department.block_id === block.id).sort((a, b) => a.display_order - b.display_order).map((department) => `
+                                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Phòng ban</p>
+                                                    <p class="mt-1 text-base font-extrabold text-slate-900">${escapeHtml(department.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(department.name)}</span></p>
+                                                </div>
+                                                <span class="admin-badge is-blue">${ADMIN_SEED.teams.filter((item) => item.department_id === department.id).length} nhóm</span>
+                                            </div>
+                                            <div class="mt-4 grid gap-4 lg:grid-cols-2">
+                                                ${ADMIN_SEED.teams.filter((team) => team.department_id === department.id).sort((a, b) => a.display_order - b.display_order).map((team) => `
+                                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                                        <div class="flex items-center justify-between gap-3">
+                                                            <div>
+                                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Nhóm</p>
+                                                                <p class="mt-1 text-sm font-extrabold text-slate-900">${escapeHtml(team.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(team.name)}</span></p>
+                                                            </div>
+                                                            <button type="button" class="rounded-xl bg-blue-600 px-3 py-2 text-sm font-bold text-white">+ Thêm vào</button>
+                                                        </div>
+                                                        <div class="mt-4 flex flex-wrap gap-2">
+                                                            ${getUsersForTeam(team.id).map((user) => {
+                                                                const jobTitle = getSeedJobTitleById(user.job_title_id);
+                                                                return `
+                                                                    <div class="admin-user-pill">
+                                                                        <span class="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</span>
+                                                                        <span>${escapeHtml(user.full_name)}</span>
+                                                                        <span class="text-[11px] text-slate-400">${escapeHtml(jobTitle?.name || 'Khác')}</span>
+                                                                    </div>
+                                                                `;
+                                                            }).join('') || '<div class="text-sm text-slate-400">Chưa có user trong nhóm này</div>'}
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                        <table class="admin-table">
+                            <thead><tr><th>User</th><th>Chức danh</th><th>Team chính</th><th>Role hiện tại</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                            <tbody class="bg-white">
+                                ${[...ADMIN_SEED.users].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((user) => {
+                                    const jobTitle = getSeedJobTitleById(user.job_title_id);
+                                    const primaryTeam = getUserPrimaryTeam(user.id);
+                                    return `
+                                        <tr>
+                                            <td>
+                                                <div class="flex items-center gap-3">
+                                                    <div class="flex h-10 w-10 items-center justify-center rounded-xl text-xs font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</div>
+                                                    <div>
+                                                        <p class="font-extrabold text-slate-900">${escapeHtml(user.full_name)}</p>
+                                                        <p class="text-xs text-slate-500">${escapeHtml(user.email)}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>${escapeHtml(jobTitle?.name || 'Khác')}</td>
+                                            <td>${escapeHtml(primaryTeam ? getTeamFullCode(primaryTeam.id) : 'Chưa gán team')}</td>
+                                            <td>${escapeHtml(getUserRolesSummary(user.id))}</td>
+                                            <td><button type="button" class="admin-toggle ${user.is_active ? 'is-on' : 'is-off'}" aria-label="${user.is_active ? 'Active' : 'Inactive'}"></button></td>
+                                            <td class="text-sm font-bold text-blue-700">View Edit</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminRolesPanel() {
+            const panel = document.querySelector('[data-admin-panel="roles"]');
+            if (!panel) return;
+            const selectedRole = ADMIN_SEED.roles.find((role) => role.code === 'MANAGER') || ADMIN_SEED.roles[0];
+            const permissions = getRolePermissions(selectedRole.id);
+            const assignments = getRoleAssignments(selectedRole.id);
+            panel.innerHTML = `
+                <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-xl font-extrabold text-slate-900">Vai trò hệ thống</h2>
+                                <p class="mt-1 text-sm text-slate-500">Không cho xóa cứng role hệ thống.</p>
+                            </div>
+                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo role</button>
+                        </div>
+                        <div class="mt-5 space-y-3">
+                            ${ADMIN_SEED.roles.map((role) => `
+                                <div class="rounded-2xl border ${role.id === selectedRole.id ? 'border-blue-200 bg-blue-50' : 'border-slate-200 bg-white'} p-4">
+                                    <p class="font-extrabold ${role.id === selectedRole.id ? 'text-blue-900' : 'text-slate-900'}">${escapeHtml(role.code)}</p>
+                                    <p class="mt-1 text-sm ${role.id === selectedRole.id ? 'text-blue-800' : 'text-slate-600'}">Scope \`${escapeHtml(role.scope_type)}\` • ${getRolePermissions(role.id).length} permissions</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-xl font-extrabold text-slate-900">Chi tiết role \`${escapeHtml(selectedRole.code)}\`</h2>
+                                <p class="mt-1 text-sm text-slate-500">Kiểm soát permission và user assignment theo team.</p>
+                            </div>
+                            <span class="admin-badge is-blue">${escapeHtml(selectedRole.scope_type)} scope</span>
+                        </div>
+                        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Permissions</p>
+                                <div class="mt-4 space-y-3 text-sm font-bold text-slate-700">
+                                    ${permissions.map((permission) => `<label class="flex items-center gap-3 rounded-xl bg-white px-3 py-3"><input type="checkbox" checked> ${escapeHtml(permission.name)}</label>`).join('')}
+                                </div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Assignments</p>
+                                <div class="mt-4 space-y-3">
+                                    ${assignments.map((assignment) => {
+                                        const user = getSeedUserById(assignment.user_id);
+                                        const teamCode = assignment.team_id ? getTeamFullCode(assignment.team_id) : 'GLOBAL';
+                                        return `<div class="rounded-xl bg-white px-4 py-3"><p class="text-sm font-extrabold text-slate-900">${escapeHtml(user?.full_name || assignment.user_id)}</p><p class="mt-1 text-xs text-slate-500">${escapeHtml(teamCode)} • Active</p></div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminStatesPanel() {
+            const panel = document.querySelector('[data-admin-panel="states"]');
+            if (!panel) return;
+            const selectedState = ADMIN_SEED.states.find((state) => state.code === 'IN_REVIEW') || ADMIN_SEED.states[0];
+            const colorOptions = [
+                { id: 'slate', hex: '#94a3b8' },
+                { id: 'gray', hex: '#6b7280' },
+                { id: 'zinc', hex: '#71717a' },
+                { id: 'stone', hex: '#78716c' },
+                { id: 'red', hex: '#ef4444' },
+                { id: 'rose', hex: '#f43f5e' },
+                { id: 'orange', hex: '#f97316' },
+                { id: 'amber', hex: '#f59e0b' },
+                { id: 'yellow', hex: '#eab308' },
+                { id: 'lime', hex: '#84cc16' },
+                { id: 'green', hex: '#22c55e' },
+                { id: 'emerald', hex: '#10b981' },
+                { id: 'teal', hex: '#14b8a6' },
+                { id: 'cyan', hex: '#06b6d4' },
+                { id: 'blue', hex: '#3b82f6' },
+                { id: 'sky', hex: '#0ea5e9' },
+                { id: 'indigo', hex: '#6366f1' },
+                { id: 'violet', hex: '#8b5cf6' },
+                { id: 'purple', hex: '#a855f7' },
+                { id: 'pink', hex: '#ec4899' }
+            ];
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900">Workflow / State</h2>
+                            <p class="mt-1 text-sm text-slate-500">Chỉ hỗ trợ đổi thứ tự, chỉnh wording và thêm state mới.</p>
+                        </div>
+                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo state</button>
+                    </div>
+                    <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thứ tự hiện tại</p>
+                            <div class="mt-4 space-y-3">
+                                ${[...ADMIN_SEED.states].sort((a, b) => a.display_order - b.display_order).map((state) => `
+                                    ${(() => {
+                                        const colorMeta = getColorOptionMeta(state.color_theme);
+                                        return `
+                                    <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
+                                        <span class="font-bold" style="color:${colorMeta.hex}">${state.display_order}. ${escapeHtml(state.label)}</span>
+                                        <i class="fa-solid fa-grip-vertical text-slate-300"></i>
+                                    </div>
+                                        `;
+                                    })()}
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                            <div class="mt-4 space-y-4">
+                                <label class="block text-sm font-bold text-slate-700">Mã state<input type="text" value="${escapeHtml(selectedState.code)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input type="text" value="${escapeHtml(selectedState.label)}" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"></label>
+                                <label class="block text-sm font-bold text-slate-700">Description<textarea class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none" rows="4">${escapeHtml(selectedState.description || '')}</textarea></label>
+                                <div>
+                                    <p class="block text-sm font-bold text-slate-700">Màu cột</p>
+                                    <p class="mt-1 text-xs text-slate-500">Chọn nhanh từ danh sách màu sẵn có.</p>
+                                    <div class="admin-color-grid mt-3">
+                                        ${colorOptions.map((option) => `
+                                            <button type="button" class="admin-color-chip ${selectedState.color_theme === option.id ? 'is-active' : ''}">
+                                                <span class="admin-color-chip-swatch" style="background:${option.hex}"></span>
+                                                <span class="admin-color-chip-copy">
+                                                    <span class="admin-color-chip-name">${escapeHtml(option.id)}</span>
+                                                    <span class="admin-color-chip-code">${escapeHtml(option.hex)}</span>
+                                                </span>
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div class="flex justify-end gap-3">
+                                    <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Hủy</button>
+                                    <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">Lưu state</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminLogsPanel() {
+            const panel = document.querySelector('[data-admin-panel="logs"]');
+            if (!panel) return;
+            panel.innerHTML = `
+                <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+                    <h2 class="text-xl font-extrabold text-slate-900">Nhật ký hệ thống</h2>
+                    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+                        <table class="admin-table">
+                            <thead><tr><th>Thời gian</th><th>User</th><th>Module</th><th>Hành động</th><th>Chi tiết</th></tr></thead>
+                            <tbody class="bg-white">
+                                ${ADMIN_SEED.auditLogs.map((log) => `
+                                    <tr>
+                                        <td>${escapeHtml(log.time)}</td>
+                                        <td>${escapeHtml(log.user)}</td>
+                                        <td>${escapeHtml(log.module)}</td>
+                                        <td>${escapeHtml(log.action)}</td>
+                                        <td>${escapeHtml(log.detail)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminView() {
+            renderAdminHeroMetrics();
+            renderAdminOrgPanel();
+            renderAdminUsersPanel();
+            renderAdminRolesPanel();
+            renderAdminStatesPanel();
+            renderAdminLogsPanel();
+            setActiveAdminTab(currentAdminTab);
         }
 
         function initializeSelectableMembers() {
@@ -4140,7 +5224,10 @@ function openInlineForm() {
         initializeSelectableMembers();
         initializeProfileCard();
         initializeCurrentUserProfile();
+        renderAdminView();
+        initializeAdminTabs();
         toggleAccordion('trackingMenu', 'trackingChevron');
+        syncAppViewFromNav();
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
