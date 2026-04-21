@@ -2932,6 +2932,489 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             pointer-events: none;
         }
 
+        .task-detail-drawer-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            pointer-events: none;
+        }
+
+        .task-detail-drawer-layer.is-open {
+            pointer-events: auto;
+        }
+
+        .task-detail-drawer-layer.is-closing {
+            pointer-events: none;
+        }
+
+        .task-detail-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.18);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.28s ease;
+        }
+
+        .task-detail-drawer-layer.is-open .task-detail-backdrop {
+            opacity: 1;
+        }
+
+        .task-detail-drawer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: min(720px, 100vw);
+            height: 100vh;
+            overflow: auto;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 32%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.99));
+            border-left: 1px solid #dbe4f0;
+            box-shadow: -24px 0 48px rgba(15, 23, 42, 0.12);
+            transform: translateX(100%);
+            transition: transform 0.34s cubic-bezier(.22, 1, .36, 1);
+            will-change: transform;
+        }
+
+        .task-detail-drawer-layer.is-open .task-detail-drawer {
+            transform: translateX(0);
+        }
+
+        .task-detail-close-btn {
+            position: absolute;
+            top: 50%;
+            right: calc(min(720px, 100vw) + 1rem);
+            transform: translateY(-50%);
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.56);
+            transition: opacity 0.08s ease;
+        }
+
+        .task-detail-drawer-layer.is-closing .task-detail-close-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .task-detail-panel {
+            min-height: 100%;
+            padding: 28px;
+        }
+
+        .task-detail-section {
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.84);
+            padding: 20px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+        }
+
+        .task-detail-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #64748b;
+        }
+
+        .task-detail-stat {
+            border: 1px solid #dbe4f0;
+            border-radius: 20px;
+            padding: 16px;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+        }
+
+        .task-detail-assignee {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+
+        .task-detail-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        }
+
+        .task-detail-status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid transparent;
+        }
+
+        .task-detail-status-chip::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: currentColor;
+            opacity: 0.9;
+        }
+
+        .task-detail-status-chip.is-todo {
+            color: #b91c1c;
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .task-detail-status-chip.is-in-progress {
+            color: #b45309;
+            background: #fffbeb;
+            border-color: #fde68a;
+        }
+
+        .task-detail-status-chip.is-done {
+            color: #047857;
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+        }
+
+        .task-detail-workflow-chip {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .task-detail-empty {
+            border: 1px dashed #cbd5e1;
+            border-radius: 18px;
+            padding: 16px;
+            text-align: center;
+            color: #64748b;
+            background: rgba(248, 250, 252, 0.78);
+        }
+
+        .task-checklist-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .task-checklist-item {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr) max-content max-content 20px;
+            gap: 10px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .task-checklist-order {
+            font-size: 13px;
+            font-weight: 800;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .task-checklist-main {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .task-checklist-deadline {
+            position: relative;
+            min-width: 0;
+            justify-self: end;
+        }
+
+        .task-checklist-date-field {
+            width: auto;
+            position: relative;
+            display: inline-flex;
+            cursor: pointer;
+        }
+
+        .task-checklist-date-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.4;
+        }
+
+        .task-checklist-date-display.is-placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .task-checklist-date-days {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .task-checklist-date-days.is-positive {
+            color: #16a34a;
+        }
+
+        .task-checklist-date-days.is-negative {
+            color: #dc2626;
+        }
+
+        .task-checklist-date-native {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: default;
+            border: 0;
+            pointer-events: none;
+        }
+
+        .task-checklist-date-native::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            display: none;
+        }
+
+        .task-checklist-title-input {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            outline: none;
+        }
+
+        .task-checklist-title-input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .task-checklist-meta {
+            display: none;
+        }
+
+        .task-checklist-done-btn {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            border-radius: 999px;
+            border: 1.5px solid #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .task-checklist-done-btn.is-done {
+            border-color: #10b981;
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        .task-checklist-status {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .task-checklist-status.is-done {
+            color: #047857;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+        }
+
+        .task-checklist-status.is-todo {
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .task-checklist-assignee {
+            position: relative;
+            width: 100%;
+            justify-self: end;
+            display: flex;
+            justify-content: flex-end;
+            padding-left: 0;
+        }
+
+        .task-checklist-assignee-trigger {
+            width: auto;
+            max-width: 100%;
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 0;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .task-checklist-assignee-trigger:hover {
+            opacity: 0.9;
+        }
+
+        .task-checklist-assignee-trigger > span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            min-width: 0;
+            max-width: 100%;
+            line-height: 1.2;
+        }
+
+        .task-checklist-assignee-trigger .tag-name {
+            border-radius: 8px;
+            min-height: 26px;
+            padding: 0 12px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10);
+        }
+
+        .task-checklist-assignee-value {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-checklist-assignee-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .task-checklist-assignee-text {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .task-checklist-assignee-text.is-placeholder {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .task-checklist-assignee-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            left: auto;
+            z-index: 3;
+            border: 1px solid #dbe4f0;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+            padding: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-width: 180px;
+            max-width: 260px;
+        }
+
+        .task-checklist-assignee-option {
+            border: 0;
+            background: #f8fafc;
+            padding: 0 12px;
+            min-height: 26px;
+            white-space: nowrap;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .task-checklist-assignee-option:hover,
+        .task-checklist-assignee-option.is-active {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1d4ed8;
+        }
+
+        .task-checklist-assignee-option:first-child {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .task-checklist-drag {
+            width: 20px;
+            height: 20px;
+            color: rgba(148, 163, 184, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            justify-self: end;
+        }
+
+        .task-checklist-add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 1px dashed #93c5fd;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 800;
+            transition: all 0.2s ease;
+        }
+
+        .task-checklist-add-btn:hover {
+            background: #dbeafe;
+        }
+
         .member-table {
             width: 100%;
             border-collapse: separate;
@@ -3323,7 +3806,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     <section id="boardWorkspaceView">
 
         <div
-            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative z-[100]">
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative">
             <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl"></div>
 
             <div>
@@ -3410,6 +3893,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         </main>
     </div>
 
+    <div id="taskDetailsDrawerRoot"></div>
+
     <script>
         const KANBAN_STATES = [
             {
@@ -3465,6 +3950,9 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         const BOARD_STORAGE_KEY = 'kanban_board_state_v3';
         let sortableInstances = [];
         let boardTickets = [];
+        let currentTaskDetailTicketId = null;
+        let taskDetailDrawerCloseTimeout = null;
+        let openTaskChecklistAssigneeItemId = null;
 
         const INLINE_FORM_HTML = `
             <div id="inlineAddForm" class="hidden po-modal relative z-20">
@@ -4229,6 +4717,506 @@ function togglePersonalMode(select) {
             return { dateStr, statusTextHtml };
         }
 
+        function getTaskDetailStatusChipClass(statusId) {
+            const normalizedStatusId = getAssigneeStatusMeta(statusId).id;
+            if (normalizedStatusId === 'IN_PROGRESS') return 'is-in-progress';
+            if (normalizedStatusId === 'DONE') return 'is-done';
+            return 'is-todo';
+        }
+
+        function getTaskDetailStateBadgeClass(stateCode) {
+            const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
+            if (normalizedStateCode === 'IN_PROGRESS') return 'bg-blue-50 text-blue-700 border border-blue-200';
+            if (normalizedStateCode === 'IN_REVIEW') return 'bg-violet-50 text-violet-700 border border-violet-200';
+            if (normalizedStateCode === 'PENDING') return 'bg-amber-50 text-amber-700 border border-amber-200';
+            if (normalizedStateCode === 'DONE') return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
+            if (normalizedStateCode === 'CANCEL') return 'bg-rose-50 text-rose-700 border border-rose-200';
+            return 'bg-slate-100 text-slate-700 border border-slate-200';
+        }
+
+        function getTaskDetailById(ticketId) {
+            return boardTickets.find((ticketState) => ticketState.ticket_id === ticketId) || null;
+        }
+
+        function normalizeChecklistItem(item, fallbackIndex = 0) {
+            if (!item) return null;
+            const assignedUserKey = normalizeUserKey(item.assignee_user_key || item.assigneeUserKey || '');
+            return {
+                id: item.id || `cli_${Date.now()}_${fallbackIndex}`,
+                title: item.title || item.label || '',
+                is_done: item.is_done === true || item.isDone === true || item.is_done === 'true' || item.isDone === 'true',
+                assignee_user_key: assignedUserKey && USERS[assignedUserKey] ? assignedUserKey : '',
+                deadline_raw: item.deadline_raw || item.deadlineRaw || ''
+            };
+        }
+
+        function getTaskChecklistAssigneeOptions(ticketState) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return [];
+            const teamUsers = getAssignableUserKeys().filter((userKey) => userKey && USERS[userKey]);
+            const selectedUsers = normalizedState.assignees.map((record) => record.user_key).filter((userKey) => userKey && USERS[userKey]);
+            const mergedUsers = Array.from(new Set([...teamUsers, ...selectedUsers]));
+            if (mergedUsers.length) return mergedUsers;
+            if (normalizedState.is_personal && USERS[CURRENT_USER_ID]) return [CURRENT_USER_ID];
+            return [];
+        }
+
+        function createChecklistItemDraft(ticketState, index = 0) {
+            const assigneeOptions = getTaskChecklistAssigneeOptions(ticketState);
+            const defaultAssigneeKey = assigneeOptions.includes(CURRENT_USER_ID)
+                ? CURRENT_USER_ID
+                : (assigneeOptions[0] || '');
+            const today = new Date();
+            const defaultDeadlineRaw = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            return normalizeChecklistItem({
+                id: `cli_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                title: '',
+                is_done: false,
+                assignee_user_key: defaultAssigneeKey,
+                deadline_raw: defaultDeadlineRaw
+            }, index);
+        }
+
+        function updateTaskChecklist(ticketId, updater) {
+            updateBoardTicket(ticketId, (ticketState) => {
+                const checklist = (ticketState.checklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean);
+                const nextChecklist = typeof updater === 'function' ? updater(checklist, ticketState) : updater;
+                return {
+                    ...ticketState,
+                    checklist: (nextChecklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean)
+                };
+            });
+            saveBoardState();
+        }
+
+        function addTaskChecklistItem(ticketId, event) {
+            event?.stopPropagation?.();
+            const ticketState = getTaskDetailById(ticketId);
+            if (!ticketState) return;
+            updateTaskChecklist(ticketId, (checklist, currentTicket) => [...checklist, createChecklistItemDraft(currentTicket, checklist.length)]);
+        }
+
+        function updateTaskChecklistTitle(ticketId, itemId, value) {
+            updateTaskChecklist(ticketId, (checklist) => checklist.map((item) => (
+                item.id === itemId ? { ...item, title: value } : item
+            )));
+        }
+
+        function updateTaskChecklistAssignee(ticketId, itemId, value) {
+            updateTaskChecklist(ticketId, (checklist) => checklist.map((item) => (
+                item.id === itemId ? { ...item, assignee_user_key: normalizeUserKey(value) || '' } : item
+            )));
+        }
+
+        function updateTaskChecklistDeadline(ticketId, itemId, value) {
+            updateTaskChecklist(ticketId, (checklist) => checklist.map((item) => (
+                item.id === itemId ? { ...item, deadline_raw: value || '' } : item
+            )));
+        }
+
+        function openTaskChecklistDatePicker(itemId, event) {
+            event?.stopPropagation?.();
+            const input = document.getElementById(`taskChecklistDate_${itemId}`);
+            if (!input) return;
+            if (typeof input.showPicker === 'function') {
+                input.showPicker();
+                return;
+            }
+            input.click();
+        }
+
+        function getChecklistDeadlineDisplayMeta(dateRaw) {
+            if (!dateRaw) {
+                return {
+                    is_placeholder: true,
+                    date_label: 'dd/mm/yyyy',
+                    days_value: null,
+                    days_class: ''
+                };
+            }
+
+            const parts = dateRaw.split('-');
+            const dateLabel = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dateRaw;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const targetDate = new Date(dateRaw);
+            targetDate.setHours(0, 0, 0, 0);
+            const diffDays = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 0) {
+                return {
+                    is_placeholder: false,
+                    date_label: dateLabel,
+                    days_value: diffDays,
+                    days_class: 'is-positive'
+                };
+            }
+
+            if (diffDays < 0) {
+                return {
+                    is_placeholder: false,
+                    date_label: dateLabel,
+                    days_value: Math.abs(diffDays),
+                    days_class: 'is-negative'
+                };
+            }
+
+            return {
+                is_placeholder: false,
+                date_label: dateLabel,
+                days_value: 0,
+                days_class: ''
+            };
+        }
+
+        function toggleTaskChecklistAssigneeLov(itemId, event) {
+            event?.stopPropagation?.();
+            openTaskChecklistAssigneeItemId = openTaskChecklistAssigneeItemId === itemId ? null : itemId;
+            syncTaskDetailsDrawer();
+        }
+
+        function closeTaskChecklistAssigneeLov() {
+            if (!openTaskChecklistAssigneeItemId) return;
+            openTaskChecklistAssigneeItemId = null;
+            syncTaskDetailsDrawer();
+        }
+
+        function selectTaskChecklistAssignee(ticketId, itemId, value, event) {
+            event?.stopPropagation?.();
+            openTaskChecklistAssigneeItemId = null;
+            updateTaskChecklistAssignee(ticketId, itemId, value);
+        }
+
+        function toggleTaskChecklistDone(ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            updateTaskChecklist(ticketId, (checklist) => checklist.map((item) => (
+                item.id === itemId ? { ...item, is_done: !item.is_done } : item
+            )));
+        }
+
+        function reorderTaskChecklist(ticketId, orderedIds) {
+            updateTaskChecklist(ticketId, (checklist) => {
+                const itemMap = new Map(checklist.map((item) => [item.id, item]));
+                return orderedIds.map((id) => itemMap.get(id)).filter(Boolean);
+            });
+        }
+
+        function initializeTaskChecklistSortable(ticketId) {
+            const checklistList = document.getElementById('taskChecklistList');
+            if (!checklistList || checklistList.dataset.sortableInitialized === 'true') return;
+
+            new Sortable(checklistList, {
+                animation: 180,
+                handle: '.task-checklist-drag',
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                onEnd: () => {
+                    const orderedIds = Array.from(checklistList.querySelectorAll('[data-checklist-id]'))
+                        .map((item) => item.dataset.checklistId)
+                        .filter(Boolean);
+                    reorderTaskChecklist(ticketId, orderedIds);
+                }
+            });
+
+            checklistList.dataset.sortableInitialized = 'true';
+        }
+
+        function syncTaskChecklistTagStyles(ticketState) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return;
+
+            const checklistItems = (normalizedState.checklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean);
+            const checklistMap = new Map(checklistItems.map((item) => [item.id, item]));
+
+            document.querySelectorAll('#taskChecklistList [data-checklist-id]').forEach((row) => {
+                const item = checklistMap.get(row.dataset.checklistId);
+                const tag = row.querySelector('.task-checklist-assignee-trigger .tag-name');
+                if (!tag) return;
+
+                const user = item?.assignee_user_key ? USERS[item.assignee_user_key] : null;
+                if (user) {
+                    tag.style.backgroundColor = user.color || '#2563EB';
+                    tag.style.borderColor = user.color || '#2563EB';
+                    tag.style.color = '#ffffff';
+                } else {
+                    tag.style.backgroundColor = '#f1f5f9';
+                    tag.style.borderColor = '#e2e8f0';
+                    tag.style.color = '#94a3b8';
+                }
+            });
+
+            document.querySelectorAll('#taskChecklistList .task-checklist-assignee-option[data-user-key]').forEach((option) => {
+                const userKey = option.dataset.userKey;
+                const user = userKey ? USERS[userKey] : null;
+                if (!user) return;
+
+                option.style.backgroundColor = user.color || '#2563EB';
+                option.style.borderColor = user.color || '#2563EB';
+                option.style.color = '#ffffff';
+            });
+        }
+
+        function buildTaskDetailsDrawerHtmlV2(ticketState) {
+            if (!ticketState) return '';
+
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+
+            const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
+            const boardAssigneeHtml = normalizedState.is_personal
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
+                : renderAssigneeTags(normalizedState.assignees);
+            const boardNoteHtml = normalizedState.note
+                ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
+                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">* ${escapeHtml(normalizedState.note)}</p>
+                   </div>`
+                : '';
+            const checklistItems = (normalizedState.checklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean);
+            const checklistAssigneeOptions = getTaskChecklistAssigneeOptions(normalizedState);
+            const checklistHtml = checklistItems.length
+                ? checklistItems.map((item, index) => {
+                    const selectedAssigneeLabel = item.assignee_user_key
+                        ? (USERS[item.assignee_user_key]?.full_name || item.assignee_user_key)
+                        : 'Chưa assign';
+                    const checklistDeadlineMeta = getChecklistDeadlineDisplayMeta(item.deadline_raw || '');
+                    const assigneeLovHtml = `
+                        <div class="task-checklist-assignee">
+                            <button type="button" class="task-checklist-assignee-trigger" onclick="toggleTaskChecklistAssigneeLov('${escapeHtml(item.id)}', event)">
+                                <span class="tag-name workflow-backlog">${escapeHtml(selectedAssigneeLabel)}</span>
+                            </button>
+                            ${openTaskChecklistAssigneeItemId === item.id ? `
+                                <div class="task-checklist-assignee-panel" onclick="event.stopPropagation()">
+                                    <button type="button" class="task-checklist-assignee-option ${!item.assignee_user_key ? 'is-active' : ''}" onclick="selectTaskChecklistAssignee('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '', event)">Chưa assign</button>
+                                    ${checklistAssigneeOptions.map((userKey) => `
+                                        <button type="button" class="task-checklist-assignee-option ${item.assignee_user_key === userKey ? 'is-active' : ''}" data-user-key="${escapeHtml(userKey)}" onclick="selectTaskChecklistAssignee('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(userKey)}', event)">${escapeHtml(USERS[userKey]?.full_name || userKey)}</button>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    return `
+                        <div class="task-checklist-item" data-checklist-id="${escapeHtml(item.id)}">
+                            <div class="task-checklist-order">${index + 1}.</div>
+                            <div class="task-checklist-main">
+                                <div class="flex items-center gap-3">
+                                    <button type="button" class="task-checklist-done-btn ${item.is_done ? 'is-done' : ''}" onclick="toggleTaskChecklistDone('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
+                                        <i class="fa-solid fa-check text-[10px]"></i>
+                                    </button>
+                                    <input type="text" class="task-checklist-title-input ${item.is_done ? 'line-through text-slate-400' : ''}" value="${escapeHtml(item.title)}" placeholder="Nhập checklist item..." onchange="updateTaskChecklistTitle('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">
+                                </div>
+                                <div class="task-checklist-meta">
+                                    <span class="task-checklist-status ${item.is_done ? 'is-done' : 'is-todo'}">${item.is_done ? 'Done' : 'Chưa done'}</span>
+                                </div>
+                            </div>
+                            <div class="task-checklist-deadline">
+                                <label class="task-checklist-date-field" onclick="openTaskChecklistDatePicker('${escapeHtml(item.id)}', event)">
+                                    <span class="task-checklist-date-display ${checklistDeadlineMeta.is_placeholder ? 'is-placeholder' : ''}">
+                                        <span>${escapeHtml(checklistDeadlineMeta.date_label)}</span>
+                                        ${checklistDeadlineMeta.days_value !== null ? `<span class="text-slate-300">|</span><span class="task-checklist-date-days ${checklistDeadlineMeta.days_class}">${escapeHtml(String(checklistDeadlineMeta.days_value))}</span>` : ''}
+                                    </span>
+                                    <input id="taskChecklistDate_${escapeHtml(item.id)}" type="date" class="task-checklist-date-native" value="${escapeHtml(item.deadline_raw || '')}" onchange="updateTaskChecklistDeadline('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">
+                                </label>
+                            </div>
+                            ${assigneeLovHtml}
+                            <div class="task-checklist-drag" title="Đổi thứ tự">
+                                <i class="fa-solid fa-grip-vertical"></i>
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : '<div class="task-detail-empty">Chưa có checklist. Bấm "Thêm checklist" để bắt đầu.</div>';
+
+            return `
+                <div class="task-detail-drawer-layer">
+                    <div class="task-detail-backdrop" onclick="closeTaskDetailsDrawer()"></div>
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Đóng" onclick="closeTaskDetailsDrawer()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="task-detail-drawer">
+                        <div class="task-detail-panel space-y-5">
+                            <div class="flex items-start justify-between gap-4 px-1">
+                                <div class="min-w-0">
+                                    <p class="task-detail-label">Chi tiết task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
+                                    <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</h3>
+                                </div>
+                                <button type="button" class="org-action-btn is-icon tooltip-btn flex-shrink-0" data-tooltip="Chỉnh sửa task" onclick="editTaskFromDrawer('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                            <div class="task-detail-section">
+                                ${normalizedState.desc ? `<p class="text-[14px] text-slate-500 leading-6">${escapeHtml(normalizedState.desc)}</p>` : ''}
+                                <div class="${normalizedState.desc ? 'mt-5' : ''} flex justify-between items-start gap-4 ${normalizedState.desc ? 'pt-4 border-t border-slate-100' : ''}">
+                                    <div class="flex flex-col gap-1">
+                                        <div class="flex items-center gap-2 text-[14px] font-semibold text-slate-500">
+                                            <i class="fa-regular fa-calendar"></i>
+                                            <span>${escapeHtml(dateStr)}</span>
+                                        </div>
+                                        <div>${statusTextHtml}</div>
+                                    </div>
+                                    <div class="flex gap-1.5 flex-wrap justify-end mt-1">
+                                        ${boardAssigneeHtml}
+                                    </div>
+                                </div>
+                                ${boardNoteHtml}
+                            </div>
+                            <div class="task-detail-section">
+                                <div class="flex items-center justify-between gap-3">
+                                    <p class="task-detail-label">Checklist</p>
+                                    <button type="button" class="task-checklist-add-btn" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span>Thêm checklist</span>
+                                    </button>
+                                </div>
+                                <div id="taskChecklistList" class="task-checklist-list mt-4">
+                                    ${checklistHtml}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function buildTaskDetailsDrawerHtml(ticketState) {
+            if (!ticketState) return '';
+
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+
+            const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
+            const trackingUserKey = getBoardTrackingUserKey();
+            const focusedAssignee = getTicketAssignee(normalizedState, trackingUserKey);
+            const focusedWorkflowState = normalizedState.is_personal
+                ? getDefaultStateCode()
+                : (getStateConfig(getTicketWorkflowState(normalizedState, trackingUserKey)) || getDefaultStateCode());
+            const boardAssigneeHtml = normalizedState.is_personal
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
+                : renderAssigneeTags(normalizedState.assignees);
+            const boardNoteHtml = normalizedState.note
+                ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
+                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">* ${escapeHtml(normalizedState.note)}</p>
+                   </div>`
+                : '';
+
+            return `
+                <div class="task-detail-drawer-layer">
+                    <div class="task-detail-backdrop" onclick="closeTaskDetailsDrawer()"></div>
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Đóng" onclick="closeTaskDetailsDrawer()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="task-detail-drawer">
+                        <div class="task-detail-panel space-y-5">
+                            <div class="flex items-start justify-between gap-4 px-1">
+                                <div class="min-w-0">
+                                    <p class="task-detail-label">Chi tiết task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
+                                    <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</h3>
+                                </div>
+                                <button type="button" class="org-action-btn is-icon tooltip-btn flex-shrink-0" data-tooltip="Chỉnh sửa task" onclick="editTaskFromDrawer('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </div>
+                            <div class="task-detail-section">
+                                ${normalizedState.desc ? `<p class="text-[14px] text-slate-500 leading-6">${escapeHtml(normalizedState.desc)}</p>` : ''}
+                                <div class="${normalizedState.desc ? 'mt-5' : ''} flex justify-between items-start gap-4 ${normalizedState.desc ? 'pt-4 border-t border-slate-100' : ''}">
+                                    <div class="flex flex-col gap-1">
+                                        <div class="flex items-center gap-2 text-[14px] font-semibold text-slate-500">
+                                            <i class="fa-regular fa-calendar"></i>
+                                            <span>${escapeHtml(dateStr)}</span>
+                                        </div>
+                                        <div>${statusTextHtml}</div>
+                                    </div>
+                                    <div class="flex gap-1.5 flex-wrap justify-end mt-1">
+                                        ${boardAssigneeHtml}
+                                    </div>
+                                </div>
+                                ${boardNoteHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTaskDetailsDrawer() {
+            const root = document.getElementById('taskDetailsDrawerRoot');
+            if (!root) return;
+
+            const ticketState = currentTaskDetailTicketId ? getTaskDetailById(currentTaskDetailTicketId) : null;
+            if (!ticketState) {
+                root.innerHTML = '';
+                return;
+            }
+
+            root.innerHTML = buildTaskDetailsDrawerHtmlV2(ticketState);
+            const drawerLayer = root.querySelector('.task-detail-drawer-layer');
+            if (!drawerLayer) return;
+            initializeTaskChecklistSortable(ticketState.ticket_id);
+            syncTaskChecklistTagStyles(ticketState);
+
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    drawerLayer.classList.add('is-open');
+                });
+            });
+        }
+
+        function syncTaskDetailsDrawer() {
+            if (!currentTaskDetailTicketId) return;
+            if (!getTaskDetailById(currentTaskDetailTicketId)) {
+                currentTaskDetailTicketId = null;
+                const root = document.getElementById('taskDetailsDrawerRoot');
+                if (root) root.innerHTML = '';
+                return;
+            }
+            renderTaskDetailsDrawer();
+        }
+
+        function openTaskDetailsDrawer(ticketId) {
+            if (!ticketId) return;
+            currentTaskDetailTicketId = ticketId;
+            if (taskDetailDrawerCloseTimeout) {
+                clearTimeout(taskDetailDrawerCloseTimeout);
+                taskDetailDrawerCloseTimeout = null;
+            }
+            renderTaskDetailsDrawer();
+        }
+
+        function openTaskDetailsFromCard(card, event) {
+            const target = event?.target;
+            if (!card || !card.dataset.ticketId) return;
+            if (target?.closest('.card-actions-wrap, .edit-form, .tag-name, .delete-btn, .edit-btn, button, input, textarea, select, a')) return;
+            openTaskDetailsDrawer(card.dataset.ticketId);
+        }
+
+        function closeTaskDetailsDrawer() {
+            const drawerLayer = document.querySelector('.task-detail-drawer-layer.is-open');
+            const root = document.getElementById('taskDetailsDrawerRoot');
+            if (!root) return;
+
+            if (!drawerLayer) {
+                currentTaskDetailTicketId = null;
+                root.innerHTML = '';
+                return;
+            }
+
+            drawerLayer.classList.remove('is-open');
+            drawerLayer.classList.add('is-closing');
+            if (taskDetailDrawerCloseTimeout) clearTimeout(taskDetailDrawerCloseTimeout);
+            taskDetailDrawerCloseTimeout = window.setTimeout(() => {
+                currentTaskDetailTicketId = null;
+                root.innerHTML = '';
+                taskDetailDrawerCloseTimeout = null;
+            }, 340);
+        }
+
+        function editTaskFromDrawer(ticketId, event) {
+            event?.stopPropagation?.();
+            closeTaskDetailsDrawer();
+            const safeTicketId = window.CSS?.escape ? window.CSS.escape(ticketId) : ticketId.replace(/["\\]/g, '\\$&');
+            const editBtn = document.querySelector(`.task-card[data-ticket-id="${safeTicketId}"] .edit-btn`);
+            if (editBtn) editTask(editBtn);
+        }
+
         function normalizeTicketState(state) {
             if (!state) return null;
 
@@ -4244,7 +5232,8 @@ function togglePersonalMode(select) {
                 note: state.note || state.progress_note || state.progressNote || '',
                 date_raw: state.date_raw || state.dateRaw || '',
                 is_personal: isPersonal,
-                assignees
+                assignees,
+                checklist: Array.isArray(state.checklist) ? state.checklist.map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean) : []
             };
         }
 
@@ -4317,7 +5306,7 @@ function togglePersonalMode(select) {
                             <span class="delete-text">Xóa</span>
                            </button>` 
                         : ''}
-                    <button type="button" onclick="editTask(this)" class="icon-btn edit-btn">
+                    <button type="button" onclick="editTask(this, event)" class="icon-btn edit-btn">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
                 </div>
@@ -4347,6 +5336,7 @@ function togglePersonalMode(select) {
         function createTaskCardElement(state) {
             const card = document.createElement('div');
             card.className = 'task-card animate-in relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]';
+            card.setAttribute('onclick', 'openTaskDetailsFromCard(this, event)');
             renderTaskCard(card, state);
             return card;
         }
@@ -4372,6 +5362,7 @@ function togglePersonalMode(select) {
             });
 
             updateCounts();
+            syncTaskDetailsDrawer();
         }
 
         function cycleAssigneeStatus(tag, event) {
@@ -4444,6 +5435,7 @@ function togglePersonalMode(select) {
         function saveBoardState() {
             localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardTickets));
             refreshTrackingSidebarAndBoard();
+            syncTaskDetailsDrawer();
         }
 
         function loadLegacyBoardState() {
@@ -4662,7 +5654,8 @@ function openInlineForm() {
                 desc,
                 date_raw: dateRaw,
                 is_personal: isPersonal,
-                assignees: buildAssigneeRecordsFromUserKeys(inlineSelectedPICs)
+                assignees: buildAssigneeRecordsFromUserKeys(inlineSelectedPICs),
+                checklist: []
             });
 
             boardTickets.unshift(ticketState);
@@ -4675,7 +5668,8 @@ function openInlineForm() {
         // ==========================================
         // 4. CHỈNH SỬA TASK (EDIT)
         // ==========================================
-        function editTask(btn) {
+        function editTask(btn, event) {
+            event?.stopPropagation?.();
             const card = btn.closest('.task-card');
             const ticketState = getCardState(card);
             if (!ticketState) return;
@@ -4832,7 +5826,8 @@ function openInlineForm() {
                 note,
                 date_raw: dateRaw,
                 is_personal: isPersonal,
-                assignees
+                assignees,
+                checklist: previousState?.checklist || []
             });
 
             updateBoardTicket(nextState.ticket_id, nextState);
@@ -8557,10 +9552,16 @@ function openInlineForm() {
         document.addEventListener('mousemove', handleStatePointerDragMove);
         document.addEventListener('mouseup', finishStatePointerDrag);
         document.addEventListener('click', () => {
+            closeTaskChecklistAssigneeLov();
             closeMemberTeamLov();
             closeMemberSingleLov();
             closeRoleScopeLov();
             closeStateColorLov();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.querySelector('.task-detail-drawer-layer.is-open')) {
+                closeTaskDetailsDrawer();
+            }
         });
 
         // ==========================================
