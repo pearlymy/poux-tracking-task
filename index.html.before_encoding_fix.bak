@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -14,7 +14,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-        /* CSS MỚI CỦA BẠN (CÁC BIẾN & STYLE FORM) */
+        /* CSS MÃ¡Â»Å¡I CÃ¡Â»Â¦A BÃ¡ÂºÂ N (CÃƒÂC BIÃ¡ÂºÂ¾N & STYLE FORM) */
         :root {
             --po-primary: #2563EB;
             --po-primary-hover: #1D4ED8;
@@ -122,7 +122,7 @@
             background: #E2E8F0;
         }
 
-        /* Trạng thái Tag được chọn */
+        /* TrÃ¡ÂºÂ¡ng thÃƒÂ¡i Tag Ã„â€˜Ã†Â°Ã¡Â»Â£c chÃ¡Â»Ân */
         .po-tag-active {
             background: var(--po-primary) !important;
             color: white !important;
@@ -172,7 +172,7 @@
             transform: translateY(-1px);
         }
 
-        /* CSS TỔNG QUAN (GIỮ NGUYÊN) */
+        /* CSS TÃ¡Â»â€NG QUAN (GIÃ¡Â»Â® NGUYÃƒÅ N) */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9;
@@ -195,29 +195,29 @@
             background-color: #94a3b8;
         }
 
-/* --- HIỆU ỨNG KÉO THẢ (PO WORKSPACE STYLE) --- */
+/* --- HIÃ¡Â»â€ U Ã¡Â»Â¨NG KÃƒâ€°O THÃ¡ÂºÂ¢ (PO WORKSPACE STYLE) --- */
         .sortable-ghost {
-            background-color: #f8fafc !important; /* Nền xám nhạt */
-            border: 2px dashed #94a3b8 !important; /* Viền đứt nét */
+            background-color: #f8fafc !important; /* NÃ¡Â»Ân xÃƒÂ¡m nhÃ¡ÂºÂ¡t */
+            border: 2px dashed #94a3b8 !important; /* ViÃ¡Â»Ân Ã„â€˜Ã¡Â»Â©t nÃƒÂ©t */
             border-radius: 12px !important;
             opacity: 1 !important;
         }
 
         .sortable-ghost > * {
-            opacity: 0 !important; /* Ẩn toàn bộ nội dung chữ bên trong vùng rớt xuống */
+            opacity: 0 !important; /* Ã¡ÂºÂ¨n toÃƒÂ n bÃ¡Â»â„¢ nÃ¡Â»â„¢i dung chÃ¡Â»Â¯ bÃƒÂªn trong vÃƒÂ¹ng rÃ¡Â»â€ºt xuÃ¡Â»â€˜ng */
             visibility: hidden !important; 
         }
 
         .sortable-drag {
             cursor: grabbing !important;
             background-color: #ffffff !important;
-            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25) !important; /* Bóng đổ xanh dương */
+            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25) !important; /* BÃƒÂ³ng Ã„â€˜Ã¡Â»â€¢ xanh dÃ†Â°Ã†Â¡ng */
             border: 1px solid #3b82f6 !important;
             border-radius: 12px !important;
             opacity: 1 !important;
-            transform: rotate(3deg) scale(1.02) !important; /* Nghiêng 3 độ, to lên 2% */
+            transform: rotate(3deg) scale(1.02) !important; /* NghiÃƒÂªng 3 Ã„â€˜Ã¡Â»â„¢, to lÃƒÂªn 2% */
             z-index: 99999 !important;
-            transition: none !important; /* BẮT BUỘC: Tắt transition để thẻ không bị lag trễ so với chuột */
+            transition: none !important; /* BÃ¡ÂºÂ®T BUÃ¡Â»ËœC: TÃ¡ÂºÂ¯t transition Ã„â€˜Ã¡Â»Æ’ thÃ¡ÂºÂ» khÃƒÂ´ng bÃ¡Â»â€¹ lag trÃ¡Â»â€¦ so vÃ¡Â»â€ºi chuÃ¡Â»â„¢t */
         }
 
         .kanban-list>div {
@@ -550,9 +550,9 @@
         .tag-name.workflow-cancel {
             --dot-color: #ef4444;
         }
-/* --- BỔ SUNG MÀU CHO DATE PICKER --- */
+/* --- BÃ¡Â»â€ SUNG MÃƒâ‚¬U CHO DATE PICKER --- */
         :root {
-            --po-bg-light: #EFF6FF; /* Màu xanh siêu nhạt khi hover ngày */
+            --po-bg-light: #EFF6FF; /* MÃƒÂ u xanh siÃƒÂªu nhÃ¡ÂºÂ¡t khi hover ngÃƒÂ y */
             --po-text-light: #94A3B8;
         }
 
@@ -616,7 +616,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             cursor: pointer;
             transition: all 0.2s ease;
             height: 35px;
-            /* Cho bằng với thẻ Date */
+            /* Cho bÃ¡ÂºÂ±ng vÃ¡Â»â€ºi thÃ¡ÂºÂ» Date */
         }
 
         .custom-select-wrapper.open .custom-select-trigger {
@@ -695,7 +695,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .hidden-native-select {
             display: none;
         }
-        /* --- HIỆU ỨNG NÚT XÓA & HÀNH ĐỘNG TICKET --- */
+        /* --- HIÃ¡Â»â€ U Ã¡Â»Â¨NG NÃƒÅ¡T XÃƒâ€œA & HÃƒâ‚¬NH Ã„ÂÃ¡Â»ËœNG TICKET --- */
         .task-card.deleting {
             transform: scale(0.9);
             opacity: 0;
@@ -728,7 +728,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .delete-btn .delete-text { display: none; font-size: 11px; font-weight: 700; white-space: nowrap; pointer-events: none;}
         .delete-btn.confirm-mode .trash-icon { display: none; }
         .delete-btn.confirm-mode .delete-text { display: block; }
-        /* --- HIỆU ỨNG TRƯỢT FORM CHUẨN UX --- */
+        /* --- HIÃ¡Â»â€ U Ã¡Â»Â¨NG TRÃ†Â¯Ã¡Â»Â¢T FORM CHUÃ¡ÂºÂ¨N UX --- */
         .form-wrapper {
             max-height: 0;
             opacity: 0;
@@ -739,14 +739,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .form-wrapper.open {
-            max-height: 800px; /* Đủ lớn để chứa form */
+            max-height: 800px; /* Ã„ÂÃ¡Â»Â§ lÃ¡Â»â€ºn Ã„â€˜Ã¡Â»Æ’ chÃ¡Â»Â©a form */
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
             margin-bottom: 16px;
         }
 
-        /* Làm mờ nút bấm khi form đang mở */
+        /* LÃƒÂ m mÃ¡Â»Â nÃƒÂºt bÃ¡ÂºÂ¥m khi form Ã„â€˜ang mÃ¡Â»Å¸ */
         .btn-add-disabled {
             opacity: 0.5;
             pointer-events: none;
@@ -2672,7 +2672,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .member-single-lov-item::after {
-            content: "✓";
+            content: "Ã¢Å“â€œ";
             font-size: 14px;
             font-weight: 700;
             color: #2563eb;
@@ -3998,7 +3998,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                         <span class="sidebar-brand font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap">PWS Workspace</span>
                     </div>
                     <div class="sidebar-toggle-wrap flex justify-end">
-                        <button onclick="toggleSidebar()" class="sidebar-toggle-btn" aria-label="Thu gọn menu">
+                        <button onclick="toggleSidebar()" class="sidebar-toggle-btn" aria-label="Thu gÃ¡Â»Ân menu">
                             <svg id="sidebarToggleIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                             </svg>
@@ -4026,20 +4026,20 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 </div>
 
                 <div>
-                    <div id="documentNavItem" class="nav-item nav-item-branch nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tài liệu" data-nav-target="documentMenu" data-menu-id="documentMenu" data-chevron-id="documentChevron">
+                    <div id="documentNavItem" class="nav-item nav-item-branch nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="TÃƒÂ i liÃ¡Â»â€¡u" data-nav-target="documentMenu" data-menu-id="documentMenu" data-chevron-id="documentChevron">
                         <div class="flex items-center gap-3 min-w-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
-                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="sidebar-label font-semibold text-sm whitespace-nowrap" data-nav-target="documentMenu">Tài liệu</button>
+                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="sidebar-label font-semibold text-sm whitespace-nowrap" data-nav-target="documentMenu">TÃƒÂ i liÃ¡Â»â€¡u</button>
                         </div>
                         <div class="document-header-actions">
-                            <button type="button" id="documentAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="Tạo page tài liệu">
+                            <button type="button" id="documentAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="TÃ¡ÂºÂ¡o page tÃƒÂ i liÃ¡Â»â€¡u">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
                             </button>
-                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="document-chevron-btn sidebar-label" aria-label="Mở tài liệu">
+                            <button type="button" onclick="toggleAccordion('documentMenu', 'documentChevron')" class="document-chevron-btn sidebar-label" aria-label="MÃ¡Â»Å¸ tÃƒÂ i liÃ¡Â»â€¡u">
                                 <svg id="documentChevron" xmlns="http://www.w3.org/2000/svg" class="sidebar-accordion h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -4049,14 +4049,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     <div id="documentMenu" class="accordion-content max-h-0">
                         <div class="branch-menu-stack space-y-1 pl-9">
                             <div id="documentCreateForm" class="document-inline-form hidden">
-                                <input id="documentCreateInput" type="text" class="document-inline-input" placeholder="Tên page mới..." maxlength="60">
+                                <input id="documentCreateInput" type="text" class="document-inline-input" placeholder="TÃƒÂªn page mÃ¡Â»â€ºi..." maxlength="60">
                                 <div class="document-inline-actions">
-                                    <button type="button" id="documentCreateSaveBtn" class="menu-action-btn" aria-label="Lưu page">
+                                    <button type="button" id="documentCreateSaveBtn" class="menu-action-btn" aria-label="LÃ†Â°u page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </button>
-                                    <button type="button" id="documentCreateCancelBtn" class="menu-action-btn" aria-label="Hủy tạo page">
+                                    <button type="button" id="documentCreateCancelBtn" class="menu-action-btn" aria-label="HÃ¡Â»Â§y tÃ¡ÂºÂ¡o page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
@@ -4077,12 +4077,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                             <button type="button" onclick="toggleAccordion('guideMenu', 'guideChevron')" class="sidebar-label font-semibold text-sm whitespace-nowrap" data-nav-target="guideMenu">HDSD</button>
                         </div>
                         <div class="document-header-actions">
-                            <button type="button" id="guideAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="Tạo page hướng dẫn">
+                            <button type="button" id="guideAddBtn" class="menu-action-btn document-add-btn sidebar-label" aria-label="TÃ¡ÂºÂ¡o page hÃ†Â°Ã¡Â»â€ºng dÃ¡ÂºÂ«n">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
                             </button>
-                            <button type="button" onclick="toggleAccordion('guideMenu', 'guideChevron')" class="document-chevron-btn sidebar-label" aria-label="Mở hướng dẫn">
+                            <button type="button" onclick="toggleAccordion('guideMenu', 'guideChevron')" class="document-chevron-btn sidebar-label" aria-label="MÃ¡Â»Å¸ hÃ†Â°Ã¡Â»â€ºng dÃ¡ÂºÂ«n">
                                 <svg id="guideChevron" xmlns="http://www.w3.org/2000/svg" class="sidebar-accordion h-4 w-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
@@ -4092,14 +4092,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     <div id="guideMenu" class="accordion-content max-h-0">
                         <div class="branch-menu-stack space-y-1 pl-9">
                             <div id="guideCreateForm" class="document-inline-form hidden">
-                                <input id="guideCreateInput" type="text" class="document-inline-input" placeholder="Tên page mới..." maxlength="60">
+                                <input id="guideCreateInput" type="text" class="document-inline-input" placeholder="TÃƒÂªn page mÃ¡Â»â€ºi..." maxlength="60">
                                 <div class="document-inline-actions">
-                                    <button type="button" id="guideCreateSaveBtn" class="menu-action-btn" aria-label="Lưu page hướng dẫn">
+                                    <button type="button" id="guideCreateSaveBtn" class="menu-action-btn" aria-label="LÃ†Â°u page hÃ†Â°Ã¡Â»â€ºng dÃ¡ÂºÂ«n">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </button>
-                                    <button type="button" id="guideCreateCancelBtn" class="menu-action-btn" aria-label="Hủy tạo page hướng dẫn">
+                                    <button type="button" id="guideCreateCancelBtn" class="menu-action-btn" aria-label="HÃ¡Â»Â§y tÃ¡ÂºÂ¡o page hÃ†Â°Ã¡Â»â€ºng dÃ¡ÂºÂ«n">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
@@ -4126,14 +4126,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                         <div id="profileCard" class="profile-card flex items-center gap-3 p-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer min-w-0">
                             <div id="profileAvatar" class="h-9 w-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">HP</div>
                             <div class="sidebar-meta flex-1 min-w-0">
-                                <p id="profileName" class="text-sm font-bold text-slate-800 truncate">Hiếu Phan</p>
+                                <p id="profileName" class="text-sm font-bold text-slate-800 truncate">HiÃ¡ÂºÂ¿u Phan</p>
                                 <p id="profileTitle" class="text-[10px] text-slate-500 truncate">Admin / Team Lead</p>
                             </div>
                         </div>
                         <div class="profile-context">
                             <button id="teamSelectorButton" type="button" class="profile-team-button sidebar-label">
                                 <span class="profile-team-copy">
-                                    <span class="profile-team-label">Phòng ban</span>
+                                    <span class="profile-team-label">PhÃƒÂ²ng ban</span>
                                     <span id="teamSelectorValue" class="profile-team-value">DB.WEB.PO</span>
                                 </span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="profile-team-chevron h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -4183,7 +4183,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     Task Tracking Elite
                 </h1>
                 <p class="text-slate-500 mt-2 text-[13px] font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-400"></i> Bảng điều khiển tiến độ dự án 2024
+                    <i class="fa-solid fa-bolt text-amber-400"></i> BÃ¡ÂºÂ£ng Ã„â€˜iÃ¡Â»Âu khiÃ¡Â»Æ’n tiÃ¡ÂºÂ¿n Ã„â€˜Ã¡Â»â„¢ dÃ¡Â»Â± ÃƒÂ¡n 2024
                 </p>
             </div>
 
@@ -4191,28 +4191,28 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 <div class="relative w-full md:w-64 group">
                     <i
                         class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
-                    <input type="text" placeholder="Tìm kiếm Task..."
+                    <input type="text" placeholder="TÃƒÂ¬m kiÃ¡ÂºÂ¿m Task..."
                         class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
                 </div>
 
                 <button type="button"
                     class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-blue-600 px-4 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
+                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> LÃ¡Â»Âc
                 </button>
 
                 <button type="button" onclick="openInlineForm()"
                     class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mới</span>
+                    <i class="fa-solid fa-plus pointer-events-none"></i> <span>Task mÃ¡Â»â€ºi</span>
                 </button>
             </div>
         </div>
 
         <div class="kanban-scroll-shell">
-            <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
-                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
+            <div class="kanban-scroll-nav-group" aria-label="Ã„ÂiÃ¡Â»Âu hÃ†Â°Ã¡Â»â€ºng cÃ¡Â»â„¢t Kanban">
+                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem cÃƒÂ¡c cÃ¡Â»â„¢t phÃƒÂ­a trÃ†Â°Ã¡Â»â€ºc">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
+                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thÃƒÂªm cÃ¡Â»â„¢t phÃƒÂ­a sau">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
@@ -4230,13 +4230,13 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     <div class="mt-4 flex flex-wrap gap-3">
                         <button type="button"
                             class="admin-tab-btn is-active rounded-2xl px-4 py-3 text-sm font-extrabold"
-                            data-admin-tab="org">Khối / Phòng / Nhóm / Users</button>
+                            data-admin-tab="org">KhÃ¡Â»â€˜i / PhÃƒÂ²ng / NhÃƒÂ³m / Users</button>
                         <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
-                            data-admin-tab="roles">Vai trò & quyền</button>
+                            data-admin-tab="roles">Vai trÃƒÂ² & quyÃ¡Â»Ân</button>
                         <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
                             data-admin-tab="states">Workflow / State</button>
                         <button type="button" class="admin-tab-btn rounded-2xl px-4 py-3 text-sm font-extrabold"
-                            data-admin-tab="logs">Nhật ký hệ thống</button>
+                            data-admin-tab="logs">NhÃ¡ÂºÂ­t kÃƒÂ½ hÃ¡Â»â€¡ thÃ¡Â»â€˜ng</button>
                     </div>
                 </div>
 
@@ -4265,7 +4265,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'BACKLOG',
                 stateName: 'Backlog',
-                description: 'Công việc mới tạo, chưa được xử lý.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c mÃ¡Â»â€ºi tÃ¡ÂºÂ¡o, chÃ†Â°a Ã„â€˜Ã†Â°Ã¡Â»Â£c xÃ¡Â»Â­ lÃƒÂ½.',
                 orderIndex: 1,
                 colorTheme: 'slate',
                 legacyStorageKey: 'kanban_backlog'
@@ -4273,7 +4273,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'IN_PROGRESS',
                 stateName: 'In Progress',
-                description: 'Công việc đang được phân công và thực hiện.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c Ã„â€˜ang Ã„â€˜Ã†Â°Ã¡Â»Â£c phÃƒÂ¢n cÃƒÂ´ng vÃƒÂ  thÃ¡Â»Â±c hiÃ¡Â»â€¡n.',
                 orderIndex: 2,
                 colorTheme: 'blue',
                 legacyStorageKey: 'kanban_inprogress'
@@ -4281,7 +4281,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'IN_REVIEW',
                 stateName: 'In Review',
-                description: 'Công việc đã làm xong và đang chờ review hoặc xác nhận.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c Ã„â€˜ÃƒÂ£ lÃƒÂ m xong vÃƒÂ  Ã„â€˜ang chÃ¡Â»Â review hoÃ¡ÂºÂ·c xÃƒÂ¡c nhÃ¡ÂºÂ­n.',
                 orderIndex: 3,
                 colorTheme: 'indigo',
                 legacyStorageKey: 'kanban_inreview'
@@ -4289,7 +4289,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'DONE',
                 stateName: 'Done',
-                description: 'Công việc đã hoàn thành và bàn giao.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c Ã„â€˜ÃƒÂ£ hoÃƒÂ n thÃƒÂ nh vÃƒÂ  bÃƒÂ n giao.',
                 orderIndex: 4,
                 colorTheme: 'emerald',
                 legacyStorageKey: 'kanban_done'
@@ -4297,7 +4297,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'PENDING',
                 stateName: 'Pending',
-                description: 'Công việc đang bị tạm dừng hoặc chờ phụ thuộc.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c Ã„â€˜ang bÃ¡Â»â€¹ tÃ¡ÂºÂ¡m dÃ¡Â»Â«ng hoÃ¡ÂºÂ·c chÃ¡Â»Â phÃ¡Â»Â¥ thuÃ¡Â»â„¢c.',
                 orderIndex: 5,
                 colorTheme: 'orange',
                 legacyStorageKey: 'kanban_pending'
@@ -4305,7 +4305,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             {
                 stateCode: 'CANCEL',
                 stateName: 'Cancel',
-                description: 'Công việc đã bị hủy bỏ, không tiếp tục thực hiện.',
+                description: 'CÃƒÂ´ng viÃ¡Â»â€¡c Ã„â€˜ÃƒÂ£ bÃ¡Â»â€¹ hÃ¡Â»Â§y bÃ¡Â»Â, khÃƒÂ´ng tiÃ¡ÂºÂ¿p tÃ¡Â»Â¥c thÃ¡Â»Â±c hiÃ¡Â»â€¡n.',
                 orderIndex: 6,
                 colorTheme: 'red',
                 legacyStorageKey: 'kanban_cancel'
@@ -4331,10 +4331,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         const INLINE_FORM_HTML = `
             <div id="inlineAddForm" class="hidden po-modal relative z-20">
                 <div class="form-group">
-                    <input type="text" id="inlineTitle" class="po-input" placeholder="Nhập tiêu đề công việc...">
+                    <input type="text" id="inlineTitle" class="po-input" placeholder="NhÃ¡ÂºÂ­p tiÃƒÂªu Ã„â€˜Ã¡Â»Â cÃƒÂ´ng viÃ¡Â»â€¡c...">
                 </div>
                 <div class="form-group">
-                    <textarea id="inlineDesc" class="po-textarea" placeholder="Mô tả công việc..."></textarea>
+                    <textarea id="inlineDesc" class="po-textarea" placeholder="MÃƒÂ´ tÃ¡ÂºÂ£ cÃƒÂ´ng viÃ¡Â»â€¡c..."></textarea>
                 </div>
                 <div class="form-group row-flex">
                     <div class="po-datepicker" id="inlineDateWrapper">
@@ -4390,12 +4390,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     </div>
                 </div>
                 <div class="form-group" id="inlineAssigneeGroup">
-                    <label class="form-label">PHỤ TRÁCH</label>
+                    <label class="form-label">PHÃ¡Â»Â¤ TRÃƒÂCH</label>
                     <div class="tags-wrap" id="inlinePicSelection"></div>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" onclick="hideInlineForm()" class="btn-cancel">Hủy</button>
-                    <button type="button" onclick="saveInlineTask()" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                    <button type="button" onclick="hideInlineForm()" class="btn-cancel">HÃ¡Â»Â§y</button>
+                    <button type="button" onclick="saveInlineTask()" class="btn-submit"><i class="fa-solid fa-check"></i> LÃ†Â°u ngay</button>
                 </div>
             </div>
         `;
@@ -4433,7 +4433,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 const addButtonHtml = isEntryState ? `
                     <div class="kanban-add-wrap">
                         <button type="button" onclick="openInlineForm()" class="kanban-add-btn w-full border-2 border-dashed rounded-xl py-2.5 text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-plus text-[14px]"></i> Thêm Task mới
+                            <i class="fa-solid fa-plus text-[14px]"></i> ThÃƒÂªm Task mÃ¡Â»â€ºi
                         </button>
                     </div>
                 ` : '';
@@ -4504,34 +4504,34 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             requestAnimationFrame(updateKanbanScrollNavState);
         }
 
-        // Lấy giá trị true/false từ thẻ Select
+        // LÃ¡ÂºÂ¥y giÃƒÂ¡ trÃ¡Â»â€¹ true/false tÃ¡Â»Â« thÃ¡ÂºÂ» Select
 function togglePersonalMode(select) {
             const assigneeGroup = document.getElementById('inlineAssigneeGroup');
             
             if (select.value === 'true') {
-                // Nếu là Private: Ẩn nhóm phụ trách
+                // NÃ¡ÂºÂ¿u lÃƒÂ  Private: Ã¡ÂºÂ¨n nhÃƒÂ³m phÃ¡Â»Â¥ trÃƒÂ¡ch
                 assigneeGroup.classList.add('hidden');
             } else {
-                // Nếu là Public: Hiện nhóm phụ trách
+                // NÃ¡ÂºÂ¿u lÃƒÂ  Public: HiÃ¡Â»â€¡n nhÃƒÂ³m phÃ¡Â»Â¥ trÃƒÂ¡ch
                 assigneeGroup.classList.remove('hidden');
                 
-                // Tự động chọn PIC mặc định nếu chưa chọn ai
+                // TÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng chÃ¡Â»Ân PIC mÃ¡ÂºÂ·c Ã„â€˜Ã¡Â»â€¹nh nÃ¡ÂºÂ¿u chÃ†Â°a chÃ¡Â»Ân ai
                 if (inlineSelectedPICs.length === 0) {
                     applyDefaultInlinePicSelection();
                 }
             }
         }
-        // Khởi tạo Custom Date Picker
- // Khởi tạo Custom Date Picker
+        // KhÃ¡Â»Å¸i tÃ¡ÂºÂ¡o Custom Date Picker
+ // KhÃ¡Â»Å¸i tÃ¡ÂºÂ¡o Custom Date Picker
         function initCustomDatePicker(wrapper) {
             if (!wrapper) return;
             const trigger = wrapper.querySelector('.dp-trigger');
 
-            // Nhân bản để xóa các event rác cũ
+            // NhÃƒÂ¢n bÃ¡ÂºÂ£n Ã„â€˜Ã¡Â»Æ’ xÃƒÂ³a cÃƒÂ¡c event rÃƒÂ¡c cÃ…Â©
             const newTrigger = trigger.cloneNode(true);
             trigger.parentNode.replaceChild(newTrigger, trigger);
 
-            // BẮT BUỘC: Phải lấy lại biến từ newTrigger sau khi đã thay thế vào DOM
+            // BÃ¡ÂºÂ®T BUÃ¡Â»ËœC: PhÃ¡ÂºÂ£i lÃ¡ÂºÂ¥y lÃ¡ÂºÂ¡i biÃ¡ÂºÂ¿n tÃ¡Â»Â« newTrigger sau khi Ã„â€˜ÃƒÂ£ thay thÃ¡ÂºÂ¿ vÃƒÂ o DOM
             const triggerText = newTrigger.querySelector('.dp-text');
             const hiddenInput = wrapper.querySelector('.hidden-date-input');
             const dates = wrapper.querySelectorAll('.dp-date:not(.empty)');
@@ -4539,7 +4539,7 @@ function togglePersonalMode(select) {
             const btnToday = wrapper.querySelector('.dpToday');
 
             newTrigger.addEventListener('click', function(e) {
-                // Đóng tất cả popup khác
+                // Ã„ÂÃƒÂ³ng tÃ¡ÂºÂ¥t cÃ¡ÂºÂ£ popup khÃƒÂ¡c
                 document.querySelectorAll('.po-datepicker.open, .custom-select-wrapper.open').forEach(w => {
                     if (w !== wrapper) w.classList.remove('open');
                 });
@@ -4553,11 +4553,11 @@ function togglePersonalMode(select) {
                     this.classList.add('selected');
                     
                     const day = this.textContent.padStart(2, '0');
-                    // Dùng innerHTML để giữ lại icon cuốn lịch
+                    // DÃƒÂ¹ng innerHTML Ã„â€˜Ã¡Â»Æ’ giÃ¡Â»Â¯ lÃ¡ÂºÂ¡i icon cuÃ¡Â»â€˜n lÃ¡Â»â€¹ch
                     triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> ${day}/04/2026`; 
                     triggerText.style.color = 'var(--po-text-main)';
                     
-                    // Lưu vào thẻ ẩn để code cũ lấy được
+                    // LÃ†Â°u vÃƒÂ o thÃ¡ÂºÂ» Ã¡ÂºÂ©n Ã„â€˜Ã¡Â»Æ’ code cÃ…Â© lÃ¡ÂºÂ¥y Ã„â€˜Ã†Â°Ã¡Â»Â£c
                     hiddenInput.value = `2026-04-${day}`;
                     
                     wrapper.classList.remove('open');
@@ -4596,12 +4596,12 @@ function togglePersonalMode(select) {
             });
         }
 
-        // Hàm khởi tạo Custom Dropdown động
- // Hàm khởi tạo Custom Dropdown động
+        // HÃƒÂ m khÃ¡Â»Å¸i tÃ¡ÂºÂ¡o Custom Dropdown Ã„â€˜Ã¡Â»â„¢ng
+ // HÃƒÂ m khÃ¡Â»Å¸i tÃ¡ÂºÂ¡o Custom Dropdown Ã„â€˜Ã¡Â»â„¢ng
         function initCustomSelect(wrapper) {
             if (!wrapper) return;
 
-            // BẢO VỆ: Nếu đã khởi tạo rồi thì bỏ qua để tránh lỗi đơ nút bấm
+            // BÃ¡ÂºÂ¢O VÃ¡Â»â€ : NÃ¡ÂºÂ¿u Ã„â€˜ÃƒÂ£ khÃ¡Â»Å¸i tÃ¡ÂºÂ¡o rÃ¡Â»â€œi thÃƒÂ¬ bÃ¡Â»Â qua Ã„â€˜Ã¡Â»Æ’ trÃƒÂ¡nh lÃ¡Â»â€”i Ã„â€˜Ã†Â¡ nÃƒÂºt bÃ¡ÂºÂ¥m
             if (wrapper.dataset.initialized === 'true') return;
             wrapper.dataset.initialized = 'true';
 
@@ -4647,23 +4647,23 @@ function togglePersonalMode(select) {
         // KEYBOARD USERS 
         // ==========================================
 // ==========================================
-        // DANH SÁCH USER (TÍCH HỢP CẤU TRÚC PHÒNG BAN & PHÂN QUYỀN)
+        // DANH SÃƒÂCH USER (TÃƒÂCH HÃ¡Â»Â¢P CÃ¡ÂºÂ¤U TRÃƒÅ¡C PHÃƒâ€™NG BAN & PHÃƒâ€šN QUYÃ¡Â»â‚¬N)
         // ==========================================
         const USERS = {
             U0001: { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'HEAD', color: '#2563EB', is_active: true, sort: 1 },
-            U0002: { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'PO', color: '#DB2777', is_active: true, sort: 2 },
-            U0003: { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'UX', color: '#16A34A', is_active: true, sort: 3 },
-            U0004: { id: 'U0004', username: 'van.le', email: 'van.le@vib.com.vn', full_name: 'Vân', job_title_id: 'PO', color: '#7C3AED', is_active: true, sort: 4 },
-            U0005: { id: 'U0005', username: 'quynh.pham', email: 'quynh.pham@vib.com.vn', full_name: 'Quỳnh', job_title_id: 'PO', color: '#EA580C', is_active: true, sort: 5 },
-            U0006: { id: 'U0006', username: 'thang.vu', email: 'thang.vu@vib.com.vn', full_name: 'Thắng', job_title_id: 'UX', color: '#0F766E', is_active: true, sort: 6 },
-            U0007: { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'DEV_MANAGER', color: '#B45309', is_active: true, sort: 7 },
+            U0002: { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'HiÃ¡ÂºÂ¿u', job_title_id: 'PO', color: '#DB2777', is_active: true, sort: 2 },
+            U0003: { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Ã„ÂÃ¡Â»â€¹nh', job_title_id: 'UX', color: '#16A34A', is_active: true, sort: 3 },
+            U0004: { id: 'U0004', username: 'van.le', email: 'van.le@vib.com.vn', full_name: 'VÃƒÂ¢n', job_title_id: 'PO', color: '#7C3AED', is_active: true, sort: 4 },
+            U0005: { id: 'U0005', username: 'quynh.pham', email: 'quynh.pham@vib.com.vn', full_name: 'QuÃ¡Â»Â³nh', job_title_id: 'PO', color: '#EA580C', is_active: true, sort: 5 },
+            U0006: { id: 'U0006', username: 'thang.vu', email: 'thang.vu@vib.com.vn', full_name: 'ThÃ¡ÂºÂ¯ng', job_title_id: 'UX', color: '#0F766E', is_active: true, sort: 6 },
+            U0007: { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Ã„ÂÃ¡ÂºÂ¯c', job_title_id: 'DEV_MANAGER', color: '#B45309', is_active: true, sort: 7 },
             U0008: { id: 'U0008', username: 'nga', email: 'nga@vib.com.vn', full_name: 'Nga', job_title_id: 'QC', color: '#475569', is_active: true, sort: 8 },
-            U0009: { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'BE', color: '#DC2626', is_active: true, sort: 9 },
-            U0010: { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'FE', color: '#0284C7', is_active: true, sort: 10 },
-            U0011: { id: 'U0011', username: 'thanh', email: 'thanh@vib.com.vn', full_name: 'Thành', job_title_id: 'QC', color: '#65A30D', is_active: true, sort: 11 },
-            U0012: { id: 'U0012', username: 'phuc', email: 'phuc@vib.com.vn', full_name: 'Phúc', job_title_id: 'BE', color: '#C2410C', is_active: true, sort: 12 },
-            U0013: { id: 'U0013', username: 'thuong', email: 'thuong@vib.com.vn', full_name: 'Thương', job_title_id: 'FE', color: '#BE185D', is_active: true, sort: 13 },
-            U0014: { id: 'U0014', username: 'thien', email: 'thien@vib.com.vn', full_name: 'Thiện', job_title_id: 'FE', color: '#4338CA', is_active: true, sort: 14 }
+            U0009: { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'TÃ¡ÂºÂ¥n', job_title_id: 'BE', color: '#DC2626', is_active: true, sort: 9 },
+            U0010: { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'ThÃ¡Â»â€¹nh', job_title_id: 'FE', color: '#0284C7', is_active: true, sort: 10 },
+            U0011: { id: 'U0011', username: 'thanh', email: 'thanh@vib.com.vn', full_name: 'ThÃƒÂ nh', job_title_id: 'QC', color: '#65A30D', is_active: true, sort: 11 },
+            U0012: { id: 'U0012', username: 'phuc', email: 'phuc@vib.com.vn', full_name: 'PhÃƒÂºc', job_title_id: 'BE', color: '#C2410C', is_active: true, sort: 12 },
+            U0013: { id: 'U0013', username: 'thuong', email: 'thuong@vib.com.vn', full_name: 'ThÃ†Â°Ã†Â¡ng', job_title_id: 'FE', color: '#BE185D', is_active: true, sort: 13 },
+            U0014: { id: 'U0014', username: 'thien', email: 'thien@vib.com.vn', full_name: 'ThiÃ¡Â»â€¡n', job_title_id: 'FE', color: '#4338CA', is_active: true, sort: 14 }
         };
 
         const JOB_TITLES = {
@@ -4703,7 +4703,7 @@ function togglePersonalMode(select) {
         }
 
         function getJobTitleName(jobTitleId) {
-            return getJobTitleMetaById(jobTitleId)?.name || jobTitleId || 'Khác';
+            return getJobTitleMetaById(jobTitleId)?.name || jobTitleId || 'KhÃƒÂ¡c';
         }
 
         const ROLES = {
@@ -5004,18 +5004,18 @@ function togglePersonalMode(select) {
             defaultPicBtn.classList.add('po-tag-active');
         }
 
-        // GIẢ LẬP ĐĂNG NHẬP: Đổi thành 'U0004' (Vân), 'U0006' (Thắng) để test
+        // GIÃ¡ÂºÂ¢ LÃ¡ÂºÂ¬P Ã„ÂÃ„â€šNG NHÃ¡ÂºÂ¬P: Ã„ÂÃ¡Â»â€¢i thÃƒÂ nh 'U0004' (VÃƒÂ¢n), 'U0006' (ThÃ¡ÂºÂ¯ng) Ã„â€˜Ã¡Â»Æ’ test
         const CURRENT_USER_ID = 'U0001'; 
 
-        // Hàm áp dụng quyền lên giao diện
+        // HÃƒÂ m ÃƒÂ¡p dÃ¡Â»Â¥ng quyÃ¡Â»Ân lÃƒÂªn giao diÃ¡Â»â€¡n
         function applyUIPermissions() {
-            // Kiểm tra quyền tạo Task
+            // KiÃ¡Â»Æ’m tra quyÃ¡Â»Ân tÃ¡ÂºÂ¡o Task
             const canCreate = checkPermission(CURRENT_USER_ID, 'CREATE_TASK');
             
-            // Tìm tất cả các nút có gọi hàm openInlineForm()
+            // TÃƒÂ¬m tÃ¡ÂºÂ¥t cÃ¡ÂºÂ£ cÃƒÂ¡c nÃƒÂºt cÃƒÂ³ gÃ¡Â»Âi hÃƒÂ m openInlineForm()
             const addButtons = document.querySelectorAll('[onclick="openInlineForm()"]');
             addButtons.forEach(btn => {
-                // Nếu không có quyền -> Ẩn nút đi
+                // NÃ¡ÂºÂ¿u khÃƒÂ´ng cÃƒÂ³ quyÃ¡Â»Ân -> Ã¡ÂºÂ¨n nÃƒÂºt Ã„â€˜i
                 btn.style.display = canCreate ? 'flex' : 'none';
             });
         }
@@ -5062,7 +5062,7 @@ function togglePersonalMode(select) {
 
         function renderAssigneeTags(assignees) {
             if (!assignees.length) {
-                return `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
+                return `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">ChÃ†Â°a giao</div>`;
             }
             return assignees.map((record) => createTagHtml(record)).join('');
         }
@@ -5070,7 +5070,7 @@ function togglePersonalMode(select) {
         function getTaskDateMeta(dateRaw) {
             if (!dateRaw) {
                 return {
-                    dateStr: 'Chưa có hạn',
+                    dateStr: 'ChÃ†Â°a cÃƒÂ³ hÃ¡ÂºÂ¡n',
                     statusTextHtml: ''
                 };
             }
@@ -5084,9 +5084,9 @@ function togglePersonalMode(select) {
             const diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
 
             let statusTextHtml = '';
-            if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">Trễ ${Math.abs(diffDays)} ngày</span>`;
-            else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">Hôm nay</span>`;
-            else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
+            if (diffDays < 0) statusTextHtml = `<span class="text-[10px] font-bold text-red-500 animate-pulse pl-4">TrÃ¡Â»â€¦ ${Math.abs(diffDays)} ngÃƒÂ y</span>`;
+            else if (diffDays === 0) statusTextHtml = `<span class="text-[10px] font-bold text-amber-500 pl-4">HÃƒÂ´m nay</span>`;
+            else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">CÃƒÂ²n ${diffDays} ngÃƒÂ y</span>`;
 
             return { dateStr, statusTextHtml };
         }
@@ -5509,7 +5509,7 @@ function togglePersonalMode(select) {
 
             const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
             const boardAssigneeHtml = normalizedState.is_personal
-                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cÃƒÂ¡ nhÃƒÂ¢n"></div>`
                 : renderAssigneeTags(normalizedState.assignees);
             const boardNoteHtml = normalizedState.note
                 ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
@@ -5556,7 +5556,7 @@ function togglePersonalMode(select) {
                     if (userKey === '__unassigned__') {
                         return `
                             <button type="button" class="task-checklist-summary-tag is-empty ${isActive ? 'is-active' : ''}" onclick="toggleTaskChecklistFilter('__unassigned__', event)">
-                                <span>Chưa assign</span>
+                                <span>ChÃ†Â°a assign</span>
                                 <span class="task-checklist-summary-separator">|</span>
                                 <span class="task-checklist-summary-count">${summary.pending}/${summary.total}</span>
                             </button>
@@ -5574,12 +5574,12 @@ function togglePersonalMode(select) {
                         </button>
                     `;
                 }).join('')
-                : '<span class="task-checklist-summary-tag is-empty">Chưa có checklist item</span>';
+                : '<span class="task-checklist-summary-tag is-empty">ChÃ†Â°a cÃƒÂ³ checklist item</span>';
             const checklistHtml = filteredChecklistItems.length
                 ? filteredChecklistItems.map((item, index) => {
                     const selectedAssigneeLabel = item.assignee_user_key
                         ? (USERS[item.assignee_user_key]?.full_name || item.assignee_user_key)
-                        : 'Chưa assign';
+                        : 'ChÃ†Â°a assign';
                     const checklistDeadlineMeta = getChecklistDeadlineDisplayMeta(item.deadline_raw || '');
                     const isChecklistDateOpen = openTaskChecklistDateItemId === item.id;
                     const checklistDateViewBase = isChecklistDateOpen
@@ -5632,7 +5632,7 @@ function togglePersonalMode(select) {
                             </button>
                             ${openTaskChecklistAssigneeItemId === item.id ? `
                                 <div class="task-checklist-assignee-panel" onclick="event.stopPropagation()">
-                                    <button type="button" class="task-checklist-assignee-option ${!item.assignee_user_key ? 'is-active' : ''}" onclick="selectTaskChecklistAssignee('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '', event)">Chưa assign</button>
+                                    <button type="button" class="task-checklist-assignee-option ${!item.assignee_user_key ? 'is-active' : ''}" onclick="selectTaskChecklistAssignee('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '', event)">ChÃ†Â°a assign</button>
                                     ${checklistAssigneeOptions.map((userKey) => `
                                         <button type="button" class="task-checklist-assignee-option ${item.assignee_user_key === userKey ? 'is-active' : ''}" data-user-key="${escapeHtml(userKey)}" onclick="selectTaskChecklistAssignee('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(userKey)}', event)">${escapeHtml(USERS[userKey]?.full_name || userKey)}</button>
                                     `).join('')}
@@ -5642,30 +5642,30 @@ function togglePersonalMode(select) {
                     `;
                     return `
                         <div class="task-checklist-item" data-checklist-id="${escapeHtml(item.id)}">
-                            <div class="task-checklist-drag" title="�?i th? t?" aria-label="�?i th? t?"><i class="fa-solid fa-grip-vertical"></i></div>
+                            <div class="task-checklist-drag" title="Äá»•i thá»© tá»±" aria-label="Äá»•i thá»© tá»±"><i class="fa-solid fa-grip-vertical"></i></div>
                             <div class="task-checklist-order">${index + 1}.</div>
                             <div class="task-checklist-main">
                                 <div class="flex items-center gap-2.5">
                                     <button type="button" class="task-checklist-done-btn ${item.is_done ? 'is-done' : ''}" onclick="toggleTaskChecklistDone('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
                                         <i class="fa-solid fa-check text-[9px]"></i>
                                     </button>
-                                    <textarea class="task-checklist-title-input ${item.is_done ? 'line-through text-slate-400' : ''}" rows="1" placeholder="Nhập checklist item..." oninput="autoResize(this)" onchange="updateTaskChecklistTitle('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">${escapeHtml(item.title)}</textarea>
+                                    <textarea class="task-checklist-title-input ${item.is_done ? 'line-through text-slate-400' : ''}" rows="1" placeholder="NhÃ¡ÂºÂ­p checklist item..." oninput="autoResize(this)" onchange="updateTaskChecklistTitle('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">${escapeHtml(item.title)}</textarea>
                                 </div>
                                 <div class="task-checklist-meta">
-                                    <span class="task-checklist-status ${item.is_done ? 'is-done' : 'is-todo'}">${item.is_done ? 'Done' : 'Chưa done'}</span>
+                                    <span class="task-checklist-status ${item.is_done ? 'is-done' : 'is-todo'}">${item.is_done ? 'Done' : 'ChÃ†Â°a done'}</span>
                                 </div>
                             </div>
                             <div class="task-checklist-deadline">${checklistDatePickerHtml}</div>
                             ${assigneeLovHtml}
-                            <button type="button" class="task-checklist-delete-btn" title="Xóa checklist" aria-label="Xóa checklist" onclick="removeTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
+                            <button type="button" class="task-checklist-delete-btn" title="XÃƒÂ³a checklist" aria-label="XÃƒÂ³a checklist" onclick="removeTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
                                 <i class="fa-regular fa-trash-can text-[11px]"></i>
                             </button>
                         </div>
                     `;
                 }).join('')
                 : (taskDetailChecklistFilterKey || taskDetailChecklistStatusFilter !== 'all')
-                    ? '<div class="task-detail-empty">Không có checklist nào khớp bộ lọc hiện tại.</div>'
-                    : '<div class="task-detail-empty">Chưa có checklist. Bấm dấu cộng để bắt đầu.</div>';
+                    ? '<div class="task-detail-empty">KhÃƒÂ´ng cÃƒÂ³ checklist nÃƒÂ o khÃ¡Â»â€ºp bÃ¡Â»â„¢ lÃ¡Â»Âc hiÃ¡Â»â€¡n tÃ¡ÂºÂ¡i.</div>'
+                    : '<div class="task-detail-empty">ChÃ†Â°a cÃƒÂ³ checklist. BÃ¡ÂºÂ¥m dÃ¡ÂºÂ¥u cÃ¡Â»â„¢ng Ã„â€˜Ã¡Â»Æ’ bÃ¡ÂºÂ¯t Ã„â€˜Ã¡ÂºÂ§u.</div>';
             const isTaskDetailEditing = taskDetailEditDraft?.ticket_id === normalizedState.ticket_id;
             const editableUserKeys = Array.from(new Set([
                 ...getAssignableUserKeys(),
@@ -5681,16 +5681,16 @@ function togglePersonalMode(select) {
                     <div class="task-detail-section">
                         <div class="task-detail-section-header">
                             <div class="task-detail-section-heading">
-                                <p class="task-detail-label">Chi tiết task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
-                                <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">Thông tin ticket</h3>
+                                <p class="task-detail-label">Chi tiÃ¡ÂºÂ¿t task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
+                                <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">ThÃƒÂ´ng tin ticket</h3>
                             </div>
                         </div>
                         <div class="edit-form mt-5">
                             <div class="form-group">
-                                <input type="text" id="taskDetailEditTitle" class="po-input" placeholder="Nhập tiêu đề công việc..." value="${escapeHtml(taskDetailEditDraft.title || '')}">
+                                <input type="text" id="taskDetailEditTitle" class="po-input" placeholder="NhÃ¡ÂºÂ­p tiÃƒÂªu Ã„â€˜Ã¡Â»Â cÃƒÂ´ng viÃ¡Â»â€¡c..." value="${escapeHtml(taskDetailEditDraft.title || '')}">
                             </div>
                             <div class="form-group">
-                                <textarea id="taskDetailEditDesc" class="po-textarea" placeholder="Mô tả công việc...">${escapeHtml(taskDetailEditDraft.desc || '')}</textarea>
+                                <textarea id="taskDetailEditDesc" class="po-textarea" placeholder="MÃƒÂ´ tÃ¡ÂºÂ£ cÃƒÂ´ng viÃ¡Â»â€¡c...">${escapeHtml(taskDetailEditDraft.desc || '')}</textarea>
                             </div>
                             <div class="form-group row-flex">
                                 <div class="po-datepicker editDateWrapper" id="taskDetailEditDateWrapper">
@@ -5740,17 +5740,17 @@ function togglePersonalMode(select) {
                                 </div>
                             </div>
                             <div class="form-group edit-assignee-group ${taskDetailEditDraft.is_personal ? 'hidden' : ''}">
-                                <label class="form-label">PHỤ TRÁCH</label>
+                                <label class="form-label">PHÃ¡Â»Â¤ TRÃƒÂCH</label>
                                 <div class="tags-wrap">
                                     ${taskDetailEditUserTagsHtml}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea id="taskDetailEditNote" class="po-textarea" placeholder="Note cập nhật tiến độ, blocker, lý do pending...">${escapeHtml(taskDetailEditDraft.note || '')}</textarea>
+                                <textarea id="taskDetailEditNote" class="po-textarea" placeholder="Note cÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t tiÃ¡ÂºÂ¿n Ã„â€˜Ã¡Â»â„¢, blocker, lÃƒÂ½ do pending...">${escapeHtml(taskDetailEditDraft.note || '')}</textarea>
                             </div>
                             <div class="modal-actions">
-                                <button type="button" onclick="cancelTaskDetailEdit(event)" class="btn-cancel">Hủy</button>
-                                <button type="button" onclick="saveTaskDetailEdit(event)" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu</button>
+                                <button type="button" onclick="cancelTaskDetailEdit(event)" class="btn-cancel">HÃ¡Â»Â§y</button>
+                                <button type="button" onclick="saveTaskDetailEdit(event)" class="btn-submit"><i class="fa-solid fa-check"></i> LÃ†Â°u</button>
                             </div>
                         </div>
                     </div>
@@ -5759,10 +5759,10 @@ function togglePersonalMode(select) {
                     <div class="task-detail-section">
                         <div class="task-detail-section-header">
                             <div class="task-detail-section-heading min-w-0">
-                                <p class="task-detail-label">Chi tiết task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
-                                <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</h3>
+                                <p class="task-detail-label">Chi tiÃ¡ÂºÂ¿t task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
+                                <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chÃ†Â°a Ã„â€˜Ã¡ÂºÂ·t tÃƒÂªn')}</h3>
                             </div>
-                            <button type="button" class="org-action-btn is-icon tooltip-btn task-detail-section-action" data-tooltip="Chỉnh sửa ticket" onclick="startTaskDetailEdit('${escapeHtml(normalizedState.ticket_id)}', event)">
+                            <button type="button" class="org-action-btn is-icon tooltip-btn task-detail-section-action" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a ticket" onclick="startTaskDetailEdit('${escapeHtml(normalizedState.ticket_id)}', event)">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
                         </div>
@@ -5786,7 +5786,7 @@ function togglePersonalMode(select) {
             return `
                 <div class="task-detail-drawer-layer">
                     <div class="task-detail-backdrop" onclick="closeTaskDetailsDrawer()"></div>
-                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Đóng" onclick="closeTaskDetailsDrawer()">
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Ã„ÂÃƒÂ³ng" onclick="closeTaskDetailsDrawer()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="task-detail-drawer">
@@ -5830,7 +5830,7 @@ function togglePersonalMode(select) {
                 ? getDefaultStateCode()
                 : (getStateConfig(getTicketWorkflowState(normalizedState, trackingUserKey)) || getDefaultStateCode());
             const boardAssigneeHtml = normalizedState.is_personal
-                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cÃƒÂ¡ nhÃƒÂ¢n"></div>`
                 : renderAssigneeTags(normalizedState.assignees);
             const boardNoteHtml = normalizedState.note
                 ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
@@ -5841,17 +5841,17 @@ function togglePersonalMode(select) {
             return `
                 <div class="task-detail-drawer-layer">
                     <div class="task-detail-backdrop" onclick="closeTaskDetailsDrawer()"></div>
-                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Đóng" onclick="closeTaskDetailsDrawer()">
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full task-detail-close-btn" data-tooltip="Ã„ÂÃƒÂ³ng" onclick="closeTaskDetailsDrawer()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="task-detail-drawer">
                         <div class="task-detail-panel space-y-5">
                             <div class="flex items-start justify-between gap-4 px-1">
                                 <div class="min-w-0">
-                                    <p class="task-detail-label">Chi tiết task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
-                                    <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</h3>
+                                    <p class="task-detail-label">Chi tiÃ¡ÂºÂ¿t task #${escapeHtml(normalizedState.ticket_id || 'N/A')}</p>
+                                    <h3 class="mt-2 text-xl font-extrabold leading-tight text-slate-900">${escapeHtml(normalizedState.title || 'Task chÃ†Â°a Ã„â€˜Ã¡ÂºÂ·t tÃƒÂªn')}</h3>
                                 </div>
-                                <button type="button" class="org-action-btn is-icon tooltip-btn flex-shrink-0" data-tooltip="Chỉnh sửa task" onclick="editTaskFromDrawer('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                <button type="button" class="org-action-btn is-icon tooltip-btn flex-shrink-0" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a task" onclick="editTaskFromDrawer('${escapeHtml(normalizedState.ticket_id)}', event)">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </div>
@@ -6021,7 +6021,7 @@ function togglePersonalMode(select) {
             const title = titleInput.value.trim();
             if (!title) {
                 titleInput.classList.add('input-error');
-                titleInput.placeholder = 'Tiêu đề không được để trống!';
+                titleInput.placeholder = 'TiÃƒÂªu Ã„â€˜Ã¡Â»Â khÃƒÂ´ng Ã„â€˜Ã†Â°Ã¡Â»Â£c Ã„â€˜Ã¡Â»Æ’ trÃ¡Â»â€˜ng!';
                 titleInput.focus();
                 setTimeout(() => titleInput.classList.remove('input-error'), 400);
                 return;
@@ -6096,7 +6096,7 @@ function togglePersonalMode(select) {
             let dateRaw = '';
             if (dateLabelEl) {
                 const dateText = dateLabelEl.textContent.trim();
-                if (dateText && dateText !== 'Chưa có hạn') {
+                if (dateText && dateText !== 'ChÃ†Â°a cÃƒÂ³ hÃ¡ÂºÂ¡n') {
                     const parts = dateText.split('/');
                     if (parts.length === 3) dateRaw = `${parts[2]}-${parts[1]}-${parts[0]}`;
                 }
@@ -6129,7 +6129,7 @@ function togglePersonalMode(select) {
 
             const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
             const picsHtml = normalizedState.is_personal
-                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`
+                ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task CÃƒÂ¡ nhÃƒÂ¢n"></div>`
                 : renderAssigneeTags(normalizedState.assignees);
             const noteHtml = normalizedState.note
                 ? `
@@ -6143,7 +6143,7 @@ function togglePersonalMode(select) {
                     ${(typeof checkPermission === 'function' && typeof CURRENT_USER_ID !== 'undefined' && checkPermission(CURRENT_USER_ID, 'DELETE_TASK')) 
                         ? `<button type="button" onclick="confirmDelete(this, event)" class="icon-btn delete-btn">
                             <svg class="trash-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            <span class="delete-text">Xóa</span>
+                            <span class="delete-text">XÃƒÂ³a</span>
                            </button>` 
                         : ''}
                     <button type="button" onclick="editTask(this, event)" class="icon-btn edit-btn">
@@ -6259,7 +6259,7 @@ function togglePersonalMode(select) {
         }
 
         // ==========================================
-        // 1. HỆ THỐNG LƯU TRỮ (LOCAL STORAGE)
+        // 1. HÃ¡Â»â€  THÃ¡Â»ÂNG LÃ†Â¯U TRÃ¡Â»Â® (LOCAL STORAGE)
         // ==========================================
         function updateCounts() {
             KANBAN_STATES.forEach(state => {
@@ -6348,7 +6348,7 @@ function togglePersonalMode(select) {
         }
 
         // ==========================================
-        // 2. KÉO THẢ TASK (SORTABLE)
+        // 2. KÃƒâ€°O THÃ¡ÂºÂ¢ TASK (SORTABLE)
         // ==========================================
         const sortableConfig = {
             group: 'shared-tasks',
@@ -6380,7 +6380,7 @@ function togglePersonalMode(select) {
         }
 
         // ==========================================
-        // 3. THÊM TASK MỚI (INLINE ADD)
+        // 3. THÃƒÅ M TASK MÃ¡Â»Å¡I (INLINE ADD)
         // ==========================================
         let inlineSelectedPICs = [];
 
@@ -6392,7 +6392,7 @@ function openInlineForm() {
             const dateWrapper = document.getElementById('inlineDateWrapper');
             initCustomDatePicker(dateWrapper);
 
-            // 1. Logic Ngày mặc định = Today
+            // 1. Logic NgÃƒÂ y mÃ¡ÂºÂ·c Ã„â€˜Ã¡Â»â€¹nh = Today
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -6403,12 +6403,12 @@ function openInlineForm() {
             triggerText.innerHTML = `<i class="fa-regular fa-calendar mr-1.5"></i> ${dd}/${mm}/${yyyy}`;
             triggerText.style.color = 'var(--po-text-main)';
 
-            // 2. Kích hoạt Dropdown Privacy
+            // 2. KÃƒÂ­ch hoÃ¡ÂºÂ¡t Dropdown Privacy
             const privacySelect = document.getElementById('inlinePrivacyWrapper');
             initCustomSelect(privacySelect);
 
-            // 3. LOGIC DEFAULT PIC = Hiếu Phan
-            // Reset danh sách chọn cũ
+            // 3. LOGIC DEFAULT PIC = HiÃ¡ÂºÂ¿u Phan
+            // Reset danh sÃƒÂ¡ch chÃ¡Â»Ân cÃ…Â©
             inlineSelectedPICs = []; 
             const picButtons = document.querySelectorAll('#inlinePicSelection button');
             picButtons.forEach(btn => btn.classList.remove('po-tag-active'));
@@ -6440,7 +6440,7 @@ function openInlineForm() {
                 dateWrapper.querySelectorAll('.dp-date').forEach(d => d.classList.remove('selected'));
             }
 
-            // RESET CUSTOM DROPDOWN VỀ PUBLIC
+            // RESET CUSTOM DROPDOWN VÃ¡Â»â‚¬ PUBLIC
             const wrapper = document.getElementById('inlinePrivacyWrapper');
             if (wrapper) {
                 const nativeSelect = wrapper.querySelector('.hidden-native-select');
@@ -6475,7 +6475,7 @@ function openInlineForm() {
             if (!title) {
                 const titleInput = document.getElementById('inlineTitle');
                 titleInput.classList.add('input-error');
-                titleInput.placeholder = "Vui lòng nhập tiêu đề công việc";
+                titleInput.placeholder = "Vui lÃƒÂ²ng nhÃ¡ÂºÂ­p tiÃƒÂªu Ã„â€˜Ã¡Â»Â cÃƒÂ´ng viÃ¡Â»â€¡c";
                 titleInput.focus();
                 setTimeout(() => { titleInput.classList.remove('input-error'); }, 400);
                 return;
@@ -6484,7 +6484,7 @@ function openInlineForm() {
             const dateRaw = document.getElementById('inlineDate').value;
 
             const isPersonalSelect = document.getElementById('inlineIsPersonal');
-            // Lấy logic True/False từ Select thay vì Checkbox
+            // LÃ¡ÂºÂ¥y logic True/False tÃ¡Â»Â« Select thay vÃƒÂ¬ Checkbox
             const isPersonal = isPersonalSelect ? (isPersonalSelect.value === 'true') : false;
 
             const ticketId = typeof generateTicketId === 'function' ? generateTicketId() : '';
@@ -6506,7 +6506,7 @@ function openInlineForm() {
         
 
         // ==========================================
-        // 4. CHỈNH SỬA TASK (EDIT)
+        // 4. CHÃ¡Â»Ë†NH SÃ¡Â»Â¬A TASK (EDIT)
         // ==========================================
         function editTask(btn, event) {
             event?.stopPropagation?.();
@@ -6523,7 +6523,7 @@ function openInlineForm() {
 
             card.dataset.originalTicketState = JSON.stringify(ticketState);
 
-            // Render Tags với CSS mới
+            // Render Tags vÃ¡Â»â€ºi CSS mÃ¡Â»â€ºi
             let picButtonsHtml = '';
             const selectableUserKeys = Array.from(new Set([...getAssignableUserKeys(), ...oldPicsKeys]));
             selectableUserKeys.forEach(userKey => {
@@ -6532,16 +6532,16 @@ function openInlineForm() {
                 picButtonsHtml += `<button type="button" onclick="toggleEditPic(this)" class="${btnClass}" data-pic="${userKey}">${USERS[userKey].full_name}</button>`;
             });
 
-            // Giao diện Edit được chuyển sang CSS mới của bạn
-            // Giao diện Edit được chuyển sang CSS mới của bạn
+            // Giao diÃ¡Â»â€¡n Edit Ã„â€˜Ã†Â°Ã¡Â»Â£c chuyÃ¡Â»Æ’n sang CSS mÃ¡Â»â€ºi cÃ¡Â»Â§a bÃ¡ÂºÂ¡n
+            // Giao diÃ¡Â»â€¡n Edit Ã„â€˜Ã†Â°Ã¡Â»Â£c chuyÃ¡Â»Æ’n sang CSS mÃ¡Â»â€ºi cÃ¡Â»Â§a bÃ¡ÂºÂ¡n
             card.innerHTML = `
                 <div class="edit-form relative z-20 w-full">
                     <div class="form-group">
-                        <input type="text" class="edit-title po-input" placeholder="Nhập tiêu đề công việc..." value="${oldTitle}">
+                        <input type="text" class="edit-title po-input" placeholder="NhÃ¡ÂºÂ­p tiÃƒÂªu Ã„â€˜Ã¡Â»Â cÃƒÂ´ng viÃ¡Â»â€¡c..." value="${oldTitle}">
                     </div>
                     
                     <div class="form-group">
-                        <textarea class="edit-desc po-textarea" placeholder="Mô tả công việc...">${oldDesc}</textarea>
+                        <textarea class="edit-desc po-textarea" placeholder="MÃƒÂ´ tÃ¡ÂºÂ£ cÃƒÂ´ng viÃ¡Â»â€¡c...">${oldDesc}</textarea>
                     </div>
 <div class="form-group row-flex">
 <div class="po-datepicker editDateWrapper">
@@ -6592,19 +6592,19 @@ function openInlineForm() {
                     </div>
                     
                     <div class="form-group edit-assignee-group ${isPersonal ? 'hidden' : ''}">
-                        <label class="form-label">PHỤ TRÁCH</label>
+                        <label class="form-label">PHÃ¡Â»Â¤ TRÃƒÂCH</label>
                         <div class="tags-wrap edit-pic-selection">
                             ${picButtonsHtml}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <textarea class="edit-note po-textarea" placeholder="Note cập nhật tiến độ, blocker, lý do pending...">${oldNote}</textarea>
+                        <textarea class="edit-note po-textarea" placeholder="Note cÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t tiÃ¡ÂºÂ¿n Ã„â€˜Ã¡Â»â„¢, blocker, lÃƒÂ½ do pending...">${oldNote}</textarea>
                     </div>
                     
                     <div class="modal-actions">
-                        <button type="button" onclick="cancelEditTask(this)" class="btn-cancel">Hủy</button>
-                        <button type="button" onclick="saveEditedTask(this)" class="btn-submit"><i class="fa-solid fa-check"></i> Lưu ngay</button>
+                        <button type="button" onclick="cancelEditTask(this)" class="btn-cancel">HÃ¡Â»Â§y</button>
+                        <button type="button" onclick="saveEditedTask(this)" class="btn-submit"><i class="fa-solid fa-check"></i> LÃ†Â°u ngay</button>
                     </div>
                 </div>
             `;
@@ -6645,7 +6645,7 @@ function openInlineForm() {
             if (!title) {
                 const editInput = card.querySelector('.edit-title');
                 editInput.classList.add('input-error');
-                editInput.placeholder = "Tiêu đề không được để trống!";
+                editInput.placeholder = "TiÃƒÂªu Ã„â€˜Ã¡Â»Â khÃƒÂ´ng Ã„â€˜Ã†Â°Ã¡Â»Â£c Ã„â€˜Ã¡Â»Æ’ trÃ¡Â»â€˜ng!";
                 editInput.focus();
                 setTimeout(() => editInput.classList.remove('input-error'), 400);
                 return;
@@ -6654,7 +6654,7 @@ function openInlineForm() {
             const previousState = getCardState(card);
             const dateRaw = card.querySelector('.edit-date').value;
 
-            // Đọc Select Value thay vì Checkbox
+            // Ã„ÂÃ¡Â»Âc Select Value thay vÃƒÂ¬ Checkbox
             const isPersonal = card.querySelector('.edit-is-personal').value === 'true';
             const picEls = card.querySelectorAll('.po-tag-active');
             const selectedKeys = Array.from(picEls).map((el) => el.dataset.pic);
@@ -6675,33 +6675,33 @@ function openInlineForm() {
             saveBoardState();
         }
 // ==========================================
-        // 5. XÓA TASK & HIỆU ỨNG XÁC NHẬN
+        // 5. XÃƒâ€œA TASK & HIÃ¡Â»â€ U Ã¡Â»Â¨NG XÃƒÂC NHÃ¡ÂºÂ¬N
         // ==========================================
         function confirmDelete(btn, event) {
-            event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+            event.stopPropagation(); // NgÃ„Æ’n sÃ¡Â»Â± kiÃ¡Â»â€¡n click lan ra ngoÃƒÂ i
             
             if (!btn.classList.contains('confirm-mode')) {
-                // Tắt các nút xóa khác đang mở (nếu có)
+                // TÃ¡ÂºÂ¯t cÃƒÂ¡c nÃƒÂºt xÃƒÂ³a khÃƒÂ¡c Ã„â€˜ang mÃ¡Â»Å¸ (nÃ¡ÂºÂ¿u cÃƒÂ³)
                 document.querySelectorAll('.delete-btn.confirm-mode').forEach(b => {
                     if (b !== btn) b.classList.remove('confirm-mode');
                 });
-                // Chuyển sang chế độ xác nhận (Nút đỏ)
+                // ChuyÃ¡Â»Æ’n sang chÃ¡ÂºÂ¿ Ã„â€˜Ã¡Â»â„¢ xÃƒÂ¡c nhÃ¡ÂºÂ­n (NÃƒÂºt Ã„â€˜Ã¡Â»Â)
                 btn.classList.add('confirm-mode');
             } else {
-                // Bấm lần 2 -> Thực hiện xóa
+                // BÃ¡ÂºÂ¥m lÃ¡ÂºÂ§n 2 -> ThÃ¡Â»Â±c hiÃ¡Â»â€¡n xÃƒÂ³a
                 const card = btn.closest('.task-card');
                 const ticketId = card?.dataset.ticketId;
-                card.classList.add('deleting'); // Chạy CSS thu nhỏ, mờ đi
+                card.classList.add('deleting'); // ChÃ¡ÂºÂ¡y CSS thu nhÃ¡Â»Â, mÃ¡Â»Â Ã„â€˜i
                 
                 setTimeout(() => {
                     boardTickets = boardTickets.filter((ticketState) => ticketState.ticket_id !== ticketId);
                     renderBoardTickets();
-                    saveBoardState(); // Lưu vào DB / LocalStorage
-                }, 300); // Đợi 300ms cho animation chạy xong
+                    saveBoardState(); // LÃ†Â°u vÃƒÂ o DB / LocalStorage
+                }, 300); // Ã„ÂÃ¡Â»Â£i 300ms cho animation chÃ¡ÂºÂ¡y xong
             }
         }
 
-        // Bấm ra ngoài khoảng trống thì hủy trạng thái "Xóa"
+        // BÃ¡ÂºÂ¥m ra ngoÃƒÂ i khoÃ¡ÂºÂ£ng trÃ¡Â»â€˜ng thÃƒÂ¬ hÃ¡Â»Â§y trÃ¡ÂºÂ¡ng thÃƒÂ¡i "XÃƒÂ³a"
         document.addEventListener('click', (e) => {
             document.querySelectorAll('.delete-btn.confirm-mode').forEach(btn => {
                 if (!btn.contains(e.target)) {
@@ -6839,12 +6839,12 @@ function openInlineForm() {
                             <div class="document-inline-form w-full">
                                 <input type="text" class="document-inline-input ${branchKey}-edit-input" data-page-id="${page.id}" value="${page.name.replace(/"/g, '&quot;')}" maxlength="60">
                                 <div class="document-inline-actions">
-                                    <button type="button" class="menu-action-btn ${branchKey}-edit-save-btn" data-page-id="${page.id}" aria-label="Lưu tên page">
+                                    <button type="button" class="menu-action-btn ${branchKey}-edit-save-btn" data-page-id="${page.id}" aria-label="LÃ†Â°u tÃƒÂªn page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </button>
-                                    <button type="button" class="menu-action-btn ${branchKey}-edit-cancel-btn" data-page-id="${page.id}" aria-label="Hủy sửa page">
+                                    <button type="button" class="menu-action-btn ${branchKey}-edit-cancel-btn" data-page-id="${page.id}" aria-label="HÃ¡Â»Â§y sÃ¡Â»Â­a page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                         </svg>
@@ -6868,18 +6868,18 @@ function openInlineForm() {
                             <span class="member-name">${page.name}</span>
                         </a>
                         <div class="document-page-actions">
-                            <button type="button" class="menu-action-btn ${branchKey}-edit-btn" data-page-id="${page.id}" aria-label="Sửa tên page">
+                            <button type="button" class="menu-action-btn ${branchKey}-edit-btn" data-page-id="${page.id}" aria-label="SÃ¡Â»Â­a tÃƒÂªn page">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </button>
-                            <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa page">
+                            <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="XÃƒÂ³a page">
                                 <span class="document-delete-icon" aria-hidden="true">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
                                     </svg>
                                 </span>
-                                <span class="document-delete-label">Xóa</span>
+                                <span class="document-delete-label">XÃƒÂ³a</span>
                             </button>
                         </div>
                     </div>
@@ -7045,7 +7045,7 @@ function openInlineForm() {
 
             if (!members.length) {
                 activeTrackingUserKey = null;
-                trackingList.innerHTML = '<li class="pl-4 py-2 text-xs text-slate-400">Không có user trong team</li>';
+                trackingList.innerHTML = '<li class="pl-4 py-2 text-xs text-slate-400">KhÃƒÂ´ng cÃƒÂ³ user trong team</li>';
                 syncActiveNavState();
                 return;
             }
@@ -7085,7 +7085,7 @@ function openInlineForm() {
 
         function applySelectedTeam(teamKey) {
             selectedTeamCode = teamKey;
-            document.getElementById('teamSelectorValue').textContent = teamKey || 'Không có phòng ban';
+            document.getElementById('teamSelectorValue').textContent = teamKey || 'KhÃƒÂ´ng cÃƒÂ³ phÃƒÂ²ng ban';
             document.querySelectorAll('.team-option').forEach((option) => {
                 option.classList.toggle('is-active', option.dataset.teamValue === teamKey);
             });
@@ -7364,7 +7364,7 @@ function openInlineForm() {
             }
         }
         // ==========================================
-        // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
+        // 5. KHÃ¡Â»Å¾I Ã„ÂÃ¡Â»ËœNG (CHÃ¡ÂºÂ Y NGAY KHI VÃƒâ‚¬O TRANG)
         function setWorkspaceView(viewKey) {
             const boardView = document.getElementById('boardWorkspaceView');
             const adminView = document.getElementById('adminWorkspaceView');
@@ -7439,14 +7439,14 @@ function openInlineForm() {
             ],
             users: [
                 { id: 'U0001', username: 'an.nguyen', email: 'an.nguyen@vib.com.vn', full_name: 'a.AN', job_title_id: 'job_head', color: '#2563EB', sort_order: 1, is_active: true },
-                { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'Hiếu', job_title_id: 'job_po', color: '#DB2777', sort_order: 2, is_active: true },
-                { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Định', job_title_id: 'job_ux', color: '#16A34A', sort_order: 3, is_active: true },
-                { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Đắc', job_title_id: 'job_dev_manager', color: '#B45309', sort_order: 7, is_active: true },
-                { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'Tấn', job_title_id: 'job_be', color: '#DC2626', sort_order: 9, is_active: true },
-                { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'Thịnh', job_title_id: 'job_fe', color: '#0284C7', sort_order: 10, is_active: true },
+                { id: 'U0002', username: 'hieu.phan', email: 'hieu.phan@vib.com.vn', full_name: 'HiÃ¡ÂºÂ¿u', job_title_id: 'job_po', color: '#DB2777', sort_order: 2, is_active: true },
+                { id: 'U0003', username: 'dinh.tran', email: 'dinh.tran@vib.com.vn', full_name: 'Ã„ÂÃ¡Â»â€¹nh', job_title_id: 'job_ux', color: '#16A34A', sort_order: 3, is_active: true },
+                { id: 'U0007', username: 'tuan.le2', email: 'tuan.le2@vib.com.vn', full_name: 'Ã„ÂÃ¡ÂºÂ¯c', job_title_id: 'job_dev_manager', color: '#B45309', sort_order: 7, is_active: true },
+                { id: 'U0009', username: 'tan', email: 'tan@vib.com.vn', full_name: 'TÃ¡ÂºÂ¥n', job_title_id: 'job_be', color: '#DC2626', sort_order: 9, is_active: true },
+                { id: 'U0010', username: 'thinh', email: 'thinh@vib.com.vn', full_name: 'ThÃ¡Â»â€¹nh', job_title_id: 'job_fe', color: '#0284C7', sort_order: 10, is_active: true },
                 { id: 'U0015', username: 'linh.nguyen', email: 'linh.nguyen@vib.com.vn', full_name: 'Linh', job_title_id: 'job_qc', color: '#7C3AED', sort_order: 15, is_active: false },
                 { id: 'U0016', username: 'mai.tran', email: 'mai.tran@vib.com.vn', full_name: 'Mai', job_title_id: 'job_po', color: '#0f766e', sort_order: 16, is_active: true },
-                { id: 'U0017', username: 'son.ngo', email: 'son.ngo@vib.com.vn', full_name: 'Sơn', job_title_id: 'job_fe', color: '#9333ea', sort_order: 17, is_active: true }
+                { id: 'U0017', username: 'son.ngo', email: 'son.ngo@vib.com.vn', full_name: 'SÃ†Â¡n', job_title_id: 'job_fe', color: '#9333ea', sort_order: 17, is_active: true }
             ],
             userTeams: [
                 { id: 'ut_001', user_id: 'U0001', team_id: 'team_po_001', is_primary: true, is_active: true },
@@ -7514,9 +7514,9 @@ function openInlineForm() {
                 { id: 'ura_007', user_id: 'U0010', role_id: 'role_member', team_id: 'team_dev_001', is_active: true }
             ],
             auditLogs: [
-                { id: 'log_001', time: '19/04 09:20', user: 'an.nguyen', module: 'Workflow', action: 'UPDATE_STATE', detail: 'Đổi wording In Review thành Review' },
-                { id: 'log_002', time: '19/04 09:05', user: 'hieu.phan', module: 'User', action: 'CREATE_USER', detail: 'Tạo user U0015' },
-                { id: 'log_003', time: '19/04 08:30', user: 'an.nguyen', module: 'Permission', action: 'UPDATE_ROLE', detail: 'Cập nhật permission cho MANAGER' }
+                { id: 'log_001', time: '19/04 09:20', user: 'an.nguyen', module: 'Workflow', action: 'UPDATE_STATE', detail: 'Ã„ÂÃ¡Â»â€¢i wording In Review thÃƒÂ nh Review' },
+                { id: 'log_002', time: '19/04 09:05', user: 'hieu.phan', module: 'User', action: 'CREATE_USER', detail: 'TÃ¡ÂºÂ¡o user U0015' },
+                { id: 'log_003', time: '19/04 08:30', user: 'an.nguyen', module: 'Permission', action: 'UPDATE_ROLE', detail: 'CÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t permission cho MANAGER' }
             ]
         };
 
@@ -7638,9 +7638,9 @@ function openInlineForm() {
         }
 
         function getOrgTypeLabel(type) {
-            if (type === 'block') return 'Khối';
-            if (type === 'department') return 'Phòng';
-            return 'Nhóm';
+            if (type === 'block') return 'KhÃ¡Â»â€˜i';
+            if (type === 'department') return 'PhÃƒÂ²ng';
+            return 'NhÃƒÂ³m';
         }
 
         function getOrgEntityToastLabel(selection) {
@@ -7652,10 +7652,10 @@ function openInlineForm() {
         function getOrgCreatePlaceholders(type) {
             const typeLabel = getOrgTypeLabel(type).toLowerCase();
             return {
-                code: `Nhập mã ${typeLabel}`,
-                name: `Nhập tên ${typeLabel}`,
-                order: 'Tự động tăng dần',
-                description: `Nhập mô tả cho ${typeLabel}...`
+                code: `NhÃ¡ÂºÂ­p mÃƒÂ£ ${typeLabel}`,
+                name: `NhÃ¡ÂºÂ­p tÃƒÂªn ${typeLabel}`,
+                order: 'TÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng tÃ„Æ’ng dÃ¡ÂºÂ§n',
+                description: `NhÃ¡ÂºÂ­p mÃƒÂ´ tÃ¡ÂºÂ£ cho ${typeLabel}...`
             };
         }
 
@@ -7671,10 +7671,10 @@ function openInlineForm() {
                         display_order: getNextDisplayOrder(ADMIN_SEED.blocks),
                         is_active: true
                     },
-                    title: 'Tạo khối mới',
+                    title: 'TÃ¡ÂºÂ¡o khÃ¡Â»â€˜i mÃ¡Â»â€ºi',
                     subtitle: '',
                     parentLabel: 'Root',
-                    stats: '0 phòng'
+                    stats: '0 phÃƒÂ²ng'
                 };
             }
 
@@ -7692,10 +7692,10 @@ function openInlineForm() {
                         display_order: getNextDisplayOrder(ADMIN_SEED.departments, 'block_id', block.id),
                         is_active: true
                     },
-                    title: 'Tạo phòng mới',
+                    title: 'TÃ¡ÂºÂ¡o phÃƒÂ²ng mÃ¡Â»â€ºi',
                     subtitle: '',
                     parentLabel: `${block.code} - ${block.name}`,
-                    stats: '0 nhóm'
+                    stats: '0 nhÃƒÂ³m'
                 };
             }
 
@@ -7714,10 +7714,10 @@ function openInlineForm() {
                     display_order: getNextDisplayOrder(ADMIN_SEED.teams, 'department_id', department.id),
                     is_active: true
                 },
-                title: 'Tạo nhóm mới',
+                title: 'TÃ¡ÂºÂ¡o nhÃƒÂ³m mÃ¡Â»â€ºi',
                 subtitle: '',
-                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'Chưa có phòng',
-                stats: '0 thành viên'
+                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'ChÃ†Â°a cÃƒÂ³ phÃƒÂ²ng',
+                stats: '0 thÃƒÂ nh viÃƒÂªn'
             };
         }
 
@@ -7744,7 +7744,7 @@ function openInlineForm() {
             if (!selection?.entity) return { label: '', full: '', prefix: '', suffix: '' };
             if (selection.type === 'block') {
                 return {
-                    label: 'Mã khối',
+                    label: 'MÃƒÂ£ khÃ¡Â»â€˜i',
                     full: selection.entity.code || '',
                     prefix: '',
                     suffix: selection.entity.code || ''
@@ -7755,7 +7755,7 @@ function openInlineForm() {
                 const blockCode = getSeedBlockById(selection.entity.block_id)?.code || '';
                 const prefix = blockCode ? `${blockCode}.` : '';
                 return {
-                    label: 'Mã phòng hiển thị',
+                    label: 'MÃƒÂ£ phÃƒÂ²ng hiÃ¡Â»Æ’n thÃ¡Â»â€¹',
                     full: getDepartmentFullCode(selection.entity.id),
                     prefix,
                     suffix: selection.entity.code || ''
@@ -7772,7 +7772,7 @@ function openInlineForm() {
                     full: [draftPrefix, selection.entity.code || ''].filter(Boolean).join('.')
                 };
             return {
-                label: 'Mã nhóm hiển thị',
+                label: 'MÃƒÂ£ nhÃƒÂ³m hiÃ¡Â»Æ’n thÃ¡Â»â€¹',
                 full: teamMeta.full,
                 prefix: teamMeta.prefix ? `${teamMeta.prefix}.` : '',
                 suffix: selection.entity.code || ''
@@ -8072,9 +8072,9 @@ function openInlineForm() {
             shouldAnimateMemberDrawer = false;
             renderAdminOrgPanel();
             if (isCreatingMember) {
-                showAdminToast(`Tạo mới thành viên ${user.full_name || user.id}`);
+                showAdminToast(`TÃ¡ÂºÂ¡o mÃ¡Â»â€ºi thÃƒÂ nh viÃƒÂªn ${user.full_name || user.id}`);
             } else {
-                showAdminToast(`Đã lưu thay đổi cho ${user.full_name || user.id}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ lÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i cho ${user.full_name || user.id}.`);
             }
         }
 
@@ -8156,7 +8156,7 @@ function openInlineForm() {
         }
 
         function getMemberTeamLovValue(teamId) {
-            if (!teamId) return 'Chọn khối / phòng / nhóm';
+            if (!teamId) return 'ChÃ¡Â»Ân khÃ¡Â»â€˜i / phÃƒÂ²ng / nhÃƒÂ³m';
             return getTeamFullCode(teamId);
         }
 
@@ -8182,7 +8182,7 @@ function openInlineForm() {
             }
 
             roleSelect.value = roleAssignment?.role_id || '';
-            roleValue.textContent = getSeedRoleById(roleSelect.value)?.name || 'Chưa gán quyền';
+            roleValue.textContent = getSeedRoleById(roleSelect.value)?.name || 'ChÃ†Â°a gÃƒÂ¡n quyÃ¡Â»Ân';
             roleValue.classList.toggle('member-lov-placeholder', !roleSelect.value);
         }
 
@@ -8239,21 +8239,21 @@ function openInlineForm() {
                     <span class="member-lov-item-code">${escapeHtml(block.code)}</span>
                     <span class="member-lov-item-name is-hidden"></span>
                 </button>
-            `).join('') || '<div class="member-lov-empty">Chưa có khối khả dụng</div>';
+            `).join('') || '<div class="member-lov-empty">ChÃ†Â°a cÃƒÂ³ khÃ¡Â»â€˜i khÃ¡ÂºÂ£ dÃ¡Â»Â¥ng</div>';
 
             departmentList.innerHTML = availableDepartments.map((department) => `
                 <button type="button" class="member-lov-item ${selectedDepartmentId === department.id ? 'is-active' : ''}" onclick="selectMemberLovDepartment('${escapeHtml(department.id)}', event)">
                     <span class="member-lov-item-code">${escapeHtml(department.code)}</span>
                     <span class="member-lov-item-name is-hidden"></span>
                 </button>
-            `).join('') || '<div class="member-lov-empty">Chưa có phòng khả dụng</div>';
+            `).join('') || '<div class="member-lov-empty">ChÃ†Â°a cÃƒÂ³ phÃƒÂ²ng khÃ¡ÂºÂ£ dÃ¡Â»Â¥ng</div>';
 
             teamList.innerHTML = availableTeams.map((team) => `
                 <button type="button" class="member-lov-item ${selectedTeamId === team.id ? 'is-active' : ''}" onclick="selectMemberLovTeam('${escapeHtml(team.id)}', event)">
                     <span class="member-lov-item-code">${escapeHtml(team.code)}</span>
                     <span class="member-lov-item-name is-hidden"></span>
                 </button>
-            `).join('') || '<div class="member-lov-empty">Chưa có nhóm khả dụng</div>';
+            `).join('') || '<div class="member-lov-empty">ChÃ†Â°a cÃƒÂ³ nhÃƒÂ³m khÃ¡ÂºÂ£ dÃ¡Â»Â¥ng</div>';
 
             syncMemberRoleByTeam(selectedTeamId);
         }
@@ -8399,10 +8399,10 @@ function openInlineForm() {
                 return {
                     type,
                     entity: block,
-                    title: 'Thông tin khối',
-                    subtitle: 'Chỉnh sửa thông tin khối và định hướng các phòng ban trực thuộc.',
+                    title: 'ThÃƒÂ´ng tin khÃ¡Â»â€˜i',
+                    subtitle: 'ChÃ¡Â»â€°nh sÃ¡Â»Â­a thÃƒÂ´ng tin khÃ¡Â»â€˜i vÃƒÂ  Ã„â€˜Ã¡Â»â€¹nh hÃ†Â°Ã¡Â»â€ºng cÃƒÂ¡c phÃƒÂ²ng ban trÃ¡Â»Â±c thuÃ¡Â»â„¢c.',
                     parentLabel: 'Root',
-                    stats: `${ADMIN_SEED.departments.filter((item) => item.block_id === id).length} phòng`
+                    stats: `${ADMIN_SEED.departments.filter((item) => item.block_id === id).length} phÃƒÂ²ng`
                 };
             }
 
@@ -8413,10 +8413,10 @@ function openInlineForm() {
                 return {
                     type,
                     entity: department,
-                    title: 'Thông tin phòng',
-                    subtitle: 'Cập nhật phòng ban và quản lý các nhóm trực thuộc.',
-                    parentLabel: block ? `${block.code} - ${block.name}` : 'Chưa có khối',
-                    stats: `${ADMIN_SEED.teams.filter((item) => item.department_id === id).length} nhóm`
+                    title: 'ThÃƒÂ´ng tin phÃƒÂ²ng',
+                    subtitle: 'CÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t phÃƒÂ²ng ban vÃƒÂ  quÃ¡ÂºÂ£n lÃƒÂ½ cÃƒÂ¡c nhÃƒÂ³m trÃ¡Â»Â±c thuÃ¡Â»â„¢c.',
+                    parentLabel: block ? `${block.code} - ${block.name}` : 'ChÃ†Â°a cÃƒÂ³ khÃ¡Â»â€˜i',
+                    stats: `${ADMIN_SEED.teams.filter((item) => item.department_id === id).length} nhÃƒÂ³m`
                 };
             }
 
@@ -8427,10 +8427,10 @@ function openInlineForm() {
             return {
                 type,
                 entity: team,
-                title: 'Thông tin nhóm',
-                subtitle: 'Điều chỉnh nhóm, người phụ trách và cấu trúc triển khai.',
-                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'Chưa có phòng',
-                stats: `${ADMIN_SEED.userTeams.filter((item) => item.team_id === id && item.is_active).length} thành viên`
+                title: 'ThÃƒÂ´ng tin nhÃƒÂ³m',
+                subtitle: 'Ã„ÂiÃ¡Â»Âu chÃ¡Â»â€°nh nhÃƒÂ³m, ngÃ†Â°Ã¡Â»Âi phÃ¡Â»Â¥ trÃƒÂ¡ch vÃƒÂ  cÃ¡ÂºÂ¥u trÃƒÂºc triÃ¡Â»Æ’n khai.',
+                parentLabel: [block?.code, department?.code].filter(Boolean).join(' / ') || 'ChÃ†Â°a cÃƒÂ³ phÃƒÂ²ng',
+                stats: `${ADMIN_SEED.userTeams.filter((item) => item.team_id === id && item.is_active).length} thÃƒÂ nh viÃƒÂªn`
             };
         }
 
@@ -8477,7 +8477,7 @@ function openInlineForm() {
                 button.classList.toggle('is-on', selection.entity.is_active);
                 button.classList.toggle('is-off', !selection.entity.is_active);
             }
-            showAdminToast(`${selection.entity.is_active ? 'Đã kích hoạt' : 'Đã ngưng'} ${getOrgEntityToastLabel(selection)}.`);
+            showAdminToast(`${selection.entity.is_active ? 'Ã„ÂÃƒÂ£ kÃƒÂ­ch hoÃ¡ÂºÂ¡t' : 'Ã„ÂÃƒÂ£ ngÃ†Â°ng'} ${getOrgEntityToastLabel(selection)}.`);
             window.setTimeout(() => {
                 renderAdminOrgPanel();
             }, 180);
@@ -8557,9 +8557,9 @@ function openInlineForm() {
                 }
                 currentOrgSelection = { type: selection.type, id: entityToSave.id };
                 currentOrgDraft = null;
-                showAdminToast(`Đã tạo ${getOrgEntityToastLabel({ type: selection.type, entity: entityToSave })}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ tÃ¡ÂºÂ¡o ${getOrgEntityToastLabel({ type: selection.type, entity: entityToSave })}.`);
             } else {
-                showAdminToast(`Đã lưu thay đổi cho ${getOrgEntityToastLabel(selection)}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ lÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i cho ${getOrgEntityToastLabel(selection)}.`);
             }
 
             isCreatingOrgSelection = false;
@@ -8646,7 +8646,7 @@ function openInlineForm() {
 
         function getTeamFullCode(teamId) {
             const team = getSeedTeamById(teamId);
-            if (!team) return 'Chưa gán team';
+            if (!team) return 'ChÃ†Â°a gÃƒÂ¡n team';
             const department = getSeedDepartmentById(team.department_id);
             const block = department ? getSeedBlockById(department.block_id) : null;
             return [block?.code, department?.code, team.code].filter(Boolean).join('.');
@@ -8662,7 +8662,7 @@ function openInlineForm() {
                 .filter((item) => item.user_id === userId && item.is_active)
                 .map((item) => getSeedRoleById(item.role_id)?.name)
                 .filter(Boolean)
-                .join(', ') || 'Chưa gán role';
+                .join(', ') || 'ChÃ†Â°a gÃƒÂ¡n role';
         }
 
         function getRolePermissions(roleId) {
@@ -8787,7 +8787,7 @@ function openInlineForm() {
             if (!role) return;
             const nextValue = String(value ?? '').trim();
             if (!nextValue) {
-                showAdminToast('Thông tin role không được để trống.');
+                showAdminToast('ThÃƒÂ´ng tin role khÃƒÂ´ng Ã„â€˜Ã†Â°Ã¡Â»Â£c Ã„â€˜Ã¡Â»Æ’ trÃ¡Â»â€˜ng.');
                 renderAdminRolesPanel();
                 return;
             }
@@ -8795,7 +8795,7 @@ function openInlineForm() {
                 const normalizedCode = nextValue.toUpperCase().replace(/\s+/g, '_');
                 const duplicatedRole = ADMIN_SEED.roles.find((item) => item.id !== roleId && item.code === normalizedCode);
                 if (duplicatedRole) {
-                    showAdminToast(`Code ${normalizedCode} đã tồn tại.`);
+                    showAdminToast(`Code ${normalizedCode} Ã„â€˜ÃƒÂ£ tÃ¡Â»â€œn tÃ¡ÂºÂ¡i.`);
                     renderAdminRolesPanel();
                     return;
                 }
@@ -8807,7 +8807,7 @@ function openInlineForm() {
                 currentRoleDraft = { ...role };
                 return;
             }
-            addAuditLog('Permission', 'UPDATE_ROLE', `Cập nhật ${field} cho ${role.code}`);
+            addAuditLog('Permission', 'UPDATE_ROLE', `CÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t ${field} cho ${role.code}`);
             renderAdminRolesPanel();
         }
 
@@ -8826,7 +8826,7 @@ function openInlineForm() {
             ADMIN_SEED.userRoleAssignments.forEach((assignment) => {
                 if (assignment.role_id === role.id) assignment.team_id = null;
             });
-            addAuditLog('Permission', 'UPDATE_ROLE_SCOPE', `Đổi phạm vi role ${role.code} sang ${role.scope_type}`);
+            addAuditLog('Permission', 'UPDATE_ROLE_SCOPE', `Ã„ÂÃ¡Â»â€¢i phÃ¡ÂºÂ¡m vi role ${role.code} sang ${role.scope_type}`);
             renderAdminRolesPanel();
         }
 
@@ -8846,8 +8846,8 @@ function openInlineForm() {
                 }, 180);
                 return;
             }
-            addAuditLog('Permission', 'TOGGLE_ROLE', `${role.is_active ? 'Kích hoạt' : 'Ngưng'} role ${role.code}`);
-            showAdminToast(`${role.is_active ? 'Đã kích hoạt' : 'Đã ngưng'} role ${role.code}.`);
+            addAuditLog('Permission', 'TOGGLE_ROLE', `${role.is_active ? 'KÃƒÂ­ch hoÃ¡ÂºÂ¡t' : 'NgÃ†Â°ng'} role ${role.code}`);
+            showAdminToast(`${role.is_active ? 'Ã„ÂÃƒÂ£ kÃƒÂ­ch hoÃ¡ÂºÂ¡t' : 'Ã„ÂÃƒÂ£ ngÃ†Â°ng'} role ${role.code}.`);
             window.setTimeout(() => {
                 renderAdminRolesPanel();
             }, 180);
@@ -8885,16 +8885,16 @@ function openInlineForm() {
                     button.classList.remove('is-on');
                     button.classList.add('is-off');
                 }
-                showAdminToast(`Đã tắt quyền ${permission.code} cho ${role.code}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ tÃ¡ÂºÂ¯t quyÃ¡Â»Ân ${permission.code} cho ${role.code}.`);
             } else {
                 ADMIN_SEED.rolePermissions.push({ role_id: roleId, permission_id: permissionId });
                 if (button) {
                     button.classList.remove('is-off');
                     button.classList.add('is-on');
                 }
-                showAdminToast(`Đã bật quyền ${permission.code} cho ${role.code}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ bÃ¡ÂºÂ­t quyÃ¡Â»Ân ${permission.code} cho ${role.code}.`);
             }
-            addAuditLog('Permission', 'UPDATE_ROLE', `Cập nhật permission ${permission.code} cho ${role.code}`);
+            addAuditLog('Permission', 'UPDATE_ROLE', `CÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t permission ${permission.code} cho ${role.code}`);
             window.setTimeout(() => {
                 renderAdminRolesPanel();
             }, 180);
@@ -8957,12 +8957,12 @@ function openInlineForm() {
                 permission_ids: Array.from(new Set(currentRoleDraft.permission_ids || []))
             };
             if (!draft.name || !draft.code) {
-                showAdminToast('Tên role và mã role không được để trống.');
+                showAdminToast('TÃƒÂªn role vÃƒÂ  mÃƒÂ£ role khÃƒÂ´ng Ã„â€˜Ã†Â°Ã¡Â»Â£c Ã„â€˜Ã¡Â»Æ’ trÃ¡Â»â€˜ng.');
                 return;
             }
             const duplicatedRole = ADMIN_SEED.roles.find((item) => item.id !== draft.id && item.code === draft.code);
             if (duplicatedRole) {
-                showAdminToast(`Code ${draft.code} đã tồn tại.`);
+                showAdminToast(`Code ${draft.code} Ã„â€˜ÃƒÂ£ tÃ¡Â»â€œn tÃ¡ÂºÂ¡i.`);
                 return;
             }
 
@@ -8977,14 +8977,14 @@ function openInlineForm() {
 
             if (draft.is_new) {
                 ADMIN_SEED.roles.push(nextRole);
-                addAuditLog('Permission', 'CREATE_ROLE', `Tạo role ${draft.code}`);
-                showAdminToast(`Đã tạo role ${draft.code}.`);
+                addAuditLog('Permission', 'CREATE_ROLE', `TÃ¡ÂºÂ¡o role ${draft.code}`);
+                showAdminToast(`Ã„ÂÃƒÂ£ tÃ¡ÂºÂ¡o role ${draft.code}.`);
             } else {
                 const role = getSeedRoleById(draft.id);
                 if (!role) return;
                 Object.assign(role, nextRole);
-                addAuditLog('Permission', 'UPDATE_ROLE', `Lưu thay đổi cho ${draft.code}`);
-                showAdminToast(`Đã lưu thay đổi cho ${draft.code}.`);
+                addAuditLog('Permission', 'UPDATE_ROLE', `LÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i cho ${draft.code}`);
+                showAdminToast(`Ã„ÂÃƒÂ£ lÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i cho ${draft.code}.`);
             }
 
             ADMIN_SEED.rolePermissions = ADMIN_SEED.rolePermissions.filter((item) => item.role_id !== draft.id);
@@ -9016,7 +9016,7 @@ function openInlineForm() {
             if (!role) return;
             const availableUsers = getAvailableUsersForRole(role);
             if (!availableUsers.length) {
-                showAdminToast('Không có user phù hợp để gán role.');
+                showAdminToast('KhÃƒÂ´ng cÃƒÂ³ user phÃƒÂ¹ hÃ¡Â»Â£p Ã„â€˜Ã¡Â»Æ’ gÃƒÂ¡n role.');
                 return;
             }
             const candidate = availableUsers.find((user) => {
@@ -9029,7 +9029,7 @@ function openInlineForm() {
                 ));
             });
             if (!candidate) {
-                showAdminToast('Tất cả user phù hợp đã được gán role này rồi.');
+                showAdminToast('TÃ¡ÂºÂ¥t cÃ¡ÂºÂ£ user phÃƒÂ¹ hÃ¡Â»Â£p Ã„â€˜ÃƒÂ£ Ã„â€˜Ã†Â°Ã¡Â»Â£c gÃƒÂ¡n role nÃƒÂ y rÃ¡Â»â€œi.');
                 return;
             }
             const defaultUser = candidate;
@@ -9041,8 +9041,8 @@ function openInlineForm() {
                 team_id: defaultTeam?.id || null,
                 is_active: true
             });
-            addAuditLog('Permission', 'CREATE_ASSIGNMENT', `Gán role ${role.code} cho ${defaultUser.full_name}`);
-            showAdminToast(`Đã thêm gán quyền cho ${defaultUser.full_name}.`);
+            addAuditLog('Permission', 'CREATE_ASSIGNMENT', `GÃƒÂ¡n role ${role.code} cho ${defaultUser.full_name}`);
+            showAdminToast(`Ã„ÂÃƒÂ£ thÃƒÂªm gÃƒÂ¡n quyÃ¡Â»Ân cho ${defaultUser.full_name}.`);
             renderAdminRolesPanel();
         }
 
@@ -9077,12 +9077,12 @@ function openInlineForm() {
                 assignment.user_id = previousValue.user_id;
                 assignment.team_id = previousValue.team_id;
                 assignment.is_active = previousValue.is_active;
-                showAdminToast('Role này đã được gán cho user ở phạm vi đã chọn.');
+                showAdminToast('Role nÃƒÂ y Ã„â€˜ÃƒÂ£ Ã„â€˜Ã†Â°Ã¡Â»Â£c gÃƒÂ¡n cho user Ã¡Â»Å¸ phÃ¡ÂºÂ¡m vi Ã„â€˜ÃƒÂ£ chÃ¡Â»Ân.');
                 renderAdminRolesPanel();
                 return;
             }
             const user = getSeedUserById(assignment.user_id);
-            addAuditLog('Permission', 'UPDATE_ASSIGNMENT', `Cập nhật gán role ${role.code} cho ${user?.full_name || assignment.user_id}`);
+            addAuditLog('Permission', 'UPDATE_ASSIGNMENT', `CÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t gÃƒÂ¡n role ${role.code} cho ${user?.full_name || assignment.user_id}`);
             renderAdminRolesPanel();
         }
 
@@ -9093,8 +9093,8 @@ function openInlineForm() {
             const role = getSeedRoleById(assignment.role_id);
             const user = getSeedUserById(assignment.user_id);
             ADMIN_SEED.userRoleAssignments.splice(assignmentIndex, 1);
-            addAuditLog('Permission', 'DELETE_ASSIGNMENT', `Gỡ role ${role?.code || assignment.role_id} khỏi ${user?.full_name || assignment.user_id}`);
-            showAdminToast('Đã gỡ gán quyền.');
+            addAuditLog('Permission', 'DELETE_ASSIGNMENT', `GÃ¡Â»Â¡ role ${role?.code || assignment.role_id} khÃ¡Â»Âi ${user?.full_name || assignment.user_id}`);
+            showAdminToast('Ã„ÂÃƒÂ£ gÃ¡Â»Â¡ gÃƒÂ¡n quyÃ¡Â»Ân.');
             renderAdminRolesPanel();
         }
 
@@ -9121,7 +9121,7 @@ function openInlineForm() {
             const selection = getOrgSelectionMeta() || {
                 type: 'block',
                 entity: ADMIN_SEED.blocks[0],
-                title: 'Thông tin khối',
+                title: 'ThÃƒÂ´ng tin khÃ¡Â»â€˜i',
                 subtitle: '',
                 parentLabel: 'Root',
                 stats: ''
@@ -9136,7 +9136,7 @@ function openInlineForm() {
                 .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
                 .map((user) => `<option value="${escapeHtml(user.id)}" ${entity?.leader_user_id === user.id ? 'selected' : ''}>${escapeHtml(user.full_name)}</option>`)
                 .join('');
-            const leaderName = entity?.leader_user_id ? (getSeedUserById(entity.leader_user_id)?.full_name || 'Chưa có') : 'Chưa có';
+            const leaderName = entity?.leader_user_id ? (getSeedUserById(entity.leader_user_id)?.full_name || 'ChÃ†Â°a cÃƒÂ³') : 'ChÃ†Â°a cÃƒÂ³';
             const members = getMembersForCurrentSelection();
             const memberRecord = currentMemberEditId
                 ? getMemberRecordById(currentMemberEditId)
@@ -9144,7 +9144,7 @@ function openInlineForm() {
             const availableTeams = getAvailableTeamsForCurrentSelection();
             const availableMemberRoles = getTeamScopedRoles();
             const orgPanelTitle = currentOrgDetailMode === 'edit' && isCreatingOrgSelection
-                ? `Tạo ${typeLabel.toLowerCase()} mới`
+                ? `TÃ¡ÂºÂ¡o ${typeLabel.toLowerCase()} mÃ¡Â»â€ºi`
                 : `${typeLabel} ${entity?.code || ''}`.trim();
             const orgPanelName = currentOrgDetailMode === 'edit' && isCreatingOrgSelection
                 ? ''
@@ -9163,17 +9163,17 @@ function openInlineForm() {
                         `}
                     </label>
                     <label>
-                        <span class="org-field-label">Tên hiển thị</span>
+                        <span class="org-field-label">TÃƒÂªn hiÃ¡Â»Æ’n thÃ¡Â»â€¹</span>
                         <input id="orgDetailName" class="org-field-input" type="text" value="${escapeHtml(entity?.name || '')}" placeholder="${escapeHtml(placeholders.name)}" oninput="if (this.value.trim()) clearCreateOrgFieldError('name')">
                     </label>
                 </div>
                 <div class="mt-5 grid gap-5 lg:grid-cols-2">
                     <label>
-                        <span class="org-field-label">Thứ tự hiển thị</span>
+                        <span class="org-field-label">ThÃ¡Â»Â© tÃ¡Â»Â± hiÃ¡Â»Æ’n thÃ¡Â»â€¹</span>
                         <input id="orgDetailOrder" class="org-field-input" type="number" min="1" value="${escapeHtml(entity?.display_order ?? 1)}" placeholder="${escapeHtml(placeholders.order)}">
                     </label>
                     <div>
-                        <span class="org-field-label">Trạng thái</span>
+                        <span class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</span>
                         <div class="org-status-edit-card">
                             <div class="org-status-edit-row">
                                 <p class="org-view-value text-base">${activeLabel}</p>
@@ -9184,7 +9184,7 @@ function openInlineForm() {
                 </div>
                 <div class="mt-5">
                     <label>
-                        <span class="org-field-label">Mô tả / Ghi chú</span>
+                        <span class="org-field-label">MÃƒÂ´ tÃ¡ÂºÂ£ / Ghi chÃƒÂº</span>
                         <textarea id="orgDetailDescription" class="org-field-textarea" placeholder="${escapeHtml(placeholders.description)}">${escapeHtml(entity?.description || '')}</textarea>
                     </label>
                 </div>
@@ -9197,19 +9197,19 @@ function openInlineForm() {
                         </div>
                     </div>
                     <div class="org-view-field">
-                        <p class="org-field-label">Tên hiển thị</p>
+                        <p class="org-field-label">TÃƒÂªn hiÃ¡Â»Æ’n thÃ¡Â»â€¹</p>
                         <div class="org-view-card">
                             <p class="org-view-value is-readonly text-base">${escapeHtml(entity?.name || '')}</p>
                         </div>
                     </div>
                     <div class="org-view-field">
-                        <p class="org-field-label">Thứ tự hiển thị</p>
+                        <p class="org-field-label">ThÃ¡Â»Â© tÃ¡Â»Â± hiÃ¡Â»Æ’n thÃ¡Â»â€¹</p>
                         <div class="org-view-card">
                             <p class="org-view-value is-readonly text-base">${escapeHtml(entity?.display_order ?? 1)}</p>
                         </div>
                     </div>
                     <div class="org-view-field">
-                        <p class="org-field-label">Trạng thái</p>
+                        <p class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</p>
                         <div class="org-view-card">
                             <div class="flex items-center gap-3">
                                 <span class="org-status-dot ${entity?.is_active ? 'is-active' : 'is-inactive'}"></span>
@@ -9219,9 +9219,9 @@ function openInlineForm() {
                     </div>
                 </div>
                 <div class="mt-5 org-view-field">
-                    <p class="org-field-label">Mô tả / Ghi chú</p>
+                    <p class="org-field-label">MÃƒÂ´ tÃ¡ÂºÂ£ / Ghi chÃƒÂº</p>
                     <div class="org-view-card">
-                        <p class="org-view-text is-readonly">${escapeHtml(entity?.description || 'Chưa có mô tả cho đối tượng này.')}</p>
+                        <p class="org-view-text is-readonly">${escapeHtml(entity?.description || 'ChÃ†Â°a cÃƒÂ³ mÃƒÂ´ tÃ¡ÂºÂ£ cho Ã„â€˜Ã¡Â»â€˜i tÃ†Â°Ã¡Â»Â£ng nÃƒÂ y.')}</p>
                     </div>
                 </div>
             `;
@@ -9237,22 +9237,22 @@ function openInlineForm() {
                                 ` : ''}
                             </h3>
                             <div class="mt-3 flex flex-wrap items-center gap-2">
-                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `Thuộc: ${escapeHtml(selection.parentLabel)}`}</span>
+                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `ThuÃ¡Â»â„¢c: ${escapeHtml(selection.parentLabel)}`}</span>
                                 <span class="admin-badge is-blue">${escapeHtml(selection.stats)}</span>
                             </div>
                         </div>
                         <div class="flex justify-start gap-3 lg:justify-end">
                             ${currentOrgDetailMode === 'view' ? `
-                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thành viên" onclick="openOrgMembersPanel('${selection.type}', '${selection.entity.id}')">
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thÃƒÂ nh viÃƒÂªn" onclick="openOrgMembersPanel('${selection.type}', '${selection.entity.id}')">
                                     <i class="fa-solid fa-users"></i>
                                 </button>
-                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa thông tin" onclick="setOrgDetailMode('edit')">
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a thÃƒÂ´ng tin" onclick="setOrgDetailMode('edit')">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                             ` : `
                                 <div class="flex flex-wrap gap-3">
-                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="setOrgDetailMode('view')">Hủy</button>
-                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveOrgSelectionChanges()">${isCreatingOrgSelection ? 'Lưu tạo mới' : 'Lưu thay đổi'}</button>
+                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="setOrgDetailMode('view')">HÃ¡Â»Â§y</button>
+                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveOrgSelectionChanges()">${isCreatingOrgSelection ? 'LÃ†Â°u tÃ¡ÂºÂ¡o mÃ¡Â»â€ºi' : 'LÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i'}</button>
                                 </div>
                             `}
                         </div>
@@ -9263,17 +9263,17 @@ function openInlineForm() {
             const memberViewHtml = currentMemberMode === 'view' && memberRecord ? `
                 <div class="member-detail-drawer-layer ${shouldAnimateMemberDrawer ? '' : 'is-open'}">
                     <div class="member-detail-backdrop" onclick="closeMemberDetailsDrawer()"></div>
-                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Đóng" onclick="closeMemberDetailsDrawer()">
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Ã„ÂÃƒÂ³ng" onclick="closeMemberDetailsDrawer()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="member-detail-drawer">
                         <div class="member-panel-card min-h-full rounded-none border-0 border-l border-slate-200 p-6 shadow-none">
                             <div class="flex items-start justify-between gap-3">
                                 <div>
-                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thông tin thành viên</p>
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">ThÃƒÂ´ng tin thÃƒÂ nh viÃƒÂªn</p>
                                     <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(memberRecord.full_name)}</h3>
                                 </div>
-                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa thành viên" onclick="shouldAnimateMemberDrawer = false; setMemberFormMode('edit', '${escapeHtml(memberRecord.id)}')">
+                                <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a thÃƒÂ nh viÃƒÂªn" onclick="shouldAnimateMemberDrawer = false; setMemberFormMode('edit', '${escapeHtml(memberRecord.id)}')">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </div>
@@ -9285,7 +9285,7 @@ function openInlineForm() {
                                     </div>
                                 </div>
                                 <div class="org-view-field">
-                                    <p class="org-field-label">Họ tên</p>
+                                    <p class="org-field-label">HÃ¡Â»Â tÃƒÂªn</p>
                                     <div class="org-view-card">
                                         <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.full_name)}</p>
                                     </div>
@@ -9293,31 +9293,31 @@ function openInlineForm() {
                                 <div class="org-view-field">
                                     <p class="org-field-label">Username</p>
                                     <div class="org-view-card">
-                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.username || 'Chưa có')}</p>
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.username || 'ChÃ†Â°a cÃƒÂ³')}</p>
                                     </div>
                                 </div>
                                 <div class="org-view-field">
                                     <p class="org-field-label">Email</p>
                                     <div class="org-view-card">
-                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.email || 'Chưa có')}</p>
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(memberRecord.email || 'ChÃ†Â°a cÃƒÂ³')}</p>
                                     </div>
                                 </div>
                                 <div class="org-view-field">
                                     <p class="org-field-label">Title</p>
                                     <div class="org-view-card">
-                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'Chưa gán')}</p>
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'ChÃ†Â°a gÃƒÂ¡n')}</p>
                                     </div>
                                 </div>
                                 <div class="org-view-field">
-                                    <p class="org-field-label">Mã nhóm</p>
+                                    <p class="org-field-label">MÃƒÂ£ nhÃƒÂ³m</p>
                                     <div class="org-view-card">
-                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getTeamFullCode(memberRecord.team_id) || 'Chưa có')}</p>
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getTeamFullCode(memberRecord.team_id) || 'ChÃ†Â°a cÃƒÂ³')}</p>
                                     </div>
                                 </div>
                                 <div class="org-view-field">
-                                    <p class="org-field-label">Phân quyền tại nhóm</p>
+                                    <p class="org-field-label">PhÃƒÂ¢n quyÃ¡Â»Ân tÃ¡ÂºÂ¡i nhÃƒÂ³m</p>
                                     <div class="org-view-card">
-                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getUserRoleForTeam(memberRecord.id, memberRecord.team_id)?.name || 'Chưa gán quyền')}</p>
+                                        <p class="org-view-value is-readonly text-base">${escapeHtml(getUserRoleForTeam(memberRecord.id, memberRecord.team_id)?.name || 'ChÃ†Â°a gÃƒÂ¡n quyÃ¡Â»Ân')}</p>
                                     </div>
                                 </div>
                                 <div class="org-view-field">
@@ -9336,7 +9336,7 @@ function openInlineForm() {
                                     </div>
                                 </div>
                                 <div class="org-view-field">
-                                    <p class="org-field-label">Trạng thái</p>
+                                    <p class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</p>
                                     <div class="org-view-card">
                                         <div class="flex items-center gap-3">
                                             <span class="org-status-dot ${memberRecord.is_active ? 'is-active' : 'is-inactive'}"></span>
@@ -9352,19 +9352,19 @@ function openInlineForm() {
             const memberFormHtml = currentMemberMode === 'edit' && memberRecord ? `
                 <div class="member-detail-drawer-layer ${shouldAnimateMemberDrawer ? '' : 'is-open'}">
                     <div class="member-detail-backdrop" onclick="closeMemberDetailsDrawer()"></div>
-                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Đóng" onclick="closeMemberDetailsDrawer()">
+                    <button type="button" class="org-action-btn is-icon tooltip-btn rounded-full member-detail-close-btn" data-tooltip="Ã„ÂÃƒÂ³ng" onclick="closeMemberDetailsDrawer()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                     <div class="member-detail-drawer">
                         <div class="member-panel-card min-h-full rounded-none border-0 border-l border-slate-200 p-6 shadow-none">
                             <div class="flex items-center justify-between gap-3">
                                 <div>
-                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">${currentMemberEditId ? 'Edit Member' : 'Tạo mới thành viên'}</p>
-                                    <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(currentMemberEditId ? memberRecord.full_name : 'Tạo mới thành viên')}</h3>
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">${currentMemberEditId ? 'Edit Member' : 'TÃ¡ÂºÂ¡o mÃ¡Â»â€ºi thÃƒÂ nh viÃƒÂªn'}</p>
+                                    <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(currentMemberEditId ? memberRecord.full_name : 'TÃ¡ÂºÂ¡o mÃ¡Â»â€ºi thÃƒÂ nh viÃƒÂªn')}</h3>
                                 </div>
                                 <div class="flex gap-3">
-                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="${currentMemberEditId ? `setMemberFormMode('view', '${escapeHtml(memberRecord.id)}')` : `closeMemberDetailsDrawer()`}">Hủy</button>
-                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveMemberForm()">${currentMemberEditId ? 'Lưu thay đổi' : 'Lưu'}</button>
+                                    <button type="button" class="bg-transparent px-1 py-2 text-sm font-bold text-slate-500 transition hover:text-slate-800" onclick="${currentMemberEditId ? `setMemberFormMode('view', '${escapeHtml(memberRecord.id)}')` : `closeMemberDetailsDrawer()`}">HÃ¡Â»Â§y</button>
+                                    <button type="button" class="rounded-2xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-700" onclick="saveMemberForm()">${currentMemberEditId ? 'LÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i' : 'LÃ†Â°u'}</button>
                                 </div>
                             </div>
                             <input id="memberUserId" type="hidden" value="${escapeHtml(memberRecord.id)}">
@@ -9374,7 +9374,7 @@ function openInlineForm() {
                                     <input class="org-field-input text-slate-400" type="text" value="${escapeHtml(memberRecord.id)}" disabled>
                                 </label>
                                 <label>
-                                    <span class="org-field-label">Họ tên</span>
+                                    <span class="org-field-label">HÃ¡Â»Â tÃƒÂªn</span>
                                     <input id="memberFullName" class="org-field-input" type="text" value="${escapeHtml(memberRecord.full_name || '')}" oninput="if (this.value.trim()) clearCreateMemberFieldError('fullName')">
                                 </label>
                                 <label>
@@ -9391,7 +9391,7 @@ function openInlineForm() {
                                         <input id="memberJobTitleId" type="hidden" value="${escapeHtml(memberRecord.job_title_id || '')}">
                                         <button type="button" class="org-field-input member-lov-trigger" data-member-single-lov-trigger="jobTitle" onclick="toggleMemberSingleLov('jobTitle', event)">
                                             <span class="member-lov-copy">
-                                                <span id="memberJobTitleValue" class="member-lov-value font-medium ${memberRecord.job_title_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'Chọn title')}</span>
+                                                <span id="memberJobTitleValue" class="member-lov-value font-medium ${memberRecord.job_title_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedJobTitleById(memberRecord.job_title_id)?.name || 'ChÃ¡Â»Ân title')}</span>
                                             </span>
                                             <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
                                         </button>
@@ -9405,14 +9405,14 @@ function openInlineForm() {
                                     </div>
                                 </label>
                                 <label>
-                                    <span class="org-field-label">Mã nhóm</span>
+                                    <span class="org-field-label">MÃƒÂ£ nhÃƒÂ³m</span>
                                     <div class="member-lov">
                                         <input id="memberBlockId" type="hidden" value="">
                                         <input id="memberDepartmentId" type="hidden" value="">
                                         <input id="memberTeamId" type="hidden" value="${escapeHtml(memberRecord.team_id || '')}">
                                         <button type="button" class="org-field-input member-lov-trigger" data-member-team-lov-trigger onclick="toggleMemberTeamLov(event)">
                                             <span class="member-lov-copy">
-                                                <span id="memberTeamLovValue" class="member-lov-value member-lov-placeholder">Chọn khối / phòng / nhóm</span>
+                                                <span id="memberTeamLovValue" class="member-lov-value member-lov-placeholder">ChÃ¡Â»Ân khÃ¡Â»â€˜i / phÃƒÂ²ng / nhÃƒÂ³m</span>
                                             </span>
                                             <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
                                         </button>
@@ -9420,19 +9420,19 @@ function openInlineForm() {
                                             <div class="member-lov-columns">
                                                 <div class="member-lov-column">
                                                     <div class="member-lov-column-head">
-                                                        <p class="member-lov-column-title">Khối</p>
+                                                        <p class="member-lov-column-title">KhÃ¡Â»â€˜i</p>
                                                     </div>
                                                     <div id="memberTeamLovBlocks" class="member-lov-list"></div>
                                                 </div>
                                                 <div class="member-lov-column">
                                                     <div class="member-lov-column-head">
-                                                        <p class="member-lov-column-title">Phòng</p>
+                                                        <p class="member-lov-column-title">PhÃƒÂ²ng</p>
                                                     </div>
                                                     <div id="memberTeamLovDepartments" class="member-lov-list"></div>
                                                 </div>
                                                 <div class="member-lov-column">
                                                     <div class="member-lov-column-head">
-                                                        <p class="member-lov-column-title">Nhóm</p>
+                                                        <p class="member-lov-column-title">NhÃƒÂ³m</p>
                                                     </div>
                                                     <div id="memberTeamLovTeams" class="member-lov-list"></div>
                                                 </div>
@@ -9441,18 +9441,18 @@ function openInlineForm() {
                                     </div>
                                 </label>
                                 <label>
-                                    <span class="org-field-label">Phân quyền tại nhóm</span>
+                                    <span class="org-field-label">PhÃƒÂ¢n quyÃ¡Â»Ân tÃ¡ÂºÂ¡i nhÃƒÂ³m</span>
                                     <div class="member-single-lov">
                                         <input id="memberRoleId" type="hidden" value="${escapeHtml(memberRecord.role_id || '')}">
                                         <button type="button" class="org-field-input member-lov-trigger" data-member-single-lov-trigger="role" onclick="toggleMemberSingleLov('role', event)">
                                             <span class="member-lov-copy">
-                                                <span id="memberRoleValue" class="member-lov-value font-medium ${memberRecord.role_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedRoleById(memberRecord.role_id)?.name || 'Chưa gán quyền')}</span>
+                                                <span id="memberRoleValue" class="member-lov-value font-medium ${memberRecord.role_id ? '' : 'member-lov-placeholder'}">${escapeHtml(getSeedRoleById(memberRecord.role_id)?.name || 'ChÃ†Â°a gÃƒÂ¡n quyÃ¡Â»Ân')}</span>
                                             </span>
                                             <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
                                         </button>
                                         <div class="member-single-lov-panel hidden" data-member-single-lov-panel="role" onclick="event.stopPropagation()">
                                             <div class="member-single-lov-list">
-                                                <button type="button" class="member-single-lov-item ${memberRecord.role_id ? '' : 'is-active'}" data-member-single-lov-option="role" data-value="" onclick="selectMemberSingleLov('role', '', 'Chưa gán quyền', event)"><span>Chưa gán quyền</span></button>
+                                                <button type="button" class="member-single-lov-item ${memberRecord.role_id ? '' : 'is-active'}" data-member-single-lov-option="role" data-value="" onclick="selectMemberSingleLov('role', '', 'ChÃ†Â°a gÃƒÂ¡n quyÃ¡Â»Ân', event)"><span>ChÃ†Â°a gÃƒÂ¡n quyÃ¡Â»Ân</span></button>
                                                 ${availableMemberRoles.map((role) => `
                                                     <button type="button" class="member-single-lov-item ${memberRecord.role_id === role.id ? 'is-active' : ''}" data-member-single-lov-option="role" data-value="${escapeHtml(role.id)}" onclick="selectMemberSingleLov('role', '${escapeHtml(role.id)}', '${escapeHtml(role.name)}', event)"><span>${escapeHtml(role.name)}</span></button>
                                                 `).join('')}
@@ -9492,7 +9492,7 @@ function openInlineForm() {
                                     </div>
                                 </label>
                                 <label>
-                                    <span class="org-field-label">Trạng thái</span>
+                                    <span class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</span>
                                     <div class="member-inline-field rounded-[20px] border border-slate-200 bg-white px-5">
                                         <div class="flex w-full items-center gap-4">
                                             <p id="memberActiveLabel" class="org-view-value text-base">${memberRecord.is_active ? 'Active' : 'Inactive'}</p>
@@ -9511,21 +9511,21 @@ function openInlineForm() {
                     <div class="flex flex-col gap-4 border-b border-slate-200 pb-5 lg:flex-row lg:items-start lg:justify-between">
                         <div class="min-w-0">
                             <h3 class="mt-2 text-[20px] font-extrabold tracking-tight text-slate-900">
-                                Nhân viên của ${typeLabel} ${escapeHtml(entity?.code || '')}
+                                NhÃƒÂ¢n viÃƒÂªn cÃ¡Â»Â§a ${typeLabel} ${escapeHtml(entity?.code || '')}
                                 <span class="mx-2 text-slate-300">|</span>
                                 <span>${escapeHtml(entity?.name || '')}</span>
                             </h3>
                             <div class="mt-3 flex flex-wrap items-center gap-2">
-                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `Thuộc: ${escapeHtml(selection.parentLabel)}`}</span>
+                                <span class="admin-badge is-slate">${selection.type === 'block' ? 'Root' : `ThuÃ¡Â»â„¢c: ${escapeHtml(selection.parentLabel)}`}</span>
                                 <span class="admin-badge is-blue">${escapeHtml(selection.stats)}</span>
-                                ${selection.type === 'team' ? '' : `<span class="admin-badge is-slate">${members.length} thành viên</span>`}
+                                ${selection.type === 'team' ? '' : `<span class="admin-badge is-slate">${members.length} thÃƒÂ nh viÃƒÂªn</span>`}
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thông tin" onclick="setActiveOrgSelection('${selection.type}', '${selection.entity.id}')">
+                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Xem thÃƒÂ´ng tin" onclick="setActiveOrgSelection('${selection.type}', '${selection.entity.id}')">
                                 <i class="fa-solid fa-circle-info"></i>
                             </button>
-                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Thêm thành viên" onclick="createMemberForSelection()">
+                            <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="ThÃƒÂªm thÃƒÂ nh viÃƒÂªn" onclick="createMemberForSelection()">
                                 <i class="fa-solid fa-user-plus"></i>
                             </button>
                         </div>
@@ -9537,10 +9537,10 @@ function openInlineForm() {
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Họ tên</th>
+                                    <th>HÃ¡Â»Â tÃƒÂªn</th>
                                     <th>Title</th>
-                                    <th>Mã nhóm</th>
-                                    <th>Phân quyền</th>
+                                    <th>MÃƒÂ£ nhÃƒÂ³m</th>
+                                    <th>PhÃƒÂ¢n quyÃ¡Â»Ân</th>
                                     <th>Sort Order</th>
                                     <th>Active</th>
                                     <th></th>
@@ -9554,9 +9554,9 @@ function openInlineForm() {
                                         <tr class="is-clickable" onclick="shouldAnimateMemberDrawer = true; setMemberFormMode('view', '${escapeHtml(member.id)}')">
                                             <td><code>${escapeHtml(member.id)}</code></td>
                                             <td class="font-bold" style="color:${escapeHtml(member.color || '#334155')}">${escapeHtml(member.full_name)}</td>
-                                            <td>${escapeHtml(jobTitle?.name || 'Chưa gán')}</td>
+                                            <td>${escapeHtml(jobTitle?.name || 'ChÃ†Â°a gÃƒÂ¡n')}</td>
                                             <td><code>${escapeHtml(getTeamFullCode(member.team_id))}</code></td>
-                                            <td>${escapeHtml(teamRole?.name || 'Chưa gán')}</td>
+                                            <td>${escapeHtml(teamRole?.name || 'ChÃ†Â°a gÃƒÂ¡n')}</td>
                                             <td>${escapeHtml(member.sort_order ?? '')}</td>
                                             <td>
                                                 <span class="inline-flex items-center">
@@ -9564,7 +9564,7 @@ function openInlineForm() {
                                                 </span>
                                             </td>
                                             <td class="text-right member-row-actions">
-                                                <button type="button" class="member-inline-btn tooltip-btn rounded-2xl px-3 py-2 text-sm font-bold" data-tooltip="Chỉnh sửa thành viên" onclick="event.stopPropagation(); shouldAnimateMemberDrawer = true; setMemberFormMode('edit', '${escapeHtml(member.id)}')">
+                                                <button type="button" class="member-inline-btn tooltip-btn rounded-2xl px-3 py-2 text-sm font-bold" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a thÃƒÂ nh viÃƒÂªn" onclick="event.stopPropagation(); shouldAnimateMemberDrawer = true; setMemberFormMode('edit', '${escapeHtml(member.id)}')">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
                                             </td>
@@ -9572,7 +9572,7 @@ function openInlineForm() {
                                     `;
             }).join('') || `
                                     <tr>
-                                        <td colspan="8" class="py-8 text-center text-sm text-slate-400">Chưa có thành viên trong cấu trúc đang chọn.</td>
+                                        <td colspan="8" class="py-8 text-center text-sm text-slate-400">ChÃ†Â°a cÃƒÂ³ thÃƒÂ nh viÃƒÂªn trong cÃ¡ÂºÂ¥u trÃƒÂºc Ã„â€˜ang chÃ¡Â»Ân.</td>
                                     </tr>
                                 `}
                             </tbody>
@@ -9584,18 +9584,18 @@ function openInlineForm() {
                 <div class="grid gap-3 xl:grid-cols-[minmax(400px,430px)_minmax(0,1fr)]">
                     <div class="org-tree-card rounded-[20px] p-5 shadow-sm">
                         <div>
-                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Cây cấu trúc</p>
-                            <h2 class="mt-1 text-lg font-extrabold text-slate-900">Khối / Phòng / Nhóm</h2>
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">CÃƒÂ¢y cÃ¡ÂºÂ¥u trÃƒÂºc</p>
+                            <h2 class="mt-1 text-lg font-extrabold text-slate-900">KhÃ¡Â»â€˜i / PhÃƒÂ²ng / NhÃƒÂ³m</h2>
                         </div>
                         <div class="mt-3 flex flex-wrap gap-2">
                             <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('block')">
-                                <i class="fa-solid fa-plus mr-1.5"></i>Khối
+                                <i class="fa-solid fa-plus mr-1.5"></i>KhÃ¡Â»â€˜i
                             </button>
                             <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('department')">
-                                <i class="fa-solid fa-plus mr-1.5"></i>Phòng
+                                <i class="fa-solid fa-plus mr-1.5"></i>PhÃƒÂ²ng
                             </button>
                             <button type="button" class="org-action-btn rounded-2xl px-3 py-2 text-xs font-bold" onclick="createOrgEntityFromSelection('team')">
-                                <i class="fa-solid fa-plus mr-1.5"></i>Nhóm
+                                <i class="fa-solid fa-plus mr-1.5"></i>NhÃƒÂ³m
                             </button>
                         </div>
                         <div class="org-tree-list mt-3">
@@ -9606,7 +9606,7 @@ function openInlineForm() {
                                             <div>
                                                 <div>
                                                     <p class="text-[13px] font-extrabold text-slate-900">
-                                                        <span class="text-[11px] uppercase tracking-[0.16em] text-blue-500">Khối</span>
+                                                        <span class="text-[11px] uppercase tracking-[0.16em] text-blue-500">KhÃ¡Â»â€˜i</span>
                                                         <span class="ml-2">${escapeHtml(block.code)}</span>
                                                         <span class="mx-2 text-slate-300">|</span>
                                                         <span class="font-medium text-slate-500">${escapeHtml(block.name)}</span>
@@ -9615,7 +9615,7 @@ function openInlineForm() {
                                             </div>
                                         </button>
                                         <div class="org-node-actions">
-                                            <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('block', '${escapeHtml(block.id)}')">
+                                            <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thÃƒÂ´ng tin" onclick="event.stopPropagation(); setActiveOrgSelection('block', '${escapeHtml(block.id)}')">
                                                 <i class="fa-solid fa-circle-info"></i>
                                             </button>
                                         </div>
@@ -9628,7 +9628,7 @@ function openInlineForm() {
                                                         <div>
                                                             <div>
                                                                 <p class="text-[13px] font-extrabold text-slate-900">
-                                                                    <span class="text-[11px] uppercase tracking-[0.16em] text-sky-500">Phòng</span>
+                                                                    <span class="text-[11px] uppercase tracking-[0.16em] text-sky-500">PhÃƒÂ²ng</span>
                                                                     <span class="ml-2">${escapeHtml(department.code)}</span>
                                                                     <span class="mx-2 text-slate-300">|</span>
                                                                     <span class="font-medium text-slate-500">${escapeHtml(department.name)}</span>
@@ -9637,7 +9637,7 @@ function openInlineForm() {
                                                         </div>
                                                     </button>
                                                     <div class="org-node-actions">
-                                                        <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('department', '${escapeHtml(department.id)}')">
+                                                        <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thÃƒÂ´ng tin" onclick="event.stopPropagation(); setActiveOrgSelection('department', '${escapeHtml(department.id)}')">
                                                             <i class="fa-solid fa-circle-info"></i>
                                                         </button>
                                                     </div>
@@ -9649,7 +9649,7 @@ function openInlineForm() {
                                                                 <div>
                                                                     <div>
                                                                         <p class="text-[13px] font-extrabold text-slate-900">
-                                                                            <span class="text-[11px] uppercase tracking-[0.16em] text-violet-500">Nhóm</span>
+                                                                            <span class="text-[11px] uppercase tracking-[0.16em] text-violet-500">NhÃƒÂ³m</span>
                                                                             <span class="ml-2">${escapeHtml(team.code)}</span>
                                                                             <span class="mx-2 text-slate-300">|</span>
                                                                             <span class="font-medium text-slate-500">${escapeHtml(team.name)}</span>
@@ -9658,15 +9658,15 @@ function openInlineForm() {
                                                                 </div>
                                                             </button>
                                                             <div class="org-node-actions">
-                                                                <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thông tin" onclick="event.stopPropagation(); setActiveOrgSelection('team', '${escapeHtml(team.id)}')">
+                                                                <button type="button" class="org-icon-btn tooltip-btn" data-tooltip="Xem thÃƒÂ´ng tin" onclick="event.stopPropagation(); setActiveOrgSelection('team', '${escapeHtml(team.id)}')">
                                                                     <i class="fa-solid fa-circle-info"></i>
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                    `).join('') || '<div class="rounded-xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">Chưa có nhóm trong phòng này</div>'}
+                                                    `).join('') || '<div class="rounded-xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">ChÃ†Â°a cÃƒÂ³ nhÃƒÂ³m trong phÃƒÂ²ng nÃƒÂ y</div>'}
                                                 </div>
                                             </div>
-                                        `).join('') || '<div class="rounded-xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">Chưa có phòng trong khối này</div>'}
+                                        `).join('') || '<div class="rounded-xl border border-dashed border-slate-300 bg-white/70 px-4 py-3 text-sm text-slate-400">ChÃ†Â°a cÃƒÂ³ phÃƒÂ²ng trong khÃ¡Â»â€˜i nÃƒÂ y</div>'}
                                     </div>
                                 </div>
                             `).join('')}
@@ -9707,13 +9707,13 @@ function openInlineForm() {
                 <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
                     <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                         <div>
-                            <h2 class="text-xl font-extrabold text-slate-900">Người dùng</h2>
-                            <p class="mt-1 text-sm text-slate-500">Phân cấp theo \`Khối > Phòng ban > Nhóm\`, và tại mỗi nhóm có thao tác thêm user.</p>
+                            <h2 class="text-xl font-extrabold text-slate-900">NgÃ†Â°Ã¡Â»Âi dÃƒÂ¹ng</h2>
+                            <p class="mt-1 text-sm text-slate-500">PhÃƒÂ¢n cÃ¡ÂºÂ¥p theo \`KhÃ¡Â»â€˜i > PhÃƒÂ²ng ban > NhÃƒÂ³m\`, vÃƒÂ  tÃ¡ÂºÂ¡i mÃ¡Â»â€”i nhÃƒÂ³m cÃƒÂ³ thao tÃƒÂ¡c thÃƒÂªm user.</p>
                         </div>
                         <div class="flex flex-wrap gap-3">
-                            <input type="text" placeholder="Tìm user theo tên hoặc email" class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-blue-400 focus:bg-white">
+                            <input type="text" placeholder="TÃƒÂ¬m user theo tÃƒÂªn hoÃ¡ÂºÂ·c email" class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-blue-400 focus:bg-white">
                             <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Import</button>
-                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ Tạo user</button>
+                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white">+ TÃ¡ÂºÂ¡o user</button>
                         </div>
                     </div>
                     <div class="mt-6 space-y-5">
@@ -9721,30 +9721,30 @@ function openInlineForm() {
                             <div class="admin-user-tree-card rounded-[24px] p-5 shadow-sm">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Khối</p>
+                                        <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">KhÃ¡Â»â€˜i</p>
                                         <h3 class="mt-1 text-lg font-extrabold text-slate-900">${escapeHtml(block.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(block.name)}</span></h3>
                                     </div>
-                                    <span class="admin-badge is-slate">${ADMIN_SEED.departments.filter((item) => item.block_id === block.id).length} phòng</span>
+                                    <span class="admin-badge is-slate">${ADMIN_SEED.departments.filter((item) => item.block_id === block.id).length} phÃƒÂ²ng</span>
                                 </div>
                                 <div class="mt-4 space-y-4">
                                     ${ADMIN_SEED.departments.filter((department) => department.block_id === block.id).sort((a, b) => a.display_order - b.display_order).map((department) => `
                                         <div class="rounded-2xl border border-slate-200 bg-white p-4">
                                             <div class="flex items-center justify-between">
                                                 <div>
-                                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Phòng ban</p>
+                                                    <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">PhÃƒÂ²ng ban</p>
                                                     <p class="mt-1 text-base font-extrabold text-slate-900">${escapeHtml(department.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(department.name)}</span></p>
                                                 </div>
-                                                <span class="admin-badge is-blue">${ADMIN_SEED.teams.filter((item) => item.department_id === department.id).length} nhóm</span>
+                                                <span class="admin-badge is-blue">${ADMIN_SEED.teams.filter((item) => item.department_id === department.id).length} nhÃƒÂ³m</span>
                                             </div>
                                             <div class="mt-4 grid gap-4 lg:grid-cols-2">
                                                 ${ADMIN_SEED.teams.filter((team) => team.department_id === department.id).sort((a, b) => a.display_order - b.display_order).map((team) => `
                                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                                                         <div class="flex items-center justify-between gap-3">
                                                             <div>
-                                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Nhóm</p>
+                                                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">NhÃƒÂ³m</p>
                                                                 <p class="mt-1 text-sm font-extrabold text-slate-900">${escapeHtml(team.code)} <span class="ml-2 font-semibold text-slate-500">${escapeHtml(team.name)}</span></p>
                                                             </div>
-                                                            <button type="button" class="rounded-xl bg-blue-600 px-3 py-2 text-sm font-bold text-white">+ Thêm vào</button>
+                                                            <button type="button" class="rounded-xl bg-blue-600 px-3 py-2 text-sm font-bold text-white">+ ThÃƒÂªm vÃƒÂ o</button>
                                                         </div>
                                                         <div class="mt-4 flex flex-wrap gap-2">
                                                             ${getUsersForTeam(team.id).map((user) => {
@@ -9753,10 +9753,10 @@ function openInlineForm() {
                                                                     <div class="admin-user-pill">
                                                                         <span class="flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold text-white" style="background:${escapeHtml(user.color || '#64748b')}">${escapeHtml(adminUserInitials(user.full_name))}</span>
                                                                         <span>${escapeHtml(user.full_name)}</span>
-                                                                        <span class="text-[11px] text-slate-400">${escapeHtml(jobTitle?.name || 'Khác')}</span>
+                                                                        <span class="text-[11px] text-slate-400">${escapeHtml(jobTitle?.name || 'KhÃƒÂ¡c')}</span>
                                                                     </div>
                                                                 `;
-            }).join('') || '<div class="text-sm text-slate-400">Chưa có user trong nhóm này</div>'}
+            }).join('') || '<div class="text-sm text-slate-400">ChÃ†Â°a cÃƒÂ³ user trong nhÃƒÂ³m nÃƒÂ y</div>'}
                                                         </div>
                                                     </div>
                                                 `).join('')}
@@ -9769,7 +9769,7 @@ function openInlineForm() {
                     </div>
                     <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
                         <table class="admin-table">
-                            <thead><tr><th>User</th><th>Chức danh</th><th>Team chính</th><th>Role hiện tại</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                            <thead><tr><th>User</th><th>ChÃ¡Â»Â©c danh</th><th>Team chÃƒÂ­nh</th><th>Role hiÃ¡Â»â€¡n tÃ¡ÂºÂ¡i</th><th>TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</th><th>Thao tÃƒÂ¡c</th></tr></thead>
                             <tbody class="bg-white">
                                 ${ADMIN_SEED.users.slice().sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((user) => {
                 const jobTitle = getSeedJobTitleById(user.job_title_id);
@@ -9785,8 +9785,8 @@ function openInlineForm() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>${escapeHtml(jobTitle?.name || 'Khác')}</td>
-                                            <td>${escapeHtml(primaryTeam ? getTeamFullCode(primaryTeam.id) : 'Chưa gán team')}</td>
+                                            <td>${escapeHtml(jobTitle?.name || 'KhÃƒÂ¡c')}</td>
+                                            <td>${escapeHtml(primaryTeam ? getTeamFullCode(primaryTeam.id) : 'ChÃ†Â°a gÃƒÂ¡n team')}</td>
                                             <td>${escapeHtml(getUserRolesSummary(user.id))}</td>
                                             <td><button type="button" class="admin-toggle ${user.is_active ? 'is-on' : 'is-off'}" aria-label="${user.is_active ? 'Active' : 'Inactive'}"></button></td>
                                             <td class="text-sm font-bold text-blue-700">View Edit</td>
@@ -9805,7 +9805,7 @@ function openInlineForm() {
             if (!panel) return;
             const selectedRole = getRoleBySelection();
             if (!selectedRole) {
-                panel.innerHTML = '<div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm text-sm text-slate-500">Chưa có role nào để cấu hình.</div>';
+                panel.innerHTML = '<div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm text-sm text-slate-500">ChÃ†Â°a cÃƒÂ³ role nÃƒÂ o Ã„â€˜Ã¡Â»Æ’ cÃ¡ÂºÂ¥u hÃƒÂ¬nh.</div>';
                 return;
             }
             const isRoleEditMode = currentRoleDetailMode === 'edit';
@@ -9819,19 +9819,19 @@ function openInlineForm() {
             const roleInfoHtml = isRoleEditMode ? `
                 <div class="mt-6 grid gap-4 lg:grid-cols-2">
                     <label>
-                        <span class="org-field-label">Tên role</span>
+                        <span class="org-field-label">TÃƒÂªn role</span>
                         <input type="text" class="org-field-input" value="${escapeHtml(selectedRole.name)}" onchange="updateRoleField('${escapeHtml(selectedRole.id)}', 'name', this.value)">
                     </label>
                     <label>
-                        <span class="org-field-label">Mã role</span>
+                        <span class="org-field-label">MÃƒÂ£ role</span>
                         <input type="text" class="org-field-input" value="${escapeHtml(selectedRole.code)}" onchange="updateRoleField('${escapeHtml(selectedRole.id)}', 'code', this.value)">
                     </label>
                     <label>
-                        <span class="org-field-label">Phạm vi quyền</span>
+                        <span class="org-field-label">PhÃ¡ÂºÂ¡m vi quyÃ¡Â»Ân</span>
                         <div class="member-single-lov role-scope-lov">
                             <button type="button" class="org-field-input member-lov-trigger ${isRoleScopeLovOpen ? 'is-open' : ''}" onclick="toggleRoleScopeLov(event)">
                                 <span class="member-lov-copy">
-                                    <span class="member-lov-value font-medium">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'Toàn hệ thống'}</span>
+                                    <span class="member-lov-value font-medium">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'ToÃƒÂ n hÃ¡Â»â€¡ thÃ¡Â»â€˜ng'}</span>
                                 </span>
                                 <i class="fa-solid fa-chevron-down text-sm text-slate-500"></i>
                             </button>
@@ -9841,14 +9841,14 @@ function openInlineForm() {
                                         <span>Theo team</span>
                                     </button>
                                     <button type="button" class="member-single-lov-item ${selectedRole.scope_type === 'GLOBAL' ? 'is-active' : ''}" onclick="selectRoleScopeLov('${escapeHtml(selectedRole.id)}', 'GLOBAL', event)">
-                                        <span>Toàn hệ thống</span>
+                                        <span>ToÃƒÂ n hÃ¡Â»â€¡ thÃ¡Â»â€˜ng</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </label>
                     <div>
-                        <span class="org-field-label">Trạng thái</span>
+                        <span class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</span>
                         <div class="flex items-center gap-4 rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-semibold text-slate-600">
                             <span class="min-w-0">${selectedRole.is_active ? 'Active' : 'Inactive'}</span>
                             <button type="button" class="ml-auto admin-toggle is-compact ${selectedRole.is_active ? 'is-on' : 'is-off'}" onclick="toggleRoleStatus('${escapeHtml(selectedRole.id)}', event)" aria-label="${selectedRole.is_active ? 'Active' : 'Inactive'}"></button>
@@ -9858,19 +9858,19 @@ function openInlineForm() {
             ` : `
                 <div class="mt-6 grid gap-4 lg:grid-cols-2">
                     <div>
-                        <span class="org-field-label">Tên role</span>
+                        <span class="org-field-label">TÃƒÂªn role</span>
                         <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${escapeHtml(selectedRole.name)}</div>
                     </div>
                     <div>
-                        <span class="org-field-label">Mã role</span>
+                        <span class="org-field-label">MÃƒÂ£ role</span>
                         <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${escapeHtml(selectedRole.code)}</div>
                     </div>
                     <div>
-                        <span class="org-field-label">Phạm vi quyền</span>
-                        <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'Toàn hệ thống'}</div>
+                        <span class="org-field-label">PhÃ¡ÂºÂ¡m vi quyÃ¡Â»Ân</span>
+                        <div class="rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">${selectedRole.scope_type === 'TEAM' ? 'Theo team' : 'ToÃƒÂ n hÃ¡Â»â€¡ thÃ¡Â»â€˜ng'}</div>
                     </div>
                     <div>
-                        <span class="org-field-label">Trạng thái</span>
+                        <span class="org-field-label">TrÃ¡ÂºÂ¡ng thÃƒÂ¡i</span>
                         <div class="flex items-center gap-3 rounded-[20px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-500">
                             <span class="org-status-dot ${selectedRole.is_active ? 'is-active' : 'is-inactive'}"></span>
                             <span>${selectedRole.is_active ? 'Active' : 'Inactive'}</span>
@@ -9888,7 +9888,7 @@ function openInlineForm() {
                                 <span class="block text-sm font-semibold text-slate-900">${escapeHtml(permission.name)}</span>
                                 <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.14em] text-slate-400">${escapeHtml(permission.code)}</span>
                             </span>
-                            <button type="button" class="admin-toggle is-compact ${isEnabled ? 'is-on' : 'is-off'}" onclick="toggleRolePermission('${escapeHtml(selectedRole.id)}', '${escapeHtml(permission.id)}', event)" aria-label="${isEnabled ? 'Tắt' : 'Bật'} quyền ${escapeHtml(permission.name)}"></button>
+                            <button type="button" class="admin-toggle is-compact ${isEnabled ? 'is-on' : 'is-off'}" onclick="toggleRolePermission('${escapeHtml(selectedRole.id)}', '${escapeHtml(permission.id)}', event)" aria-label="${isEnabled ? 'TÃ¡ÂºÂ¯t' : 'BÃ¡ÂºÂ­t'} quyÃ¡Â»Ân ${escapeHtml(permission.name)}"></button>
                         </div>
                     `;
             }).join('')}
@@ -9914,10 +9914,10 @@ function openInlineForm() {
                     <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
                         <div class="flex items-center justify-between gap-3">
                             <div>
-                                <h2 class="text-xl font-bold text-slate-900">Vai trò hệ thống</h2>
-                                <p class="mt-1 text-sm text-slate-500">Không cho xóa cứng role hệ thống.</p>
+                                <h2 class="text-xl font-bold text-slate-900">Vai trÃƒÂ² hÃ¡Â»â€¡ thÃ¡Â»â€˜ng</h2>
+                                <p class="mt-1 text-sm text-slate-500">KhÃƒÂ´ng cho xÃƒÂ³a cÃ¡Â»Â©ng role hÃ¡Â»â€¡ thÃ¡Â»â€˜ng.</p>
                             </div>
-                            <button type="button" class="rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20" onclick="createRoleDraft()">+ Tạo role</button>
+                            <button type="button" class="rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20" onclick="createRoleDraft()">+ TÃ¡ÂºÂ¡o role</button>
                         </div>
                         <div class="mt-5 -mx-6 divide-y divide-slate-200">
                             ${roleList.map((role) => {
@@ -9942,17 +9942,17 @@ function openInlineForm() {
                     <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
                         <div class="flex items-center justify-between gap-3">
                             <div>
-                                <h2 class="text-xl font-bold text-slate-900">Chi tiết role \`${escapeHtml(selectedRole.code)}\`</h2>
-                                <p class="mt-1 text-sm text-slate-500">${isRoleEditMode ? 'Chế độ chỉnh sửa role.' : 'Thông tin xem nhanh của role đang chọn.'}</p>
+                                <h2 class="text-xl font-bold text-slate-900">Chi tiÃ¡ÂºÂ¿t role \`${escapeHtml(selectedRole.code)}\`</h2>
+                                <p class="mt-1 text-sm text-slate-500">${isRoleEditMode ? 'ChÃ¡ÂºÂ¿ Ã„â€˜Ã¡Â»â„¢ chÃ¡Â»â€°nh sÃ¡Â»Â­a role.' : 'ThÃƒÂ´ng tin xem nhanh cÃ¡Â»Â§a role Ã„â€˜ang chÃ¡Â»Ân.'}</p>
                             </div>
                             <div class="flex items-center gap-3">
                                 <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${escapeHtml(selectedRole.scope_type)} scope</span>
                                 ${isRoleEditMode
                     ? `
-                                        <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelRoleChanges()">Hủy</button>
-                                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveRoleChanges()">Lưu</button>
+                                        <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelRoleChanges()">HÃ¡Â»Â§y</button>
+                                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveRoleChanges()">LÃ†Â°u</button>
                                     `
-                    : `<button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa role" onclick="setRoleDetailMode('edit')"><i class="fa-solid fa-pen-to-square"></i></button>`}
+                    : `<button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a role" onclick="setRoleDetailMode('edit')"><i class="fa-solid fa-pen-to-square"></i></button>`}
                             </div>
                         </div>
                         ${roleInfoHtml}
@@ -9960,7 +9960,7 @@ function openInlineForm() {
                             <div class="rounded-[24px] border border-slate-200 bg-white p-5">
                                 <div class="flex items-center justify-between gap-3">
                                     <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Permissions</p>
-                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${permissions.length}/${ADMIN_SEED.permissions.length} quyền</span>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">${permissions.length}/${ADMIN_SEED.permissions.length} quyÃ¡Â»Ân</span>
                                 </div>
                                 ${permissionsHtml}
                             </div>
@@ -9974,20 +9974,20 @@ function openInlineForm() {
                         const user = getSeedUserById(assignment.user_id);
                         const teamLabel = selectedRole.scope_type === 'GLOBAL'
                             ? 'GLOBAL'
-                            : (assignment.team_id ? getTeamFullCode(assignment.team_id) : 'Chưa gán team');
+                            : (assignment.team_id ? getTeamFullCode(assignment.team_id) : 'ChÃ†Â°a gÃƒÂ¡n team');
                         return `
                                             <div class="bg-white px-1 py-3">
                                                 <div class="flex items-center gap-3">
                                                     <span class="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold text-white" style="background:${escapeHtml(user?.color || '#64748b')}">${escapeHtml(adminUserInitials(user?.full_name || assignment.user_id))}</span>
                                                     <div class="min-w-0">
                                                         <p class="text-sm font-semibold text-slate-900">${escapeHtml(user?.full_name || assignment.user_id)}</p>
-                                                        <p class="mt-1 text-xs text-slate-500">${escapeHtml(teamLabel)} • ${assignment.is_active ? 'Active' : 'Inactive'}</p>
+                                                        <p class="mt-1 text-xs text-slate-500">${escapeHtml(teamLabel)} Ã¢â‚¬Â¢ ${assignment.is_active ? 'Active' : 'Inactive'}</p>
                                                     </div>
                                                     <span class="ml-auto text-xs font-medium text-slate-400">${escapeHtml(assignment.user_id)}</span>
                                                 </div>
                                             </div>
                                         `;
-                    }).join('') || '<div class="rounded-[20px] border border-dashed border-slate-300 bg-white px-4 py-6 text-sm text-slate-400">Chưa có user nào được gán vào role này.</div>'}
+                    }).join('') || '<div class="rounded-[20px] border border-dashed border-slate-300 bg-white px-4 py-6 text-sm text-slate-400">ChÃ†Â°a cÃƒÂ³ user nÃƒÂ o Ã„â€˜Ã†Â°Ã¡Â»Â£c gÃƒÂ¡n vÃƒÂ o role nÃƒÂ y.</div>'}
                                 </div>
                             </div>
                         </div>
@@ -10019,13 +10019,13 @@ function openInlineForm() {
                     <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                         <div>
                             <h2 class="text-xl font-extrabold text-slate-900">Workflow / State</h2>
-                            <p class="mt-1 text-sm text-slate-500">Chỉ hỗ trợ đổi thứ tự, chỉnh wording và thêm state mới.</p>
+                            <p class="mt-1 text-sm text-slate-500">ChÃ¡Â»â€° hÃ¡Â»â€” trÃ¡Â»Â£ Ã„â€˜Ã¡Â»â€¢i thÃ¡Â»Â© tÃ¡Â»Â±, chÃ¡Â»â€°nh wording vÃƒÂ  thÃƒÂªm state mÃ¡Â»â€ºi.</p>
                         </div>
-                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white" onclick="createStateDraft()">+ Tạo state</button>
+                        <button type="button" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white" onclick="createStateDraft()">+ TÃ¡ÂºÂ¡o state</button>
                     </div>
                     <div class="mt-6 grid gap-4 lg:grid-cols-2">
                         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Thứ tự hiện tại</p>
+                            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">ThÃ¡Â»Â© tÃ¡Â»Â± hiÃ¡Â»â€¡n tÃ¡ÂºÂ¡i</p>
                             <div class="state-order-list mt-4 space-y-3">
                                 ${sortedStates.map((state) => {
                 const colorMeta = getColorOptionMeta(state.color_theme);
@@ -10037,7 +10037,7 @@ function openInlineForm() {
                                             onclick="setActiveState('${escapeHtml(state.id)}')"
                                         >
                                             <span class="font-bold" style="color:${colorMeta.hex}">${state.display_order}. ${escapeHtml(state.label)}</span>
-                                            <button type="button" class="state-order-handle" onmousedown="startStatePointerDrag(event, '${escapeHtml(state.id)}')" aria-label="Kéo thả state">
+                                            <button type="button" class="state-order-handle" onmousedown="startStatePointerDrag(event, '${escapeHtml(state.id)}')" aria-label="KÃƒÂ©o thÃ¡ÂºÂ£ state">
                                                 <i class="fa-solid fa-grip-vertical"></i>
                                             </button>
                                         </div>
@@ -10047,27 +10047,27 @@ function openInlineForm() {
                         </div>
                         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                             <div class="flex items-center justify-between gap-3">
-                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiết state</p>
+                                <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Chi tiÃ¡ÂºÂ¿t state</p>
                                 ${isStateEditMode
                     ? `
                                         <div class="flex justify-end gap-3">
-                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelStateChanges()">Hủy</button>
-                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveStateChanges()">Lưu</button>
+                                            <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700" onclick="cancelStateChanges()">HÃ¡Â»Â§y</button>
+                                            <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white" onclick="saveStateChanges()">LÃ†Â°u</button>
                                         </div>
                                     `
                     : `
-                                        <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="Chỉnh sửa state" onclick="setStateDetailMode('edit')">
+                                        <button type="button" class="org-action-btn is-icon tooltip-btn" data-tooltip="ChÃ¡Â»â€°nh sÃ¡Â»Â­a state" onclick="setStateDetailMode('edit')">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                     `}
                             </div>
                             <div class="mt-4 space-y-4">
                                 ${isStateEditMode ? `
-                                    <label class="block text-sm font-bold text-slate-700">Mã state<input id="stateCode" type="text" value="${escapeHtml(selectedState.code)}" placeholder="Nhập mã state" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('code')"></label>
-                                    <label class="block text-sm font-bold text-slate-700">Wording hiển thị<input id="stateLabel" type="text" value="${escapeHtml(selectedState.label)}" placeholder="Nhập wording hiển thị" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('label')"></label>
-                                    <label class="block text-sm font-bold text-slate-700">Description<textarea id="stateDescription" class="org-field-input org-field-textarea mt-2 w-full text-sm font-normal" rows="1" placeholder="Nhập mô tả state">${escapeHtml(selectedState.description || '')}</textarea></label>
+                                    <label class="block text-sm font-bold text-slate-700">MÃƒÂ£ state<input id="stateCode" type="text" value="${escapeHtml(selectedState.code)}" placeholder="NhÃ¡ÂºÂ­p mÃƒÂ£ state" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('code')"></label>
+                                    <label class="block text-sm font-bold text-slate-700">Wording hiÃ¡Â»Æ’n thÃ¡Â»â€¹<input id="stateLabel" type="text" value="${escapeHtml(selectedState.label)}" placeholder="NhÃ¡ÂºÂ­p wording hiÃ¡Â»Æ’n thÃ¡Â»â€¹" class="org-field-input mt-2 w-full text-sm font-normal" oninput="if (this.value.trim()) clearStateFieldError('label')"></label>
+                                    <label class="block text-sm font-bold text-slate-700">Description<textarea id="stateDescription" class="org-field-input org-field-textarea mt-2 w-full text-sm font-normal" rows="1" placeholder="NhÃ¡ÂºÂ­p mÃƒÂ´ tÃ¡ÂºÂ£ state">${escapeHtml(selectedState.description || '')}</textarea></label>
                                     <div>
-                                        <span class="block text-sm font-bold text-slate-700">Màu cột</span>
+                                        <span class="block text-sm font-bold text-slate-700">MÃƒÂ u cÃ¡Â»â„¢t</span>
                                         <div class="member-single-lov state-color-lov mt-2">
                                             <button type="button" class="org-field-input member-lov-trigger ${isStateColorLovOpen ? 'is-open' : ''}" onclick="toggleStateColorLov(event)">
                                                 <span class="member-lov-copy">
@@ -10095,19 +10095,19 @@ function openInlineForm() {
                                 ` : `
                                     <div class="grid gap-4">
                                         <div>
-                                            <span class="block text-sm font-bold text-slate-700">Mã state</span>
+                                            <span class="block text-sm font-bold text-slate-700">MÃƒÂ£ state</span>
                                             <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">${escapeHtml(selectedState.code)}</div>
                                         </div>
                                         <div>
-                                            <span class="block text-sm font-bold text-slate-700">Wording hiển thị</span>
+                                            <span class="block text-sm font-bold text-slate-700">Wording hiÃ¡Â»Æ’n thÃ¡Â»â€¹</span>
                                             <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">${escapeHtml(selectedState.label)}</div>
                                         </div>
                                         <div>
                                             <span class="block text-sm font-bold text-slate-700">Description</span>
-                                            <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">${escapeHtml(selectedState.description || 'Chưa có mô tả')}</div>
+                                            <div class="mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500">${escapeHtml(selectedState.description || 'ChÃ†Â°a cÃƒÂ³ mÃƒÂ´ tÃ¡ÂºÂ£')}</div>
                                         </div>
                                         <div>
-                                            <span class="block text-sm font-bold text-slate-700">Màu cột</span>
+                                            <span class="block text-sm font-bold text-slate-700">MÃƒÂ u cÃ¡Â»â„¢t</span>
                                             <div class="mt-2 inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-500">
                                                 <span class="admin-color-chip-swatch" style="background:${getColorOptionMeta(selectedState.color_theme).hex}"></span>
                                                 <span>${escapeHtml(selectedState.color_theme)}</span>
@@ -10190,14 +10190,14 @@ function openInlineForm() {
             if (!nextCode || !nextLabel) {
                 if (!nextCode) markStateFieldError('code');
                 if (!nextLabel) markStateFieldError('label');
-                showAdminToast('Mã state và wording không được để trống.');
+                showAdminToast('MÃƒÂ£ state vÃƒÂ  wording khÃƒÂ´ng Ã„â€˜Ã†Â°Ã¡Â»Â£c Ã„â€˜Ã¡Â»Æ’ trÃ¡Â»â€˜ng.');
                 return;
             }
 
             const duplicatedState = ADMIN_SEED.states.find((item) => item.id !== currentStateDraft.id && item.code === nextCode);
             if (duplicatedState) {
                 markStateFieldError('code');
-                showAdminToast(`Code ${nextCode} đã tồn tại.`);
+                showAdminToast(`Code ${nextCode} Ã„â€˜ÃƒÂ£ tÃ¡Â»â€œn tÃ¡ÂºÂ¡i.`);
                 return;
             }
 
@@ -10213,13 +10213,13 @@ function openInlineForm() {
 
             if (currentStateDraft.is_new) {
                 ADMIN_SEED.states.push(nextState);
-                showAdminToast(`Đã tạo state ${nextState.code}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ tÃ¡ÂºÂ¡o state ${nextState.code}.`);
             } else if (state) {
                 state.code = nextCode;
                 state.label = nextLabel;
                 state.description = nextDescription;
                 state.color_theme = currentStateDraft.color_theme;
-                showAdminToast(`Đã lưu thay đổi cho state ${state.code}.`);
+                showAdminToast(`Ã„ÂÃƒÂ£ lÃ†Â°u thay Ã„â€˜Ã¡Â»â€¢i cho state ${state.code}.`);
             } else {
                 return;
             }
@@ -10331,7 +10331,7 @@ function openInlineForm() {
             });
 
             currentStateSelectionId = movedState.id;
-            showAdminToast(`Đã cập nhật thứ tự state ${movedState.label}.`);
+            showAdminToast(`Ã„ÂÃƒÂ£ cÃ¡ÂºÂ­p nhÃ¡ÂºÂ­t thÃ¡Â»Â© tÃ¡Â»Â± state ${movedState.label}.`);
             handleStateDragEnd();
             renderAdminStatesPanel();
         }
@@ -10358,10 +10358,10 @@ function openInlineForm() {
             if (!panel) return;
             panel.innerHTML = `
                 <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
-                    <h2 class="text-xl font-extrabold text-slate-900">Nhật ký hệ thống</h2>
+                    <h2 class="text-xl font-extrabold text-slate-900">NhÃ¡ÂºÂ­t kÃƒÂ½ hÃ¡Â»â€¡ thÃ¡Â»â€˜ng</h2>
                     <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
                         <table class="admin-table">
-                            <thead><tr><th>Thời gian</th><th>User</th><th>Module</th><th>Hành động</th><th>Chi tiết</th></tr></thead>
+                            <thead><tr><th>ThÃ¡Â»Âi gian</th><th>User</th><th>Module</th><th>HÃƒÂ nh Ã„â€˜Ã¡Â»â„¢ng</th><th>Chi tiÃ¡ÂºÂ¿t</th></tr></thead>
                             <tbody class="bg-white">
                                 ${ADMIN_SEED.auditLogs.map((log) => `
                                     <tr>
