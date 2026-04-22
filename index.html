@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -3058,6 +3058,276 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             color: #64748b;
         }
 
+        .task-comments-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .task-comment-composer {
+            position: relative;
+            border: 1px solid #dbe4f0;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+        }
+
+        .task-comment-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(180deg, #fbfdff 0%, #f8fbff 100%);
+        }
+
+        .task-comment-toolbar-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-comment-toolbar-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            border: 1px solid #dbe4f0;
+            background: #ffffff;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            transition: all 0.18s ease;
+        }
+
+        .task-comment-toolbar-btn:hover {
+            border-color: #93c5fd;
+            color: #2563eb;
+            background: #f8fbff;
+        }
+
+        .task-comment-editor {
+            min-height: 108px;
+            padding: 14px 16px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            outline: none;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .task-comment-editor.is-empty::before {
+            content: attr(data-placeholder);
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .task-comment-editor p,
+        .task-comment-body p {
+            margin: 0 0 8px;
+        }
+
+        .task-comment-editor p:last-child,
+        .task-comment-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-comment-editor ul,
+        .task-comment-editor ol,
+        .task-comment-body ul,
+        .task-comment-body ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .task-comment-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px 14px;
+            border-top: 1px solid #eef2f7;
+            background: #ffffff;
+        }
+
+        .task-comment-hint {
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .task-comment-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 126px;
+            height: 38px;
+            padding: 0 16px;
+            border-radius: 999px;
+            border: 1px solid #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 800;
+            transition: all 0.18s ease;
+            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.2);
+        }
+
+        .task-comment-submit-btn:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        .task-comment-mention-popup {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            bottom: 60px;
+            z-index: 20;
+            display: none;
+            max-height: 208px;
+            overflow-y: auto;
+            border: 1px solid #dbe4f0;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.14);
+            backdrop-filter: blur(14px);
+            padding: 8px;
+        }
+
+        .task-comment-mention-popup.is-open {
+            display: block;
+        }
+
+        .task-comment-mention-option {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .task-comment-mention-option:hover,
+        .task-comment-mention-option.is-active {
+            background: #eff6ff;
+        }
+
+        .task-comment-mention-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .task-comment-mention-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .task-comment-mention-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .task-comment-mention-subtitle {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .task-comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-comment-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 14px;
+        }
+
+        .task-comment-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .task-comment-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .task-comment-author-tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 26px;
+            padding: 0 12px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+        }
+
+        .task-comment-time {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .task-comment-body {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #475569;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .task-comment-body a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 600;
+        }
+
+        .task-comment-body a:hover {
+            color: #1d4ed8;
+        }
+
+        .task-comment-mention {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
         .task-detail-stat {
             border: 1px solid #dbe4f0;
             border-radius: 20px;
@@ -3152,6 +3422,26 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             border-top: 1px solid #e2e8f0;
         }
 
+        .task-checklist-body {
+            margin-top: 1rem;
+            overflow: visible;
+            max-height: 2400px;
+            opacity: 1;
+            transform: translateY(0);
+            transform-origin: top center;
+            transition: max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, transform 0.22s ease, margin-top 0.22s ease;
+            will-change: max-height, opacity, transform;
+        }
+
+        .task-checklist-body.is-collapsed {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-6px);
+            margin-top: 0;
+            pointer-events: none;
+        }
+
         .task-checklist-header {
             display: flex;
             align-items: flex-start;
@@ -3167,6 +3457,13 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             flex: 1;
         }
 
+        .task-checklist-title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
         .task-checklist-summary {
             display: flex;
             flex-wrap: wrap;
@@ -3180,6 +3477,38 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             gap: 8px;
             flex-shrink: 0;
             overflow: visible;
+        }
+
+        .task-checklist-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1rem;
+            height: 1rem;
+            padding: 0;
+            border-radius: 0;
+            border: 0;
+            background: transparent;
+            color: #475569;
+            font-size: 0.72rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            box-shadow: none;
+        }
+
+        .task-checklist-toggle-btn:hover {
+            color: #1e293b;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .task-checklist-toggle-btn i {
+            transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+
+        .task-checklist-toggle-btn.is-collapsed i {
+            transform: rotate(-90deg);
         }
 
         .task-checklist-status-filters {
@@ -3247,28 +3576,30 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
         .task-checklist-summary-tag {
             --summary-tag-color: currentColor;
+            appearance: none;
+            -webkit-appearance: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            min-height: 28px;
-            padding: 0 12px;
+            height: 28px;
+            padding: 0 10px;
             border-radius: 999px;
-            border: 1px solid var(--summary-tag-color);
-            font-size: 10.5px;
+            border: 0;
+            font-size: 10px;
             font-weight: 800;
             line-height: 1;
             background: #ffffff;
-            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--summary-tag-color) 8%, #f1f5f9), 0 4px 12px rgba(15, 23, 42, 0.04);
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.18s ease;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
             vertical-align: middle;
+            box-sizing: border-box;
         }
 
         .task-checklist-summary-tag:hover {
             transform: translateY(-1px);
-            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
         }
 
         .task-checklist-summary-tag > span {
@@ -3280,46 +3611,62 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             vertical-align: middle;
         }
 
+        .task-checklist-summary-label {
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .task-checklist-summary-label,
+        .task-checklist-summary-count {
+            transform: translateY(0);
+        }
+
         .task-checklist-summary-separator {
-            opacity: 0.38;
-            font-weight: 600;
-            font-size: 10px;
-            transform: translateY(-0.25px);
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            border-radius: 999px;
+            background: currentColor;
+            flex-shrink: 0;
+            opacity: 0.12;
         }
 
         .task-checklist-summary-tag.is-empty {
             --summary-tag-color: #94a3b8;
-            background: #f8fafc;
-            border-color: #e2e8f0;
+            background: #ffffff;
             color: #94a3b8;
-            box-shadow: none;
+            box-shadow: inset 0 0 0 1px #f1f5f9;
         }
 
         .task-checklist-summary-tag.is-active {
-            background: var(--summary-tag-color);
-            color: #ffffff !important;
-            border-color: transparent;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            background: color-mix(in srgb, var(--summary-tag-color) 8%, #ffffff);
+            color: var(--summary-tag-color) !important;
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--summary-tag-color) 10%, #f1f5f9), 0 8px 18px rgba(15, 23, 42, 0.06);
             transform: translateY(-1px);
         }
 
         .task-checklist-summary-count {
-            display: inline;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             min-width: 0;
             padding: 0;
-            border-radius: 0;
             background: transparent;
-            font-size: 10.5px;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            font-size: 10px;
             font-weight: 900;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
             line-height: 1;
-            transform: translateY(0);
+            opacity: 0.85;
         }
+
 
         .task-checklist-item {
             display: grid;
-            grid-template-columns: 24px 28px minmax(0, 1fr) max-content max-content 24px;
-            gap: 8px;
+            grid-template-columns: 24px 28px minmax(0, 1fr) max-content max-content 44px;
+            gap: 4px;
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #e2e8f0;
@@ -3477,6 +3824,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             color: #dc2626;
         }
 
+        .task-checklist-date-days.is-today {
+            color: #d97706;
+        }
+
         .task-checklist-date-native {
             position: absolute;
             inset: 0;
@@ -3569,6 +3920,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: flex;
             justify-content: flex-end;
             padding-left: 0;
+            margin-right: -6px;
+        }
+
+        .task-checklist-deadline {
+            justify-self: end;
+            margin-right: -6px;
         }
 
         .task-checklist-assignee-trigger {
@@ -3725,6 +4082,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .task-checklist-delete-btn {
             width: 24px;
             height: 24px;
+            min-width: 24px;
             border: 1px solid #e2e8f0;
             background: #ffffff;
             color: #94a3b8;
@@ -3735,16 +4093,28 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             cursor: pointer;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
-            transition: all 0.18s ease;
+            transition: opacity 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
             opacity: 0;
+            visibility: hidden;
             pointer-events: none;
-            transform: translateY(1px);
+            flex-shrink: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-right: -8px;
         }
 
-        .task-checklist-item:hover .task-checklist-delete-btn {
+        .task-checklist-item:hover .task-checklist-delete-btn:not(.confirm-mode),
+        .task-checklist-item:focus-within .task-checklist-delete-btn:not(.confirm-mode),
+        .task-checklist-delete-btn:focus-visible:not(.confirm-mode) {
+            justify-self: end;
+        }
+
+        .task-checklist-item:hover .task-checklist-delete-btn,
+        .task-checklist-item:focus-within .task-checklist-delete-btn,
+        .task-checklist-delete-btn:focus-visible {
             opacity: 1;
+            visibility: visible;
             pointer-events: auto;
-            transform: translateY(0);
         }
 
         .task-checklist-delete-btn:hover {
@@ -3752,6 +4122,41 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             background: #ffffff;
             border-color: #fecaca;
             box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+        }
+
+        .task-checklist-delete-btn .delete-text {
+            display: none;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .task-checklist-delete-btn.confirm-mode {
+            width: 44px;
+            min-width: 44px;
+            justify-self: end;
+            color: #dc2626;
+            background: #fef2f2;
+            border-color: #f87171;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .task-checklist-delete-btn.confirm-mode:hover {
+            background: #fee2e2;
+            box-shadow: 0 6px 14px rgba(220, 38, 38, 0.12);
+        }
+
+        .task-checklist-delete-btn.confirm-mode .fa-trash-can {
+            display: none;
+        }
+
+        .task-checklist-delete-btn.confirm-mode .delete-text {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .task-checklist-add-btn {
@@ -3778,6 +4183,363 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             color: #1e293b;
             border-color: #93c5fd;
             box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .task-documents-body {
+            margin-top: 1rem;
+            overflow: visible;
+            max-height: 3200px;
+            opacity: 1;
+            transform: translateY(0);
+            transform-origin: top center;
+            transition: max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, transform 0.22s ease, margin-top 0.22s ease;
+            will-change: max-height, opacity, transform;
+        }
+
+        .task-documents-body.is-collapsed {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-6px);
+            margin-top: 0;
+            pointer-events: none;
+        }
+
+        .task-documents-summary {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .task-document-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .task-document-empty-add {
+            width: 100%;
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            border-radius: 18px;
+            border: 1.5px dashed #bfd7ff;
+            background: #ffffff;
+            color: #3b82f6;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 10px 14px;
+            transition: all 0.2s ease;
+        }
+
+        .task-checklist-empty-add {
+            width: 100%;
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            border-radius: 18px;
+            border: 1.5px dashed #bfd7ff;
+            background: #ffffff;
+            color: #3b82f6;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 10px 14px;
+            transition: all 0.2s ease;
+        }
+
+        .task-checklist-empty-add:hover,
+        .task-document-empty-add:hover {
+            border-color: #93c5fd;
+            background: #f8fbff;
+            color: #2563eb;
+        }
+
+        .task-document-item {
+            display: grid;
+            grid-template-columns: 24px 28px minmax(0, 1fr) max-content;
+            gap: 6px;
+            align-items: start;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .task-document-drag {
+            width: 24px;
+            height: 24px;
+            color: rgba(148, 163, 184, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            justify-self: center;
+            border-radius: 8px;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: color 0.18s ease, background 0.18s ease;
+        }
+
+        .task-document-item:hover .task-document-drag {
+            color: rgba(100, 116, 139, 0.7);
+            background: #f8fafc;
+        }
+
+        .task-document-main {
+            min-width: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            column-gap: 10px;
+            row-gap: 8px;
+        }
+
+        .task-document-title-input,
+        .task-document-note-input {
+            width: 100%;
+            grid-column: 1 / 2;
+            border: 1px solid #dbe4f0;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #334155;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        }
+
+        .task-document-title-input:focus,
+        .task-document-note-input:focus {
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+        }
+
+        .task-document-title-input {
+            font-weight: 700;
+        }
+
+        .task-document-note-input {
+            resize: none;
+            min-height: 78px;
+            line-height: 1.65;
+            background: #fbfdff;
+            overflow: hidden;
+        }
+
+        .task-document-display {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: auto;
+            justify-content: flex-start;
+            grid-column: 1 / 2;
+        }
+
+        .task-document-display-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #475569;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .task-document-display-note {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #64748b;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .task-document-display-note a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 600;
+        }
+
+        .task-document-display-note a:hover {
+            color: #1d4ed8;
+        }
+
+        .task-document-display-note.is-placeholder {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .task-document-meta {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            justify-self: end;
+            text-align: right;
+            align-self: start;
+            white-space: nowrap;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            margin-right: -12px;
+            transform: translateX(18px);
+        }
+
+        .task-document-meta-separator {
+            width: 3px;
+            height: 3px;
+            border-radius: 999px;
+            background: #cbd5e1;
+        }
+
+        .task-document-apply-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 28px;
+            min-width: 72px;
+            padding: 0 10px;
+            border-radius: 999px;
+            border: 1px solid #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            transition: all 0.18s ease;
+        }
+
+        .task-document-cancel-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 28px;
+            min-width: 72px;
+            padding: 0 10px;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            transition: all 0.18s ease;
+        }
+
+        .task-document-apply-btn:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        .task-document-side-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            justify-self: end;
+            align-self: start;
+            padding-top: 2px;
+            min-width: 72px;
+            margin-right: -2px;
+        }
+
+        .task-document-cancel-btn:hover,
+        .task-document-cancel-btn:focus-visible {
+            color: #475569;
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+
+        .task-document-edit-btn,
+        .task-document-delete-btn {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #94a3b8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            justify-self: end;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+            transition: opacity 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            flex-shrink: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-right: -2px;
+        }
+
+        .task-document-edit-btn:hover,
+        .task-document-edit-btn:focus-visible,
+        .task-document-delete-btn:hover,
+        .task-document-delete-btn:focus-visible {
+            color: #475569;
+            border-color: #cbd5e1;
+            background: #ffffff;
+        }
+
+        .task-document-item:hover .task-document-edit-btn,
+        .task-document-item:focus-within .task-document-edit-btn,
+        .task-document-item:hover .task-document-delete-btn:not(.confirm-mode),
+        .task-document-item:focus-within .task-document-delete-btn:not(.confirm-mode),
+        .task-document-edit-btn:focus-visible:not(.confirm-mode),
+        .task-document-delete-btn:focus-visible:not(.confirm-mode) {
+            justify-self: end;
+        }
+
+        .task-document-item:hover .task-document-edit-btn,
+        .task-document-item:focus-within .task-document-edit-btn,
+        .task-document-edit-btn:focus-visible,
+        .task-document-item:hover .task-document-delete-btn,
+        .task-document-item:focus-within .task-document-delete-btn,
+        .task-document-delete-btn:focus-visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .task-document-delete-btn .delete-text {
+            display: none;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .task-document-delete-btn.confirm-mode {
+            width: 44px;
+            min-width: 44px;
+            justify-self: end;
+            color: #dc2626;
+            background: #fef2f2;
+            border-color: #f87171;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .task-document-delete-btn.confirm-mode .fa-trash-can {
+            display: none;
+        }
+
+        .task-document-delete-btn.confirm-mode .delete-text {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .member-table {
@@ -4315,6 +5077,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         const BOARD_STORAGE_KEY = 'kanban_board_state_v3';
         const TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY = 'task_checklist_status_filter_v1';
         const TASK_CHECKLIST_USER_FILTER_STORAGE_KEY = 'task_checklist_user_filter_v1';
+        const TASK_CHECKLIST_COLLAPSED_STORAGE_KEY = 'task_checklist_collapsed_v1';
+        const TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY = 'task_documents_collapsed_v1';
         let sortableInstances = [];
         let boardTickets = [];
         let currentTaskDetailTicketId = null;
@@ -4323,10 +5087,16 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         let taskDetailEditDraft = null;
         let taskDetailChecklistFilterKey = localStorage.getItem(TASK_CHECKLIST_USER_FILTER_STORAGE_KEY) || '';
         let taskDetailChecklistStatusFilter = localStorage.getItem(TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY) || 'all';
+        let taskDetailCommentFilterKey = '';
+        let isTaskChecklistCollapsed = localStorage.getItem(TASK_CHECKLIST_COLLAPSED_STORAGE_KEY) === 'true';
+        let isTaskDocumentsCollapsed = localStorage.getItem(TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY) === 'true';
         let openTaskChecklistDateItemId = null;
         let taskChecklistDateViewYear = null;
         let taskChecklistDateViewMonth = null;
         let pendingChecklistFocusItemId = null;
+        let pendingTaskDocumentFocusItemId = null;
+        let taskCommentComposerDraftHtml = '';
+        let taskCommentMentionActiveIndex = 0;
 
         const INLINE_FORM_HTML = `
             <div id="inlineAddForm" class="hidden po-modal relative z-20">
@@ -5137,12 +5907,42 @@ function togglePersonalMode(select) {
             renderTaskDetailsDrawer();
         }
 
+        function toggleTaskCommentFilter(filterKey, event) {
+            event?.stopPropagation?.();
+            taskDetailCommentFilterKey = taskDetailCommentFilterKey === filterKey ? '' : filterKey;
+            renderTaskDetailsDrawer();
+        }
+
         function setTaskChecklistStatusFilter(filterValue, event) {
             event?.stopPropagation?.();
             const nextFilter = ['all', 'incomplete', 'done'].includes(filterValue) ? filterValue : 'all';
             taskDetailChecklistStatusFilter = nextFilter;
             localStorage.setItem(TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY, nextFilter);
             renderTaskDetailsDrawer();
+        }
+
+        function toggleTaskChecklistCollapse(event) {
+            event?.stopPropagation?.();
+            isTaskChecklistCollapsed = !isTaskChecklistCollapsed;
+            localStorage.setItem(TASK_CHECKLIST_COLLAPSED_STORAGE_KEY, isTaskChecklistCollapsed ? 'true' : 'false');
+            const root = document.getElementById('taskDetailsDrawerRoot');
+            const checklistBody = root?.querySelector('.task-checklist-body');
+            const toggleBtn = root?.querySelector('.task-checklist-title-row .task-checklist-toggle-btn');
+
+            if (checklistBody) {
+                checklistBody.classList.toggle('is-collapsed', isTaskChecklistCollapsed);
+            }
+
+            if (toggleBtn) {
+                toggleBtn.classList.toggle('is-collapsed', isTaskChecklistCollapsed);
+                const label = isTaskChecklistCollapsed ? 'Mở checklist' : 'Thu gọn checklist';
+                toggleBtn.setAttribute('aria-label', label);
+                toggleBtn.setAttribute('data-tooltip', label);
+            }
+
+            if (!checklistBody || !toggleBtn) {
+                renderTaskDetailsDrawer();
+            }
         }
 
         function matchesTaskChecklistActiveFilters(item) {
@@ -5193,6 +5993,681 @@ function togglePersonalMode(select) {
             }, index);
         }
 
+        function normalizeTaskDocumentItem(item, fallbackIndex = 0) {
+            if (!item) return null;
+            const creatorUserKey = normalizeUserKey(item.created_by || item.createdBy || item.creator_user_key || item.creatorUserKey || CURRENT_USER_ID) || CURRENT_USER_ID;
+            const createdAtRaw = item.created_at || item.createdAt || '';
+            return {
+                id: item.id || `doc_${Date.now()}_${fallbackIndex}`,
+                title: item.title || item.label || '',
+                note: item.note || item.note_text || item.noteText || item.attachment_value || item.attachmentValue || item.text || '',
+                is_applied: item.is_applied === true || item.isApplied === true || item.is_applied === 'true' || item.isApplied === 'true' || (!(item.is_applied === false || item.isApplied === false) && !!String((item.title || item.label || item.note || item.note_text || item.attachment_value || item.attachmentValue || '')).trim()),
+                created_at: createdAtRaw,
+                created_by: USERS[creatorUserKey] ? creatorUserKey : CURRENT_USER_ID
+            };
+        }
+
+        function createTaskDocumentDraft(index = 0) {
+            const now = new Date();
+            const createdAt = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            return normalizeTaskDocumentItem({
+                id: `doc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                title: '',
+                note: '',
+                is_applied: false,
+                created_at: createdAt,
+                created_by: CURRENT_USER_ID
+            }, index);
+        }
+
+        function focusTaskDocumentTitleInput(itemId) {
+            if (!itemId) return;
+            const input = document.querySelector(`#taskDocumentList [data-document-id="${itemId}"] .task-document-title-input`);
+            if (!input) return;
+            input.focus();
+            const valueLength = input.value?.length || 0;
+            if (typeof input.setSelectionRange === 'function') {
+                input.setSelectionRange(valueLength, valueLength);
+            }
+        }
+
+        function updateTaskDocuments(ticketId, updater) {
+            updateBoardTicket(ticketId, (ticketState) => {
+                const documents = (ticketState.documents || []).map((item, index) => normalizeTaskDocumentItem(item, index)).filter(Boolean);
+                const nextDocuments = typeof updater === 'function' ? updater(documents, ticketState) : updater;
+                return {
+                    ...ticketState,
+                    documents: (nextDocuments || []).map((item, index) => normalizeTaskDocumentItem(item, index)).filter(Boolean)
+                };
+            });
+            saveBoardState();
+            if (currentTaskDetailTicketId === ticketId) {
+                renderTaskDetailsDrawer();
+            }
+        }
+
+        function addTaskDocumentItem(ticketId, event) {
+            event?.stopPropagation?.();
+            if (isTaskDocumentsCollapsed) {
+                isTaskDocumentsCollapsed = false;
+                localStorage.setItem(TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY, 'false');
+            }
+            const createdItem = createTaskDocumentDraft(0);
+            pendingTaskDocumentFocusItemId = createdItem.id;
+            updateTaskDocuments(ticketId, (documents) => [createdItem, ...documents]);
+        }
+
+        function updateTaskDocumentTitle(ticketId, itemId, value) {
+            updateTaskDocuments(ticketId, (documents) => documents.map((item) => (
+                item.id === itemId ? { ...item, title: value } : item
+            )));
+        }
+
+        function updateTaskDocumentNote(ticketId, itemId, value) {
+            updateTaskDocuments(ticketId, (documents) => documents.map((item) => (
+                item.id === itemId ? { ...item, note: value } : item
+            )));
+        }
+
+        function getTaskDocumentDraftValues(itemId) {
+            if (!itemId) return null;
+            const itemRoot = document.querySelector(`#taskDocumentList [data-document-id="${itemId}"]`);
+            if (!itemRoot) return null;
+            const titleInput = itemRoot.querySelector('.task-document-title-input');
+            const noteInput = itemRoot.querySelector('.task-document-note-input');
+            return {
+                title: titleInput ? titleInput.value : undefined,
+                note: noteInput ? noteInput.value : undefined
+            };
+        }
+
+        function applyTaskDocumentItem(ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            const draftValues = getTaskDocumentDraftValues(itemId);
+            updateTaskDocuments(ticketId, (documents) => documents.map((item) => (
+                item.id === itemId
+                    ? {
+                        ...item,
+                        title: draftValues?.title ?? item.title,
+                        note: draftValues?.note ?? item.note,
+                        is_applied: true
+                    }
+                    : item
+            )));
+        }
+
+        function applyTaskDocumentItemOnMouseDown(ticketId, itemId, event) {
+            event?.preventDefault?.();
+            applyTaskDocumentItem(ticketId, itemId, event);
+        }
+
+        function cancelTaskDocumentEdit(ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            updateTaskDocuments(ticketId, (documents) => {
+                const targetItem = documents.find((item) => item.id === itemId);
+                if (!targetItem) return documents;
+                const isEmptyDraft = !String(targetItem.title || '').trim() && !String(targetItem.note || '').trim();
+                if (isEmptyDraft) {
+                    return documents.filter((item) => item.id !== itemId);
+                }
+                return documents.map((item) => (
+                    item.id === itemId ? { ...item, is_applied: true } : item
+                ));
+            });
+        }
+
+        function editTaskDocumentItem(ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            if (isTaskDocumentsCollapsed) {
+                isTaskDocumentsCollapsed = false;
+                localStorage.setItem(TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY, 'false');
+            }
+            pendingTaskDocumentFocusItemId = itemId;
+            updateTaskDocuments(ticketId, (documents) => documents.map((item) => (
+                item.id === itemId ? { ...item, is_applied: false } : item
+            )));
+        }
+
+        function removeTaskDocumentItem(ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            updateTaskDocuments(ticketId, (documents) => documents.filter((item) => item.id !== itemId));
+        }
+
+        function confirmTaskDocumentDelete(btn, ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            if (!btn) return;
+            if (!btn.classList.contains('confirm-mode')) {
+                document.querySelectorAll('.task-document-delete-btn.confirm-mode').forEach((button) => {
+                    if (button !== btn) button.classList.remove('confirm-mode');
+                });
+                btn.classList.add('confirm-mode');
+                return;
+            }
+            btn.classList.remove('confirm-mode');
+            removeTaskDocumentItem(ticketId, itemId, event);
+        }
+
+        function reorderTaskDocuments(ticketId, orderedIds) {
+            updateTaskDocuments(ticketId, (documents) => {
+                const itemMap = new Map(documents.map((item) => [item.id, item]));
+                return orderedIds.map((id) => itemMap.get(id)).filter(Boolean);
+            });
+        }
+
+        function initializeTaskDocumentSortable(ticketId) {
+            const documentList = document.getElementById('taskDocumentList');
+            if (!documentList || documentList.dataset.sortableInitialized === 'true') return;
+
+            new Sortable(documentList, {
+                animation: 180,
+                handle: '.task-document-drag',
+                ghostClass: 'sortable-ghost',
+                dragClass: 'sortable-drag',
+                draggable: '[data-document-id]',
+                onEnd: () => {
+                    const orderedIds = Array.from(documentList.querySelectorAll('[data-document-id]'))
+                        .map((item) => item.dataset.documentId)
+                        .filter(Boolean);
+                    reorderTaskDocuments(ticketId, orderedIds);
+                }
+            });
+
+            documentList.dataset.sortableInitialized = 'true';
+        }
+
+        function toggleTaskDocumentsCollapse(event) {
+            event?.stopPropagation?.();
+            isTaskDocumentsCollapsed = !isTaskDocumentsCollapsed;
+            localStorage.setItem(TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY, isTaskDocumentsCollapsed ? 'true' : 'false');
+            const root = document.getElementById('taskDetailsDrawerRoot');
+            const documentsBody = root?.querySelector('.task-documents-body');
+            const toggleBtn = root?.querySelector('.task-documents-title-row .task-checklist-toggle-btn');
+
+            if (documentsBody) {
+                documentsBody.classList.toggle('is-collapsed', isTaskDocumentsCollapsed);
+            }
+
+            if (toggleBtn) {
+                toggleBtn.classList.toggle('is-collapsed', isTaskDocumentsCollapsed);
+                const label = isTaskDocumentsCollapsed ? 'Mở tài liệu' : 'Thu gọn tài liệu';
+                toggleBtn.setAttribute('aria-label', label);
+                toggleBtn.setAttribute('data-tooltip', label);
+            }
+
+            if (!documentsBody || !toggleBtn) {
+                renderTaskDetailsDrawer();
+            }
+        }
+
+        function normalizeTaskDocumentLink(value) {
+            const trimmedValue = String(value || '').trim();
+            if (!trimmedValue) return '';
+            if (/^https?:\/\//i.test(trimmedValue)) return trimmedValue;
+            if (/^[\w.-]+\.[a-z]{2,}/i.test(trimmedValue)) return `https://${trimmedValue}`;
+            return '';
+        }
+
+        function hydrateTaskDocumentLinks(root = document) {
+            if (!root) return;
+            root.querySelectorAll('.task-document-display-note').forEach((noteEl) => {
+                if (noteEl.classList.contains('is-placeholder') || noteEl.querySelector('a')) return;
+                const noteText = (noteEl.textContent || '').trim();
+                const normalizedLink = normalizeTaskDocumentLink(noteText);
+                if (!normalizedLink) return;
+                noteEl.textContent = '';
+                const linkEl = document.createElement('a');
+                linkEl.href = normalizedLink;
+                linkEl.target = '_blank';
+                linkEl.rel = 'noopener noreferrer';
+                linkEl.textContent = noteText;
+                linkEl.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+                noteEl.appendChild(linkEl);
+            });
+        }
+
+        function buildLinkifiedTextFragment(text) {
+            const fragment = document.createDocumentFragment();
+            const sourceText = String(text || '');
+            const urlPattern = /(https?:\/\/[^\s<]+|(?:www\.)?[\w.-]+\.[a-z]{2,}(?:\/[^\s<]*)?)/gi;
+            let lastIndex = 0;
+            let match;
+            while ((match = urlPattern.exec(sourceText)) !== null) {
+                const matchedText = match[0];
+                const matchIndex = match.index;
+                if (matchIndex > lastIndex) {
+                    fragment.appendChild(document.createTextNode(sourceText.slice(lastIndex, matchIndex)));
+                }
+                const normalizedLink = normalizeTaskDocumentLink(matchedText);
+                if (normalizedLink) {
+                    const linkEl = document.createElement('a');
+                    linkEl.href = normalizedLink;
+                    linkEl.target = '_blank';
+                    linkEl.rel = 'noopener noreferrer';
+                    linkEl.textContent = matchedText;
+                    linkEl.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                    });
+                    fragment.appendChild(linkEl);
+                } else {
+                    fragment.appendChild(document.createTextNode(matchedText));
+                }
+                lastIndex = matchIndex + matchedText.length;
+            }
+            if (lastIndex < sourceText.length) {
+                fragment.appendChild(document.createTextNode(sourceText.slice(lastIndex)));
+            }
+            return fragment;
+        }
+
+        function hydrateTaskCommentLinks(root = document) {
+            if (!root) return;
+            root.querySelectorAll('.task-comment-body').forEach((commentBodyEl) => {
+                const walker = document.createTreeWalker(commentBodyEl, NodeFilter.SHOW_TEXT, {
+                    acceptNode(textNode) {
+                        if (!textNode?.textContent?.trim()) return NodeFilter.FILTER_REJECT;
+                        const parentEl = textNode.parentElement;
+                        if (!parentEl) return NodeFilter.FILTER_REJECT;
+                        if (parentEl.closest('a, .task-comment-mention')) return NodeFilter.FILTER_REJECT;
+                        return /https?:\/\/|(?:^|\s)(?:www\.)?[\w.-]+\.[a-z]{2,}/i.test(textNode.textContent)
+                            ? NodeFilter.FILTER_ACCEPT
+                            : NodeFilter.FILTER_REJECT;
+                    }
+                });
+                const textNodes = [];
+                let currentNode = walker.nextNode();
+                while (currentNode) {
+                    textNodes.push(currentNode);
+                    currentNode = walker.nextNode();
+                }
+                textNodes.forEach((textNode) => {
+                    const fragment = buildLinkifiedTextFragment(textNode.textContent || '');
+                    textNode.parentNode?.replaceChild(fragment, textNode);
+                });
+            });
+        }
+
+        function hydrateTaskDocumentEditState(root = document) {
+            if (!root) return;
+            root.querySelectorAll('.task-document-item').forEach((itemEl) => {
+                const isEditing = !!itemEl.querySelector('.task-document-note-input');
+                itemEl.classList.toggle('is-editing', isEditing);
+                const metaEl = itemEl.querySelector('.task-document-meta');
+                if (metaEl) {
+                    metaEl.style.display = isEditing ? 'none' : '';
+                }
+            });
+            root.querySelectorAll('.task-document-note-input').forEach((textarea) => {
+                textarea.rows = 1;
+                autoResize(textarea);
+                if (textarea.dataset.autoresizeBound === 'true') return;
+                textarea.addEventListener('input', function () {
+                    autoResize(this);
+                });
+                textarea.dataset.autoresizeBound = 'true';
+            });
+        }
+
+        function hydrateTaskDocumentEmptyState(root = document, ticketId = '') {
+            if (!root || !ticketId) return;
+            const documentList = root.querySelector('#taskDocumentList');
+            if (!documentList) return;
+            const emptyState = documentList.querySelector('.task-detail-empty');
+            if (!emptyState) return;
+            if (documentList.querySelector('.task-document-item')) return;
+            emptyState.outerHTML = `
+                <button type="button" class="task-document-empty-add" onclick="addTaskDocumentItem('${escapeHtml(ticketId)}', event)">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Thêm tài liệu</span>
+                </button>
+            `;
+        }
+
+        function normalizeTaskCommentItem(item, fallbackIndex = 0) {
+            if (!item) return null;
+            const createdBy = normalizeUserKey(item.created_by || item.createdBy || CURRENT_USER_ID);
+            return {
+                id: item.id || `tcm_${Date.now()}_${fallbackIndex}`,
+                created_by: createdBy && USERS[createdBy] ? createdBy : CURRENT_USER_ID,
+                created_at: item.created_at || item.createdAt || new Date().toISOString(),
+                content_html: sanitizeTaskCommentHtml(item.content_html || item.contentHtml || item.content || '')
+            };
+        }
+
+        function sanitizeTaskCommentNode(node) {
+            if (!node) return null;
+            if (node.nodeType === Node.TEXT_NODE) {
+                return document.createTextNode(node.textContent || '');
+            }
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+                return null;
+            }
+
+            const tagName = node.tagName.toLowerCase();
+            const allowedTags = new Set(['b', 'strong', 'i', 'em', 'u', 'br', 'p', 'div', 'ul', 'ol', 'li', 'a', 'span']);
+            if (!allowedTags.has(tagName)) {
+                const fragment = document.createDocumentFragment();
+                Array.from(node.childNodes).forEach((childNode) => {
+                    const sanitizedChild = sanitizeTaskCommentNode(childNode);
+                    if (sanitizedChild) fragment.appendChild(sanitizedChild);
+                });
+                return fragment;
+            }
+
+            const cleanNode = document.createElement(tagName);
+            if (tagName === 'a') {
+                const href = String(node.getAttribute('href') || '').trim();
+                if (/^https?:\/\//i.test(href)) {
+                    cleanNode.setAttribute('href', href);
+                    cleanNode.setAttribute('target', '_blank');
+                    cleanNode.setAttribute('rel', 'noopener noreferrer');
+                }
+            }
+            if (tagName === 'span') {
+                const userKey = normalizeUserKey(node.getAttribute('data-user-key') || '');
+                if (userKey && USERS[userKey] && node.classList.contains('task-comment-mention')) {
+                    cleanNode.className = 'task-comment-mention';
+                    cleanNode.setAttribute('data-user-key', userKey);
+                    cleanNode.textContent = `@${USERS[userKey].full_name || userKey}`;
+                    return cleanNode;
+                }
+            }
+
+            Array.from(node.childNodes).forEach((childNode) => {
+                const sanitizedChild = sanitizeTaskCommentNode(childNode);
+                if (sanitizedChild) cleanNode.appendChild(sanitizedChild);
+            });
+            return cleanNode;
+        }
+
+        function sanitizeTaskCommentHtml(value) {
+            const template = document.createElement('template');
+            template.innerHTML = String(value || '');
+            const wrapper = document.createElement('div');
+            Array.from(template.content.childNodes).forEach((childNode) => {
+                const sanitizedNode = sanitizeTaskCommentNode(childNode);
+                if (sanitizedNode) wrapper.appendChild(sanitizedNode);
+            });
+            return wrapper.innerHTML.trim();
+        }
+
+        function getTaskCommentPlainText(value) {
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = String(value || '');
+            return (wrapper.textContent || '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+
+        function formatTaskCommentTimestamp(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
+        }
+
+        function getTaskCommentMentionOptions(ticketState) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return [];
+            return Array.from(new Set([
+                CURRENT_USER_ID,
+                ...getAssignableUserKeys(),
+                ...normalizedState.assignees.map((record) => record.user_key)
+            ])).filter((userKey) => userKey && USERS[userKey] && USERS[userKey].is_active);
+        }
+
+        function updateTaskComments(ticketId, updater) {
+            updateBoardTicket(ticketId, (ticketState) => {
+                const comments = (ticketState.comments || []).map((item, index) => normalizeTaskCommentItem(item, index)).filter(Boolean);
+                const nextComments = typeof updater === 'function' ? updater(comments, ticketState) : updater;
+                return {
+                    ...ticketState,
+                    comments: (nextComments || []).map((item, index) => normalizeTaskCommentItem(item, index)).filter(Boolean)
+                };
+            });
+            saveBoardState();
+        }
+
+        function getTaskCommentComposerElements() {
+            const root = document.getElementById('taskDetailsDrawerRoot');
+            if (!root) return {};
+            return {
+                root,
+                editor: root.querySelector('#taskCommentComposerInput'),
+                popup: root.querySelector('#taskCommentMentionPopup')
+            };
+        }
+
+        function syncTaskCommentComposerPlaceholder(editor) {
+            if (!editor) return;
+            const hasText = !!getTaskCommentPlainText(editor.innerHTML);
+            editor.classList.toggle('is-empty', !hasText);
+        }
+
+        function closeTaskCommentMentionPopup() {
+            const { popup } = getTaskCommentComposerElements();
+            if (!popup) return;
+            popup.classList.remove('is-open');
+            popup.innerHTML = '';
+            taskCommentMentionActiveIndex = 0;
+        }
+
+        function renderTaskCommentMentionPopup(options = [], query = '') {
+            const { popup } = getTaskCommentComposerElements();
+            if (!popup) return;
+            if (!options.length) {
+                closeTaskCommentMentionPopup();
+                return;
+            }
+            if (taskCommentMentionActiveIndex >= options.length) {
+                taskCommentMentionActiveIndex = 0;
+            }
+            popup.innerHTML = options.map((userKey, index) => {
+                const user = USERS[userKey];
+                const jobTitle = getJobTitleName(user.job_title_id);
+                return `
+                    <button
+                        type="button"
+                        class="task-comment-mention-option ${index === taskCommentMentionActiveIndex ? 'is-active' : ''}"
+                        data-user-key="${escapeHtml(userKey)}"
+                        onmousedown="chooseTaskCommentMention('${escapeHtml(userKey)}', event)"
+                    >
+                        <span class="task-comment-mention-avatar" style="background:${escapeHtml(user.color || '#2563eb')}">${escapeHtml(adminUserInitials(user.full_name || userKey))}</span>
+                        <span class="task-comment-mention-meta">
+                            <span class="task-comment-mention-name">${escapeHtml(user.full_name || userKey)}</span>
+                            <span class="task-comment-mention-subtitle">${escapeHtml(jobTitle)}${query ? ` • @${escapeHtml(query)}` : ''}</span>
+                        </span>
+                    </button>
+                `;
+            }).join('');
+            popup.classList.add('is-open');
+        }
+
+        function getTaskCommentActiveMention(editor) {
+            if (!editor) return null;
+            const selection = window.getSelection();
+            if (!selection || !selection.rangeCount || !selection.isCollapsed) return null;
+            const range = selection.getRangeAt(0);
+            if (!editor.contains(range.endContainer)) return null;
+            if (range.endContainer.nodeType !== Node.TEXT_NODE) return null;
+            const textBeforeCaret = range.endContainer.textContent.slice(0, range.endOffset);
+            const mentionMatch = textBeforeCaret.match(/(^|\s)@([^\s@]*)$/);
+            if (!mentionMatch) return null;
+            const query = mentionMatch[2] || '';
+            const startOffset = textBeforeCaret.lastIndexOf(`@${query}`);
+            if (startOffset < 0) return null;
+            return {
+                textNode: range.endContainer,
+                startOffset,
+                query
+            };
+        }
+
+        function updateTaskCommentMentionSuggestions(ticketId = currentTaskDetailTicketId) {
+            if (!ticketId) return closeTaskCommentMentionPopup();
+            const ticketState = getTaskDetailById(ticketId);
+            const { editor } = getTaskCommentComposerElements();
+            if (!ticketState || !editor) return closeTaskCommentMentionPopup();
+            const activeMention = getTaskCommentActiveMention(editor);
+            if (!activeMention) return closeTaskCommentMentionPopup();
+            const normalizedQuery = activeMention.query.trim().toLowerCase();
+            const options = getTaskCommentMentionOptions(ticketState).filter((userKey) => {
+                const user = USERS[userKey];
+                const haystack = `${user.full_name || ''} ${userKey}`.toLowerCase();
+                return !normalizedQuery || haystack.includes(normalizedQuery);
+            });
+            renderTaskCommentMentionPopup(options, activeMention.query);
+        }
+
+        function chooseTaskCommentMention(userKey, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const { editor } = getTaskCommentComposerElements();
+            if (!editor || !USERS[userKey]) return;
+            editor.focus();
+            const activeMention = getTaskCommentActiveMention(editor);
+            const selection = window.getSelection();
+            if (!selection || !selection.rangeCount) return;
+            const currentRange = selection.getRangeAt(0);
+            if (activeMention && activeMention.textNode === currentRange.endContainer) {
+                const replaceRange = document.createRange();
+                replaceRange.setStart(activeMention.textNode, activeMention.startOffset);
+                replaceRange.setEnd(currentRange.endContainer, currentRange.endOffset);
+                selection.removeAllRanges();
+                selection.addRange(replaceRange);
+            }
+            const mentionHtml = `<span class="task-comment-mention" data-user-key="${escapeHtml(userKey)}" contenteditable="false">@${escapeHtml(USERS[userKey].full_name || userKey)}</span>&nbsp;`;
+            document.execCommand('insertHTML', false, mentionHtml);
+            taskCommentComposerDraftHtml = sanitizeTaskCommentHtml(editor.innerHTML);
+            syncTaskCommentComposerPlaceholder(editor);
+            closeTaskCommentMentionPopup();
+        }
+
+        function handleTaskCommentComposerKeydown(event) {
+            const { popup } = getTaskCommentComposerElements();
+            if (!popup || !popup.classList.contains('is-open')) {
+                if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+                    submitTaskComment(currentTaskDetailTicketId, event);
+                }
+                return;
+            }
+            const options = Array.from(popup.querySelectorAll('.task-comment-mention-option'));
+            if (!options.length) return;
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                taskCommentMentionActiveIndex = (taskCommentMentionActiveIndex + 1) % options.length;
+                const userKey = options[taskCommentMentionActiveIndex]?.dataset.userKey || '';
+                renderTaskCommentMentionPopup(options.map((option) => option.dataset.userKey), '');
+                popup.querySelector(`[data-user-key="${userKey}"]`)?.scrollIntoView({ block: 'nearest' });
+                return;
+            }
+            if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                taskCommentMentionActiveIndex = (taskCommentMentionActiveIndex - 1 + options.length) % options.length;
+                const userKey = options[taskCommentMentionActiveIndex]?.dataset.userKey || '';
+                renderTaskCommentMentionPopup(options.map((option) => option.dataset.userKey), '');
+                popup.querySelector(`[data-user-key="${userKey}"]`)?.scrollIntoView({ block: 'nearest' });
+                return;
+            }
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                const activeOption = options[taskCommentMentionActiveIndex] || options[0];
+                if (activeOption?.dataset.userKey) {
+                    chooseTaskCommentMention(activeOption.dataset.userKey, event);
+                }
+                return;
+            }
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeTaskCommentMentionPopup();
+            }
+        }
+
+        function formatTaskComment(command, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const { editor } = getTaskCommentComposerElements();
+            if (!editor) return;
+            editor.focus();
+            document.execCommand(command, false, null);
+            taskCommentComposerDraftHtml = sanitizeTaskCommentHtml(editor.innerHTML);
+            syncTaskCommentComposerPlaceholder(editor);
+        }
+
+        function openTaskCommentMentionPicker(event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const { editor } = getTaskCommentComposerElements();
+            if (!editor) return;
+            editor.focus();
+            taskCommentMentionActiveIndex = 0;
+            renderTaskCommentMentionPopup(getTaskCommentMentionOptions(getTaskDetailById(currentTaskDetailTicketId)), '');
+        }
+
+        function submitTaskComment(ticketId, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            if (!ticketId) return;
+            const { editor } = getTaskCommentComposerElements();
+            if (!editor) return;
+            const contentHtml = sanitizeTaskCommentHtml(editor.innerHTML);
+            if (!getTaskCommentPlainText(contentHtml)) {
+                editor.focus();
+                syncTaskCommentComposerPlaceholder(editor);
+                return;
+            }
+            const newComment = normalizeTaskCommentItem({
+                id: `tcm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                created_by: CURRENT_USER_ID,
+                created_at: new Date().toISOString(),
+                content_html: contentHtml
+            });
+            updateTaskComments(ticketId, (comments) => [newComment, ...comments]);
+            taskCommentComposerDraftHtml = '';
+            closeTaskCommentMentionPopup();
+            window.requestAnimationFrame(() => {
+                const { editor: nextEditor } = getTaskCommentComposerElements();
+                if (!nextEditor) return;
+                nextEditor.innerHTML = '';
+                syncTaskCommentComposerPlaceholder(nextEditor);
+                nextEditor.focus();
+            });
+        }
+
+        function hydrateTaskCommentComposer(root = document, ticketState = null) {
+            if (!root || !ticketState) return;
+            const editor = root.querySelector('#taskCommentComposerInput');
+            if (!editor) return;
+            const popup = root.querySelector('#taskCommentMentionPopup');
+            if (editor.dataset.bound !== 'true') {
+                editor.addEventListener('input', function () {
+                    taskCommentComposerDraftHtml = sanitizeTaskCommentHtml(this.innerHTML);
+                    syncTaskCommentComposerPlaceholder(this);
+                    updateTaskCommentMentionSuggestions(ticketState.ticket_id);
+                });
+                editor.addEventListener('keydown', handleTaskCommentComposerKeydown);
+                editor.addEventListener('focus', function () {
+                    syncTaskCommentComposerPlaceholder(this);
+                });
+                editor.addEventListener('blur', function () {
+                    window.setTimeout(() => {
+                        if (!popup?.matches(':hover')) closeTaskCommentMentionPopup();
+                    }, 120);
+                });
+                editor.addEventListener('paste', function (pasteEvent) {
+                    pasteEvent.preventDefault();
+                    const pastedText = pasteEvent.clipboardData?.getData('text/plain') || '';
+                    document.execCommand('insertText', false, pastedText);
+                });
+                editor.dataset.bound = 'true';
+            }
+            editor.innerHTML = taskCommentComposerDraftHtml || '';
+            syncTaskCommentComposerPlaceholder(editor);
+        }
+
         function focusChecklistItemInput(itemId) {
             if (!itemId) return;
             const input = document.querySelector(`#taskChecklistList [data-checklist-id="${itemId}"] .task-checklist-title-input`);
@@ -5227,7 +6702,16 @@ function togglePersonalMode(select) {
                 taskDetailChecklistStatusFilter = 'incomplete';
                 localStorage.setItem(TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY, taskDetailChecklistStatusFilter);
             }
+            if (isTaskChecklistCollapsed) {
+                isTaskChecklistCollapsed = false;
+                localStorage.setItem(TASK_CHECKLIST_COLLAPSED_STORAGE_KEY, 'false');
+            }
             const createdItem = createChecklistItemDraft(ticketState, 0);
+            const createdItemFilterKey = createdItem.assignee_user_key || '__unassigned__';
+            if (taskDetailChecklistFilterKey && taskDetailChecklistFilterKey !== createdItemFilterKey) {
+                taskDetailChecklistFilterKey = '';
+                localStorage.removeItem(TASK_CHECKLIST_USER_FILTER_STORAGE_KEY);
+            }
             pendingChecklistFocusItemId = createdItem.id;
             updateTaskChecklist(ticketId, (checklist) => [createdItem, ...checklist]);
         }
@@ -5253,6 +6737,22 @@ function togglePersonalMode(select) {
         function removeTaskChecklistItem(ticketId, itemId, event) {
             event?.stopPropagation?.();
             updateTaskChecklist(ticketId, (checklist) => checklist.filter((item) => item.id !== itemId));
+        }
+
+        function confirmTaskChecklistDelete(btn, ticketId, itemId, event) {
+            event?.stopPropagation?.();
+            if (!btn) return;
+
+            if (!btn.classList.contains('confirm-mode')) {
+                document.querySelectorAll('.task-checklist-delete-btn.confirm-mode').forEach((button) => {
+                    if (button !== btn) button.classList.remove('confirm-mode');
+                });
+                btn.classList.add('confirm-mode');
+                return;
+            }
+
+            btn.classList.remove('confirm-mode');
+            removeTaskChecklistItem(ticketId, itemId, event);
         }
 
         function getChecklistDateViewBase(dateRaw) {
@@ -5392,7 +6892,7 @@ function togglePersonalMode(select) {
                 is_placeholder: false,
                 date_label: dateLabel,
                 days_value: 0,
-                days_class: ''
+                days_class: 'is-today'
             };
         }
 
@@ -5523,6 +7023,7 @@ function togglePersonalMode(select) {
                 const currentSummary = summaryMap.get(summaryKey) || { total: 0, pending: 0 };
                 currentSummary.total += 1;
                 if (!item.is_done) currentSummary.pending += 1;
+                currentSummary.resolved = currentSummary.total - currentSummary.pending;
                 summaryMap.set(summaryKey, currentSummary);
                 return summaryMap;
             }, new Map());
@@ -5541,11 +7042,11 @@ function togglePersonalMode(select) {
             });
             const checklistStatusFilterHtml = `
                 <div class="task-checklist-status-filters">
-                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn is-all ${taskDetailChecklistStatusFilter === 'all' ? 'is-active' : ''}" data-tooltip="T?t c?" aria-label="T?t c?" onclick="setTaskChecklistStatusFilter('all', event)">All</button>
-                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn ${taskDetailChecklistStatusFilter === 'incomplete' ? 'is-active' : ''}" data-tooltip="Ch?a xong" aria-label="Ch?a xong" onclick="setTaskChecklistStatusFilter('incomplete', event)">
+                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn is-all ${taskDetailChecklistStatusFilter === 'all' ? 'is-active' : ''}" data-tooltip="Tất cả" aria-label="Tất cả" onclick="setTaskChecklistStatusFilter('all', event)">All</button>
+                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn ${taskDetailChecklistStatusFilter === 'incomplete' ? 'is-active' : ''}" data-tooltip="Chưa xong" aria-label="Chưa xong" onclick="setTaskChecklistStatusFilter('incomplete', event)">
                         <i class="fa-regular fa-circle"></i>
                     </button>
-                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn ${taskDetailChecklistStatusFilter === 'done' ? 'is-active' : ''}" data-tooltip="?? xong" aria-label="?? xong" onclick="setTaskChecklistStatusFilter('done', event)">
+                    <button type="button" class="task-checklist-status-filter task-checklist-tooltip tooltip-btn ${taskDetailChecklistStatusFilter === 'done' ? 'is-active' : ''}" data-tooltip="Đã xong" aria-label="Đã xong" onclick="setTaskChecklistStatusFilter('done', event)">
                         <i class="fa-solid fa-check"></i>
                     </button>
                 </div>
@@ -5556,9 +7057,9 @@ function togglePersonalMode(select) {
                     if (userKey === '__unassigned__') {
                         return `
                             <button type="button" class="task-checklist-summary-tag is-empty ${isActive ? 'is-active' : ''}" onclick="toggleTaskChecklistFilter('__unassigned__', event)">
-                                <span>Chưa assign</span>
-                                <span class="task-checklist-summary-separator">|</span>
-                                <span class="task-checklist-summary-count">${summary.pending}/${summary.total}</span>
+                                <span class="task-checklist-summary-label">Chưa assign</span>
+                                <span class="task-checklist-summary-separator" aria-hidden="true"></span>
+                                <span class="task-checklist-summary-count">${summary.resolved}/${summary.total}</span>
                             </button>
                         `;
                     }
@@ -5568,13 +7069,13 @@ function togglePersonalMode(select) {
                     const userColor = escapeHtml(user.color || '#2563EB');
                     return `
                         <button type="button" class="task-checklist-summary-tag ${isActive ? 'is-active' : ''}" style="--summary-tag-color:${userColor}; color:${userColor};" onclick="toggleTaskChecklistFilter('${escapeHtml(userKey)}', event)">
-                            <span>${escapeHtml(user.full_name || userKey)}</span>
-                            <span class="task-checklist-summary-separator">|</span>
-                            <span class="task-checklist-summary-count">${summary.pending}/${summary.total}</span>
+                            <span class="task-checklist-summary-label">${escapeHtml(user.full_name || userKey)}</span>
+                            <span class="task-checklist-summary-separator" aria-hidden="true"></span>
+                            <span class="task-checklist-summary-count">${summary.resolved}/${summary.total}</span>
                         </button>
                     `;
                 }).join('')
-                : '<span class="task-checklist-summary-tag is-empty">Chưa có checklist item</span>';
+                : '';
             const checklistHtml = filteredChecklistItems.length
                 ? filteredChecklistItems.map((item, index) => {
                     const selectedAssigneeLabel = item.assignee_user_key
@@ -5657,15 +7158,195 @@ function togglePersonalMode(select) {
                             </div>
                             <div class="task-checklist-deadline">${checklistDatePickerHtml}</div>
                             ${assigneeLovHtml}
-                            <button type="button" class="task-checklist-delete-btn" title="Xóa checklist" aria-label="Xóa checklist" onclick="removeTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
+                            <button type="button" class="task-checklist-delete-btn" title="Xóa checklist" aria-label="Xóa checklist" onclick="confirmTaskChecklistDelete(this, '${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
                                 <i class="fa-regular fa-trash-can text-[11px]"></i>
+                                <span class="delete-text">Xóa</span>
                             </button>
                         </div>
                     `;
                 }).join('')
                 : (taskDetailChecklistFilterKey || taskDetailChecklistStatusFilter !== 'all')
                     ? '<div class="task-detail-empty">Không có checklist nào khớp bộ lọc hiện tại.</div>'
-                    : '<div class="task-detail-empty">Chưa có checklist. Bấm dấu cộng để bắt đầu.</div>';
+                    : `<button type="button" class="task-checklist-empty-add" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)"><i class="fa-solid fa-plus"></i><span>Thêm checklist</span></button>`;
+            const documentItems = (normalizedState.documents || []).map((item, index) => normalizeTaskDocumentItem(item, index)).filter(Boolean);
+            const documentSummaryHtml = `
+                <span class="task-checklist-summary-tag is-empty">
+                    <span class="task-checklist-summary-label">Tổng</span>
+                    <span class="task-checklist-summary-separator" aria-hidden="true"></span>
+                    <span class="task-checklist-summary-count">${documentItems.length}</span>
+                </span>
+            `;
+            const editingDocumentItem = documentItems.find((item) => item.is_applied !== true) || null;
+            const documentToolbarActionsHtml = editingDocumentItem
+                ? `
+                    <button type="button" class="task-document-apply-btn" onmousedown="applyTaskDocumentItemOnMouseDown('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(editingDocumentItem.id)}', event)" onclick="applyTaskDocumentItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(editingDocumentItem.id)}', event)"><i class="fa-solid fa-check"></i><span>Apply</span></button>
+                    <button type="button" class="task-document-cancel-btn" onclick="cancelTaskDocumentEdit('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(editingDocumentItem.id)}', event)"><span>Hủy</span></button>
+                `
+                : '';
+            const documentsHtml = documentItems.length
+                ? documentItems.map((item, index) => {
+                    const creatorName = USERS[item.created_by]?.full_name || item.created_by || 'User';
+                    const isApplied = item.is_applied === true;
+                    const documentContentHtml = isApplied
+                        ? `
+                            <div class="task-document-display">
+                                <div class="task-document-display-title">${escapeHtml(item.title || 'Chưa có tiêu đề')}</div>
+                                <div class="task-document-display-note ${item.note ? '' : 'is-placeholder'}">${escapeHtml(item.note || 'Chưa có ghi chú')}</div>
+                            </div>
+                        `
+                        : `
+                            <input type="text" class="task-document-title-input" placeholder="Nhập tiêu đề..." value="${escapeHtml(item.title || '')}" onchange="updateTaskDocumentTitle('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">
+                            <textarea class="task-document-note-input" rows="3" placeholder="Ghi chú..." onchange="updateTaskDocumentNote('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', this.value)">${escapeHtml(item.note || '')}</textarea>
+                        `;
+                    return `
+                        <div class="task-document-item" data-document-id="${escapeHtml(item.id)}">
+                            <div class="task-document-drag" title="Đổi thứ tự" aria-label="Đổi thứ tự"><i class="fa-solid fa-grip-vertical"></i></div>
+                            <div class="task-checklist-order">${index + 1}.</div>
+                            <div class="task-document-main">
+                                ${documentContentHtml}
+                                <div class="task-document-meta">
+                                    <span>${escapeHtml(creatorName)}</span>
+                                </div>
+                            </div>
+                            <div class="task-document-side-actions">
+                                ${isApplied
+                                    ? `
+                                        <button type="button" class="task-document-delete-btn" title="Xóa tài liệu" aria-label="Xóa tài liệu" onclick="confirmTaskDocumentDelete(this, '${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)">
+                                            <i class="fa-regular fa-trash-can text-[11px]"></i>
+                                            <span class="delete-text">Xóa</span>
+                                        </button>
+                                        <button type="button" class="task-document-edit-btn" title="Sửa tài liệu" aria-label="Sửa tài liệu" onclick="editTaskDocumentItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)"><i class="fa-regular fa-pen-to-square text-[11px]"></i></button>
+                                    `
+                                    : `
+                                        <button type="button" class="task-document-apply-btn" onmousedown="applyTaskDocumentItemOnMouseDown('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)" onclick="applyTaskDocumentItem('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)"><i class="fa-solid fa-check"></i><span>Apply</span></button>
+                                        <button type="button" class="task-document-cancel-btn" onclick="cancelTaskDocumentEdit('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', event)"><span>Hủy</span></button>
+                                    `}
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : '<div class="task-detail-empty">Chưa có tài liệu. Bấm dấu cộng để thêm mới.</div>';
+            const documentsSectionHtml = `
+                <div class="task-detail-section">
+                    <div class="task-checklist-header">
+                        <div class="task-checklist-heading">
+                            <div class="task-checklist-title-row task-documents-title-row">
+                                <p class="task-detail-label">Tài liệu</p>
+                                <button type="button" class="task-checklist-toggle-btn task-checklist-tooltip tooltip-btn ${isTaskDocumentsCollapsed ? 'is-collapsed' : ''}" data-tooltip="${isTaskDocumentsCollapsed ? 'Mở tài liệu' : 'Thu gọn tài liệu'}" aria-label="${isTaskDocumentsCollapsed ? 'Mở tài liệu' : 'Thu gọn tài liệu'}" onclick="toggleTaskDocumentsCollapse(event)">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            <div class="task-documents-summary">
+                                ${documentSummaryHtml}
+                            </div>
+                        </div>
+                        <div class="task-checklist-toolbar">
+                            <button type="button" class="task-checklist-add-btn task-checklist-tooltip tooltip-btn" data-tooltip="Thêm tài liệu" aria-label="Thêm tài liệu" onclick="addTaskDocumentItem('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="task-documents-body ${isTaskDocumentsCollapsed ? 'is-collapsed' : ''}">
+                        <div id="taskDocumentList" class="task-document-list">
+                            ${documentsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            const commentItems = (normalizedState.comments || []).map((item, index) => normalizeTaskCommentItem(item, index)).filter(Boolean);
+            const commentSummaryMap = commentItems.reduce((summaryMap, item) => {
+                const userKey = item.created_by || CURRENT_USER_ID;
+                summaryMap.set(userKey, (summaryMap.get(userKey) || 0) + 1);
+                return summaryMap;
+            }, new Map());
+            const commentSummaryEntries = Array.from(commentSummaryMap.entries()).sort((entryA, entryB) => {
+                const [userKeyA] = entryA;
+                const [userKeyB] = entryB;
+                return (USERS[userKeyA]?.sort || Number.MAX_SAFE_INTEGER) - (USERS[userKeyB]?.sort || Number.MAX_SAFE_INTEGER);
+            });
+            const filteredCommentItems = commentItems.filter((item) => !taskDetailCommentFilterKey || item.created_by === taskDetailCommentFilterKey);
+            const commentSummaryHtml = `
+                <button type="button" class="task-checklist-summary-tag is-empty ${!taskDetailCommentFilterKey ? 'is-active' : ''}" onclick="toggleTaskCommentFilter('', event)">
+                    <span class="task-checklist-summary-label">Tổng</span>
+                    <span class="task-checklist-summary-separator" aria-hidden="true"></span>
+                    <span class="task-checklist-summary-count">${commentItems.length}</span>
+                </button>
+                ${commentSummaryEntries.map(([userKey, count]) => {
+                    const user = USERS[userKey];
+                    const userColor = escapeHtml(user?.color || '#2563EB');
+                    const isActive = taskDetailCommentFilterKey === userKey;
+                    return `
+                        <button type="button" class="task-checklist-summary-tag ${isActive ? 'is-active' : ''}" style="--summary-tag-color:${userColor}; color:${userColor};" onclick="toggleTaskCommentFilter('${escapeHtml(userKey)}', event)">
+                            <span class="task-checklist-summary-label">${escapeHtml(user?.full_name || userKey)}</span>
+                            <span class="task-checklist-summary-separator" aria-hidden="true"></span>
+                            <span class="task-checklist-summary-count">${count}</span>
+                        </button>
+                    `;
+                }).join('')}
+            `;
+            const commentsHtml = filteredCommentItems.length
+                ? filteredCommentItems.map((item) => {
+                    const author = USERS[item.created_by] || USERS[CURRENT_USER_ID];
+                    return `
+                        <div class="task-comment-item">
+                            <div class="task-comment-content">
+                                <div class="task-comment-meta">
+                                    <span class="task-comment-author-tag" style="background:${escapeHtml(author?.color || '#2563eb')}">${escapeHtml(author?.full_name || item.created_by || 'User')}</span>
+                                    <span class="task-comment-time">${escapeHtml(formatTaskCommentTimestamp(item.created_at))}</span>
+                                </div>
+                                <div class="task-comment-body">${sanitizeTaskCommentHtml(item.content_html || '')}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')
+                : commentItems.length
+                    ? '<div class="task-detail-empty">Không có comment nào khớp bộ lọc hiện tại.</div>'
+                    : '<div class="task-detail-empty">Chưa có comment nào. Bắt đầu trao đổi ở đây.</div>';
+            const commentsSectionHtml = `
+                <div class="task-detail-section">
+                    <div class="task-comments-section">
+                        <div class="task-checklist-header">
+                            <div class="task-checklist-heading">
+                                <div class="task-checklist-title-row">
+                                    <p class="task-detail-label">Comment</p>
+                                </div>
+                                <div class="task-checklist-summary">
+                                    ${commentSummaryHtml}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-comment-composer">
+                            <div class="task-comment-toolbar">
+                                <div class="task-comment-toolbar-group">
+                                    <button type="button" class="task-comment-toolbar-btn" aria-label="In đậm" onclick="formatTaskComment('bold', event)"><i class="fa-solid fa-bold"></i></button>
+                                    <button type="button" class="task-comment-toolbar-btn" aria-label="In nghiêng" onclick="formatTaskComment('italic', event)"><i class="fa-solid fa-italic"></i></button>
+                                    <button type="button" class="task-comment-toolbar-btn" aria-label="Gạch chân" onclick="formatTaskComment('underline', event)"><i class="fa-solid fa-underline"></i></button>
+                                </div>
+                                <div class="task-comment-toolbar-group">
+                                    <button type="button" class="task-comment-toolbar-btn" aria-label="Tag người trong nhóm" onclick="openTaskCommentMentionPicker(event)">@</button>
+                                </div>
+                            </div>
+                            <div
+                                id="taskCommentComposerInput"
+                                class="task-comment-editor is-empty"
+                                contenteditable="true"
+                                data-placeholder="Nhập comment... dùng @ để tag người trong nhóm"
+                            ></div>
+                            <div id="taskCommentMentionPopup" class="task-comment-mention-popup"></div>
+                            <div class="task-comment-footer">
+                                <span class="task-comment-hint"></span>
+                                <button type="button" class="task-comment-submit-btn" onclick="submitTaskComment('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                    <i class="fa-regular fa-paper-plane"></i>
+                                    <span>Comment</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task-comment-list">
+                            ${commentsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
             const isTaskDetailEditing = taskDetailEditDraft?.ticket_id === normalizedState.ticket_id;
             const editableUserKeys = Array.from(new Set([
                 ...getAssignableUserKeys(),
@@ -5795,22 +7476,31 @@ function togglePersonalMode(select) {
                             <div class="task-detail-section">
                                 <div class="task-checklist-header">
                                     <div class="task-checklist-heading">
-                                        <p class="task-detail-label">Checklist</p>
+                                        <div class="task-checklist-title-row">
+                                            <p class="task-detail-label">Checklist</p>
+                                            <button type="button" class="task-checklist-toggle-btn task-checklist-tooltip tooltip-btn ${isTaskChecklistCollapsed ? 'is-collapsed' : ''}" data-tooltip="${isTaskChecklistCollapsed ? 'Mở checklist' : 'Thu gọn checklist'}" aria-label="${isTaskChecklistCollapsed ? 'Mở checklist' : 'Thu gọn checklist'}" onclick="toggleTaskChecklistCollapse(event)">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+                                        </div>
                                         <div class="task-checklist-summary">
                                             ${checklistSummaryHtml}
                                         </div>
                                     </div>
                                     <div class="task-checklist-toolbar">
                                         ${checklistStatusFilterHtml}
-                                        <button type="button" class="task-checklist-add-btn task-checklist-tooltip tooltip-btn" data-tooltip="Th?m checklist" aria-label="Th?m checklist" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                        <button type="button" class="task-checklist-add-btn task-checklist-tooltip tooltip-btn" data-tooltip="Thêm checklist" aria-label="Thêm checklist" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)">
                                             <i class="fa-solid fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div id="taskChecklistList" class="task-checklist-list mt-4">
-                                    ${checklistHtml}
+                                <div class="task-checklist-body ${isTaskChecklistCollapsed ? 'is-collapsed' : ''}">
+                                    <div id="taskChecklistList" class="task-checklist-list">
+                                        ${checklistHtml}
+                                    </div>
                                 </div>
                             </div>
+                            ${documentsSectionHtml}
+                            ${commentsSectionHtml}
                         </div>
                     </div>
                 </div>
@@ -5898,6 +7588,9 @@ function togglePersonalMode(select) {
             root.querySelectorAll('.task-checklist-title-input').forEach((textarea) => {
                 autoResize(textarea);
             });
+            root.querySelectorAll('.task-document-note-input').forEach((textarea) => {
+                autoResize(textarea);
+            });
             if (pendingChecklistFocusItemId) {
                 const targetItemId = pendingChecklistFocusItemId;
                 pendingChecklistFocusItemId = null;
@@ -5905,8 +7598,21 @@ function togglePersonalMode(select) {
                     focusChecklistItemInput(targetItemId);
                 });
             }
+            if (pendingTaskDocumentFocusItemId) {
+                const targetItemId = pendingTaskDocumentFocusItemId;
+                pendingTaskDocumentFocusItemId = null;
+                window.requestAnimationFrame(() => {
+                    focusTaskDocumentTitleInput(targetItemId);
+                });
+            }
             initializeTaskChecklistSortable(ticketState.ticket_id);
+            initializeTaskDocumentSortable(ticketState.ticket_id);
             syncTaskChecklistTagStyles(ticketState);
+            hydrateTaskDocumentLinks(root);
+            hydrateTaskDocumentEditState(root);
+            hydrateTaskDocumentEmptyState(root, ticketState.ticket_id);
+            hydrateTaskCommentLinks(root);
+            hydrateTaskCommentComposer(root, ticketState);
             if (taskDetailEditDraft?.ticket_id === ticketState.ticket_id) {
                 const editDesc = root.querySelector('#taskDetailEditDesc');
                 if (editDesc) {
@@ -5949,12 +7655,17 @@ function togglePersonalMode(select) {
             taskDetailEditDraft = null;
             taskDetailChecklistFilterKey = localStorage.getItem(TASK_CHECKLIST_USER_FILTER_STORAGE_KEY) || '';
             taskDetailChecklistStatusFilter = localStorage.getItem(TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY) || 'all';
+            taskDetailCommentFilterKey = '';
+            isTaskChecklistCollapsed = localStorage.getItem(TASK_CHECKLIST_COLLAPSED_STORAGE_KEY) === 'true';
+            isTaskDocumentsCollapsed = localStorage.getItem(TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY) === 'true';
             openTaskChecklistDateItemId = null;
+            taskCommentComposerDraftHtml = '';
+            taskCommentMentionActiveIndex = 0;
             if (taskDetailDrawerCloseTimeout) {
                 clearTimeout(taskDetailDrawerCloseTimeout);
                 taskDetailDrawerCloseTimeout = null;
             }
-            renderTaskDetailsDrawer();
+            renderTaskDetailsDrawer({ animate: true });
         }
 
         function openTaskDetailsFromCard(card, event) {
@@ -5973,6 +7684,8 @@ function togglePersonalMode(select) {
                 currentTaskDetailTicketId = null;
                 taskDetailEditDraft = null;
                 openTaskChecklistDateItemId = null;
+                taskDetailCommentFilterKey = '';
+                taskCommentComposerDraftHtml = '';
                 root.innerHTML = '';
                 return;
             }
@@ -5984,6 +7697,8 @@ function togglePersonalMode(select) {
                 currentTaskDetailTicketId = null;
                 taskDetailEditDraft = null;
                 openTaskChecklistDateItemId = null;
+                taskDetailCommentFilterKey = '';
+                taskCommentComposerDraftHtml = '';
                 root.innerHTML = '';
                 taskDetailDrawerCloseTimeout = null;
             }, 340);
@@ -6043,7 +7758,9 @@ function togglePersonalMode(select) {
                 date_raw: dateInput.value,
                 is_personal: isPersonal,
                 assignees,
-                checklist: previousState.checklist || []
+                checklist: previousState.checklist || [],
+                documents: previousState.documents || [],
+                comments: previousState.comments || []
             });
 
             updateBoardTicket(nextState.ticket_id, nextState);
@@ -6073,7 +7790,9 @@ function togglePersonalMode(select) {
                 date_raw: state.date_raw || state.dateRaw || '',
                 is_personal: isPersonal,
                 assignees,
-                checklist: Array.isArray(state.checklist) ? state.checklist.map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean) : []
+                checklist: Array.isArray(state.checklist) ? state.checklist.map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean) : [],
+                documents: Array.isArray(state.documents) ? state.documents.map((item, index) => normalizeTaskDocumentItem(item, index)).filter(Boolean) : [],
+                comments: Array.isArray(state.comments) ? state.comments.map((item, index) => normalizeTaskCommentItem(item, index)).filter(Boolean) : []
             };
         }
 
@@ -6495,7 +8214,9 @@ function openInlineForm() {
                 date_raw: dateRaw,
                 is_personal: isPersonal,
                 assignees: buildAssigneeRecordsFromUserKeys(inlineSelectedPICs),
-                checklist: []
+                checklist: [],
+                documents: [],
+                comments: []
             });
 
             boardTickets.unshift(ticketState);
@@ -6667,7 +8388,9 @@ function openInlineForm() {
                 date_raw: dateRaw,
                 is_personal: isPersonal,
                 assignees,
-                checklist: previousState?.checklist || []
+                checklist: previousState?.checklist || [],
+                documents: previousState?.documents || [],
+                comments: previousState?.comments || []
             });
 
             updateBoardTicket(nextState.ticket_id, nextState);
@@ -6704,6 +8427,16 @@ function openInlineForm() {
         // Bấm ra ngoài khoảng trống thì hủy trạng thái "Xóa"
         document.addEventListener('click', (e) => {
             document.querySelectorAll('.delete-btn.confirm-mode').forEach(btn => {
+                if (!btn.contains(e.target)) {
+                    btn.classList.remove('confirm-mode');
+                }
+            });
+            document.querySelectorAll('.task-checklist-delete-btn.confirm-mode').forEach((btn) => {
+                if (!btn.contains(e.target)) {
+                    btn.classList.remove('confirm-mode');
+                }
+            });
+            document.querySelectorAll('.task-document-delete-btn.confirm-mode').forEach((btn) => {
                 if (!btn.contains(e.target)) {
                     btn.classList.remove('confirm-mode');
                 }
