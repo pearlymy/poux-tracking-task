@@ -719,6 +719,47 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
         .icon-btn:hover { background: #F8FAFC; color: var(--po-text-main); border-color: #cbd5e1; }
         .icon-btn svg { width: 14px; height: 14px; flex-shrink: 0; pointer-events: none;}
+
+        .task-card-note-shell {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed #dbeafe;
+        }
+
+        .task-card-note-chip {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+            border: 1px solid #dbeafe;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .task-card-note-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #2563eb;
+        }
+
+        .task-card-note-label i {
+            font-size: 11px;
+        }
+
+        .task-note-text {
+            margin: 0;
+            color: #475569;
+            font-size: 11px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
         
         .delete-btn.confirm-mode {
             width: 56px; 
@@ -3068,9 +3109,16 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             position: relative;
             border: 1px solid #dbe4f0;
             border-radius: 20px;
-            background: #ffffff;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
             overflow: hidden;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+        }
+
+        .task-comment-composer:focus-within {
+            border-color: #93c5fd;
+            box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+            transform: translateY(-1px);
         }
 
         .task-comment-toolbar {
@@ -3148,39 +3196,48 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
             gap: 12px;
             padding: 12px 14px 14px;
             border-top: 1px solid #eef2f7;
             background: #ffffff;
         }
 
-        .task-comment-hint {
-            font-size: 12px;
-            font-weight: 600;
-            color: #94a3b8;
-        }
-
         .task-comment-submit-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            min-width: 126px;
-            height: 38px;
-            padding: 0 16px;
+            gap: 10px;
+            min-width: 148px;
+            height: 42px;
+            padding: 0 18px;
+            margin-left: auto;
             border-radius: 999px;
-            border: 1px solid #2563eb;
-            background: #2563eb;
+            border: 1px solid rgba(29, 78, 216, 0.12);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
             font-size: 13px;
             font-weight: 800;
-            transition: all 0.18s ease;
-            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.2);
+            letter-spacing: 0.01em;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+            box-shadow: 0 16px 30px rgba(37, 99, 235, 0.24);
+        }
+
+        .task-comment-submit-btn i {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 12px;
         }
 
         .task-comment-submit-btn:hover {
-            background: #1d4ed8;
-            border-color: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 20px 36px rgba(29, 78, 216, 0.28);
+            filter: saturate(1.05);
         }
 
         .task-comment-mention-popup {
@@ -3259,6 +3316,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             gap: 12px;
         }
 
+        .task-comment-item.is-jump-target {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.14), 0 18px 36px rgba(37, 99, 235, 0.12);
+            transition: box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
         .task-comment-item {
             border: 1px solid #e2e8f0;
             border-radius: 20px;
@@ -3280,6 +3343,27 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             flex-wrap: wrap;
         }
 
+        .task-comment-meta-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .task-comment-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .task-comment-action-icons {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .task-comment-author-tag {
             display: inline-flex;
             align-items: center;
@@ -3299,11 +3383,268 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .task-comment-body {
-            font-size: 14px;
-            line-height: 1.7;
+            font-size: 12px;
+            line-height: 1.6;
             color: #475569;
             white-space: normal;
             word-break: break-word;
+        }
+
+        .task-comment-action-btn {
+            border: 0;
+            background: transparent;
+            padding: 0;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: color 0.18s ease;
+        }
+
+        .task-comment-action-btn:hover {
+            color: #1d4ed8;
+        }
+
+        .task-comment-action-icon-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1px solid #dbe4f0;
+            background: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .task-comment-action-icon-btn:hover {
+            transform: translateY(-1px) scale(1.04);
+            border-color: #93c5fd;
+            background: #eff6ff;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+        }
+
+        .task-comment-action-icon-btn.is-active {
+            border-color: #93c5fd;
+            background: #dbeafe;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        }
+
+        .task-comment-action-placeholder {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1px dashed #bfdbfe;
+            background: #f8fbff;
+            color: #2563eb;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .task-comment-action-placeholder:hover,
+        .task-comment-action-placeholder.is-open {
+            border-color: #93c5fd;
+            background: #eff6ff;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.10);
+        }
+
+        .task-comment-action-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px;
+            border-radius: 999px;
+            border: 1px solid #dbeafe;
+            background: #ffffff;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+            z-index: 20;
+        }
+
+        .task-comment-reactions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+
+        .task-comment-reaction-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .task-comment-reaction-picker-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 0.02em;
+        }
+
+        .task-comment-reaction-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 28px;
+            padding: 0 10px;
+            border-radius: 999px;
+            border: 1px solid #dbe4f0;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .task-comment-reaction-btn:hover {
+            border-color: #93c5fd;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .task-comment-reaction-btn.is-active {
+            border-color: #93c5fd;
+            background: #dbeafe;
+            color: #1d4ed8;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        }
+
+        .task-comment-reaction-emoji {
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .task-comment-reaction-count {
+            min-width: 8px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .task-comment-reply-quote {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            cursor: pointer;
+            text-align: left;
+            appearance: none;
+            -webkit-appearance: none;
+            transition: border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .task-comment-reply-quote:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+
+        .task-comment-reply-label {
+            display: block;
+            align-items: center;
+            width: 100%;
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 6px;
+        }
+
+        .task-comment-reply-preview {
+            display: block;
+            width: 100%;
+            align-self: stretch;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #475569;
+            text-align: left;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow: hidden;
+        }
+
+        .task-comment-item .task-comment-reply-quote .task-comment-reply-preview,
+        .task-comment-reply-banner-card .task-comment-reply-preview {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: left !important;
+            align-self: stretch !important;
+        }
+
+        .task-comment-reply-preview-text {
+            display: block !important;
+            float: left !important;
+            clear: both !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: left !important;
+        }
+
+        .task-comment-reply-banner {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px 0;
+        }
+
+        .task-comment-reply-banner-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            text-align: left;
+        }
+
+        .task-comment-reply-banner-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .task-comment-reply-banner-close {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid #dbeafe;
+            background: #ffffff;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .task-comment-reply-banner-close:hover {
+            border-color: #93c5fd;
+            color: #1d4ed8;
+            background: #eff6ff;
         }
 
         .task-comment-body a {
@@ -5097,6 +5438,18 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         let pendingTaskDocumentFocusItemId = null;
         let taskCommentComposerDraftHtml = '';
         let taskCommentMentionActiveIndex = 0;
+        let currentTaskCommentReplyId = '';
+        let currentTaskCommentReactionMenuId = '';
+        const TASK_COMMENT_REACTION_OPTIONS = [
+            { key: 'like', emoji: '👍', label: 'Like' },
+            { key: 'haha', emoji: '😂', label: 'Haha' },
+            { key: 'love', emoji: '❤️', label: 'Tim' }
+        ];
+        const IS_MAC_OS = (() => {
+            const platform = String(navigator.platform || '').toLowerCase();
+            const userAgent = String(navigator.userAgent || '').toLowerCase();
+            return /mac|iphone|ipad|ipod/.test(platform) || /mac os|iphone|ipad|ipod/.test(userAgent);
+        })();
 
         const INLINE_FORM_HTML = `
             <div id="inlineAddForm" class="hidden po-modal relative z-20">
@@ -6331,8 +6684,22 @@ function togglePersonalMode(select) {
                 id: item.id || `tcm_${Date.now()}_${fallbackIndex}`,
                 created_by: createdBy && USERS[createdBy] ? createdBy : CURRENT_USER_ID,
                 created_at: item.created_at || item.createdAt || new Date().toISOString(),
-                content_html: sanitizeTaskCommentHtml(item.content_html || item.contentHtml || item.content || '')
+                content_html: sanitizeTaskCommentHtml(item.content_html || item.contentHtml || item.content || ''),
+                reply_to_id: item.reply_to_id || item.replyToId || '',
+                reactions: normalizeTaskCommentReactions(item.reactions || {})
             };
+        }
+
+        function normalizeTaskCommentReactions(reactions) {
+            const normalized = {};
+            TASK_COMMENT_REACTION_OPTIONS.forEach(({ key }) => {
+                normalized[key] = Array.from(new Set(
+                    (Array.isArray(reactions?.[key]) ? reactions[key] : [])
+                        .map((userKey) => normalizeUserKey(userKey))
+                        .filter((userKey) => userKey && USERS[userKey])
+                ));
+            });
+            return normalized;
         }
 
         function sanitizeTaskCommentNode(node) {
@@ -6409,6 +6776,82 @@ function togglePersonalMode(select) {
             return `${day}/${month}/${year} ${hours}:${minutes}`;
         }
 
+        function getTaskCommentShortcutKeys() {
+            return IS_MAC_OS ? ['Cmd', 'Enter'] : ['Ctrl', 'Enter'];
+        }
+
+        function getTaskCommentById(ticketState, commentId) {
+            if (!ticketState || !commentId) return null;
+            return (ticketState.comments || []).map((item, index) => normalizeTaskCommentItem(item, index)).find((item) => item?.id === commentId) || null;
+        }
+
+        function getTaskCommentPreviewText(comment) {
+            if (!comment) return '';
+            const plainText = getTaskCommentPlainText(comment.content_html || '');
+            if (!plainText) return '';
+            return plainText.length > 160 ? `${plainText.slice(0, 157)}...` : plainText;
+        }
+
+        function toggleTaskCommentReaction(ticketId, commentId, reactionKey, event = null) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            if (!ticketId || !commentId || !reactionKey) return;
+            updateTaskComments(ticketId, (comments) => comments.map((comment) => {
+                if (comment.id !== commentId) return comment;
+                const currentReactionUsers = Array.isArray(comment.reactions?.[reactionKey]) ? comment.reactions[reactionKey] : [];
+                const hasReacted = currentReactionUsers.includes(CURRENT_USER_ID);
+                return {
+                    ...comment,
+                    reactions: {
+                        ...normalizeTaskCommentReactions(comment.reactions || {}),
+                        [reactionKey]: hasReacted
+                            ? currentReactionUsers.filter((userKey) => userKey !== CURRENT_USER_ID)
+                            : [...currentReactionUsers, CURRENT_USER_ID]
+                    }
+                };
+            }));
+        }
+
+        function toggleTaskCommentReactionMenu(commentId, event = null) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            currentTaskCommentReactionMenuId = currentTaskCommentReactionMenuId === commentId ? '' : commentId;
+            renderTaskDetailsDrawer();
+        }
+
+        function closeTaskCommentReactionMenu() {
+            if (!currentTaskCommentReactionMenuId) return;
+            currentTaskCommentReactionMenuId = '';
+            renderTaskDetailsDrawer();
+        }
+
+        function setTaskCommentReply(commentId = '', event = null) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            currentTaskCommentReplyId = commentId || '';
+            renderTaskDetailsDrawer();
+            window.requestAnimationFrame(() => {
+                const { editor } = getTaskCommentComposerElements();
+                editor?.focus?.();
+            });
+        }
+
+        function scrollToTaskComment(commentId, event = null) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            if (!commentId) return;
+            const targetEl = document.querySelector(`.task-comment-item[data-comment-id="${commentId}"]`);
+            if (!targetEl) return;
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetEl.classList.remove('is-jump-target');
+            window.requestAnimationFrame(() => {
+                targetEl.classList.add('is-jump-target');
+            });
+            window.setTimeout(() => {
+                targetEl.classList.remove('is-jump-target');
+            }, 1800);
+        }
+
         function getTaskCommentMentionOptions(ticketState) {
             const normalizedState = normalizeTicketState(ticketState);
             if (!normalizedState) return [];
@@ -6429,6 +6872,9 @@ function togglePersonalMode(select) {
                 };
             });
             saveBoardState();
+            if (currentTaskDetailTicketId === ticketId) {
+                renderTaskDetailsDrawer();
+            }
         }
 
         function getTaskCommentComposerElements() {
@@ -6623,10 +7069,12 @@ function togglePersonalMode(select) {
                 id: `tcm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
                 created_by: CURRENT_USER_ID,
                 created_at: new Date().toISOString(),
-                content_html: contentHtml
+                content_html: contentHtml,
+                reply_to_id: currentTaskCommentReplyId
             });
             updateTaskComments(ticketId, (comments) => [newComment, ...comments]);
             taskCommentComposerDraftHtml = '';
+            currentTaskCommentReplyId = '';
             closeTaskCommentMentionPopup();
             window.requestAnimationFrame(() => {
                 const { editor: nextEditor } = getTaskCommentComposerElements();
@@ -7265,6 +7713,7 @@ function togglePersonalMode(select) {
                 return (USERS[userKeyA]?.sort || Number.MAX_SAFE_INTEGER) - (USERS[userKeyB]?.sort || Number.MAX_SAFE_INTEGER);
             });
             const filteredCommentItems = commentItems.filter((item) => !taskDetailCommentFilterKey || item.created_by === taskDetailCommentFilterKey);
+            const activeReplyComment = getTaskCommentById(normalizedState, currentTaskCommentReplyId);
             const commentSummaryHtml = `
                 <button type="button" class="task-checklist-summary-tag is-empty ${!taskDetailCommentFilterKey ? 'is-active' : ''}" onclick="toggleTaskCommentFilter('', event)">
                     <span class="task-checklist-summary-label">Tổng</span>
@@ -7287,14 +7736,80 @@ function togglePersonalMode(select) {
             const commentsHtml = filteredCommentItems.length
                 ? filteredCommentItems.map((item) => {
                     const author = USERS[item.created_by] || USERS[CURRENT_USER_ID];
+                    const repliedComment = item.reply_to_id ? getTaskCommentById(normalizedState, item.reply_to_id) : null;
+                    const repliedAuthor = repliedComment ? (USERS[repliedComment.created_by] || USERS[CURRENT_USER_ID]) : null;
+                    const quickReactionIconsHtml = TASK_COMMENT_REACTION_OPTIONS.map((reactionOption) => {
+                        const reactionUsers = Array.isArray(item.reactions?.[reactionOption.key]) ? item.reactions[reactionOption.key] : [];
+                        const isActive = reactionUsers.includes(CURRENT_USER_ID);
+                        return `
+                            <button
+                                type="button"
+                                class="task-comment-action-icon-btn ${isActive ? 'is-active' : ''}"
+                                title="${escapeHtml(reactionOption.label)}"
+                                aria-label="${escapeHtml(reactionOption.label)}"
+                                onclick="toggleTaskCommentReaction('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(reactionOption.key)}', event)"
+                            >${reactionOption.emoji}</button>
+                        `;
+                    }).join('');
+                    const isReactionMenuOpen = currentTaskCommentReactionMenuId === item.id;
+                    const reactionMenuHtml = `
+                        <div class="task-comment-action-icons">
+                            <button
+                                type="button"
+                                class="task-comment-action-placeholder ${isReactionMenuOpen ? 'is-open' : ''}"
+                                title="Thả reaction"
+                                aria-label="Thả reaction"
+                                onclick="toggleTaskCommentReactionMenu('${escapeHtml(item.id)}', event)"
+                            >
+                                <i class="fa-regular fa-face-smile"></i>
+                            </button>
+                            ${isReactionMenuOpen ? `<div class="task-comment-action-menu" onclick="event.stopPropagation()">${quickReactionIconsHtml}</div>` : ''}
+                        </div>
+                    `;
+                    const reactionsHtml = TASK_COMMENT_REACTION_OPTIONS.map((reactionOption) => {
+                        const reactionUsers = Array.isArray(item.reactions?.[reactionOption.key]) ? item.reactions[reactionOption.key] : [];
+                        const isActive = reactionUsers.includes(CURRENT_USER_ID);
+                        return `
+                            <button
+                                type="button"
+                                class="task-comment-reaction-btn ${isActive ? 'is-active' : ''}"
+                                aria-label="${escapeHtml(reactionOption.label)}"
+                                onclick="toggleTaskCommentReaction('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(reactionOption.key)}', event)"
+                            >
+                                <span class="task-comment-reaction-emoji">${reactionOption.emoji}</span>
+                                <span class="task-comment-reaction-count">${reactionUsers.length}</span>
+                            </button>
+                        `;
+                    }).join('');
+                    const replyQuoteHtml = repliedComment
+                        ? `
+                            <div class="task-comment-reply-quote" role="button" tabindex="0" style="display:block;width:100%;text-align:left;" onclick="scrollToTaskComment('${escapeHtml(repliedComment.id)}', event)" onkeydown="if (event.key === 'Enter' || event.key === ' ') scrollToTaskComment('${escapeHtml(repliedComment.id)}', event)">
+                                <span class="task-comment-reply-label" style="display:block;width:100%;text-align:left;">
+                                    <i class="fa-solid fa-reply"></i>
+                                    Reply to ${escapeHtml(repliedAuthor?.full_name || repliedComment.created_by || 'User')}
+                                </span>
+                                <div class="task-comment-reply-preview" style="display:block;width:100%;margin:0;text-align:left;overflow:hidden;">
+                                    <div class="task-comment-reply-preview-text" style="display:block;float:left;clear:both;max-width:100%;margin:0;text-align:left;">${escapeHtml(getTaskCommentPreviewText(repliedComment) || 'Comment gốc không có nội dung text')}</div>
+                                </div>
+                            </div>
+                        `
+                        : '';
                     return `
-                        <div class="task-comment-item">
+                        <div class="task-comment-item" data-comment-id="${escapeHtml(item.id)}">
                             <div class="task-comment-content">
                                 <div class="task-comment-meta">
-                                    <span class="task-comment-author-tag" style="background:${escapeHtml(author?.color || '#2563eb')}">${escapeHtml(author?.full_name || item.created_by || 'User')}</span>
-                                    <span class="task-comment-time">${escapeHtml(formatTaskCommentTimestamp(item.created_at))}</span>
+                                    <div class="task-comment-meta-main">
+                                        <span class="task-comment-author-tag" style="background:${escapeHtml(author?.color || '#2563eb')}">${escapeHtml(author?.full_name || item.created_by || 'User')}</span>
+                                        <span class="task-comment-time">${escapeHtml(formatTaskCommentTimestamp(item.created_at))}</span>
+                                    </div>
+                                    <div class="task-comment-actions">
+                                        ${reactionMenuHtml}
+                                        <button type="button" class="task-comment-action-btn" onclick="setTaskCommentReply('${escapeHtml(item.id)}', event)">Reply</button>
+                                    </div>
                                 </div>
+                                ${replyQuoteHtml}
                                 <div class="task-comment-body">${sanitizeTaskCommentHtml(item.content_html || '')}</div>
+                                <div class="task-comment-reactions" style="display:flex !important;align-items:center !important;gap:8px !important;flex-wrap:wrap !important;margin-top:8px !important;">${reactionsHtml}</div>
                             </div>
                         </div>
                     `;
@@ -7316,6 +7831,22 @@ function togglePersonalMode(select) {
                             </div>
                         </div>
                         <div class="task-comment-composer">
+                            ${activeReplyComment ? `
+                                <div class="task-comment-reply-banner">
+                                    <div class="task-comment-reply-banner-card" style="display:block;text-align:left;">
+                                        <span class="task-comment-reply-banner-meta" style="display:block;width:100%;text-align:left;">
+                                            <i class="fa-solid fa-reply"></i>
+                                            Replying to ${escapeHtml((USERS[activeReplyComment.created_by] || USERS[CURRENT_USER_ID])?.full_name || activeReplyComment.created_by || 'User')}
+                                        </span>
+                                        <div class="task-comment-reply-preview" style="display:block;width:100%;margin:0;text-align:left;overflow:hidden;">
+                                            <div class="task-comment-reply-preview-text" style="display:block;float:left;clear:both;max-width:100%;margin:0;text-align:left;">${escapeHtml(getTaskCommentPreviewText(activeReplyComment) || 'Comment gốc không có nội dung text')}</div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="task-comment-reply-banner-close" aria-label="Hủy reply" onclick="setTaskCommentReply('', event)">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            ` : ''}
                             <div class="task-comment-toolbar">
                                 <div class="task-comment-toolbar-group">
                                     <button type="button" class="task-comment-toolbar-btn" aria-label="In đậm" onclick="formatTaskComment('bold', event)"><i class="fa-solid fa-bold"></i></button>
@@ -7334,10 +7865,9 @@ function togglePersonalMode(select) {
                             ></div>
                             <div id="taskCommentMentionPopup" class="task-comment-mention-popup"></div>
                             <div class="task-comment-footer">
-                                <span class="task-comment-hint"></span>
-                                <button type="button" class="task-comment-submit-btn" onclick="submitTaskComment('${escapeHtml(normalizedState.ticket_id)}', event)">
+                                <button type="button" class="task-comment-submit-btn" title="${escapeHtml(getTaskCommentShortcutKeys().join('+'))}" onclick="submitTaskComment('${escapeHtml(normalizedState.ticket_id)}', event)">
                                     <i class="fa-regular fa-paper-plane"></i>
-                                    <span>Comment</span>
+                                    <span>${escapeHtml(getTaskCommentShortcutKeys().join('+'))}</span>
                                 </button>
                             </div>
                         </div>
@@ -7686,6 +8216,8 @@ function togglePersonalMode(select) {
                 openTaskChecklistDateItemId = null;
                 taskDetailCommentFilterKey = '';
                 taskCommentComposerDraftHtml = '';
+                currentTaskCommentReplyId = '';
+                currentTaskCommentReactionMenuId = '';
                 root.innerHTML = '';
                 return;
             }
@@ -7699,6 +8231,8 @@ function togglePersonalMode(select) {
                 openTaskChecklistDateItemId = null;
                 taskDetailCommentFilterKey = '';
                 taskCommentComposerDraftHtml = '';
+                currentTaskCommentReplyId = '';
+                currentTaskCommentReactionMenuId = '';
                 root.innerHTML = '';
                 taskDetailDrawerCloseTimeout = null;
             }, 340);
@@ -7852,8 +8386,11 @@ function togglePersonalMode(select) {
                 : renderAssigneeTags(normalizedState.assignees);
             const noteHtml = normalizedState.note
                 ? `
-                <div class="mt-1.5 pt-1 border-t border-dashed border-slate-200">
-                    <p class="task-note-text text-left text-[11px] light text-slate-500 leading-snug whitespace-pre-wrap break-words">*${normalizedState.note}</p>
+                <div class="task-card-note-shell">
+                    <div class="task-card-note-chip">
+                        <span class="task-card-note-label"><i class="fa-regular fa-note-sticky"></i> Note</span>
+                        <p class="task-note-text">${normalizedState.note}</p>
+                    </div>
                 </div>`
                 : '';
 
@@ -12131,6 +12668,7 @@ function openInlineForm() {
             closeMemberSingleLov();
             closeRoleScopeLov();
             closeStateColorLov();
+            closeTaskCommentReactionMenu();
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && document.querySelector('.task-detail-drawer-layer.is-open')) {
