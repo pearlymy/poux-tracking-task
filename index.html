@@ -527,6 +527,51 @@
             background: linear-gradient(315deg, rgba(0, 0, 0, 0.10) 0%, transparent 45%);
         }
 
+        .tag-status-lov {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 148px;
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid #dbe4f0;
+            background: #ffffff;
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
+            z-index: 50;
+        }
+
+        .tag-status-lov-option {
+            width: 100%;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 9px;
+            font-size: 11px;
+            font-weight: 800;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: 0;
+            cursor: pointer;
+        }
+
+        .tag-status-lov-option:hover,
+        .tag-status-lov-option.is-active {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .tag-status-lov-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--status-option-color);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 4px 10px color-mix(in srgb, var(--status-option-color) 24%, transparent);
+        }
+
         .tag-name.workflow-backlog {
             --dot-color: #94a3b8;
         }
@@ -3493,6 +3538,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .task-comment-reaction-btn {
+            position: relative;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -3521,6 +3567,28 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
         }
 
+        .task-comment-reaction-btn[data-reactors]:hover::after,
+        .task-comment-reaction-btn[data-reactors]:focus-visible::after {
+            content: attr(data-reactors);
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            width: max-content;
+            max-width: 220px;
+            padding: 7px 9px;
+            border-radius: 8px;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.35;
+            text-align: left;
+            white-space: normal;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+            z-index: 30;
+            pointer-events: none;
+        }
+
         .task-comment-reaction-emoji {
             font-size: 14px;
             line-height: 1;
@@ -3535,8 +3603,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .task-comment-reply-quote {
             display: block;
             width: 100%;
-            padding: 10px 12px;
-            border-radius: 14px;
+            padding: 7px 11px 8px;
+            border-radius: 8px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
             cursor: pointer;
@@ -3556,11 +3624,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             align-items: center;
             width: 100%;
             color: #2563eb;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             text-align: left;
+            line-height: 1;
             margin-bottom: 6px;
         }
 
@@ -3569,7 +3638,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             width: 100%;
             align-self: stretch;
             font-size: 11px;
-            line-height: 1.5;
+            line-height: 1.35;
             color: #475569;
             text-align: left;
             white-space: pre-wrap;
@@ -3587,6 +3656,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             align-self: stretch !important;
         }
 
+        .task-comment-item .task-comment-reply-quote .task-comment-reply-preview {
+            margin-top: 0 !important;
+            line-height: 1.35 !important;
+            white-space: normal !important;
+        }
+
         .task-comment-reply-preview-text {
             display: block !important;
             float: left !important;
@@ -3597,12 +3672,19 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             text-align: left !important;
         }
 
+        .task-comment-reply-quote .task-comment-reply-preview-text {
+            float: none !important;
+            clear: none !important;
+            line-height: 1.35 !important;
+            white-space: normal !important;
+        }
+
         .task-comment-reply-banner {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            gap: 12px;
-            padding: 12px 14px 0;
+            gap: 10px;
+            padding: 9px 12px 0;
         }
 
         .task-comment-reply-banner-card {
@@ -3610,9 +3692,9 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
-            padding: 10px 12px;
-            border-radius: 14px;
+            gap: 4px;
+            padding: 8px 10px;
+            border-radius: 10px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
             text-align: left;
@@ -3631,8 +3713,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
         .task-comment-reply-banner-close {
             flex-shrink: 0;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 999px;
             border: 1px solid #dbeafe;
             background: #ffffff;
@@ -4608,7 +4690,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             grid-template-columns: 24px 28px minmax(0, 1fr) max-content;
             gap: 6px;
             align-items: start;
-            padding: 12px 0;
+            padding: 8px 0 0;
             border-bottom: 1px solid #e2e8f0;
         }
 
@@ -4677,7 +4759,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .task-document-display {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             min-height: auto;
             justify-content: flex-start;
             grid-column: 1 / 2;
@@ -4693,7 +4775,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
         .task-document-display-note {
             font-size: 12px;
-            line-height: 1.6;
+            line-height: 1.35;
             color: #64748b;
             white-space: pre-wrap;
             word-break: break-word;
@@ -5440,6 +5522,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         let taskCommentMentionActiveIndex = 0;
         let currentTaskCommentReplyId = '';
         let currentTaskCommentReactionMenuId = '';
+        let openAssigneeStatusLovKey = '';
         const TASK_COMMENT_REACTION_OPTIONS = [
             { key: 'like', emoji: '👍', label: 'Like' },
             { key: 'haha', emoji: '😂', label: 'Haha' },
@@ -5535,12 +5618,31 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             return `count-${slugifyStateCode(stateCode)}`;
         }
 
+        function getWorkflowStates() {
+            if (typeof ADMIN_SEED !== 'undefined' && Array.isArray(ADMIN_SEED.states) && ADMIN_SEED.states.length) {
+                return ADMIN_SEED.states
+                    .filter((state) => state.is_active !== false)
+                    .slice()
+                    .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+                    .map((state) => ({
+                        stateCode: state.code,
+                        stateName: state.label,
+                        description: state.description || '',
+                        orderIndex: state.display_order || 0,
+                        colorTheme: state.color_theme || 'slate',
+                        legacyStorageKey: `kanban_${String(state.code || '').toLowerCase()}`
+                    }))
+                    .filter((state) => state.stateCode);
+            }
+            return KANBAN_STATES;
+        }
+
         function getStateConfig(stateCode) {
-            return KANBAN_STATES.find(state => state.stateCode === stateCode);
+            return getWorkflowStates().find(state => state.stateCode === stateCode);
         }
 
         function getFirstStateConfig() {
-            return KANBAN_STATES[0];
+            return getWorkflowStates()[0] || KANBAN_STATES[0];
         }
 
         function getDefaultStateCode() {
@@ -5551,7 +5653,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             const board = document.getElementById('kanbanBoard');
             if (!board) return;
 
-            board.innerHTML = KANBAN_STATES.map((state, index) => {
+            board.innerHTML = getWorkflowStates().map((state, index) => {
                 const isEntryState = index === 0;
                 const addButtonHtml = isEntryState ? `
                     <div class="kanban-add-wrap">
@@ -5940,25 +6042,6 @@ function togglePersonalMode(select) {
             return getUsersByTeamCode(getCurrentTeamCode());
         }
 
-        const ASSIGNEE_STATUSES = {
-            TODO: { id: 'TODO', label: 'Chua xu ly', dotColor: '#ef4444' },
-            IN_PROGRESS: { id: 'IN_PROGRESS', label: 'Dang xu ly', dotColor: '#f59e0b' },
-            DONE: { id: 'DONE', label: 'Hoan thanh', dotColor: '#22c55e' }
-        };
-        const DEFAULT_ASSIGNEE_STATUS = 'TODO';
-        const ASSIGNEE_STATUS_FLOW = ['TODO', 'IN_PROGRESS', 'DONE'];
-
-        function getAssigneeStatusMeta(statusId) {
-            return ASSIGNEE_STATUSES[statusId] || ASSIGNEE_STATUSES[DEFAULT_ASSIGNEE_STATUS];
-        }
-
-        function getAssigneeStatusClass(statusId) {
-            const normalizedStatusId = getAssigneeStatusMeta(statusId).id;
-            if (normalizedStatusId === 'IN_PROGRESS') return 'assignee-status-in-progress';
-            if (normalizedStatusId === 'DONE') return 'assignee-status-done';
-            return 'assignee-status-todo';
-        }
-
         function getWorkflowStateClass(stateCode) {
             const normalizedStateCode = getStateConfig(stateCode)?.stateCode || getDefaultStateCode().stateCode;
             if (normalizedStateCode === 'IN_PROGRESS') return 'workflow-in-progress';
@@ -5974,7 +6057,7 @@ function togglePersonalMode(select) {
             if (typeof record === 'string') {
                 const normalizedUserKey = normalizeUserKey(record);
                 return normalizedUserKey && USERS[normalizedUserKey]
-                    ? { user_key: normalizedUserKey, status: DEFAULT_ASSIGNEE_STATUS, workflow_state: getDefaultStateCode().stateCode }
+                    ? { user_key: normalizedUserKey, workflow_state: getDefaultStateCode().stateCode }
                     : null;
             }
 
@@ -5983,7 +6066,6 @@ function togglePersonalMode(select) {
 
             return {
                 user_key: normalizedUserKey,
-                status: getAssigneeStatusMeta(record.status).id,
                 workflow_state: getStateConfig(record.workflow_state || record.workflowState)?.stateCode || getDefaultStateCode().stateCode
             };
         }
@@ -5993,7 +6075,7 @@ function togglePersonalMode(select) {
                 existingAssignees
                     .map((record) => normalizeAssigneeRecord(record))
                     .filter(Boolean)
-                    .map((record) => [record.user_key, { status: record.status, workflow_state: record.workflow_state }])
+                    .map((record) => [record.user_key, { workflow_state: record.workflow_state }])
             );
 
             return userKeys
@@ -6001,7 +6083,6 @@ function togglePersonalMode(select) {
                 .filter((userKey) => userKey && USERS[userKey])
                 .map((userKey) => ({
                     user_key: userKey,
-                    status: existingStatusMap.get(userKey)?.status || DEFAULT_ASSIGNEE_STATUS,
                     workflow_state: existingStatusMap.get(userKey)?.workflow_state || getDefaultStateCode().stateCode
                 }));
         }
@@ -6153,41 +6234,64 @@ function togglePersonalMode(select) {
             });
         }
 
-        function applyAssigneeTagPresentation(tag, assigneeRecord) {
+        function getAssigneeStatusLovKey(ticketId, userKey) {
+            return `${ticketId || ''}::${userKey || ''}`;
+        }
+
+        function buildAssigneeStatusLovHtml(ticketId, assigneeRecord) {
+            const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
+            if (!ticketId || !normalizedAssignee) return '';
+            const lovKey = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key);
+            if (openAssigneeStatusLovKey !== lovKey) return '';
+            return `
+                <div class="tag-status-lov" onclick="event.stopPropagation()">
+                    ${getWorkflowStates().map((state) => {
+                        const stateMeta = getStateConfig(state.stateCode) || getDefaultStateCode();
+                        const isActive = normalizedAssignee.workflow_state === stateMeta.stateCode;
+                        const stateColor = getColorOptionMeta(stateMeta.colorTheme).hex;
+                        return `
+                            <button type="button" class="tag-status-lov-option ${isActive ? 'is-active' : ''}" style="--status-option-color:${stateColor}" onclick="selectAssigneeStatus('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', '${escapeHtml(stateMeta.stateCode)}', event)">
+                                <span class="tag-status-lov-dot" aria-hidden="true"></span>
+                                <span>${escapeHtml(stateMeta.stateName)}</span>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function applyAssigneeTagPresentation(tag, assigneeRecord, ticketId = '') {
             if (!tag || !assigneeRecord) return;
             const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
             if (!normalizedAssignee) return;
             const user = USERS[normalizedAssignee.user_key];
             if (!user) return '';
-            const statusMeta = getAssigneeStatusMeta(normalizedAssignee.status);
             const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
+            const workflowColor = getColorOptionMeta(workflowMeta.colorTheme).hex;
             tag.dataset.userKey = normalizedAssignee.user_key;
-            tag.dataset.status = statusMeta.id;
             tag.dataset.workflowState = workflowMeta.stateCode;
-            tag.setAttribute('onclick', 'cycleAssigneeStatus(this, event)');
-            tag.setAttribute('title', `${user.full_name} - ${workflowMeta.stateName}`);
-            tag.style.backgroundColor = user.color;
-            tag.style.borderColor = user.color;
-            tag.style.color = '#ffffff';
+            tag.setAttribute('onclick', `toggleAssigneeStatusLov('${ticketId}', '${normalizedAssignee.user_key}', event)`);
             tag.className = `tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}`;
-            tag.innerHTML = `<span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span>`;
+            tag.setAttribute('title', `${user.full_name} - ${workflowMeta.stateName}`);
+            tag.setAttribute('style', `--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;`);
+            tag.innerHTML = `<span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}`;
         }
 
-        function createTagHtml(assigneeRecord) {
+        function createTagHtml(assigneeRecord, ticketId = '') {
             const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
             if (!normalizedAssignee) return '';
             const user = USERS[normalizedAssignee.user_key];
             if (!user) return '';
-            const statusMeta = getAssigneeStatusMeta(normalizedAssignee.status);
             const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
-            return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}" data-user-key="${normalizedAssignee.user_key}" data-status="${statusMeta.id}" data-workflow-state="${workflowMeta.stateCode}" onclick="cycleAssigneeStatus(this, event)" title="${user.full_name} - ${workflowMeta.stateName}" style="background-color: ${user.color}; border: 1px solid ${user.color}; color: #ffffff;"><span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span></div>`;
+            const workflowColor = getColorOptionMeta(workflowMeta.colorTheme).hex;
+            return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}" data-user-key="${normalizedAssignee.user_key}" data-workflow-state="${workflowMeta.stateCode}" onclick="toggleAssigneeStatusLov('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', event)" title="${escapeHtml(`${user.full_name} - ${workflowMeta.stateName}`)}" style="--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;"><span class="tag-label">${escapeHtml(user.full_name)}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}</div>`;
         }
 
-        function renderAssigneeTags(assignees) {
+        function renderAssigneeTags(assignees, ticketId = '') {
             if (!assignees.length) {
                 return `<div class="tag-name bg-slate-100 border-slate-200 text-slate-400">Chưa giao</div>`;
             }
-            return assignees.map((record) => createTagHtml(record)).join('');
+            return assignees.map((record) => createTagHtml(record, ticketId)).join('');
         }
 
         function getTaskDateMeta(dateRaw) {
@@ -6212,13 +6316,6 @@ function togglePersonalMode(select) {
             else statusTextHtml = `<span class="text-[10px] font-bold text-blue-500 pl-4">Còn ${diffDays} ngày</span>`;
 
             return { dateStr, statusTextHtml };
-        }
-
-        function getTaskDetailStatusChipClass(statusId) {
-            const normalizedStatusId = getAssigneeStatusMeta(statusId).id;
-            if (normalizedStatusId === 'IN_PROGRESS') return 'is-in-progress';
-            if (normalizedStatusId === 'DONE') return 'is-done';
-            return 'is-todo';
         }
 
         function getTaskDetailStateBadgeClass(stateCode) {
@@ -6377,7 +6474,7 @@ function togglePersonalMode(select) {
             if (!itemId) return;
             const input = document.querySelector(`#taskDocumentList [data-document-id="${itemId}"] .task-document-title-input`);
             if (!input) return;
-            input.focus();
+            input.focus({ preventScroll: true });
             const valueLength = input.value?.length || 0;
             if (typeof input.setSelectionRange === 'function') {
                 input.setSelectionRange(valueLength, valueLength);
@@ -6773,7 +6870,14 @@ function togglePersonalMode(select) {
             const year = date.getFullYear();
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
-            return `${day}/${month}/${year} ${hours}:${minutes}`;
+            const today = new Date();
+            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const commentDateStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const diffDays = Math.floor((todayStart - commentDateStart) / 86400000);
+            const timeLabel = `${hours}:${minutes}`;
+            const dateTimeLabel = `${day}/${month}/${year} ${timeLabel}`;
+            if (diffDays <= 0) return `Hôm nay ${timeLabel}`;
+            return `${diffDays} ngày trước · ${dateTimeLabel}`;
         }
 
         function getTaskCommentShortcutKeys() {
@@ -7072,9 +7176,9 @@ function togglePersonalMode(select) {
                 content_html: contentHtml,
                 reply_to_id: currentTaskCommentReplyId
             });
-            updateTaskComments(ticketId, (comments) => [newComment, ...comments]);
             taskCommentComposerDraftHtml = '';
             currentTaskCommentReplyId = '';
+            updateTaskComments(ticketId, (comments) => [newComment, ...comments]);
             closeTaskCommentMentionPopup();
             window.requestAnimationFrame(() => {
                 const { editor: nextEditor } = getTaskCommentComposerElements();
@@ -7120,14 +7224,14 @@ function togglePersonalMode(select) {
             if (!itemId) return;
             const input = document.querySelector(`#taskChecklistList [data-checklist-id="${itemId}"] .task-checklist-title-input`);
             if (!input) return;
-            input.focus();
+            input.focus({ preventScroll: true });
             const valueLength = input.value?.length || 0;
             if (typeof input.setSelectionRange === 'function') {
                 input.setSelectionRange(valueLength, valueLength);
             }
         }
 
-        function updateTaskChecklist(ticketId, updater) {
+        function updateTaskChecklist(ticketId, updater, options = {}) {
             updateBoardTicket(ticketId, (ticketState) => {
                 const checklist = (ticketState.checklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean);
                 const nextChecklist = typeof updater === 'function' ? updater(checklist, ticketState) : updater;
@@ -7136,6 +7240,10 @@ function togglePersonalMode(select) {
                     checklist: (nextChecklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean)
                 };
             });
+            if (options.renderDrawer === false) {
+                localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardTickets));
+                return;
+            }
             saveBoardState();
             if (currentTaskDetailTicketId === ticketId) {
                 renderTaskDetailsDrawer();
@@ -7167,7 +7275,7 @@ function togglePersonalMode(select) {
         function updateTaskChecklistTitle(ticketId, itemId, value) {
             updateTaskChecklist(ticketId, (checklist) => checklist.map((item) => (
                 item.id === itemId ? { ...item, title: value } : item
-            )));
+            )), { renderDrawer: false });
         }
 
         function updateTaskChecklistAssignee(ticketId, itemId, value) {
@@ -7458,10 +7566,10 @@ function togglePersonalMode(select) {
             const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
             const boardAssigneeHtml = normalizedState.is_personal
                 ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
-                : renderAssigneeTags(normalizedState.assignees);
+                : renderAssigneeTags(normalizedState.assignees, normalizedState.ticket_id);
             const boardNoteHtml = normalizedState.note
                 ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
-                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">* ${escapeHtml(normalizedState.note)}</p>
+                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">${escapeHtml(normalizedState.note)}</p>
                    </div>`
                 : '';
             const checklistItems = (normalizedState.checklist || []).map((item, index) => normalizeChecklistItem(item, index)).filter(Boolean);
@@ -7614,7 +7722,7 @@ function togglePersonalMode(select) {
                     `;
                 }).join('')
                 : (taskDetailChecklistFilterKey || taskDetailChecklistStatusFilter !== 'all')
-                    ? '<div class="task-detail-empty">Không có checklist nào khớp bộ lọc hiện tại.</div>'
+                    ? `<button type="button" class="task-checklist-empty-add" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)"><i class="fa-solid fa-plus"></i><span>Checklist</span></button>`
                     : `<button type="button" class="task-checklist-empty-add" onclick="addTaskChecklistItem('${escapeHtml(normalizedState.ticket_id)}', event)"><i class="fa-solid fa-plus"></i><span>Thêm checklist</span></button>`;
             const documentItems = (normalizedState.documents || []).map((item, index) => normalizeTaskDocumentItem(item, index)).filter(Boolean);
             const documentSummaryHtml = `
@@ -7738,6 +7846,28 @@ function togglePersonalMode(select) {
                     const author = USERS[item.created_by] || USERS[CURRENT_USER_ID];
                     const repliedComment = item.reply_to_id ? getTaskCommentById(normalizedState, item.reply_to_id) : null;
                     const repliedAuthor = repliedComment ? (USERS[repliedComment.created_by] || USERS[CURRENT_USER_ID]) : null;
+                    const activeReactionsHtml = TASK_COMMENT_REACTION_OPTIONS.map((reactionOption) => {
+                        const reactionUsers = Array.isArray(item.reactions?.[reactionOption.key]) ? item.reactions[reactionOption.key] : [];
+                        if (!reactionUsers.length) return '';
+                        const isActive = reactionUsers.includes(CURRENT_USER_ID);
+                        const reactionUserNames = reactionUsers
+                            .map((userKey) => USERS[userKey]?.full_name || userKey)
+                            .filter(Boolean)
+                            .join(', ');
+                        return `
+                            <button
+                                type="button"
+                                class="task-comment-reaction-btn ${isActive ? 'is-active' : ''}"
+                                aria-label="${escapeHtml(`${reactionOption.label}: ${reactionUserNames}`)}"
+                                title="${escapeHtml(reactionUserNames)}"
+                                data-reactors="${escapeHtml(reactionUserNames)}"
+                                onclick="toggleTaskCommentReaction('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(reactionOption.key)}', event)"
+                            >
+                                <span class="task-comment-reaction-emoji">${reactionOption.emoji}</span>
+                                <span class="task-comment-reaction-count">${reactionUsers.length}</span>
+                            </button>
+                        `;
+                    }).join('');
                     const quickReactionIconsHtml = TASK_COMMENT_REACTION_OPTIONS.map((reactionOption) => {
                         const reactionUsers = Array.isArray(item.reactions?.[reactionOption.key]) ? item.reactions[reactionOption.key] : [];
                         const isActive = reactionUsers.includes(CURRENT_USER_ID);
@@ -7754,6 +7884,7 @@ function togglePersonalMode(select) {
                     const isReactionMenuOpen = currentTaskCommentReactionMenuId === item.id;
                     const reactionMenuHtml = `
                         <div class="task-comment-action-icons">
+                            ${activeReactionsHtml}
                             <button
                                 type="button"
                                 class="task-comment-action-placeholder ${isReactionMenuOpen ? 'is-open' : ''}"
@@ -7766,21 +7897,6 @@ function togglePersonalMode(select) {
                             ${isReactionMenuOpen ? `<div class="task-comment-action-menu" onclick="event.stopPropagation()">${quickReactionIconsHtml}</div>` : ''}
                         </div>
                     `;
-                    const reactionsHtml = TASK_COMMENT_REACTION_OPTIONS.map((reactionOption) => {
-                        const reactionUsers = Array.isArray(item.reactions?.[reactionOption.key]) ? item.reactions[reactionOption.key] : [];
-                        const isActive = reactionUsers.includes(CURRENT_USER_ID);
-                        return `
-                            <button
-                                type="button"
-                                class="task-comment-reaction-btn ${isActive ? 'is-active' : ''}"
-                                aria-label="${escapeHtml(reactionOption.label)}"
-                                onclick="toggleTaskCommentReaction('${escapeHtml(normalizedState.ticket_id)}', '${escapeHtml(item.id)}', '${escapeHtml(reactionOption.key)}', event)"
-                            >
-                                <span class="task-comment-reaction-emoji">${reactionOption.emoji}</span>
-                                <span class="task-comment-reaction-count">${reactionUsers.length}</span>
-                            </button>
-                        `;
-                    }).join('');
                     const replyQuoteHtml = repliedComment
                         ? `
                             <div class="task-comment-reply-quote" role="button" tabindex="0" style="display:block;width:100%;text-align:left;" onclick="scrollToTaskComment('${escapeHtml(repliedComment.id)}', event)" onkeydown="if (event.key === 'Enter' || event.key === ' ') scrollToTaskComment('${escapeHtml(repliedComment.id)}', event)">
@@ -7809,7 +7925,6 @@ function togglePersonalMode(select) {
                                 </div>
                                 ${replyQuoteHtml}
                                 <div class="task-comment-body">${sanitizeTaskCommentHtml(item.content_html || '')}</div>
-                                <div class="task-comment-reactions" style="display:flex !important;align-items:center !important;gap:8px !important;flex-wrap:wrap !important;margin-top:8px !important;">${reactionsHtml}</div>
                             </div>
                         </div>
                     `;
@@ -7978,7 +8093,7 @@ function togglePersonalMode(select) {
                             </button>
                         </div>
                         ${normalizedState.desc ? `<p class="mt-5 text-[14px] text-slate-500 leading-6">${escapeHtml(normalizedState.desc)}</p>` : ''}
-                        <div class="${normalizedState.desc ? 'mt-5' : 'mt-0'} flex justify-between items-start gap-4 ${normalizedState.desc ? 'pt-4 border-t border-slate-100' : ''}">
+                        <div class="${normalizedState.desc ? 'mt-5' : 'mt-4'} flex justify-between items-start gap-4 pt-4 border-t border-slate-100">
                             <div class="flex flex-col gap-1">
                                 <div class="flex items-center gap-2 text-[14px] font-semibold text-slate-500">
                                     <i class="fa-regular fa-calendar"></i>
@@ -8051,10 +8166,10 @@ function togglePersonalMode(select) {
                 : (getStateConfig(getTicketWorkflowState(normalizedState, trackingUserKey)) || getDefaultStateCode());
             const boardAssigneeHtml = normalizedState.is_personal
                 ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task cá nhân"></div>`
-                : renderAssigneeTags(normalizedState.assignees);
+                : renderAssigneeTags(normalizedState.assignees, normalizedState.ticket_id);
             const boardNoteHtml = normalizedState.note
                 ? `<div class="mt-3 pt-3 border-t border-dashed border-slate-200">
-                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">* ${escapeHtml(normalizedState.note)}</p>
+                        <p class="text-left text-[12px] text-slate-600 leading-6 whitespace-pre-wrap break-words">${escapeHtml(normalizedState.note)}</p>
                    </div>`
                 : '';
 
@@ -8077,7 +8192,7 @@ function togglePersonalMode(select) {
                             </div>
                             <div class="task-detail-section">
                                 ${normalizedState.desc ? `<p class="text-[14px] text-slate-500 leading-6">${escapeHtml(normalizedState.desc)}</p>` : ''}
-                                <div class="${normalizedState.desc ? 'mt-5' : ''} flex justify-between items-start gap-4 ${normalizedState.desc ? 'pt-4 border-t border-slate-100' : ''}">
+                                <div class="${normalizedState.desc ? 'mt-5' : 'mt-4'} flex justify-between items-start gap-4 pt-4 border-t border-slate-100">
                                     <div class="flex flex-col gap-1">
                                         <div class="flex items-center gap-2 text-[14px] font-semibold text-slate-500">
                                             <i class="fa-regular fa-calendar"></i>
@@ -8098,7 +8213,7 @@ function togglePersonalMode(select) {
         }
 
         function renderTaskDetailsDrawer(options = {}) {
-            const { animate = false } = options;
+            const { animate = false, preserveScroll = true } = options;
             const root = document.getElementById('taskDetailsDrawerRoot');
             if (!root) return;
 
@@ -8109,11 +8224,18 @@ function togglePersonalMode(select) {
             }
 
             const hadOpenDrawer = !!root.querySelector('.task-detail-drawer-layer.is-open');
+            const previousDrawer = root.querySelector('.task-detail-drawer');
+            const previousScrollTop = previousDrawer ? previousDrawer.scrollTop : 0;
+            const shouldRestoreScroll = preserveScroll && hadOpenDrawer;
             root.innerHTML = buildTaskDetailsDrawerHtmlV2(ticketState);
             const drawerLayer = root.querySelector('.task-detail-drawer-layer');
             if (!drawerLayer) return;
+            const nextDrawer = root.querySelector('.task-detail-drawer');
             if (!animate || hadOpenDrawer) {
                 drawerLayer.classList.add('is-open');
+            }
+            if (shouldRestoreScroll && nextDrawer) {
+                nextDrawer.scrollTop = previousScrollTop;
             }
             root.querySelectorAll('.task-checklist-title-input').forEach((textarea) => {
                 autoResize(textarea);
@@ -8163,6 +8285,11 @@ function togglePersonalMode(select) {
                     window.requestAnimationFrame(() => {
                         drawerLayer.classList.add('is-open');
                     });
+                });
+            }
+            if (shouldRestoreScroll && nextDrawer) {
+                window.requestAnimationFrame(() => {
+                    nextDrawer.scrollTop = previousScrollTop;
                 });
             }
         }
@@ -8383,7 +8510,7 @@ function togglePersonalMode(select) {
             const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
             const picsHtml = normalizedState.is_personal
                 ? `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`
-                : renderAssigneeTags(normalizedState.assignees);
+                : renderAssigneeTags(normalizedState.assignees, normalizedState.ticket_id);
             const noteHtml = normalizedState.note
                 ? `
                 <div class="task-card-note-shell">
@@ -8407,7 +8534,9 @@ function togglePersonalMode(select) {
                     </button>
                 </div>
                 <h4 class="task-title font-semibold text-[16px] text-blue-950 group-hover:text-blue-600 transition-colors mb-2 leading-tight pr-8">${normalizedState.title}</h4>
-                <p class="task-desc text-[12px] text-slate-500 leading-relaxed ${normalizedState.desc ? 'mb-4' : 'hidden'}">${normalizedState.desc}</p>
+                ${normalizedState.desc
+                    ? `<p class="task-desc text-[12px] text-slate-500 leading-relaxed mb-4">${normalizedState.desc}</p>`
+                    : ''}
                 <div class="flex justify-between items-start pt-3 border-t border-slate-100">
                     <div class="flex flex-col gap-0.5">
                         <div class="flex items-center gap-1.5 text-[12px] font-semibold text-slate-400">
@@ -8461,28 +8590,47 @@ function togglePersonalMode(select) {
             syncTaskDetailsDrawer();
         }
 
-        function cycleAssigneeStatus(tag, event) {
-            if (event) event.stopPropagation();
-            const card = tag.closest('.task-card');
-            const userKey = normalizeUserKey(tag.dataset.userKey);
-            if (!card || !userKey) return;
+        function toggleAssigneeStatusLov(ticketId, userKey, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const normalizedUserKey = normalizeUserKey(userKey);
+            if (!ticketId || !normalizedUserKey) return;
+            const lovKey = getAssigneeStatusLovKey(ticketId, normalizedUserKey);
+            openAssigneeStatusLovKey = openAssigneeStatusLovKey === lovKey ? '' : lovKey;
+            renderBoardTickets();
+        }
 
-            const ticketState = getCardState(card);
+        function selectAssigneeStatus(ticketId, userKey, stateCode, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const normalizedUserKey = normalizeUserKey(userKey);
+            const stateMeta = getStateConfig(stateCode) || getDefaultStateCode();
+            const ticketState = getTaskDetailById(ticketId);
             if (!ticketState || ticketState.is_personal) return;
 
             const updatedAssignees = ticketState.assignees.map((record) => {
-                if (record.user_key !== userKey) return record;
-                const currentIndex = ASSIGNEE_STATUS_FLOW.indexOf(record.status);
-                const nextStatus = ASSIGNEE_STATUS_FLOW[(currentIndex + 1) % ASSIGNEE_STATUS_FLOW.length];
-                return { ...record, status: nextStatus };
+                if (record.user_key !== normalizedUserKey) return record;
+                return { ...record, workflow_state: stateMeta.stateCode };
             });
 
+            openAssigneeStatusLovKey = '';
             updateBoardTicket(ticketState.ticket_id, {
                 ...ticketState,
                 assignees: updatedAssignees
             });
-            renderBoardTickets();
             saveBoardState();
+        }
+
+        function closeAssigneeStatusLov() {
+            if (!openAssigneeStatusLovKey) return;
+            openAssigneeStatusLovKey = '';
+            renderBoardTickets();
+        }
+
+        function cycleAssigneeStatus(tag, event) {
+            const card = tag?.closest?.('.task-card');
+            const ticketId = card?.dataset?.ticketId || currentTaskDetailTicketId || '';
+            toggleAssigneeStatusLov(ticketId, tag?.dataset?.userKey || '', event);
         }
 
         function generateTicketId() {
@@ -8518,7 +8666,7 @@ function togglePersonalMode(select) {
         // 1. HỆ THỐNG LƯU TRỮ (LOCAL STORAGE)
         // ==========================================
         function updateCounts() {
-            KANBAN_STATES.forEach(state => {
+            getWorkflowStates().forEach(state => {
                 const countEl = document.getElementById(getStateCountId(state.stateCode));
                 const columnEl = document.getElementById(getStateColumnId(state.stateCode));
                 if (countEl && columnEl) {
@@ -8538,7 +8686,7 @@ function togglePersonalMode(select) {
             const legacyState = {};
             let hasLegacyData = false;
 
-            KANBAN_STATES.forEach(state => {
+            getWorkflowStates().forEach(state => {
                 if (!state.legacyStorageKey) return;
                 const raw = localStorage.getItem(state.legacyStorageKey);
                 if (!raw) return;
@@ -8573,7 +8721,7 @@ function togglePersonalMode(select) {
             if (Array.isArray(boardState)) {
                 boardTickets = boardState.map((ticketState) => normalizeTicketState(ticketState)).filter(Boolean);
             } else if (boardState && typeof boardState === 'object') {
-                KANBAN_STATES.forEach((state) => {
+                getWorkflowStates().forEach((state) => {
                     const tasks = Array.isArray(boardState[state.stateCode]) ? boardState[state.stateCode] : [];
                     tasks.forEach((html) => {
                         const template = document.createElement('template');
@@ -8629,10 +8777,16 @@ function togglePersonalMode(select) {
 
         function initSortableColumns() {
             sortableInstances.forEach(instance => instance.destroy());
-            sortableInstances = KANBAN_STATES
+            sortableInstances = getWorkflowStates()
                 .map(state => document.getElementById(getStateColumnId(state.stateCode)))
                 .filter(Boolean)
                 .map(columnEl => new Sortable(columnEl, sortableConfig));
+        }
+
+        function syncWorkflowStatesToBoard() {
+            renderKanbanBoard();
+            initSortableColumns();
+            renderBoardTickets();
         }
 
         // ==========================================
@@ -12499,6 +12653,7 @@ function openInlineForm() {
             isStateColorLovOpen = false;
             currentStateSelectionId = nextState.id;
             renderAdminStatesPanel();
+            syncWorkflowStatesToBoard();
         }
 
         function ensureStatePlaceholder() {
@@ -12604,6 +12759,7 @@ function openInlineForm() {
             showAdminToast(`Đã cập nhật thứ tự state ${movedState.label}.`);
             handleStateDragEnd();
             renderAdminStatesPanel();
+            syncWorkflowStatesToBoard();
         }
 
         function handleStateDragEnd() {
@@ -12669,6 +12825,7 @@ function openInlineForm() {
             closeRoleScopeLov();
             closeStateColorLov();
             closeTaskCommentReactionMenu();
+            closeAssigneeStatusLov();
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && document.querySelector('.task-detail-drawer-layer.is-open')) {

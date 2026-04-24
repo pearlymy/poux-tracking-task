@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Builder</title>
+    <style>
+        :root {
+            --bg: #f5f1ea;
+            --sidebar: rgba(255, 255, 255, 0.86);
+            --paper: #fffdf9;
+            --line: #e8ddd0;
+            --line-strong: #d7c5b2;
+            --text: #2f2822;
+            --muted: #7e7062;
+            --accent: #2b6de0;
+            --accent-soft: #edf3ff;
+            --warn: #b7791f;
+            --warn-soft: #fff7e8;
+            --success: #228257;
+            --success-soft: #edf9f1;
+            --danger: #bf3d57;
+            --danger-soft: #fff1f4;
+            --shadow: 0 24px 60px rgba(60, 43, 25, 0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.96), rgba(255,255,255,0) 32%),
+                linear-gradient(180deg, #f8f5ef 0, var(--bg) 360px),
+                var(--bg);
+            line-height: 1.6;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        .app {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 22px 18px;
+            overflow: auto;
+            border-right: 1px solid var(--line);
+            background: var(--sidebar);
+            backdrop-filter: blur(14px);
+        }
+
+        .brand {
+            display: grid;
+            grid-template-columns: 42px minmax(0, 1fr);
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: var(--accent);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 14px 28px rgba(43, 109, 224, 0.22);
+        }
+
+        .brand-label {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 700;
+        }
+
+        .brand-title {
+            margin: 2px 0 0;
+            font-size: 23px;
+            line-height: 1.2;
+            font-weight: 650;
+        }
+
+        .side-card,
+        .palette-card,
+        .palette-section {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .side-card {
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .side-card p {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.55;
+            color: var(--muted);
+        }
+
+        .palette-shell {
+            display: grid;
+            gap: 12px;
+        }
+
+        .palette-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin: 18px 0 0;
+        }
+
+        .palette-head span:first-child {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #556273;
+        }
+
+        .palette-count {
+            min-width: 26px;
+            height: 22px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            min-height: 40px;
+            padding: 0 14px 0 38px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #334155;
+            outline: none;
+            transition: 0.18s ease;
+        }
+
+        .search-input:focus {
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.10);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .palette-section {
+            padding: 12px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .palette-section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .palette-section-title {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #556273;
+        }
+
+        .palette-section-note {
+            margin: 0;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .palette {
+            display: grid;
+            gap: 10px;
+        }
+
+        .palette-card {
+            width: 100%;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: 28px 38px minmax(0, 1fr);
+            gap: 12px;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.18s ease;
+        }
+
+        .palette-card:hover {
+            border-color: #9ec0fb;
+            box-shadow: 0 12px 26px rgba(43, 109, 224, 0.10);
+            transform: translateY(-1px);
+        }
+
+        .palette-icon,
+        .drag-grip {
+            display: grid;
+            place-items: center;
+        }
+
+        .drag-grip {
+            width: 28px;
+            height: 34px;
+            color: #9aa7b6;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+        }
+
+        .palette-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .palette-card[data-type="callout"] .palette-icon {
+            background: var(--warn-soft);
+            color: var(--warn);
+        }
+
+        .palette-card[data-type="todo"] .palette-icon {
+            background: var(--success-soft);
+            color: var(--success);
+        }
+
+        .palette-name {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .palette-desc {
+            display: block;
+            margin-top: 3px;
+            font-size: 12px;
+            line-height: 1.35;
+            color: var(--muted);
+        }
+
+        .palette-card.is-hidden {
+            display: none;
+        }
+
+        .palette-card.is-favorite {
+            background: linear-gradient(180deg, #ffffff 0%, #fffaf4 100%);
+        }
+
+        .palette-empty {
+            display: none;
+            padding: 10px 12px;
+            border: 1px dashed var(--line-strong);
+            border-radius: 10px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+            background: #fffdfa;
+        }
+
+        .palette-empty.is-visible {
+            display: block;
+        }
+
+        .workspace {
+            min-width: 0;
+            padding: 24px clamp(18px, 4vw, 52px) 40px;
+        }
+
+        .topbar {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 18px;
+            align-items: start;
+            margin-bottom: 18px;
+        }
+
+        .title-input {
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            outline: none;
+            font-size: clamp(30px, 4vw, 40px);
+            line-height: 1.16;
+            letter-spacing: -0.025em;
+            color: #211b17;
+            font-weight: 680;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .pill {
+            min-height: 30px;
+            padding: 0 11px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.85);
+            color: #627286;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .segmented,
+        .btn,
+        .icon-btn {
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            background: #fff;
+        }
+
+        .btn,
+        .icon-btn,
+        .segment-btn {
+            cursor: pointer;
+            color: #4b5a6b;
+            font-weight: 700;
+            transition: 0.18s ease;
+        }
+
+        .btn:hover,
+        .icon-btn:hover,
+        .segment-btn:hover {
+            border-color: #9ec0fb;
+            background: var(--accent-soft);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            min-height: 40px;
+            padding: 0 13px;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: inline-grid;
+            place-items: center;
+            font-size: 14px;
+        }
+
+        .segmented {
+            display: inline-flex;
+            padding: 3px;
+        }
+
+        .segment-btn {
+            min-height: 32px;
+            padding: 0 10px;
+            border: 0;
+            border-radius: 7px;
+            background: transparent;
+            font-size: 12px;
+        }
+
+        .segment-btn.is-active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .canvas-shell {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: rgba(255, 251, 246, 0.76);
+            box-shadow: var(--shadow);
+        }
+
+        .canvas-head {
+            min-height: 54px;
+            padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 250, 244, 0.94);
+        }
+
+        .canvas-label,
+        .save-state {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .canvas-label {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #536273;
+        }
+
+        .save-state {
+            color: #64748b;
+        }
+
+        .canvas {
+            min-height: calc(100vh - 172px);
+            padding: 18px;
+        }
+
+        .paper {
+            position: relative;
+            max-width: 860px;
+            min-height: 420px;
+            margin: 0 auto;
+            padding: 48px 72px 64px 146px;
+            border: 1px solid #eee2d5;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(252,248,242,0.98));
+            box-shadow: 0 30px 70px rgba(91, 78, 63, 0.10);
+        }
+
+        .paper::before {
+            content: "";
+            position: absolute;
+            left: 54px;
+            top: 40px;
+            bottom: 40px;
+            width: 1px;
+            background: linear-gradient(180deg, rgba(205,191,173,0), rgba(205,191,173,0.9) 12%, rgba(205,191,173,0.9) 88%, rgba(205,191,173,0));
+        }
+
+        .empty {
+            min-height: 360px;
+            padding: 28px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #e8eef8;
+            border-radius: 12px;
+            background: linear-gradient(#fff, #fff) padding-box, repeating-linear-gradient(135deg, #e8eef8 0 10px, #f8fbff 10px 20px) border-box;
+            text-align: center;
+        }
+
+        .empty h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .empty p {
+            max-width: 420px;
+            margin: 8px 0 18px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .empty-actions {
+            display: inline-flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .blocks {
+            display: grid;
+            gap: 4px;
+        }
+
+        .block {
+            position: relative;
+            border: 1px solid #efe6da;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.88);
+            transition: 0.18s ease;
+        }
+
+        .block:hover {
+            border-color: #d4c4b2;
+            box-shadow: 0 18px 34px rgba(83, 67, 49, 0.08);
+        }
+
+        .app.is-preview .block {
+            border-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .block-meta,
+        .block-tools,
+        .toolbar {
+            position: absolute;
+        }
+
+        .block-meta {
+            left: -150px;
+            top: 12px;
+            width: max-content;
+            max-width: 140px;
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .order,
+        .type-label,
+        .meta-select {
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #dbe4f0;
+            border-radius: 999px;
+            background: #fff;
+            color: #526173;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .order {
+            min-width: 28px;
+            justify-content: center;
+            padding: 0 7px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+        }
+
+        .type-label,
+        .meta-select {
+            padding: 0 8px;
+        }
+
+        .meta-select {
+            max-width: 132px;
+            padding-right: 24px;
+            appearance: none;
+            background-color: #f8fafc;
+            background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+            background-position: calc(100% - 12px) 9px, calc(100% - 8px) 9px;
+            background-size: 4px 4px, 4px 4px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+        }
+
+        .block-tools {
+            left: -56px;
+            top: 42px;
+            display: inline-flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.14s ease;
+        }
+
+        .toolbar {
+            right: 8px;
+            top: 8px;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.14s ease;
+        }
+
+        .block:hover .block-tools,
+        .block:hover .toolbar,
+        .block:focus-within .block-tools,
+        .block:focus-within .toolbar {
+            opacity: 1;
+        }
+
+        .app.is-preview .block-meta,
+        .app.is-preview .block-tools,
+        .app.is-preview .toolbar {
+            display: none;
+        }
+
+        .side-tool,
+        .tool-btn {
+            border: 1px solid #dbe4f0;
+            background: #fff;
+            color: #536176;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .side-tool {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
+        .tool-btn {
+            min-width: 30px;
+            height: 30px;
+            padding: 0 8px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .tool-btn:hover,
+        .side-tool:hover {
+            border-color: #93c5fd;
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .tool-btn.is-danger:hover {
+            border-color: #fecdd3;
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+
+        .block-main {
+            min-width: 0;
+            padding: 16px 18px 14px;
+        }
+
+        .app.is-preview .block-main {
+            padding: 8px 0;
+        }
+
+        .control,
+        .textarea,
+        .editor {
+            width: 100%;
+            outline: none;
+            border: 1px solid #dbe4f0;
+            border-radius: 10px;
+            background: #fff;
+            color: #334155;
+            transition: 0.18s ease;
+        }
+
+        .control,
+        .textarea {
+            padding: 10px 11px;
+        }
+
+        .textarea {
+            min-height: 112px;
+            resize: vertical;
+            line-height: 1.55;
+        }
+
+        .editor {
+            min-height: 128px;
+            padding: 15px 16px;
+            line-height: 1.82;
+        }
+
+        .control:focus,
+        .textarea:focus,
+        .editor:focus,
+        .meta-select:focus {
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.10);
+        }
+
+        .rich-tools {
+            display: inline-flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .view {
+            color: #40352c;
+            font-size: 16px;
+            line-height: 1.78;
+            font-weight: 400;
+        }
+
+        .view p {
+            margin: 0 0 1em;
+        }
+
+        .view ul,
+        .view ol,
+        .render-list,
+        .todo-list {
+            margin-top: 0.4em;
+            margin-bottom: 1.1em;
+        }
+
+        .view h1,
+        .view h2,
+        .view h3,
+        .view h4,
+        .toggle-plain h1,
+        .toggle-plain h2,
+        .toggle-plain h3,
+        .toggle-plain h4 {
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: #1f1814;
+            font-weight: 650;
+        }
+
+        .view h1 { font-size: clamp(34px, 4vw, 42px); }
+        .view h2 { font-size: 28px; }
+        .view h3 { font-size: 22px; }
+        .view h4,
+        .toggle-plain h4 { font-size: 17px; }
+
+        .page-card,
+        .callout,
+        .synced,
+        .equation {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .page-card,
+        .callout {
+            display: grid;
+            grid-template-columns: 38px minmax(0, 1fr);
+            gap: 12px;
+            align-items: start;
+        }
+
+        .page-icon,
+        .callout-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .page-icon {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        .page-title {
+            margin: 0;
+            color: #1e293b;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .page-desc {
+            margin: 4px 0 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .todo-list {
+            padding-left: 0;
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .todo-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .todo-box {
+            width: 16px;
+            height: 16px;
+            margin-top: 5px;
+            border: 1.5px solid #94a3b8;
+            border-radius: 4px;
+            flex: 0 0 auto;
+        }
+
+        .toggle {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px 12px;
+        }
+
+        .toggle summary {
+            cursor: pointer;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .toggle p {
+            margin: 8px 0 0;
+            color: #64748b;
+        }
+
+        .toggle-plain {
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            padding: 0;
+        }
+
+        .toggle-plain summary {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            list-style-position: outside;
+        }
+
+        .toggle-plain p {
+            margin: 12px 0 0 22px;
+            max-width: 68ch;
+            color: #667085;
+            line-height: 1.7;
+        }
+
+        .code-lang,
+        .sync-label {
+            display: inline-flex;
+            min-height: 24px;
+            align-items: center;
+            padding: 0 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .code-lang,
+        .sync-label {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .code-view {
+            margin: 0;
+            padding: 14px;
+            overflow: auto;
+            border-radius: 10px;
+            background: #0f172a;
+            color: #dbeafe;
+            line-height: 1.55;
+        }
+
+        .quote {
+            margin: 0;
+            padding: 10px 0 10px 18px;
+            border-left: 3px solid #cab8a2;
+            color: #605446;
+            font-size: 17px;
+            font-style: italic;
+            line-height: 1.72;
+        }
+
+        .callout {
+            background: var(--accent-soft);
+            border-color: #bfdbfe;
+        }
+
+        .callout.warning {
+            background: var(--warn-soft);
+            border-color: #fde68a;
+        }
+
+        .callout.success {
+            background: var(--success-soft);
+            border-color: #bbf7d0;
+        }
+
+        .callout-mark {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .callout.warning .callout-mark {
+            background: var(--warn);
+        }
+
+        .callout.success .callout-mark {
+            background: var(--success);
+        }
+
+        .equation {
+            background: #fbfdff;
+            text-align: center;
+            color: #0f172a;
+            font-family: "Cambria Math", Georgia, serif;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .synced {
+            border-style: dashed;
+            background: #f8fafc;
+        }
+
+        .columns-view,
+        .columns-edit {
+            display: grid;
+            gap: 12px;
+        }
+
+        .columns-view.count-2,
+        .columns-edit.count-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .columns-view.count-3,
+        .columns-edit.count-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .column-card {
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .file-input {
+            max-width: 210px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            width: 100%;
+            max-height: 360px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .image-preview.has-image {
+            display: block;
+        }
+
+        .sticky {
+            width: min(100%, 340px);
+            min-height: 184px;
+            padding: 14px;
+            border: 1px solid rgba(15,23,42,0.08);
+            border-radius: 10px;
+            box-shadow: 0 14px 24px rgba(15,23,42,0.08);
+        }
+
+        .sticky textarea {
+            width: 100%;
+            min-height: 132px;
+            border: 0;
+            background: transparent;
+            color: #334155;
+            resize: vertical;
+            outline: none;
+            line-height: 1.5;
+        }
+
+        .swatches {
+            display: inline-flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .swatch {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255,255,255,0.95);
+            border-radius: 999px;
+            box-shadow: 0 0 0 1px #cbd5e1;
+            cursor: pointer;
+        }
+
+        .divider {
+            border: 0;
+            border-top: 2px solid #dbe4f0;
+            margin: 12px 0;
+        }
+
+        .app.is-preview .block + .block {
+            margin-top: 6px;
+        }
+
+        .app.is-preview .block[data-kind="heading-h1"] {
+            margin-bottom: 20px;
+        }
+
+        .app.is-preview .block[data-kind="heading-h2"] {
+            margin-top: 38px;
+            margin-bottom: 10px;
+        }
+
+        .app.is-preview .block[data-kind="heading-h3"] {
+            margin-top: 26px;
+            margin-bottom: 6px;
+        }
+
+        .app.is-preview .divider {
+            border-top-color: #dfd2c2;
+            margin: 28px 0;
+        }
+
+        .drop-line {
+            height: 3px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+            pointer-events: none;
+        }
+
+        .toast {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            min-height: 38px;
+            padding: 9px 12px;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            background: #fff;
+            color: #1d4ed8;
+            box-shadow: var(--shadow);
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .palette,
+            .palette-shell {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .topbar {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .workspace {
+                padding: 18px 10px 28px;
+            }
+
+            .palette,
+            .palette-shell,
+            .columns-view.count-2,
+            .columns-view.count-3,
+            .columns-edit.count-2,
+            .columns-edit.count-3,
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .canvas {
+                padding: 10px;
+            }
+
+            .paper {
+                padding: 28px 18px 36px 82px;
+                border-radius: 20px;
+            }
+
+            .paper::before {
+                left: 34px;
+                top: 24px;
+                bottom: 24px;
+            }
+
+            .block-meta {
+                left: -68px;
+                max-width: 58px;
+            }
+
+            .type-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="app" id="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">DOC</div>
+                <div>
+                    <p class="brand-label">Page builder</p>
+                    <h1 class="brand-title">Document Builder</h1>
+                </div>
+            </div>
+
+            <div class="side-card">
+                <p>Keo block vao canvas hoac bam de them nhanh. Khi muon xuat PDF, chuyen sang che do Preview de co bo cuc sach, gon va de doc nhu Notion.</p>
+            </div>
+
+            <div class="palette-head">
+                <span>Blocks</span>
+                <span class="palette-count">13</span>
+            </div>
+
+            <div class="palette-shell">
+                <label class="search-box" for="paletteSearch">
+                    <span class="search-icon">/</span>
+                    <input class="search-input" id="paletteSearch" type="search" placeholder="Search block..." oninput="filterPalette(this.value)">
+                </label>
+
+                <section class="palette-section">
+                    <div class="palette-section-head">
+                        <div>
+                            <p class="palette-section-title">Favorite 1</p>
+                            <p class="palette-section-note">Keo tha de doi thu tu nhanh</p>
+                        </div>
+                        <span class="palette-count" id="favoriteOneCount">0</span>
+                    </div>
+                    <div class="palette" id="favoriteOne"></div>
+                    <div class="palette-empty" id="favoriteOneEmpty">Khong co block nao trong Favorite 1.</div>
+                </section>
+
+                <section class="palette-section">
+                    <div class="palette-section-head">
+                        <div>
+                            <p class="palette-section-title">Favorite 2</p>
+                            <p class="palette-section-note">Nhom block thuong dung tiep theo</p>
+                        </div>
+                        <span class="palette-count" id="favoriteTwoCount">0</span>
+                    </div>
+                    <div class="palette" id="favoriteTwo"></div>
+                    <div class="palette-empty" id="favoriteTwoEmpty">Khong co block nao trong Favorite 2.</div>
+                </section>
+
+                <section class="palette-section">
+                    <div class="palette-section-head">
+                        <div>
+                            <p class="palette-section-title">All blocks</p>
+                            <p class="palette-section-note">Heading duoc gom chung de de quet</p>
+                        </div>
+                        <span class="palette-count" id="remainingCount">0</span>
+                    </div>
+                    <div class="palette" id="remainingBlocks">
+                        <button class="palette-card" type="button" draggable="true" data-type="text" data-group="favorite1" data-label="Text" data-desc="Rich text paragraph" onclick="addBlock('text')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">T</span>
+                            <span><span class="palette-name">Text</span><span class="palette-desc">Rich text paragraph</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="heading1" data-group="remaining" data-label="Heading 1" data-desc="Main title" onclick="addBlock('heading1')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">H1</span>
+                            <span><span class="palette-name">Heading 1</span><span class="palette-desc">Main title</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="heading2" data-group="favorite1" data-label="Heading 2" data-desc="Section title" onclick="addBlock('heading2')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">H2</span>
+                            <span><span class="palette-name">Heading 2</span><span class="palette-desc">Section title</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="heading3" data-group="remaining" data-label="Heading 3" data-desc="Subsection" onclick="addBlock('heading3')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">H3</span>
+                            <span><span class="palette-name">Heading 3</span><span class="palette-desc">Subsection</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="bulleted" data-group="favorite1" data-label="Bulleted list" data-desc="Simple highlights" onclick="addBlock('bulleted')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">UL</span>
+                            <span><span class="palette-name">Bulleted list</span><span class="palette-desc">Simple highlights</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="todo" data-group="favorite2" data-label="To-do list" data-desc="Action items" onclick="addBlock('todo')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">OK</span>
+                            <span><span class="palette-name">To-do list</span><span class="palette-desc">Action items</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="quote" data-group="remaining" data-label="Quote" data-desc="Highlighted insight" onclick="addBlock('quote')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">QT</span>
+                            <span><span class="palette-name">Quote</span><span class="palette-desc">Highlighted insight</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="callout" data-group="favorite2" data-label="Callout" data-desc="Key note or warning" onclick="addBlock('callout')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">!</span>
+                            <span><span class="palette-name">Callout</span><span class="palette-desc">Key note or warning</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="columns2" data-group="favorite2" data-label="2 columns" data-desc="Split summary layout" onclick="addBlock('columns2')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">2C</span>
+                            <span><span class="palette-name">2 columns</span><span class="palette-desc">Split summary layout</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="columns3" data-group="remaining" data-label="3 columns" data-desc="Three-up comparison" onclick="addBlock('columns3')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">3C</span>
+                            <span><span class="palette-name">3 columns</span><span class="palette-desc">Three-up comparison</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="image" data-group="remaining" data-label="Image" data-desc="Upload chart or visual" onclick="addBlock('image')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">IMG</span>
+                            <span><span class="palette-name">Image</span><span class="palette-desc">Upload chart or visual</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="sticky" data-group="favorite2" data-label="Sticky note" data-desc="Quick note block" onclick="addBlock('sticky')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">N</span>
+                            <span><span class="palette-name">Sticky note</span><span class="palette-desc">Quick note block</span></span>
+                        </button>
+                        <button class="palette-card" type="button" draggable="true" data-type="divider" data-group="remaining" data-label="Divider" data-desc="Separate sections" onclick="addBlock('divider')">
+                            <span class="drag-grip">::</span>
+                            <span class="palette-icon">-</span>
+                            <span><span class="palette-name">Divider</span><span class="palette-desc">Separate sections</span></span>
+                        </button>
+                    </div>
+                    <div class="palette-empty" id="remainingEmpty">Khong tim thay block phu hop.</div>
+                </section>
+            </div>
+        </aside>
+
+        <section class="workspace">
+            <div class="topbar">
+                <div>
+                    <input id="docTitle" class="title-input" value="Bao cao hieu qua kinh doanh 6 thang dau nam 2019" placeholder="Nhap ten tai lieu">
+                    <div class="meta-row">
+                        <span class="pill" id="blockCounter">0 blocks</span>
+                        <span class="pill" id="lastSaved">Autosaved</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <div class="segmented">
+                        <button class="segment-btn is-active" type="button" id="editModeBtn" onclick="setMode('edit')">Edit</button>
+                        <button class="segment-btn" type="button" id="previewModeBtn" onclick="setMode('preview')">Preview</button>
+                    </div>
+                    <button class="btn" type="button" onclick="loadSample()">Sample</button>
+                    <button class="icon-btn" type="button" title="Them heading" onclick="addBlock('heading2')">H</button>
+                    <button class="icon-btn" type="button" title="Xoa canvas" onclick="clearCanvas()">x</button>
+                </div>
+            </div>
+
+            <section class="canvas-shell">
+                <div class="canvas-head">
+                    <span class="canvas-label">Canvas</span>
+                    <span class="save-state" id="saveState">Ready</span>
+                </div>
+                <div class="canvas" id="canvas">
+                    <div class="paper">
+                        <div class="empty" id="emptyState">
+                            <div>
+                                <h2>Bat dau voi mot block</h2>
+                                <p>Keo block tu sidebar vao day, hoac bam Sample de nap san bo cuc bao cao giong kieu tai lieu Notion khi xuat PDF.</p>
+                                <div class="empty-actions">
+                                    <button class="btn" type="button" onclick="addBlock('heading2')">Them heading</button>
+                                    <button class="btn" type="button" onclick="loadSample()">Dung sample</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blocks" id="blockList"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <div class="toast" id="toast">Saved</div>
+
+    <script>
+        const STORAGE_KEY = 'document_builder_state_v4';
+        const app = document.getElementById('app');
+        const blockList = document.getElementById('blockList');
+        const emptyState = document.getElementById('emptyState');
+        const canvas = document.getElementById('canvas');
+        const docTitle = document.getElementById('docTitle');
+        const blockCounter = document.getElementById('blockCounter');
+        const lastSaved = document.getElementById('lastSaved');
+        const saveStateEl = document.getElementById('saveState');
+        const editModeBtn = document.getElementById('editModeBtn');
+        const previewModeBtn = document.getElementById('previewModeBtn');
+        const toast = document.getElementById('toast');
+        const paletteSearch = document.getElementById('paletteSearch');
+        const favoriteOne = document.getElementById('favoriteOne');
+        const favoriteTwo = document.getElementById('favoriteTwo');
+        const remainingBlocks = document.getElementById('remainingBlocks');
+        const favoriteOneCount = document.getElementById('favoriteOneCount');
+        const favoriteTwoCount = document.getElementById('favoriteTwoCount');
+        const remainingCount = document.getElementById('remainingCount');
+        const favoriteOneEmpty = document.getElementById('favoriteOneEmpty');
+        const favoriteTwoEmpty = document.getElementById('favoriteTwoEmpty');
+        const remainingEmpty = document.getElementById('remainingEmpty');
+        const stickyColors = ['#fef3c7', '#dcfce7', '#dbeafe', '#fce7f3', '#ede9fe'];
+
+        let blocks = [];
+        let globalMode = 'edit';
+        let dragging = null;
+        let toastTimer = null;
+
+        function getPaletteCards() {
+            return Array.from(document.querySelectorAll('.palette-card'));
+        }
+
+        function getPaletteSection(group) {
+            if (group === 'favorite1') return favoriteOne;
+            if (group === 'favorite2') return favoriteTwo;
+            return remainingBlocks;
+        }
+
+        function updatePaletteCounts() {
+            const visibleCount = function (container) {
+                return Array.from(container.querySelectorAll('.palette-card')).filter(function (card) {
+                    return !card.classList.contains('is-hidden');
+                }).length;
+            };
+
+            favoriteOneCount.textContent = String(visibleCount(favoriteOne));
+            favoriteTwoCount.textContent = String(visibleCount(favoriteTwo));
+            remainingCount.textContent = String(visibleCount(remainingBlocks));
+            favoriteOneEmpty.classList.toggle('is-visible', !visibleCount(favoriteOne));
+            favoriteTwoEmpty.classList.toggle('is-visible', !visibleCount(favoriteTwo));
+            remainingEmpty.classList.toggle('is-visible', !visibleCount(remainingBlocks));
+        }
+
+        function filterPalette(query) {
+            const keyword = String(query || '').trim().toLowerCase();
+            getPaletteCards().forEach(function (card) {
+                const haystack = [card.dataset.label, card.dataset.desc, card.dataset.type].join(' ').toLowerCase();
+                card.classList.toggle('is-hidden', !!keyword && haystack.indexOf(keyword) === -1);
+            });
+            updatePaletteCounts();
+        }
+
+        function movePaletteCard(card, group, beforeNode) {
+            const target = getPaletteSection(group);
+            card.dataset.group = group;
+            card.classList.toggle('is-favorite', group === 'favorite1' || group === 'favorite2');
+            if (beforeNode && beforeNode.parentElement === target) {
+                target.insertBefore(card, beforeNode);
+            } else {
+                target.appendChild(card);
+            }
+        }
+
+        function setupPalette() {
+            getPaletteCards().forEach(function (card) {
+                movePaletteCard(card, card.dataset.group || 'remaining');
+            });
+            updatePaletteCounts();
+        }
+
+        function getPaletteDropIndex(container, event) {
+            const cards = Array.from(container.querySelectorAll('.palette-card:not(.is-hidden)'));
+            const pointerY = event.clientY;
+            const targetIndex = cards.findIndex(function (card) {
+                const rect = card.getBoundingClientRect();
+                return pointerY < rect.top + rect.height / 2;
+            });
+            return targetIndex === -1 ? cards.length : targetIndex;
+        }
+
+        function attachPaletteDnD() {
+            getPaletteCards().forEach(function (card) {
+                card.addEventListener('dragstart', function (event) {
+                    dragging = { source: 'palette', type: card.dataset.type, card: card };
+                    event.dataTransfer.effectAllowed = 'copyMove';
+                    event.dataTransfer.setData('block-type', card.dataset.type);
+                });
+                card.addEventListener('dragend', function () {
+                    dragging = null;
+                    clearDropLine();
+                });
+            });
+
+            [favoriteOne, favoriteTwo, remainingBlocks].forEach(function (container) {
+                container.addEventListener('dragover', function (event) {
+                    if (!dragging || dragging.source !== 'palette') return;
+                    event.preventDefault();
+                });
+                container.addEventListener('drop', function (event) {
+                    if (!dragging || dragging.source !== 'palette' || !dragging.card) return;
+                    event.preventDefault();
+                    const targetCards = Array.from(container.querySelectorAll('.palette-card:not(.is-hidden)'));
+                    const dropIndex = getPaletteDropIndex(container, event);
+                    movePaletteCard(dragging.card, container.id === 'favoriteOne' ? 'favorite1' : container.id === 'favoriteTwo' ? 'favorite2' : 'remaining', targetCards[dropIndex] || null);
+                    updatePaletteCounts();
+                });
+            });
+        }
+
+        function uid() {
+            return 'blk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+        }
+
+        function defaultBlock(type) {
+            const base = { id: uid(), type, mode: 'edit' };
+            if (type === 'heading1') return { ...base, type: 'heading', level: 'h1', text: 'Heading 1' };
+            if (type === 'heading2') return { ...base, type: 'heading', level: 'h2', text: 'Heading 2' };
+            if (type === 'heading3') return { ...base, type: 'heading', level: 'h3', text: 'Heading 3' };
+            if (type === 'text') return { ...base, html: '<p>Nhap noi dung tai lieu...</p>' };
+            if (type === 'bulleted') return { ...base, itemsText: 'First item\nSecond item\nThird item' };
+            if (type === 'todo') return { ...base, itemsText: 'Action 1\nAction 2\nAction 3' };
+            if (type === 'quote') return { ...base, text: 'Tang truong ben vung can duoc nhin dong thoi qua quy mo va chat luong loi nhuan.' };
+            if (type === 'callout') return { ...base, tone: 'info', text: 'Thong diep quan trong hoac canh bao du lieu.' };
+            if (type === 'columns2') return { ...base, type: 'columns', count: 2, columns: ['Cot 1', 'Cot 2'] };
+            if (type === 'columns3') return { ...base, type: 'columns', count: 3, columns: ['Cot 1', 'Cot 2', 'Cot 3'] };
+            if (type === 'image') return { ...base, src: '', alt: '' };
+            if (type === 'sticky') return { ...base, text: 'Y tuong / ghi chu nhanh...', color: stickyColors[0] };
+            if (type === 'divider') return { ...base };
+            return base;
+        }
+
+        function loadSample() {
+            blocks = [
+                { ...defaultBlock('heading1'), text: 'Bao cao hieu qua kinh doanh 6 thang dau nam 2019' },
+                { ...defaultBlock('text'), html: '<p>Tai lieu nay tong hop ket qua kinh doanh H1/2019 theo phong cach trinh bay sach, ro lop thong tin va phu hop khi xuat PDF tu trinh duyet.</p>' },
+                { ...defaultBlock('callout'), tone: 'info', text: 'Ky phan tich: H1/2019. Ky so sanh: H1/2018. Du lieu thang 7/2019 chua day du nen khong dung de ket luan xu huong.' },
+                { ...defaultBlock('divider') },
+                { ...defaultBlock('heading2'), text: 'I. Tong quan chung' },
+                { ...defaultBlock('heading3'), text: '1.1. Muc tieu bao cao' },
+                { ...defaultBlock('text'), html: '<p>Bao cao nham danh gia hieu qua hoat dong kinh doanh trong 6 thang dau nam 2019 thong qua dashboard va cac chi so cot loi.</p><ul><li>Do luong tang truong doanh thu, loi nhuan, bien loi nhuan va don hang.</li><li>Xac dinh thi truong va nganh hang dan dat doanh thu.</li><li>Phat hien cac diem canh bao can uu tien xu ly.</li></ul>' },
+                { ...defaultBlock('heading3'), text: '1.2. Tom tat chi so cot loi' },
+                { ...defaultBlock('bulleted'), itemsText: 'Doanh thu tang khoang 149% YoY\nLoi nhuan dat khoang 4.05M USD, tang manh so voi cung ky\nSo don hang tang gan 5 lan\nBien loi nhuan giam nhe xuong quanh 41.5%' },
+                { ...defaultBlock('quote'), text: 'Tang truong den tu mo rong quy mo nhanh hon la tu cai thien bien loi nhuan.' },
+                { ...defaultBlock('heading2'), text: 'II. Phan tich tong quan' },
+                { ...defaultBlock('text'), html: '<p>Doanh thu H1/2019 tang deu qua tung thang, khong phu thuoc vao cac dot bien ngan han. Bac My van la trung tam doanh thu lon nhat, trong khi chau Au dong gop on dinh nhung phan tan.</p>' },
+                { ...defaultBlock('columns2'), columns: ['Bac My dan dat doanh thu va la trong tam tang truong.', 'Chau Au giu vai tro bo tro, cac khu vuc khac chua tao anh huong ro net.'] },
+                { ...defaultBlock('heading2'), text: 'III. Phan tich theo thi truong' },
+                { ...defaultBlock('text'), html: '<p>Hoa Ky va Uc la hai thi truong chu luc. Uc can duoc canh bao do bien loi nhuan thap, trong khi Canada du quy mo nho nhung cho thay muc sinh loi cao hon.</p>' },
+                { ...defaultBlock('callout'), tone: 'warning', text: 'Can ra soat cau truc chi phi va chinh sach khuyen mai tai Uc de tranh suy giam bien loi nhuan sau hon.' },
+                { ...defaultBlock('heading2'), text: 'IV. Phan tich danh muc nganh hang' },
+                { ...defaultBlock('text'), html: '<p>Bikes la tru cot doanh thu, chiem phan lon tong quy mo ban hang. Accessories co bien loi nhuan cao nhat nhung chua duoc khai thac dung muc. Clothing co hieu suat sinh loi thap va can duoc xem xet lai.</p>' },
+                { ...defaultBlock('columns3'), columns: ['Bikes\nDanh muc dan dat doanh thu.', 'Accessories\nBien loi nhuan cao, nen day manh cross-sell.', 'Clothing\nHieu suat thap, can xem lai gia va chi phi.'] },
+                { ...defaultBlock('heading2'), text: 'V. Ket luan va kien nghi' },
+                { ...defaultBlock('todo'), itemsText: 'Ra soat nguyen nhan giam bien loi nhuan tai Uc\nDanh gia mo rong Canada\nDay manh ban kem Accessories\nXem lai chien luoc gia cua Clothing' },
+                { ...defaultBlock('callout'), tone: 'success', text: 'Huong uu tien: giu dong luc doanh thu cua Bikes, dong thoi cai thien chat luong loi nhuan thong qua phu kien va toi uu thi truong.' }
+            ];
+            save('Sample loaded');
+            render();
+        }
+
+        function addBlock(type, index) {
+            const insertAt = typeof index === 'number' ? index : blocks.length;
+            blocks.splice(insertAt, 0, defaultBlock(type));
+            save('Added block');
+            render();
+        }
+
+        function addBelow(id) {
+            const index = blocks.findIndex((block) => block.id === id);
+            addBlock('text', index + 1);
+        }
+
+        function duplicateBlock(id) {
+            const index = blocks.findIndex((block) => block.id === id);
+            if (index < 0) return;
+            const copy = JSON.parse(JSON.stringify(blocks[index]));
+            copy.id = uid();
+            blocks.splice(index + 1, 0, copy);
+            save('Duplicated');
+            render();
+        }
+
+        function deleteBlock(id) {
+            blocks = blocks.filter((block) => block.id !== id);
+            save('Deleted');
+            render();
+        }
+
+        function clearCanvas() {
+            if (blocks.length && !window.confirm('Xoa tat ca block trong canvas?')) return;
+            blocks = [];
+            save('Canvas cleared');
+            render();
+        }
+
+        function setMode(mode) {
+            globalMode = mode === 'preview' ? 'preview' : 'edit';
+            app.classList.toggle('is-preview', globalMode === 'preview');
+            editModeBtn.classList.toggle('is-active', globalMode === 'edit');
+            previewModeBtn.classList.toggle('is-active', globalMode === 'preview');
+            render();
+        }
+
+        function setBlockMode(id, mode) {
+            const block = blocks.find((item) => item.id === id);
+            if (!block) return;
+            block.mode = mode;
+            save('Mode changed', false);
+            render();
+        }
+
+        function updateBlock(id, patch, rerender) {
+            blocks = blocks.map((block) => block.id === id ? { ...block, ...patch } : block);
+            save('Autosaved', false);
+            if (rerender) render();
+        }
+
+        function updateColumn(id, index, value) {
+            const block = blocks.find((item) => item.id === id);
+            if (!block) return;
+            const columns = Array.isArray(block.columns) ? block.columns.slice() : [];
+            columns[index] = value;
+            updateBlock(id, { columns }, false);
+        }
+
+        function render() {
+            emptyState.style.display = blocks.length ? 'none' : 'grid';
+            blockList.innerHTML = '';
+            blocks.forEach((block, index) => blockList.appendChild(renderBlock(block, index)));
+            blockCounter.textContent = blocks.length + ' ' + (blocks.length === 1 ? 'block' : 'blocks');
+        }
+
+        function renderBlock(block, index) {
+            const wrapper = document.createElement('article');
+            wrapper.className = 'block';
+            wrapper.dataset.id = block.id;
+            wrapper.dataset.kind = block.type === 'heading' ? 'heading-' + (block.level || 'h2') : block.type;
+            wrapper.addEventListener('dragover', handleCanvasDragOver);
+            wrapper.innerHTML = [
+                '<div class="block-meta">',
+                '<span class="order">' + String(index + 1).padStart(2, '0') + '</span>',
+                renderMeta(block),
+                '</div>',
+                '<div class="block-tools"><button class="side-tool" type="button" onclick="addBelow(\'' + block.id + '\')">+</button></div>',
+                '<div class="block-main">',
+                '<div class="toolbar"><button class="tool-btn" type="button" onclick="duplicateBlock(\'' + block.id + '\')">Copy</button><button class="tool-btn is-danger" type="button" onclick="deleteBlock(\'' + block.id + '\')">Del</button></div>',
+                renderContent(block),
+                '</div>'
+            ].join('');
+
+            const meta = wrapper.querySelector('.block-meta');
+            meta.setAttribute('draggable', 'true');
+            meta.addEventListener('dragstart', function (event) {
+                dragging = { source: 'canvas', id: block.id };
+                event.dataTransfer.effectAllowed = 'move';
+                event.dataTransfer.setData('text/plain', block.id);
+            });
+            meta.addEventListener('dragend', function () {
+                dragging = null;
+                clearDropLine();
+            });
+
+            return wrapper;
+        }
+
+        function renderMeta(block) {
+            if (block.type === 'heading') {
+                return '<select class="meta-select" onchange="updateBlock(\'' + block.id + '\', { level: this.value }, true)"><option value="h1"' + selected(block.level, 'h1') + '>H1 heading</option><option value="h2"' + selected(block.level, 'h2') + '>H2 heading</option><option value="h3"' + selected(block.level, 'h3') + '>H3 heading</option><option value="h4"' + selected(block.level, 'h4') + '>H4 heading</option></select>';
+            }
+            if (block.type === 'callout') {
+                return '<select class="meta-select" onchange="updateBlock(\'' + block.id + '\', { tone: this.value }, true)"><option value="info"' + selected(block.tone, 'info') + '>info</option><option value="warning"' + selected(block.tone, 'warning') + '>warning</option><option value="success"' + selected(block.tone, 'success') + '>success</option></select>';
+            }
+            if (block.type === 'columns') {
+                return '<select class="meta-select" onchange="changeColumnCount(\'' + block.id + '\', this.value)"><option value="2"' + selected(String(block.count), '2') + '>2 columns</option><option value="3"' + selected(String(block.count), '3') + '>3 columns</option></select>';
+            }
+            return '<span class="type-label">' + escapeHtml(getLabel(block)) + '</span>';
+        }
+
+        function changeColumnCount(id, value) {
+            const count = Number(value);
+            const block = blocks.find((item) => item.id === id);
+            if (!block) return;
+            const next = Array.from({ length: count }, function (_, index) {
+                return (block.columns && block.columns[index]) || 'Cot ' + (index + 1);
+            });
+            updateBlock(id, { count: count, columns: next }, true);
+        }
+
+        function selected(current, expected) {
+            return current === expected ? ' selected' : '';
+        }
+
+        function getLabel(block) {
+            if (block.type === 'bulleted') return 'Bulleted list';
+            if (block.type === 'todo') return 'To-do list';
+            if (block.type === 'columns') return block.count + ' columns';
+            if (block.type === 'heading') return (block.level || 'h2').toUpperCase() + ' heading';
+            return block.type;
+        }
+
+        function renderContent(block) {
+            const isView = globalMode === 'preview' || block.mode === 'view';
+            if (block.type === 'heading') return renderHeading(block, isView);
+            if (block.type === 'text') return renderText(block, isView);
+            if (block.type === 'bulleted') return renderList(block, isView, 'ul');
+            if (block.type === 'todo') return renderTodo(block, isView);
+            if (block.type === 'quote') return renderQuote(block, isView);
+            if (block.type === 'callout') return renderCallout(block, isView);
+            if (block.type === 'columns') return renderColumns(block, isView);
+            if (block.type === 'image') return renderImage(block, isView);
+            if (block.type === 'sticky') return renderSticky(block, isView);
+            return '<hr class="divider">';
+        }
+
+        function renderHeading(block, isView) {
+            if (isView) {
+                return '<div class="view"><' + block.level + '>' + escapeHtml(block.text) + '</' + block.level + '></div>';
+            }
+            return '<input class="control" value="' + escapeAttr(block.text) + '" oninput="updateBlock(\'' + block.id + '\', { text: this.value })">';
+        }
+
+        function renderText(block, isView) {
+            if (isView) return '<div class="view">' + block.html + '</div>';
+            return '<div class="rich-tools"><button class="tool-btn" type="button" onclick="formatText(\'' + block.id + '\', \"bold\")">B</button><button class="tool-btn" type="button" onclick="formatText(\'' + block.id + '\', \"italic\")">I</button><button class="tool-btn" type="button" onclick="formatText(\'' + block.id + '\', \"insertUnorderedList\")">List</button></div><div class="editor" contenteditable="true" oninput="updateBlock(\'' + block.id + '\', { html: this.innerHTML })">' + block.html + '</div>';
+        }
+
+        function textLines(value) {
+            return String(value || '').split(/\n/).map(function (line) { return line.trim(); }).filter(Boolean);
+        }
+
+        function renderList(block, isView, tag) {
+            const lines = textLines(block.itemsText);
+            if (isView) {
+                return '<' + tag + ' class="render-list">' + lines.map(function (line) { return '<li>' + escapeHtml(line) + '</li>'; }).join('') + '</' + tag + '>';
+            }
+            return '<textarea class="textarea" oninput="updateBlock(\'' + block.id + '\', { itemsText: this.value })">' + escapeHtml(block.itemsText || '') + '</textarea>';
+        }
+
+        function renderTodo(block, isView) {
+            const lines = textLines(block.itemsText);
+            if (isView) {
+                return '<ul class="todo-list">' + lines.map(function (line) { return '<li><span class="todo-box"></span><span>' + escapeHtml(line) + '</span></li>'; }).join('') + '</ul>';
+            }
+            return '<textarea class="textarea" oninput="updateBlock(\'' + block.id + '\', { itemsText: this.value })">' + escapeHtml(block.itemsText || '') + '</textarea>';
+        }
+
+        function renderQuote(block, isView) {
+            if (isView) return '<blockquote class="quote">' + escapeHtml(block.text || '').replace(/\n/g, '<br>') + '</blockquote>';
+            return '<textarea class="textarea" oninput="updateBlock(\'' + block.id + '\', { text: this.value })">' + escapeHtml(block.text || '') + '</textarea>';
+        }
+
+        function renderCallout(block, isView) {
+            const tone = block.tone || 'info';
+            const icon = tone === 'warning' ? '!' : (tone === 'success' ? 'OK' : 'i');
+            const className = tone === 'warning' ? 'callout warning' : tone === 'success' ? 'callout success' : 'callout';
+            if (isView) {
+                return '<div class="' + className + '"><div class="callout-mark">' + icon + '</div><p>' + escapeHtml(block.text || '').replace(/\n/g, '<br>') + '</p></div>';
+            }
+            return '<textarea class="textarea" oninput="updateBlock(\'' + block.id + '\', { text: this.value })">' + escapeHtml(block.text || '') + '</textarea>';
+        }
+
+        function renderColumns(block, isView) {
+            const count = Number(block.count || 2);
+            const columns = Array.from({ length: count }, function (_, index) {
+                return (block.columns && block.columns[index]) || '';
+            });
+            if (isView) {
+                return '<div class="columns-view count-' + count + '">' + columns.map(function (column) { return '<div class="column-card">' + escapeHtml(column).replace(/\n/g, '<br>') + '</div>'; }).join('') + '</div>';
+            }
+            return '<div class="columns-edit count-' + count + '">' + columns.map(function (column, index) { return '<textarea class="textarea" oninput="updateColumn(\'' + block.id + '\', ' + index + ', this.value)">' + escapeHtml(column) + '</textarea>'; }).join('') + '</div>';
+        }
+
+        function renderImage(block, isView) {
+            if (isView) {
+                if (!block.src) return '<div class="view"><p>Chua co hinh anh.</p></div>';
+                return '<img class="image-preview has-image" src="' + escapeAttr(block.src) + '" alt="' + escapeAttr(block.alt || '') + '">';
+            }
+            return '<div class="image-grid"><input class="control" value="' + escapeAttr(block.src || '') + '" placeholder="Paste image URL..." oninput="setImageUrl(\'' + block.id + '\', this)"><input class="file-input" type="file" accept="image/*" onchange="uploadImage(\'' + block.id + '\', this.files[0])"></div><input class="control" style="margin-top:8px" value="' + escapeAttr(block.alt || '') + '" placeholder="Alt text" oninput="updateBlock(\'' + block.id + '\', { alt: this.value })"><img class="image-preview ' + (block.src ? 'has-image' : '') + '" src="' + escapeAttr(block.src || '') + '" alt="' + escapeAttr(block.alt || '') + '">';
+        }
+
+        function renderSticky(block, isView) {
+            const color = block.color || stickyColors[0];
+            if (isView) {
+                return '<div class="sticky view" style="background:' + color + '">' + escapeHtml(block.text || '').replace(/\n/g, '<br>') + '</div>';
+            }
+            return '<div class="sticky" style="background:' + color + '"><textarea oninput="updateBlock(\'' + block.id + '\', { text: this.value })">' + escapeHtml(block.text || '') + '</textarea><div class="swatches">' + stickyColors.map(function (item) { return '<button class="swatch" type="button" style="background:' + item + '" onclick="updateBlock(\'' + block.id + '\', { color: \'' + item + '\' }, true)"></button>'; }).join('') + '</div></div>';
+        }
+
+        function setImageUrl(id, input) {
+            updateBlock(id, { src: input.value });
+            const img = input.parentElement.parentElement.querySelector('.image-preview');
+            if (!img) return;
+            img.src = input.value;
+            img.classList.toggle('has-image', !!input.value);
+        }
+
+        function uploadImage(id, file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function () {
+                updateBlock(id, { src: reader.result }, true);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function formatText(id, command) {
+            document.execCommand(command, false, null);
+            const editor = document.querySelector('[data-id="' + id + '"] .editor');
+            if (editor) updateBlock(id, { html: editor.innerHTML });
+        }
+
+        function getDropIndex(event) {
+            const blockEls = Array.from(blockList.querySelectorAll('.block'));
+            const pointerY = event.clientY;
+            const targetIndex = blockEls.findIndex(function (blockEl) {
+                const rect = blockEl.getBoundingClientRect();
+                return pointerY < rect.top + rect.height / 2;
+            });
+            return targetIndex === -1 ? blockEls.length : targetIndex;
+        }
+
+        function handleCanvasDragOver(event) {
+            event.preventDefault();
+            if (!dragging) return;
+            showDropLine(getDropIndex(event));
+        }
+
+        function showDropLine(index) {
+            clearDropLine();
+            const line = document.createElement('div');
+            line.className = 'drop-line';
+            const blockEls = Array.from(blockList.querySelectorAll('.block'));
+            blockList.insertBefore(line, blockEls[index] || null);
+        }
+
+        function clearDropLine() {
+            blockList.querySelectorAll('.drop-line').forEach(function (line) { line.remove(); });
+        }
+
+        canvas.addEventListener('dragover', handleCanvasDragOver);
+        canvas.addEventListener('drop', function (event) {
+            event.preventDefault();
+            const dropIndex = getDropIndex(event);
+            const type = event.dataTransfer.getData('block-type');
+            if (dragging && dragging.source === 'canvas') {
+                const fromIndex = blocks.findIndex(function (block) { return block.id === dragging.id; });
+                if (fromIndex >= 0) {
+                    const moved = blocks.splice(fromIndex, 1)[0];
+                    const targetIndex = fromIndex < dropIndex ? dropIndex - 1 : dropIndex;
+                    blocks.splice(Math.max(0, targetIndex), 0, moved);
+                    save('Reordered');
+                }
+            } else if (type) {
+                blocks.splice(dropIndex, 0, defaultBlock(type));
+                save('Added block');
+            }
+            dragging = null;
+            clearDropLine();
+            render();
+        });
+
+        setupPalette();
+        attachPaletteDnD();
+        filterPalette(paletteSearch.value);
+
+        docTitle.addEventListener('input', function () {
+            save('Autosaved', false);
+        });
+
+        function save(message, showToastMessage) {
+            if (showToastMessage === undefined) showToastMessage = true;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ title: docTitle.value, blocks: blocks }));
+            const now = new Date();
+            const time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            lastSaved.textContent = 'Saved ' + time;
+            saveStateEl.textContent = message;
+            if (showToastMessage) showToast(message);
+        }
+
+        function load() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                if (saved.title) docTitle.value = saved.title;
+                if (Array.isArray(saved.blocks)) blocks = saved.blocks;
+            } catch (error) {
+                blocks = [];
+            }
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () {
+                toast.classList.remove('show');
+            }, 1200);
+        }
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function escapeAttr(value) {
+            return escapeHtml(value).replace(/`/g, '&#96;');
+        }
+
+        load();
+        if (!blocks.length) loadSample();
+        render();
+    </script>
+</body>
+</html>
