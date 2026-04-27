@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Block - Auto Detect (HTML & DAX)</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fc;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .code-block-wrapper {
+            width: 100%;
+            max-width: 800px;
+            background: #fafafa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e1e1e1;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f1f3f5;
+            color: #5c6370;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .detected-lang {
+            background: #e0e0e0;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: #383a42;
+        }
+
+        .copy-btn {
+            background: #fff;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #f3f4f6; color: #1f2937; }
+
+        .editor-container { position: relative; min-height: 200px; }
+
+        .editing-area {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            padding: 16px; margin: 0;
+            border: none; outline: none; resize: none;
+            background: transparent; color: transparent;
+            caret-color: #333; z-index: 2;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 15px; line-height: 1.5; white-space: pre; overflow-y: auto;
+        }
+
+        .highlighting-area {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            padding: 16px; margin: 0;
+            border: none; z-index: 1;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 15px; line-height: 1.5;
+            pointer-events: none; overflow-y: hidden;
+        }
+        
+        .highlighting-area code {
+            background: transparent !important;
+            padding: 0 !important;
+        }
+
+        .editing-area, .highlighting-area { tab-size: 4; }
+    </style>
+</head>
+<body>
+
+    <div class="code-block-wrapper">
+        <div class="code-header">
+            <span id="lang-label" class="detected-lang">AUTO</span>
+            <button class="copy-btn" onclick="copyCode()">Copy code</button>
+        </div>
+
+        <div class="editor-container">
+            <textarea id="editing" class="editing-area" spellcheck="false" oninput="updateEditor()" onscroll="syncScroll()">
+// Thử gõ DAX vào đây nhé!
+VAR Revenue = SUM(Sales[Amount])
+RETURN CALCULATE(Revenue, 'Date'[Year] = 2024)
+            </textarea>
+            
+            <pre class="highlighting-area"><code id="highlighting-content" class="hljs"></code></pre>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script>
+        // BƯỚC 1: Tự định nghĩa ngôn ngữ DAX cho Highlight.js
+        hljs.registerLanguage('dax', function(hljs) {
+            return {
+                name: 'DAX',
+                case_insensitive: true, // DAX không phân biệt hoa thường
+                keywords: {
+                    keyword: 'EVALUATE DEFINE VAR RETURN CALCULATE FILTER ALL ALLEXCEPT VALUES DISTINCT RELATED TRUE FALSE NOT AND OR IF IFERROR SWITCH',
+                    built_in: 'SUM SUMX MIN MINX MAX MAXX AVERAGE AVERAGEX COUNT COUNTROWS DIVIDE FORMAT DATESYTD',
+                    literal: 'BLANK'
+                },
+                contains: [
+                    hljs.C_LINE_COMMENT_MODE,     // Hỗ trợ // comment
+                    hljs.C_BLOCK_COMMENT_MODE,    // Hỗ trợ /* comment */
+                    hljs.QUOTE_STRING_MODE,       // Hỗ trợ "chuỗi"
+                    {
+                        className: 'symbol',      // Tên Bảng (vd: 'Sales')
+                        begin: /'/, end: /'/
+                    },
+                    {
+                        className: 'attr',        // Tên Cột (vd: [Total Amount])
+                        begin: /\[/, end: /\]/
+                    },
+                    hljs.C_NUMBER_MODE
+                ]
+            };
+        });
+
+        // BƯỚC 2: Cập nhật hàm xử lý code
+        function updateEditor() {
+            let text = document.getElementById("editing").value;
+            let resultElement = document.getElementById("highlighting-content");
+            let langLabel = document.getElementById("lang-label");
+            
+            if(text[text.length-1] === "\n") text += " ";
+
+            // Đưa thêm 'xml' (HTML) và 'dax' vào mảng ưu tiên
+            let popularLanguages = ['sql', 'javascript', 'xml', 'css', 'dax'];
+            
+            let result = hljs.highlightAuto(text, popularLanguages);
+            
+            resultElement.innerHTML = result.value;
+
+            // Đổi nhãn hiển thị cho đẹp
+            let detected = result.language ? result.language.toUpperCase() : "TEXT";
+            if (detected === 'XML') {
+                detected = 'HTML'; // Đổi chữ XML thành HTML trên Header
+            }
+
+            langLabel.innerText = detected;
+        }
+
+        // --- Các hàm tiện ích giữ nguyên ---
+        function syncScroll() {
+            let textarea = document.getElementById("editing");
+            let pre = document.querySelector(".highlighting-area");
+            pre.scrollTop = textarea.scrollTop;
+            pre.scrollLeft = textarea.scrollLeft;
+        }
+
+        document.getElementById('editing').addEventListener('keydown', function(e) {
+            if (e.key == 'Tab') {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
+                this.selectionStart = this.selectionEnd = start + 4;
+                updateEditor();
+            }
+        });
+
+        function copyCode() {
+            let text = document.getElementById("editing").value;
+            navigator.clipboard.writeText(text).then(() => {
+                let btn = document.querySelector('.copy-btn');
+                btn.innerText = "Copied!";
+                setTimeout(() => { btn.innerText = "Copy code"; }, 2000);
+            });
+        }
+
+        // Chạy lần đầu
+        updateEditor();
+    </script>
+</body>
+</html>

@@ -36,7 +36,6 @@
             --ink-soft: #fafafa;
             --shadow: 0 22px 44px rgba(24, 24, 27, 0.1);
             --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
-            --sidebar-width: 400px;
         }
 
         * {
@@ -62,17 +61,9 @@
         .app {
             min-height: 100vh;
             display: grid;
-            grid-template-columns: minmax(320px, var(--sidebar-width)) minmax(0, 1fr);
+            grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
             gap: 22px;
             padding: 24px;
-        }
-
-        .app.is-preview {
-            grid-template-columns: minmax(0, 1fr);
-        }
-
-        .app.is-preview .sidebar {
-            display: none;
         }
 
         .sidebar {
@@ -86,57 +77,6 @@
             color: var(--text);
             border-radius: 20px;
             box-shadow: var(--shadow-soft);
-        }
-
-        .app:not(.is-preview) .sidebar {
-            animation: sidebarSlideIn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-            transform-origin: left center;
-        }
-
-        .sidebar-resizer {
-            position: absolute;
-            top: 16px;
-            right: 0;
-            z-index: 20;
-            width: 12px;
-            height: calc(100% - 32px);
-            padding: 0;
-            border: 0;
-            border-radius: 999px;
-            background: transparent;
-            cursor: col-resize;
-            touch-action: none;
-        }
-
-        .sidebar-resizer::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 48px;
-            border-radius: 999px;
-            background: #d4d4d8;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.18s ease, background 0.18s ease;
-        }
-
-        .sidebar:hover .sidebar-resizer::after,
-        .sidebar-resizer:hover::after,
-        .sidebar-resizer:focus-visible::after,
-        body.is-resizing-sidebar .sidebar-resizer::after {
-            opacity: 1;
-        }
-
-        .sidebar-resizer:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        body.is-resizing-sidebar {
-            cursor: col-resize;
-            user-select: none;
         }
 
         .sidebar::-webkit-scrollbar {
@@ -213,93 +153,6 @@
             margin-bottom: 10px;
         }
 
-        .documents-head-actions {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .documents-pagination {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .documents-page-btn {
-            width: 28px;
-            height: 28px;
-            display: inline-grid;
-            place-items: center;
-            border: 1px solid #e4e4e7;
-            border-radius: 9px;
-            background: #ffffff;
-            color: #52525b;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 900;
-            line-height: 1;
-            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-        }
-
-        .documents-page-btn:hover:not(:disabled) {
-            border-color: #d4d4d8;
-            background: #18181b;
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-
-        .documents-page-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.38;
-        }
-
-        .documents-page-label {
-            min-width: 42px;
-            color: #71717a;
-            font-size: 11px;
-            font-weight: 900;
-            text-align: center;
-        }
-
-        .documents-filter {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .documents-filter-btn {
-            min-height: 30px;
-            min-width: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 7px;
-            border: 1px solid #e4e4e7;
-            border-radius: 10px;
-            background: #ffffff;
-            color: #71717a;
-            cursor: pointer;
-            font-size: 10.5px;
-            font-weight: 900;
-            line-height: 1;
-            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-        }
-
-        .documents-filter-btn span {
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .documents-filter-btn:hover,
-        .documents-filter-btn.is-active {
-            border-color: #d4d4d8;
-            background: #18181b;
-            color: #ffffff;
-        }
-
         .documents-title {
             margin: 0;
             color: #a1a1aa;
@@ -342,15 +195,6 @@
             display: grid;
             gap: 6px;
         }
-
-        .document-list.is-filter-switching .document-row {
-            animation: documentFilterRowIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-        }
-
-        .document-list.is-filter-switching .document-row:nth-child(2) { animation-delay: 18ms; }
-        .document-list.is-filter-switching .document-row:nth-child(3) { animation-delay: 34ms; }
-        .document-list.is-filter-switching .document-row:nth-child(4) { animation-delay: 48ms; }
-        .document-list.is-filter-switching .document-row:nth-child(n+5) { animation-delay: 60ms; }
 
         .document-row {
             width: 100%;
@@ -395,56 +239,6 @@
             white-space: nowrap;
         }
 
-        .document-row-category {
-            display: block;
-            overflow: hidden;
-            margin-top: 4px;
-            color: #71717a;
-            font-size: 11px;
-            font-weight: 750;
-            line-height: 1.2;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .title-tooltip {
-            position: fixed;
-            z-index: 1000;
-            max-width: min(420px, calc(100vw - 28px));
-            padding: 10px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 12px;
-            background: linear-gradient(180deg, rgba(24, 24, 27, 0.98), rgba(39, 39, 42, 0.96));
-            color: #ffffff;
-            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.26), 0 3px 10px rgba(15, 23, 42, 0.18);
-            font-size: 12px;
-            font-weight: 750;
-            line-height: 1.45;
-            overflow-wrap: anywhere;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(4px) scale(0.98);
-            transition: opacity 0.14s ease, transform 0.14s ease;
-        }
-
-        .title-tooltip::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 18px;
-            width: 10px;
-            height: 10px;
-            border-right: 1px solid rgba(255, 255, 255, 0.14);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-            background: rgba(39, 39, 42, 0.96);
-            transform: rotate(45deg);
-        }
-
-        .title-tooltip.is-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
         .document-row-meta {
             margin-top: 5px;
             display: flex;
@@ -470,38 +264,12 @@
             color: #166534;
         }
 
-        .document-status.is-archived {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .document-status.is-pending {
-            padding: 1px 5px;
-            background: #fef3c7;
-            color: #92400e;
-            font-size: 9px;
-            line-height: 1.35;
-            white-space: nowrap;
-        }
-
         .document-row-actions {
             display: flex;
             gap: 4px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(4px) scale(0.98);
-            transition: opacity 0.16s ease, visibility 0.16s ease, transform 0.16s ease;
-        }
-
-        .document-row:hover .document-row-actions,
-        .document-row:focus-within .document-row-actions {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0) scale(1);
         }
 
         .document-row-action {
-            position: relative;
             width: 28px;
             height: 28px;
             display: inline-grid;
@@ -509,66 +277,6 @@
             border-radius: 9px;
             font-size: 12px;
             font-weight: 900;
-        }
-
-        .document-row-action::before,
-        .document-row-action::after {
-            position: absolute;
-            left: 50%;
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(-50%, -4px) scale(0.96);
-            transition: opacity 0.14s ease, transform 0.14s ease;
-        }
-
-        .document-row-action::before {
-            content: attr(data-tooltip);
-            bottom: calc(100% + 8px);
-            z-index: 3;
-            width: max-content;
-            max-width: 150px;
-            padding: 6px 8px;
-            border-radius: 8px;
-            background: #18181b;
-            color: #ffffff;
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.2);
-            font-size: 11px;
-            font-weight: 800;
-            line-height: 1.2;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .document-row-action::after {
-            content: "";
-            bottom: calc(100% + 4px);
-            z-index: 2;
-            width: 8px;
-            height: 8px;
-            background: #18181b;
-            transform: translate(-50%, -4px) rotate(45deg) scale(0.96);
-        }
-
-        .document-row-action:hover::before,
-        .document-row-action:focus-visible::before {
-            opacity: 1;
-            transform: translate(-50%, 0) scale(1);
-        }
-
-        .document-row-action:hover::after,
-        .document-row-action:focus-visible::after {
-            opacity: 1;
-            transform: translate(-50%, 0) rotate(45deg) scale(1);
-        }
-
-        .document-row-action svg {
-            width: 14px;
-            height: 14px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2.15;
-            stroke-linecap: round;
-            stroke-linejoin: round;
         }
 
         .document-row-action.is-danger:hover {
@@ -915,6 +623,107 @@
             font-weight: 700;
         }
 
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .floating-actions {
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(-50%);
+        }
+
+        .floating-action-item {
+            position: relative;
+            border: 1px solid #e4e4e7;
+            background: #ffffff;
+            color: var(--accent);
+            cursor: pointer;
+            font-family: "Google Sans Flex", sans-serif;
+            font-weight: 800;
+            box-shadow: 0 18px 34px rgba(24, 24, 27, 0.12);
+            transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+        }
+
+        .floating-action-item {
+            width: 48px;
+            height: 48px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 999px;
+            font-size: 0;
+        }
+
+        .floating-action-item svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .floating-action-item:hover,
+        .floating-action-item:focus-visible {
+            border-color: #d4d4d8;
+            background: var(--accent);
+            color: #ffffff;
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        .floating-action-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 50%;
+            right: calc(100% + 8px);
+            padding: 5px 8px;
+            border-radius: 8px;
+            background: #18181b;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.2;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(4px, -50%);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .floating-action-item:hover::after,
+        .floating-action-item:focus-visible::after {
+            opacity: 1;
+            transform: translate(0, -50%);
+        }
+
+        .floating-action-item.is-active {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .floating-action-item.is-danger {
+            color: var(--danger);
+        }
+
+        .floating-action-item.is-danger:hover,
+        .floating-action-item.is-danger:focus-visible {
+            border-color: var(--danger);
+            background: var(--danger);
+            color: #ffffff;
+        }
+
         .segmented,
         .btn,
         .icon-btn {
@@ -1032,37 +841,6 @@
             border-radius: 18px;
             background: #ffffff;
             box-shadow: 0 18px 34px rgba(24, 24, 27, 0.07);
-        }
-
-        .paper-category-badge {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-            max-width: calc(100% - 36px);
-            min-height: 26px;
-            display: none;
-            align-items: center;
-            padding: 4px 10px;
-            border: 1px solid #e4e4e7;
-            border-radius: 999px;
-            background: #f4f4f5;
-            color: #52525b;
-            font-size: 10px;
-            font-weight: 900;
-            line-height: 1.2;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .app:not(.is-preview) .paper-category-badge {
-            display: none;
-        }
-
-        .app.is-preview .paper-category-badge.is-visible {
-            display: inline-flex;
         }
 
         .empty {
@@ -1680,7 +1458,7 @@
             border-radius: 0;
             padding: 0;
             background: transparent;
-            color: #18181b;
+            color: var(--accent);
             font-family: "Google Sans Flex", sans-serif;
             font-weight: 700;
             line-height: 1.18;
@@ -1701,18 +1479,15 @@
         }
 
         .heading-input.level-h2 {
-            color: #27272a;
             font-size: 28px;
             line-height: 1.14;
         }
 
         .heading-input.level-h3 {
-            color: #3f3f46;
             font-size: 22px;
         }
 
         .heading-input.level-h4 {
-            color: #52525b;
             font-size: 17px;
             line-height: 1.2;
         }
@@ -3114,24 +2889,6 @@
             transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .app.is-mode-switching .paper {
-            animation: modePaperIn 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-            transform-origin: center top;
-        }
-
-        .app.is-mode-switching .block {
-            animation: modeBlockIn 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-        }
-
-        .app.is-mode-switching .block:nth-child(2) { animation-delay: 18ms; }
-        .app.is-mode-switching .block:nth-child(3) { animation-delay: 34ms; }
-        .app.is-mode-switching .block:nth-child(4) { animation-delay: 48ms; }
-        .app.is-mode-switching .block:nth-child(n+5) { animation-delay: 60ms; }
-
-        .app.is-mode-switching .edit-topbar-actions {
-            animation: modeToolbarIn 0.26s ease both;
-        }
-
         .drag-ghost {
             position: fixed;
             left: 0;
@@ -3247,88 +3004,6 @@
             }
         }
 
-        @keyframes modePaperIn {
-            0% {
-                opacity: 0.86;
-                transform: translateY(8px) scale(0.992);
-                filter: saturate(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: saturate(1);
-            }
-        }
-
-        @keyframes modeBlockIn {
-            0% {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes modeToolbarIn {
-            0% {
-                opacity: 0.8;
-                transform: translateY(-50%) translateX(8px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(-50%) translateX(0);
-            }
-        }
-
-        @keyframes categoryLovPulse {
-            0% {
-                transform: translateY(0) scale(1);
-            }
-            45% {
-                transform: translateY(-1px) scale(1.02);
-                box-shadow: 0 0 0 4px #f4f4f5, 0 16px 32px rgba(15, 23, 42, 0.14);
-            }
-            100% {
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes documentFilterRowIn {
-            0% {
-                opacity: 0;
-                transform: translateY(7px) scale(0.985);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes sidebarSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-22px) scale(0.985);
-                filter: saturate(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-                filter: saturate(1);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .app:not(.is-preview) .sidebar,
-            .app.is-mode-switching .paper,
-            .app.is-mode-switching .block,
-            .app.is-mode-switching .edit-topbar-actions,
-            .document-list.is-filter-switching .document-row {
-                animation: none !important;
-            }
-        }
-
         .toast {
             position: fixed;
             right: 18px;
@@ -3353,105 +3028,6 @@
             transform: translateY(0);
         }
 
-        .publish-guard {
-            position: fixed;
-            inset: 0;
-            z-index: 1200;
-            display: grid;
-            place-items: center;
-            padding: 24px;
-            background: rgba(15, 23, 42, 0.34);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.18s ease;
-        }
-
-        .publish-guard.is-visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .publish-guard-dialog {
-            width: min(100%, 440px);
-            padding: 18px;
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            border-radius: 16px;
-            background: #ffffff;
-            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
-            transform: translateY(8px) scale(0.98);
-            transition: transform 0.18s ease;
-        }
-
-        .publish-guard.is-visible .publish-guard-dialog {
-            transform: translateY(0) scale(1);
-        }
-
-        .publish-guard-kicker {
-            margin: 0 0 8px;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        .publish-guard-title {
-            margin: 0;
-            color: #0f172a;
-            font-size: 20px;
-            line-height: 1.2;
-        }
-
-        .publish-guard-text {
-            margin: 10px 0 0;
-            color: #475569;
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .publish-guard-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 18px;
-        }
-
-        .publish-guard-btn {
-            min-height: 36px;
-            padding: 0 12px;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            background: #ffffff;
-            color: #475569;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 850;
-            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
-        }
-
-        .publish-guard-btn:hover,
-        .publish-guard-btn:focus-visible {
-            border-color: #bfdbfe;
-            background: var(--accent-soft);
-            color: var(--accent);
-            outline: none;
-            transform: translateY(-1px);
-        }
-
-        .publish-guard-btn.is-primary {
-            border-color: var(--accent);
-            background: var(--accent);
-            color: #ffffff;
-        }
-
-        .publish-guard-btn.is-primary:hover,
-        .publish-guard-btn.is-primary:focus-visible {
-            border-color: var(--accent-strong);
-            background: var(--accent-strong);
-            color: #ffffff;
-        }
-
         @page {
             size: A4;
             margin: 16mm;
@@ -3471,11 +3047,10 @@
             .quick-blocks,
             .toolbar,
             .block-meta,
+            .floating-actions,
             .toast,
             .drag-ghost,
-            .image-resize-handle,
-            .doc-status-badge,
-            .paper-back-link {
+            .image-resize-handle {
                 display: none !important;
             }
 
@@ -3494,21 +3069,6 @@
                 background: #ffffff !important;
                 box-shadow: none !important;
                 overflow: visible !important;
-            }
-
-            .paper-category-badge.is-visible {
-                display: inline-flex !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-            }
-
-            .category-lov {
-                display: none !important;
-            }
-
-            .paper.has-category-badge .blocks {
-                padding-top: 34px !important;
             }
 
             .block[data-kind^="heading-"] {
@@ -3539,6 +3099,12 @@
                 grid-template-columns: 1fr;
                 gap: 12px;
                 padding: 12px;
+            }
+
+            .floating-actions {
+                position: fixed;
+                top: 50%;
+                right: 12px;
             }
 
             .sidebar {
@@ -3655,1110 +3221,11 @@
                 max-width: 100%;
             }
         }
-
-        /* Builder redesign aligned with document-list.html */
-        :root {
-            --bg: #f8fafc;
-            --bg-deep: #eef2f7;
-            --bg-accent: #f8fafc;
-            --sidebar: #ffffff;
-            --paper: #ffffff;
-            --line: #e2e8f0;
-            --line-strong: #cbd5e1;
-            --text: #0f172a;
-            --muted: #64748b;
-            --accent: #2563eb;
-            --accent-strong: #1d4ed8;
-            --accent-soft: #eff6ff;
-            --warn: #b45309;
-            --warn-soft: #fffbeb;
-            --success: #15803d;
-            --success-soft: #f0fdf4;
-            --danger: #dc2626;
-            --danger-soft: #fef2f2;
-            --shadow: 0 24px 52px rgba(15, 23, 42, 0.12);
-            --shadow-soft: 0 14px 32px rgba(15, 23, 42, 0.07);
-            --sidebar-width: 328px;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        .app {
-            grid-template-columns: minmax(280px, var(--sidebar-width)) minmax(0, 1fr);
-            gap: 18px;
-            padding: 18px;
-        }
-
-        .sidebar {
-            top: 18px;
-            height: calc(100vh - 36px);
-            border-color: var(--line);
-            border-radius: 18px;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .brand {
-            grid-template-columns: 44px minmax(0, 1fr);
-            gap: 12px;
-            padding: 22px 22px 10px;
-        }
-
-        .brand-mark {
-            width: 44px;
-            height: 44px;
-            border-radius: 13px;
-            background: var(--accent);
-            box-shadow: 0 14px 24px rgba(37, 99, 235, 0.22);
-        }
-
-        .brand-label,
-        .documents-title,
-        .palette-head span:first-child {
-            color: #94a3b8;
-            letter-spacing: 0.16em;
-        }
-
-        .brand-title {
-            color: var(--text);
-            font-size: 20px;
-        }
-
-        .documents-panel {
-            margin: 16px 18px 18px;
-            padding: 14px;
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            background: #f8fafc;
-        }
-
-        .document-create-btn,
-        .document-row-action {
-            border-color: var(--line);
-        }
-
-        .document-create-btn:hover,
-        .document-row-action:hover {
-            border-color: #bfdbfe;
-            background: var(--accent);
-        }
-
-        .document-row {
-            border-radius: 12px;
-        }
-
-        .document-row:hover,
-        .document-row.is-active {
-            border-color: #bfdbfe;
-            background: #ffffff;
-        }
-
-        .document-row.is-active {
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.08);
-        }
-
-        .document-status.is-published {
-            background: var(--success-soft);
-            color: var(--success);
-        }
-
-        .document-status.is-archived {
-            background: var(--danger-soft);
-            color: var(--danger);
-        }
-
-        .document-status.is-pending {
-            padding: 1px 5px;
-            background: #fef3c7;
-            color: #92400e;
-            font-size: 9px;
-            line-height: 1.35;
-            white-space: nowrap;
-        }
-
-        .palette-head {
-            margin: 18px 22px 12px;
-            padding-top: 18px;
-            border-top-color: var(--line);
-        }
-
-        .palette-shell {
-            gap: 18px;
-            padding: 0 18px 26px;
-        }
-
-        .search-box {
-            background: linear-gradient(180deg, #ffffff 0%, #ffffff 80%, rgba(255,255,255,0));
-        }
-
-        .search-input {
-            min-height: 44px;
-            border-color: var(--line);
-            border-radius: 14px;
-            background: #f8fafc;
-            font-size: 13px;
-        }
-
-        .search-input:focus {
-            border-color: #93c5fd;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .palette-section {
-            gap: 8px;
-        }
-
-        .palette-section-title {
-            color: #334155;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: none;
-        }
-
-        .palette-section-note {
-            display: none;
-        }
-
-        .palette {
-            gap: 3px;
-        }
-
-        .palette-card {
-            grid-template-columns: 18px 38px minmax(0, 1fr);
-            gap: 9px;
-            padding: 8px 9px;
-            border-radius: 12px;
-        }
-
-        .palette-card:hover {
-            border-color: #dbeafe;
-            background: var(--accent-soft);
-        }
-
-        .palette-icon {
-            width: 38px;
-            height: 38px;
-            border-color: var(--line);
-            border-radius: 11px;
-            color: var(--accent);
-        }
-
-        .palette-icon svg {
-            width: 19px;
-            height: 19px;
-        }
-
-        .palette-name {
-            color: #1e293b;
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-        .palette-desc {
-            color: #64748b;
-            font-size: 11.5px;
-        }
-
-        .workspace {
-            display: grid;
-            grid-template-rows: auto minmax(0, 1fr);
-            min-height: calc(100vh - 36px);
-        }
-
-        .editor-shell {
-            display: grid;
-            grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
-            gap: 20px;
-            align-items: start;
-        }
-
-        .editor-sidepanel {
-            position: sticky;
-            top: 96px;
-            display: grid;
-            gap: 14px;
-        }
-
-        .editor-title-card {
-            padding: 18px 18px 16px;
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            background: #ffffff;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .editor-side-label {
-            margin: 0 0 10px;
-            color: #94a3b8;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-
-        .edit-topbar-shell {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr);
-            gap: 14px;
-            align-items: start;
-        }
-
-        .edit-topbar-main {
-            display: grid;
-            grid-template-columns: auto;
-            gap: 0;
-            align-items: center;
-        }
-
-        .edit-topbar-content {
-            display: none;
-        }
-
-        .edit-topbar-actions {
-            position: fixed;
-            top: 50%;
-            right: 18px;
-            z-index: 140;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: stretch;
-            gap: 8px;
-            transform: translateY(-50%);
-        }
-
-        .mode-switch {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            padding: 3px;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            background: #f8fafc;
-        }
-
-        .category-lov {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-            z-index: 8;
-            width: 210px;
-            max-width: calc(100% - 36px);
-        }
-
-        .category-lov-trigger {
-            width: 100%;
-            min-height: 34px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 0 11px 0 14px;
-            border: 1px solid rgba(24, 24, 27, 0.1);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-            color: #18181b;
-            cursor: pointer;
-            font-family: "Google Sans Flex", sans-serif;
-            font-size: 11px;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: 0.06em;
-            outline: none;
-            text-overflow: ellipsis;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease;
-        }
-
-        .category-lov-trigger:hover {
-            border-color: rgba(24, 24, 27, 0.18);
-            background: #ffffff;
-            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
-            transform: translateY(-1px);
-        }
-
-        .category-lov-trigger:focus-visible,
-        .category-lov.is-open .category-lov-trigger {
-            border-color: #a1a1aa;
-            box-shadow: 0 0 0 4px #f4f4f5, 0 14px 28px rgba(15, 23, 42, 0.12);
-        }
-
-        .category-lov-trigger:disabled {
-            cursor: default;
-            opacity: 0.62;
-            transform: none;
-        }
-
-        .category-lov-label {
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .category-lov-chevron {
-            width: 16px;
-            height: 16px;
-            flex: 0 0 auto;
-            border-radius: 999px;
-            color: #52525b;
-            transition: transform 0.18s ease;
-        }
-
-        .category-lov-chevron path,
-        .category-lov-check path {
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2.3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .category-lov.is-open .category-lov-chevron {
-            transform: rotate(180deg);
-        }
-
-        .category-lov-menu {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            width: min(260px, calc(100vw - 56px));
-            max-height: 240px;
-            padding: 6px;
-            border: 1px solid rgba(24, 24, 27, 0.1);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 24px 54px rgba(15, 23, 42, 0.16), 0 8px 20px rgba(15, 23, 42, 0.08);
-            opacity: 0;
-            overflow: auto;
-            pointer-events: none;
-            transform: translateY(-8px) scale(0.96);
-            transform-origin: left top;
-            transition: opacity 0.16s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .category-lov.is-open .category-lov-menu {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0) scale(1);
-        }
-
-        .category-lov-option {
-            width: 100%;
-            min-height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 0 9px 0 11px;
-            border: 0;
-            border-radius: 10px;
-            background: transparent;
-            color: #3f3f46;
-            cursor: pointer;
-            font-family: "Google Sans Flex", sans-serif;
-            font-size: 11px;
-            font-weight: 850;
-            letter-spacing: 0.04em;
-            line-height: 1;
-            text-align: left;
-            transition: background 0.14s ease, color 0.14s ease, transform 0.14s ease;
-        }
-
-        .category-lov-option:hover,
-        .category-lov-option:focus-visible {
-            background: #f4f4f5;
-            color: #18181b;
-            outline: none;
-            transform: translateX(2px);
-        }
-
-        .category-lov-option.is-active {
-            background: #18181b;
-            color: #ffffff;
-        }
-
-        .category-lov-check {
-            width: 14px;
-            height: 14px;
-            flex: 0 0 auto;
-            opacity: 0;
-            transition: opacity 0.14s ease, transform 0.14s ease;
-        }
-
-        .category-lov-option.is-active .category-lov-check {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .category-lov.is-updating .category-lov-trigger {
-            animation: categoryLovPulse 0.42s ease both;
-        }
-
-        .app.is-preview .category-lov {
-            display: none;
-        }
-
-        .mode-switch-btn,
-        .topbar-action,
-        .more-trigger,
-        .more-menu-item {
-            min-height: 34px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            border: 1px solid transparent;
-            border-radius: 10px;
-            background: transparent;
-            color: #475569;
-            cursor: pointer;
-            font-family: "Google Sans Flex", sans-serif;
-            font-size: 12px;
-            font-weight: 800;
-            line-height: 1;
-            white-space: nowrap;
-            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
-        }
-
-        .mode-switch-btn {
-            padding: 0 10px;
-        }
-
-        .mode-switch-btn:hover,
-        .mode-switch-btn:focus-visible,
-        .mode-switch-btn.is-active {
-            border-color: #bfdbfe;
-            background: #ffffff;
-            color: var(--accent);
-            outline: none;
-        }
-
-        .mode-switch-btn.is-active {
-            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.1);
-        }
-
-        .topbar-action {
-            padding: 0 12px;
-            border-color: var(--line);
-            background: #ffffff;
-            width: 100%;
-        }
-
-        .topbar-action.is-icon {
-            width: 34px;
-            height: 34px;
-            min-height: 34px;
-            padding: 0;
-            flex: 0 0 34px;
-        }
-
-        .topbar-action.is-icon span {
-            display: none;
-        }
-
-        .topbar-action.is-icon.is-confirming {
-            width: auto;
-            min-width: 142px;
-            padding: 0 10px;
-            flex-basis: auto;
-        }
-
-        .topbar-action.is-icon.is-confirming span {
-            display: inline;
-        }
-
-        .topbar-icon-actions {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .topbar-action.is-hidden {
-            display: none;
-        }
-
-        .topbar-action.is-danger {
-            color: var(--danger);
-        }
-
-        .topbar-action svg,
-        .more-trigger svg,
-        .mode-switch-btn svg,
-        .more-menu-item svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .topbar-action:hover,
-        .topbar-action:focus-visible,
-        .more-trigger:hover,
-        .more-trigger:focus-visible {
-            border-color: #bfdbfe;
-            background: var(--accent-soft);
-            color: var(--accent);
-            outline: none;
-            transform: translateY(-1px);
-        }
-
-        .topbar-action.is-danger:hover,
-        .topbar-action.is-danger:focus-visible {
-            border-color: rgba(239, 68, 68, 0.28);
-            background: var(--danger-soft);
-            color: var(--danger);
-        }
-
-        .topbar-action.is-primary {
-            border-color: var(--accent);
-            background: var(--accent);
-            color: #ffffff;
-            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.16);
-        }
-
-        .topbar-action.is-primary:hover,
-        .topbar-action.is-primary:focus-visible {
-            border-color: var(--accent-strong);
-            background: var(--accent-strong);
-            color: #ffffff;
-        }
-
-        .topbar-action:disabled {
-            cursor: default;
-            opacity: 0.62;
-            transform: none;
-        }
-
-        .mode-switch-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.56;
-            transform: none;
-        }
-
-        .more-actions {
-            position: relative;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .more-trigger {
-            width: 34px;
-            border-color: var(--line);
-            background: #ffffff;
-        }
-
-        .more-menu {
-            position: absolute;
-            top: 50%;
-            right: calc(100% + 8px);
-            z-index: 130;
-            min-width: 190px;
-            padding: 6px;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            background: #ffffff;
-            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.16);
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(4px, -50%);
-            transition: opacity 0.16s ease, transform 0.16s ease;
-        }
-
-        .more-actions.is-open .more-menu {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(0, -50%);
-        }
-
-        .more-menu-item {
-            width: 100%;
-            justify-content: flex-start;
-            padding: 0 10px;
-            border-radius: 9px;
-        }
-
-        .more-menu-item.is-hidden {
-            display: none;
-        }
-
-        .more-menu-item:hover,
-        .more-menu-item:focus-visible {
-            background: #f8fafc;
-            color: var(--accent);
-            outline: none;
-        }
-
-        .more-menu-item.is-danger {
-            color: var(--danger);
-        }
-
-        .more-menu-item.is-danger:hover,
-        .more-menu-item.is-danger:focus-visible {
-            background: var(--danger-soft);
-            color: var(--danger);
-        }
-
-        .topbar {
-            position: sticky;
-            top: 18px;
-            z-index: 70;
-            grid-template-columns: minmax(0, 1fr);
-            gap: 0;
-            margin-bottom: 14px;
-            padding: 14px;
-            border-color: var(--line);
-            border-radius: 18px;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .back-link {
-            width: 42px;
-            height: 42px;
-            display: inline-grid;
-            place-items: center;
-            align-self: start;
-            border: 1px solid var(--line);
-            border-radius: 13px;
-            background: #ffffff;
-            color: #475569;
-            text-decoration: none;
-            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
-        }
-
-        .back-link:hover,
-        .back-link:focus-visible {
-            border-color: #bfdbfe;
-            background: var(--accent-soft);
-            color: var(--accent);
-            outline: none;
-            transform: translateY(-1px);
-        }
-
-        .back-link svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .title-input {
-            color: var(--text);
-            font-size: 26px;
-            line-height: 1.15;
-        }
-
-        .meta-row {
-            margin-top: 14px;
-        }
-
-        .pill {
-            min-height: 28px;
-            border-color: var(--line);
-            background: #f8fafc;
-            color: #64748b;
-            font-size: 11.5px;
-        }
-
-        .canvas-shell {
-            overflow: visible;
-            border: 0;
-            border-radius: 0;
-            background: transparent;
-            box-shadow: none;
-            min-width: 0;
-        }
-
-        .canvas-head {
-            min-height: 42px;
-            margin: 0 0 10px;
-            padding: 0 4px;
-            border: 0;
-            background: transparent;
-        }
-
-        .canvas-label {
-            color: #64748b;
-            font-size: 11px;
-        }
-
-        .save-state {
-            min-height: 28px;
-            padding: 0 10px;
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            background: #ffffff;
-            color: #64748b;
-            font-size: 11.5px;
-        }
-
-        .canvas {
-            min-height: calc(100vh - 160px);
-            padding: 24px clamp(22px, 5vw, 72px) 36px;
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
-        }
-
-        .paper {
-            width: min(100%, 900px);
-            min-height: 520px;
-            padding: clamp(34px, 5vw, 58px) clamp(30px, 6vw, 68px) 72px;
-            border-color: #e5e7eb;
-            border-radius: 10px;
-            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.09);
-        }
-
-        .empty {
-            border-color: #cbd5e1;
-            border-radius: 14px;
-            background: #f8fafc;
-        }
-
-        .empty h2 {
-            color: var(--text);
-        }
-
-        .btn {
-            border-color: var(--line);
-            border-radius: 12px;
-        }
-
-        .btn:hover,
-        .icon-btn:hover,
-        .segment-btn:hover,
-        .tool-btn:hover {
-            border-color: #bfdbfe;
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
-
-        .quick-blocks {
-            width: min(100%, 900px);
-        }
-
-        .quick-block-item {
-            border-color: var(--line);
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
-        }
-
-        .block::after {
-            right: -78px;
-            width: 78px;
-        }
-
-        .block-meta {
-            left: -154px;
-            width: 142px;
-            gap: 6px;
-        }
-
-        .toolbar {
-            right: -68px;
-            gap: 5px;
-        }
-
-        .order,
-        .type-label,
-        .meta-select,
-        .meta-lov-trigger,
-        .heading-lov-trigger,
-        .tool-btn {
-            border-color: var(--line);
-        }
-
-        .tool-icon-btn {
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.07);
-        }
-
-        .control:focus,
-        .textarea:focus,
-        .editor:focus,
-        .meta-select:focus {
-            border-color: #93c5fd;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .heading-input,
-        .view h1,
-        .toggle-plain h1 {
-            color: #18181b;
-        }
-
-        .heading-input.level-h2,
-        .view h2,
-        .toggle-plain h2 {
-            color: #27272a;
-        }
-
-        .heading-input.level-h3,
-        .view h3,
-        .toggle-plain h3 {
-            color: #3f3f46;
-        }
-
-        .heading-input.level-h4,
-        .view h4,
-        .toggle-plain h4 {
-            color: #52525b;
-        }
-
-        .app .topbar {
-            display: contents;
-        }
-
-        .app .edit-topbar-main {
-            display: none;
-        }
-
-        .app .workspace {
-            padding-right: 198px;
-        }
-
-        .app .edit-topbar-shell {
-            display: contents;
-        }
-
-        .app .canvas-shell {
-            display: grid;
-            gap: 12px;
-        }
-
-        .app .editor-shell {
-            grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
-        }
-
-        .app .canvas-head {
-            display: none;
-        }
-
-        .app .canvas {
-            position: relative;
-            padding-top: 0;
-            border: 0;
-            border-radius: 0;
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .app .paper {
-            border-radius: 12px;
-            box-shadow: 0 22px 46px rgba(15, 23, 42, 0.08);
-        }
-
-        .paper-back-link {
-            position: absolute;
-            top: 0;
-            left: max(18px, calc(50% - 544px));
-            z-index: 20;
-        }
-
-        .app .quick-blocks {
-            width: min(100%, 980px);
-        }
-
-        .doc-status-badge {
-            position: fixed;
-            top: 24px;
-            right: 32px;
-            z-index: 115;
-            display: none;
-            align-items: center;
-            min-height: 28px;
-            padding: 0 10px;
-            border: 1px solid #fcd34d;
-            border-radius: 999px;
-            background: #fffbeb;
-            color: #92400e;
-            font-size: 11px;
-            font-weight: 850;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-        }
-
-        .doc-status-badge.is-visible {
-            display: inline-flex;
-        }
-
-        .doc-status-badge.is-published {
-            border-color: #bbf7d0;
-            background: #f0fdf4;
-            color: #166534;
-        }
-
-        .doc-status-badge.is-archived {
-            border-color: #fecdd3;
-            background: #fff1f2;
-            color: #be123c;
-        }
-
-        @media (max-width: 980px) {
-            .edit-topbar-actions {
-                right: 14px;
-                gap: 7px;
-            }
-
-            .app .topbar {
-                top: 12px;
-            }
-
-            .app .workspace {
-                padding-right: 182px;
-            }
-
-            .editor-shell,
-            .app .editor-shell {
-                grid-template-columns: 1fr;
-            }
-
-            .editor-sidepanel {
-                position: static;
-            }
-
-        }
-
-        .toast {
-            border-color: #bfdbfe;
-            background: #ffffff;
-            color: var(--text);
-        }
-
-        @media (max-width: 1100px) {
-            .app {
-                grid-template-columns: minmax(248px, var(--sidebar-width)) minmax(0, 1fr);
-            }
-
-            .topbar {
-                padding-right: 14px;
-            }
-
-        }
-
-        @media (max-width: 900px) {
-            .app {
-                grid-template-columns: 1fr;
-                padding: 12px;
-            }
-
-            .sidebar {
-                top: auto;
-                height: auto;
-                max-height: 42vh;
-                border: 1px solid var(--line);
-            }
-
-            .sidebar-resizer {
-                display: none;
-            }
-
-            .topbar {
-                position: static;
-                padding: 12px;
-            }
-
-            .app .topbar {
-                position: static;
-            }
-
-            .mode-switch {
-                flex: 1 1 220px;
-            }
-
-            .mode-switch-btn {
-                flex: 1 1 0;
-            }
-
-            .edit-topbar-actions .mode-switch {
-                flex: 0 0 auto;
-            }
-
-            .edit-topbar-actions .mode-switch-btn {
-                flex: 1 1 0;
-            }
-
-            .canvas {
-                padding: 18px;
-            }
-
-            .block-meta,
-            .toolbar {
-                position: relative;
-                left: auto;
-                right: auto;
-                top: auto;
-                width: 100%;
-            }
-
-            .block-meta {
-                justify-content: flex-start;
-                margin-bottom: 6px;
-            }
-
-            .toolbar {
-                justify-content: flex-start;
-                opacity: 1;
-                transform: none;
-                margin-bottom: 8px;
-            }
-        }
-
-        @media (max-width: 620px) {
-            .edit-topbar-actions {
-                right: 10px;
-                gap: 6px;
-            }
-
-            .app .workspace {
-                padding-right: 156px;
-            }
-
-            .mode-switch-btn,
-            .topbar-action,
-            .more-trigger {
-                min-height: 32px;
-                font-size: 11px;
-            }
-
-            .mode-switch-btn,
-            .topbar-action {
-                padding-left: 8px;
-                padding-right: 8px;
-            }
-
-            .more-menu {
-                min-width: 170px;
-                right: calc(100% + 6px);
-            }
-
-            .title-input {
-                font-size: 21px;
-            }
-
-            .paper {
-                padding: 24px 18px 82px;
-            }
-
-        }
     </style>
 </head>
 <body>
     <main class="app" id="app">
         <aside class="sidebar">
-            <button class="sidebar-resizer" id="sidebarResizer" type="button" title="Kéo để đổi độ rộng menu" aria-label="Kéo để đổi độ rộng menu"></button>
             <div class="brand">
                 <div class="brand-mark">DOC</div>
                 <div>
@@ -4767,22 +3234,14 @@
                 </div>
             </div>
 
-            <div class="documents-panel">
+            <section class="documents-panel" aria-label="Documents">
                 <div class="documents-head">
-                    <h2 class="documents-title">Documents</h2>
-                    <div class="documents-head-actions">
-                        <div class="documents-pagination" id="documentsPagination" aria-label="Documents pagination"></div>
-                        <button class="document-create-btn" type="button" title="New document" aria-label="New document" onclick="createDocument()">+</button>
-                    </div>
-                </div>
-                <div class="documents-filter" role="tablist" aria-label="Document status filter">
-                    <button class="documents-filter-btn is-active" id="draftDocumentsFilterBtn" type="button" role="tab" aria-selected="true" title="Draft" onclick="setDocumentsFilter('draft')"><span>Draft</span></button>
-                    <button class="documents-filter-btn" id="publishedDocumentsFilterBtn" type="button" role="tab" aria-selected="false" title="Published" onclick="setDocumentsFilter('published')"><span>Published</span></button>
-                    <button class="documents-filter-btn" id="archivedDocumentsFilterBtn" type="button" role="tab" aria-selected="false" title="Archived" onclick="setDocumentsFilter('archived')"><span>Archived</span></button>
+                    <p class="documents-title">Documents</p>
+                    <button class="document-create-btn" type="button" title="New document" aria-label="New document" onclick="createDocument()">+</button>
                 </div>
                 <div class="document-list" id="documentList"></div>
-                <div class="documents-empty" id="documentsEmpty">No documents in this view.</div>
-            </div>
+                <div class="documents-empty" id="documentsEmpty">No active documents yet.</div>
+            </section>
 
             <div class="palette-head">
                 <span>Blocks</span>
@@ -4801,7 +3260,7 @@
                     <div class="palette-section-head">
                         <div>
                             <p class="palette-section-title">Favorite 1</p>
-                            <p class="palette-section-note">Kéo thả để đổi thứ tự nhanh</p>
+                            <p class="palette-section-note">Keo tha de doi thu tu nhanh</p>
                         </div>
                         <span class="palette-count" id="favoriteOneCount">0</span>
                     </div>
@@ -4813,7 +3272,7 @@
                     <div class="palette-section-head">
                         <div>
                             <p class="palette-section-title">Favorite 2</p>
-                            <p class="palette-section-note">Nhóm block thường dùng tiếp theo</p>
+                            <p class="palette-section-note">Nhom block thuong dung tiep theo</p>
                         </div>
                         <span class="palette-count" id="favoriteTwoCount">0</span>
                     </div>
@@ -4825,7 +3284,7 @@
                     <div class="palette-section-head">
                         <div>
                             <p class="palette-section-title">All blocks</p>
-                            <p class="palette-section-note">Heading được gom chung để dễ quét</p>
+                            <p class="palette-section-note">Heading duoc gom chung de de quet</p>
                         </div>
                         <span class="palette-count" id="remainingCount">0</span>
                     </div>
@@ -4903,54 +3362,12 @@
 
         <section class="workspace">
             <div class="topbar">
-                <div class="edit-topbar-shell">
-                    <div class="edit-topbar-main">
-                        <a class="back-link" href="document-list.html" title="Back to viewed article" aria-label="Back to viewed article">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M21 12H9"></path></svg>
-                        </a>
-                        <div class="edit-topbar-content">
+                <div>
                     <input id="docTitle" class="title-input" value="Báo cáo hiệu quả kinh doanh 6 tháng đầu năm 2019" placeholder="Nhập tên tài liệu">
                     <div class="meta-row">
                         <span class="pill" id="blockCounter">0 blocks</span>
                         <span class="pill" id="lastSaved">Autosaved</span>
-                        <span class="save-state" id="saveState">Ready</span>
                         <span class="pill">Editorial workspace</span>
-                    </div>
-                        </div>
-                    </div>
-                    <div class="edit-topbar-actions">
-                        <div class="mode-switch" role="group" aria-label="View mode">
-                            <button class="mode-switch-btn is-active" type="button" id="editModeBtn" aria-label="Edit" onclick="setMode('edit')">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="m16.5 3.5 4 4L7 21l-4 1 1-4z"></path></svg>
-                                <span>Edit</span>
-                            </button>
-                            <button class="mode-switch-btn" type="button" id="previewModeBtn" aria-label="Preview" onclick="setMode('preview')">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <span>Preview</span>
-                            </button>
-                        </div>
-                        <button class="topbar-action" type="button" aria-label="Export PDF" onclick="exportPdf()">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 19h14"></path><path d="M5 15v4"></path><path d="M19 15v4"></path></svg>
-                            <span>Export</span>
-                        </button>
-                        <button class="topbar-action is-primary" type="button" id="publishActionBtn" aria-label="Publish" onclick="publishDocument()">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 8 5-5 5 5"></path><path d="M5 15v4h14v-4"></path></svg>
-                            <span>Publish</span>
-                        </button>
-                        <div class="topbar-icon-actions" aria-label="Document actions">
-                            <button class="topbar-action is-icon is-hidden" type="button" id="restoreActionBtn" title="Restore" aria-label="Restore" onclick="restoreCurrentDocument();">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>
-                                <span>Restore</span>
-                            </button>
-                            <button class="topbar-action is-icon is-hidden" type="button" id="unpublishActionBtn" title="Unpublish" aria-label="Unpublish" onclick="unpublishCurrentDocument();">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"></path><path d="m17 16-5 5-5-5"></path><path d="M5 9V5h14v4"></path></svg>
-                                <span>Unpublish</span>
-                            </button>
-                            <button class="topbar-action is-icon is-danger" type="button" id="archiveActionBtn" title="Archive" aria-label="Archive" onclick="archiveCurrentDocument();">
-                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
-                                <span>Archive</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -4958,20 +3375,10 @@
             <section class="canvas-shell">
                 <div class="canvas-head">
                     <span class="canvas-label">Canvas</span>
+                    <span class="save-state" id="saveState">Ready</span>
                 </div>
                 <div class="canvas" id="canvas">
-                    <a class="back-link paper-back-link" id="builderBackLink" href="document-list.html" title="Back to viewed article" aria-label="Back to viewed article">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M21 12H9"></path></svg>
-                    </a>
                     <div class="paper">
-                        <div class="paper-category-badge" id="paperCategoryBadge"></div>
-                        <div class="category-lov" id="categoryLov">
-                            <button class="category-lov-trigger" id="categoryLovTrigger" type="button" aria-label="Danh mục" aria-haspopup="listbox" aria-expanded="false">
-                                <span class="category-lov-label" id="categoryLovLabel">Chưa phân loại</span>
-                                <svg class="category-lov-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
-                            </button>
-                            <div class="category-lov-menu" id="categoryLovMenu" role="listbox" aria-label="Danh mục"></div>
-                        </div>
                         <div class="empty" id="emptyState">
                             <div>
                                 <h2>Bắt đầu với một khối nội dung</h2>
@@ -4991,36 +3398,35 @@
         </section>
     </main>
 
-    <div class="doc-status-badge" id="docStatusBadge"></div>
-
-    <div class="publish-guard" id="publishGuard" role="dialog" aria-modal="true" aria-labelledby="publishGuardTitle" aria-hidden="true">
-        <div class="publish-guard-dialog">
-            <p class="publish-guard-kicker">Draft saved</p>
-            <h2 class="publish-guard-title" id="publishGuardTitle">Có thay đổi chưa publish</h2>
-            <p class="publish-guard-text">Bản nháp đã được lưu trong builder, nhưng nội dung public/list vẫn chưa được cập nhật. Bạn muốn xử lý thế nào trước khi rời khỏi tài liệu này?</p>
-            <div class="publish-guard-actions">
-                <button class="publish-guard-btn" type="button" id="publishGuardContinueBtn">Continue editing</button>
-                <button class="publish-guard-btn" type="button" id="publishGuardLeaveBtn">Leave with draft</button>
-                <button class="publish-guard-btn is-primary" type="button" id="publishGuardPublishBtn">Publish &amp; leave</button>
-            </div>
-        </div>
+    <div class="floating-actions" id="floatingActions">
+        <button class="floating-action-item is-active" type="button" id="editModeBtn" data-tooltip="Edit" aria-label="Edit" onclick="setMode('edit')">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="m16.5 3.5 4 4L7 21l-4 1 1-4z"></path></svg>
+        </button>
+        <button class="floating-action-item" type="button" id="previewModeBtn" data-tooltip="Preview" aria-label="Preview" onclick="setMode('preview')">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+        <button class="floating-action-item" type="button" data-tooltip="Export PDF" aria-label="Export PDF" onclick="exportPdf()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 19h14"></path><path d="M5 15v4"></path><path d="M19 15v4"></path></svg>
+        </button>
+        <button class="floating-action-item" type="button" data-tooltip="Publish" aria-label="Publish" onclick="publishDocument()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 8 5-5 5 5"></path><path d="M5 15v4h14v-4"></path></svg>
+        </button>
+        <button class="floating-action-item is-danger" type="button" data-tooltip="Delete" aria-label="Delete" onclick="archiveCurrentDocument()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+        </button>
     </div>
 
     <div class="toast" id="toast">Saved</div>
     <div class="drag-ghost" id="dragGhost" aria-hidden="true"></div>
-    <div class="title-tooltip" id="titleTooltip" role="tooltip"></div>
 
     <script>
         const STORAGE_KEY = 'document_builder_state_v4';
         const DOCUMENTS_STORAGE_KEY = 'document_builder_documents_v1';
         const ACTIVE_DOCUMENT_KEY = 'document_builder_active_document_v1';
-        const TEAM_DOCUMENTS_STORAGE_KEY = 'team_documents_dashboard_v1';
         const BLOCK_USAGE_KEY = 'document_builder_block_usage_v1';
         const PINNED_BLOCKS_KEY = 'document_builder_pinned_blocks_v1';
-        const SIDEBAR_WIDTH_KEY = 'document_builder_sidebar_width_v1';
         const app = document.getElementById('app');
         const sidebar = document.querySelector('.sidebar');
-        const sidebarResizer = document.getElementById('sidebarResizer');
         const blockList = document.getElementById('blockList');
         const emptyState = document.getElementById('emptyState');
         const canvas = document.getElementById('canvas');
@@ -5034,29 +3440,8 @@
         const saveStateEl = document.getElementById('saveState');
         const editModeBtn = document.getElementById('editModeBtn');
         const previewModeBtn = document.getElementById('previewModeBtn');
-        const publishActionBtn = document.getElementById('publishActionBtn');
-        const restoreActionBtn = document.getElementById('restoreActionBtn');
-        const unpublishActionBtn = document.getElementById('unpublishActionBtn');
-        const archiveActionBtn = document.getElementById('archiveActionBtn');
-        const moreActions = document.getElementById('moreActions');
-        const moreActionsBtn = document.getElementById('moreActionsBtn');
-        const documentsPagination = document.getElementById('documentsPagination');
-        const draftDocumentsFilterBtn = document.getElementById('draftDocumentsFilterBtn');
-        const publishedDocumentsFilterBtn = document.getElementById('publishedDocumentsFilterBtn');
-        const archivedDocumentsFilterBtn = document.getElementById('archivedDocumentsFilterBtn');
-        const docStatusBadge = document.getElementById('docStatusBadge');
-        const paperCategoryBadge = document.getElementById('paperCategoryBadge');
-        const categoryLov = document.getElementById('categoryLov');
-        const categoryLovTrigger = document.getElementById('categoryLovTrigger');
-        const categoryLovLabel = document.getElementById('categoryLovLabel');
-        const categoryLovMenu = document.getElementById('categoryLovMenu');
-        const publishGuard = document.getElementById('publishGuard');
-        const publishGuardContinueBtn = document.getElementById('publishGuardContinueBtn');
-        const publishGuardLeaveBtn = document.getElementById('publishGuardLeaveBtn');
-        const publishGuardPublishBtn = document.getElementById('publishGuardPublishBtn');
         const toast = document.getElementById('toast');
         const dragGhost = document.getElementById('dragGhost');
-        const titleTooltip = document.getElementById('titleTooltip');
         const paletteSearch = document.getElementById('paletteSearch');
         const favoriteOne = document.getElementById('favoriteOne');
         const favoriteTwo = document.getElementById('favoriteTwo');
@@ -5073,14 +3458,11 @@
         const favoriteTwoEmpty = document.getElementById('favoriteTwoEmpty');
         const remainingEmpty = document.getElementById('remainingEmpty');
         const stickyColors = ['#fef3c7', '#dcfce7', '#dbeafe', '#fce7f3', '#ede9fe'];
-        const DOCUMENTS_PAGE_SIZE = 5;
 
         let blocks = [];
         let documents = [];
         let activeDocumentId = null;
-        let documentsFilter = 'draft';
-        let documentsPage = 1;
-        let globalMode = 'preview';
+        let globalMode = 'edit';
         let activeEditId = null;
         let dragging = null;
         let pendingPointer = null;
@@ -5102,96 +3484,9 @@
         let pendingListFocus = null;
         let pendingBlockClickFocus = null;
         let activeTableToolsPanel = null;
-        let modeAnimationTimer = null;
-        let publishConfirmPending = false;
-        let publishConfirmTimer = null;
-        let unpublishConfirmPending = false;
-        let unpublishConfirmTimer = null;
-        let archiveConfirmPending = false;
-        let archiveConfirmTimer = null;
-        let documentsFilterAnimationTimer = null;
-        let hasDraftChanges = false;
-        let hasUnpublishedChanges = false;
-        let draftSaveFailed = false;
-        let pendingNavigation = null;
-        let bypassPublishGuard = false;
-        const requestParams = new URLSearchParams(window.location.search);
-        const requestedDocumentId = requestParams.get('id') || requestParams.get('doc') || '';
-        const requestedReturnTo = requestParams.get('returnTo') || '';
-        const requestedMode = requestParams.get('mode') || requestParams.get('view') || '';
-        if (requestedMode === 'edit') globalMode = 'edit';
-        if (requestedMode === 'view' || requestedMode === 'preview') globalMode = 'preview';
         const DRAG_THRESHOLD = 7;
         const AUTO_SCROLL_EDGE = 72;
         const AUTO_SCROLL_MAX = 18;
-        const SIDEBAR_MIN_WIDTH = 280;
-        const SIDEBAR_MAX_WIDTH = 720;
-
-        function clampSidebarWidth(width) {
-            const maxByViewport = Math.max(SIDEBAR_MIN_WIDTH, Math.min(SIDEBAR_MAX_WIDTH, window.innerWidth - 360));
-            return Math.min(Math.max(width, SIDEBAR_MIN_WIDTH), maxByViewport);
-        }
-
-        function setSidebarWidth(width, persist) {
-            if (!app) return;
-            const nextWidth = clampSidebarWidth(width);
-            app.style.setProperty('--sidebar-width', nextWidth + 'px');
-            if (persist) localStorage.setItem(SIDEBAR_WIDTH_KEY, String(Math.round(nextWidth)));
-            updateEllipsisTooltips(documentList);
-        }
-
-        function loadSidebarWidth() {
-            const storedWidth = parseInt(localStorage.getItem(SIDEBAR_WIDTH_KEY), 10);
-            if (Number.isFinite(storedWidth)) setSidebarWidth(storedWidth, false);
-        }
-
-        function startSidebarResize(event) {
-            if (!sidebar || window.innerWidth <= 900) return;
-            event.preventDefault();
-            event.stopPropagation();
-            const startX = event.clientX;
-            const startWidth = sidebar.getBoundingClientRect().width;
-            document.body.classList.add('is-resizing-sidebar');
-            if (sidebarResizer && sidebarResizer.setPointerCapture) sidebarResizer.setPointerCapture(event.pointerId);
-
-            function onPointerMove(moveEvent) {
-                setSidebarWidth(startWidth + moveEvent.clientX - startX, false);
-            }
-
-            function onPointerUp(upEvent) {
-                document.removeEventListener('pointermove', onPointerMove);
-                document.removeEventListener('pointerup', onPointerUp);
-                document.body.classList.remove('is-resizing-sidebar');
-                if (sidebarResizer && sidebarResizer.releasePointerCapture) {
-                    try {
-                        sidebarResizer.releasePointerCapture(upEvent.pointerId);
-                    } catch (error) {
-                        // Pointer capture may already be released by the browser.
-                    }
-                }
-                setSidebarWidth(sidebar.getBoundingClientRect().width, true);
-            }
-
-            document.addEventListener('pointermove', onPointerMove);
-            document.addEventListener('pointerup', onPointerUp, { once: true });
-        }
-
-        function resizeSidebarWithKeyboard(event) {
-            if (!sidebar || window.innerWidth <= 900) return;
-            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-            event.preventDefault();
-            const direction = event.key === 'ArrowRight' ? 1 : -1;
-            setSidebarWidth(sidebar.getBoundingClientRect().width + direction * 24, true);
-        }
-
-        loadSidebarWidth();
-        if (sidebarResizer) sidebarResizer.addEventListener('pointerdown', startSidebarResize);
-        if (sidebarResizer) sidebarResizer.addEventListener('keydown', resizeSidebarWithKeyboard);
-        window.addEventListener('resize', function () {
-            const storedWidth = parseInt(localStorage.getItem(SIDEBAR_WIDTH_KEY), 10);
-            if (Number.isFinite(storedWidth)) setSidebarWidth(storedWidth, false);
-            updateEllipsisTooltips(documentList);
-        });
 
         // --- LOGIC CODE BLOCK TỪ A.HTML ---
         hljs.registerLanguage('dax', function(hljs) {
@@ -5620,448 +3915,42 @@
             return JSON.parse(JSON.stringify(Array.isArray(sourceBlocks) ? sourceBlocks : []));
         }
 
-        function getBuilderBackHref() {
-            if (requestedReturnTo && !/^(?:javascript:|data:)/i.test(requestedReturnTo)) {
-                return requestedReturnTo;
-            }
-            return 'document-list.html';
-        }
-
-        function getBuilderEditHref() {
-            const url = new URL(window.location.href);
-            url.searchParams.delete('view');
-            url.searchParams.set('mode', 'edit');
-            return 'document-builder.html' + url.search + url.hash;
-        }
-
-        function updateBuilderBackLink() {
-            document.querySelectorAll('.back-link').forEach(function (link) {
-                link.href = getBuilderBackHref();
-            });
-        }
-
-        function normalizeDocumentStatus(value, archived) {
-            if (archived || value === 'archived') return 'archived';
-            return value === 'published' ? 'published' : 'draft';
-        }
-
-        function applyDocumentStatus(doc, status, options) {
-            if (!doc) return null;
-            const nextStatus = normalizeDocumentStatus(status);
-            const opts = options || {};
-            const now = opts.now || new Date().toISOString();
-            doc.status = nextStatus;
-            doc.archived = nextStatus === 'archived';
-            doc.updatedAt = now;
-            if (nextStatus === 'published') {
-                doc.publishedAt = opts.publishedAt || now;
-                doc.publishedSignature = opts.publishedSignature || getDocumentSignature(doc);
-            } else {
-                doc.publishedAt = null;
-                doc.publishedSignature = '';
-            }
-            return doc;
-        }
-
-        function getDocumentStatusMeta(status) {
-            if (status === 'published') return { label: 'Published', className: ' is-published' };
-            if (status === 'archived') return { label: 'Archived', className: ' is-archived' };
-            return { label: 'Draft', className: '' };
-        }
-
-        function getDocumentTitleFromBlocks(fallbackTitle) {
-            const headingBlocks = blocks.filter(function (block) {
-                return block && block.type === 'heading' && String(block.text || '').trim();
-            });
-            const primaryHeading = headingBlocks.find(function (block) { return block.level === 'h1'; }) || headingBlocks[0];
-            if (primaryHeading) return String(primaryHeading.text || '').trim();
-            return String(fallbackTitle || docTitle.value || '').trim() || 'Untitled document';
-        }
-
-        function applyCurrentDocumentTitle(doc) {
-            const nextTitle = getDocumentTitleFromBlocks(doc && doc.title);
-            if (doc) doc.title = nextTitle;
-            if (docTitle && docTitle.value !== nextTitle) docTitle.value = nextTitle;
-            return nextTitle;
-        }
-
         function getActiveDocument() {
-            return documents.find(function (doc) { return doc.id === activeDocumentId; }) || null;
-        }
-
-        function isActiveDocumentArchived() {
-            const doc = getActiveDocument();
-            return !!(doc && doc.status === 'archived');
-        }
-
-        function canEditActiveDocument(showMessage) {
-            if (!isActiveDocumentArchived()) return true;
-            activeEditId = null;
-            globalMode = 'preview';
-            if (showMessage) showToast('Restore document before editing');
-            return false;
+            return documents.find(function (doc) { return doc.id === activeDocumentId && !doc.archived; }) || null;
         }
 
         function getActiveDocuments() {
             return documents
-                .filter(matchesDocumentsFilter)
+                .filter(function (doc) { return !doc.archived; })
                 .sort(function (a, b) { return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); });
         }
 
-        function ensureUniqueDocumentIds() {
-            const seen = new Set();
-            let changed = false;
-            documents.forEach(function (doc) {
-                if (!doc) return;
-                const originalId = doc.id || documentUid();
-                if (!doc.id) {
-                    doc.id = originalId;
-                    changed = true;
-                }
-                if (seen.has(doc.id)) {
-                    if (!doc.sourceArticleId && findTeamArticle(originalId)) {
-                        doc.sourceArticleId = originalId;
-                    }
-                    doc.id = documentUid();
-                    changed = true;
-                }
-                seen.add(doc.id);
-            });
-            return changed;
-        }
-
-        function hasDocumentUnpublishedChanges(doc) {
-            return !!(doc && doc.status === 'published' && doc.publishedSignature && getDocumentSignature(doc) !== doc.publishedSignature);
-        }
-
-        function matchesDocumentsFilter(doc) {
-            if (!doc) return false;
-            if (documentsFilter === 'archived') return doc.status === 'archived';
-            if (documentsFilter === 'published') return doc.status === 'published';
-            return doc.status === 'draft' || hasDocumentUnpublishedChanges(doc);
-        }
-
-        function createDocumentRecord(title, sourceBlocks, metadata) {
+        function createDocumentRecord(title, sourceBlocks) {
             const now = new Date().toISOString();
-            const meta = metadata || {};
             return {
-                id: meta.id || documentUid(),
+                id: documentUid(),
                 title: title || 'Untitled document',
                 blocks: cloneBlocks(sourceBlocks),
-                status: normalizeDocumentStatus(meta.status, meta.archived),
-                createdAt: meta.createdAt || now,
-                updatedAt: meta.updatedAt || now,
-                publishedAt: meta.publishedAt || null,
-                publishedSignature: meta.publishedSignature || '',
-                archived: normalizeDocumentStatus(meta.status, meta.archived) === 'archived',
-                sourceArticleId: meta.sourceArticleId || null,
-                sourceCategoryId: meta.sourceCategoryId || null,
-                sourceAuthor: meta.sourceAuthor || null,
-                sourceDescription: meta.sourceDescription || ''
+                status: 'draft',
+                createdAt: now,
+                updatedAt: now,
+                publishedAt: null,
+                archived: false
             };
         }
 
         function normalizeDocument(raw) {
             const now = new Date().toISOString();
-            const isArchived = !!(raw && (raw.archived || raw.status === 'archived'));
-            const status = normalizeDocumentStatus(raw && raw.status, isArchived);
-            const normalized = {
+            return {
                 id: raw && raw.id ? String(raw.id) : documentUid(),
                 title: raw && raw.title ? String(raw.title) : 'Untitled document',
                 blocks: cloneBlocks(raw && raw.blocks),
-                status: status,
+                status: raw && raw.status === 'published' ? 'published' : 'draft',
                 createdAt: raw && raw.createdAt ? raw.createdAt : now,
                 updatedAt: raw && raw.updatedAt ? raw.updatedAt : now,
                 publishedAt: raw && raw.publishedAt ? raw.publishedAt : null,
-                publishedSignature: raw && raw.publishedSignature ? String(raw.publishedSignature) : '',
-                archived: isArchived,
-                sourceArticleId: raw && raw.sourceArticleId ? String(raw.sourceArticleId) : null,
-                sourceCategoryId: raw && raw.sourceCategoryId ? String(raw.sourceCategoryId) : null,
-                sourceAuthor: raw && raw.sourceAuthor ? String(raw.sourceAuthor) : null,
-                sourceDescription: raw && raw.sourceDescription ? String(raw.sourceDescription) : ''
+                archived: !!(raw && raw.archived)
             };
-            if (normalized.status === 'published' && !normalized.publishedSignature) {
-                normalized.publishedSignature = getDocumentSignature(normalized);
-            }
-            if (normalized.status !== 'published') {
-                normalized.publishedAt = null;
-                normalized.publishedSignature = '';
-            }
-            return normalized;
-        }
-
-        function getDocumentSignature(doc) {
-            return JSON.stringify({
-                title: String((doc && doc.title) || 'Untitled document').trim() || 'Untitled document',
-                blocks: cloneBlocks(doc && doc.blocks)
-            });
-        }
-
-        function getCurrentDraftSignature() {
-            return JSON.stringify({
-                title: String(docTitle.value || '').trim() || 'Untitled document',
-                blocks: cloneBlocks(blocks)
-            });
-        }
-
-        function refreshDraftState() {
-            const doc = getActiveDocument();
-            hasUnpublishedChanges = !!(doc && doc.status === 'published' && doc.publishedSignature && getCurrentDraftSignature() !== doc.publishedSignature);
-            if (saveStateEl) {
-                if (draftSaveFailed) {
-                    saveStateEl.textContent = 'Draft save failed';
-                } else if (hasDraftChanges) {
-                    saveStateEl.textContent = 'Saving draft...';
-                } else if (hasUnpublishedChanges) {
-                    saveStateEl.textContent = 'Unpublished changes';
-                }
-            }
-            renderFloatingActions();
-        }
-
-        function readTeamDocumentStore() {
-            try {
-                const data = JSON.parse(localStorage.getItem(TEAM_DOCUMENTS_STORAGE_KEY) || '{}');
-                if (!data || !Array.isArray(data.articles)) return null;
-                return data;
-            } catch (error) {
-                return null;
-            }
-        }
-
-        function writeTeamDocumentStore(data) {
-            try {
-                localStorage.setItem(TEAM_DOCUMENTS_STORAGE_KEY, JSON.stringify(data));
-                return true;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        function findTeamArticle(id) {
-            const data = readTeamDocumentStore();
-            if (!data || !id) return null;
-            return data.articles.find(function (article) { return article.id === id; }) || null;
-        }
-
-        function getTeamCategories() {
-            const data = readTeamDocumentStore();
-            return data && Array.isArray(data.categories) ? data.categories : [];
-        }
-
-        function resolveDocumentCategoryName(doc) {
-            const categoryId = doc && doc.sourceCategoryId;
-            if (!categoryId) return 'Chưa phân loại';
-            const categories = getTeamCategories();
-            const category = categories.find(function (item) {
-                return item && String(item.id) === String(categoryId);
-            });
-            const name = category && String(category.name || '').trim();
-            return name || 'Chưa phân loại';
-        }
-
-        function formatCategoryLovText(value) {
-            return String(value || 'Chưa phân loại').toLocaleUpperCase('vi-VN');
-        }
-
-        function plainTextToHtml(value) {
-            const paragraphs = String(value || '')
-                .split(/\n{2,}/)
-                .map(function (part) { return part.trim(); })
-                .filter(Boolean);
-            if (!paragraphs.length) return '<p></p>';
-            return paragraphs.map(function (paragraph) {
-                return '<p>' + escapeHtml(paragraph).replace(/\n/g, '<br>') + '</p>';
-            }).join('');
-        }
-
-        function createBlocksFromArticle(article) {
-            const blocksFromArticle = [];
-            const title = article && article.title ? String(article.title) : 'Untitled document';
-            blocksFromArticle.push({ ...defaultBlock('heading'), level: 'h1', text: title });
-            if (article && article.description) {
-                blocksFromArticle.push({ ...defaultBlock('callout'), tone: 'info', text: String(article.description) });
-            }
-            blocksFromArticle.push({ ...defaultBlock('text'), html: plainTextToHtml(article && article.content) });
-            return blocksFromArticle;
-        }
-
-        function createDocumentFromArticle(article) {
-            const doc = createDocumentRecord(article.title || 'Untitled document', createBlocksFromArticle(article), {
-                id: article.id,
-                createdAt: article.createdAt,
-                updatedAt: article.updatedAt || article.createdAt || new Date().toISOString(),
-                publishedAt: article.publishedAt || null,
-                status: article.status,
-                archived: article.status === 'archived'
-            });
-            doc.sourceArticleId = article.id;
-            doc.sourceCategoryId = article.categoryId || null;
-            doc.sourceAuthor = article.author || null;
-            doc.sourceDescription = article.description || '';
-            applyDocumentStatus(doc, article.status, {
-                now: article.updatedAt || article.createdAt || new Date().toISOString(),
-                publishedAt: article.publishedAt || null,
-                publishedSignature: getDocumentSignature(doc)
-            });
-            return doc;
-        }
-
-        function syncDocumentToTeamStore(doc) {
-            const sourceId = doc && (doc.sourceArticleId || doc.id);
-            if (!doc || !sourceId) return;
-            const data = readTeamDocumentStore();
-            if (!data || !Array.isArray(data.articles)) return;
-            const articleIndex = data.articles.findIndex(function (article) { return article.id === sourceId; });
-            const currentArticle = articleIndex >= 0 ? data.articles[articleIndex] : {};
-            const nextArticle = {
-                ...currentArticle,
-                id: sourceId,
-                title: doc.title,
-                description: doc.sourceDescription || currentArticle.description || '',
-                content: blocksToPlainText(doc.blocks, doc.title),
-                author: currentArticle.author || doc.sourceAuthor || 'Bạn',
-                categoryId: doc.sourceCategoryId || '',
-                status: normalizeDocumentStatus(doc.status, doc.archived),
-                createdAt: currentArticle.createdAt || doc.createdAt || new Date().toISOString(),
-                updatedAt: doc.updatedAt || new Date().toISOString(),
-                publishedAt: doc.publishedAt || currentArticle.publishedAt || null
-            };
-            if (articleIndex >= 0) {
-                data.articles[articleIndex] = nextArticle;
-            } else {
-                data.articles.unshift(nextArticle);
-                doc.sourceArticleId = sourceId;
-            }
-            writeTeamDocumentStore(data);
-        }
-
-        function syncDocumentStatusToTeamStore(doc) {
-            const sourceId = doc && (doc.sourceArticleId || doc.id);
-            if (!doc || !sourceId) return;
-            const data = readTeamDocumentStore() || { categories: [], articles: [] };
-            if (!Array.isArray(data.articles)) data.articles = [];
-            const articleIndex = data.articles.findIndex(function (article) { return article.id === sourceId; });
-            if (articleIndex < 0) {
-                syncDocumentToTeamStore(doc);
-                return;
-            }
-            const currentArticle = data.articles[articleIndex];
-            data.articles[articleIndex] = {
-                ...currentArticle,
-                status: normalizeDocumentStatus(doc.status, doc.archived),
-                updatedAt: doc.updatedAt || new Date().toISOString(),
-                publishedAt: doc.publishedAt || null
-            };
-            writeTeamDocumentStore(data);
-        }
-
-        function deleteDocumentFromTeamStore(doc) {
-            const sourceId = doc && (doc.sourceArticleId || doc.id);
-            if (!sourceId) return;
-            const data = readTeamDocumentStore() || { categories: [], articles: [] };
-            if (!Array.isArray(data.articles)) data.articles = [];
-            const nextArticles = data.articles.filter(function (article) { return article.id !== sourceId; });
-            if (nextArticles.length === data.articles.length) return;
-            writeTeamDocumentStore({ ...data, articles: nextArticles });
-        }
-
-        function syncLocalDocumentStatusesFromTeamStore() {
-            const data = readTeamDocumentStore();
-            if (!data || !Array.isArray(data.articles) || !Array.isArray(documents)) return;
-            let changed = false;
-            documents.forEach(function (doc) {
-                if (!doc) return;
-                const article = data.articles.find(function (item) {
-                    return item.id === doc.sourceArticleId || item.id === doc.id;
-                });
-                if (!article) return;
-                const nextStatus = normalizeDocumentStatus(article.status, article.status === 'archived');
-                const nextArchived = nextStatus === 'archived';
-                const nextPublishedAt = article.publishedAt || null;
-                if (
-                    doc.status !== nextStatus ||
-                    doc.archived !== nextArchived ||
-                    (doc.publishedAt || null) !== nextPublishedAt ||
-                    doc.sourceCategoryId !== (article.categoryId || null) ||
-                    doc.sourceDescription !== (article.description || '')
-                ) {
-                    changed = true;
-                    doc.status = nextStatus;
-                    doc.archived = nextArchived;
-                    doc.publishedAt = nextPublishedAt;
-                    doc.sourceArticleId = article.id;
-                    doc.sourceCategoryId = article.categoryId || null;
-                    doc.sourceAuthor = article.author || doc.sourceAuthor || null;
-                    doc.sourceDescription = article.description || '';
-                    if (nextStatus !== 'published') doc.publishedSignature = '';
-                    if (nextStatus === 'published' && !doc.publishedSignature) doc.publishedSignature = getDocumentSignature(doc);
-                }
-            });
-            return changed;
-        }
-
-        function syncActiveDocumentToTeamStore() {
-            syncDocumentToTeamStore(getActiveDocument());
-        }
-
-        function stripHtmlToText(html) {
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = String(html || '');
-            return (wrapper.textContent || '').trim();
-        }
-
-        function blocksToPlainText(sourceBlocks, titleToSkip) {
-            let skippedTitle = false;
-            const normalizedTitle = String(titleToSkip || '').trim().toLowerCase();
-            return cloneBlocks(sourceBlocks).map(function (block) {
-                if (!skippedTitle && block.type === 'heading' && block.level === 'h1') {
-                    const headingText = String(block.text || '').trim();
-                    if (headingText && headingText.toLowerCase() === normalizedTitle) {
-                        skippedTitle = true;
-                        return '';
-                    }
-                }
-                if (block.type === 'heading') return block.text || '';
-                if (block.type === 'text') return stripHtmlToText(block.html);
-                if (block.type === 'bulleted' || block.type === 'numbered' || block.type === 'todo') return block.itemsText || '';
-                if (block.type === 'quote' || block.type === 'callout' || block.type === 'sticky') return block.text || '';
-                if (block.type === 'columns') return Array.isArray(block.columns) ? block.columns.join('\n') : '';
-                if (block.type === 'table') return Array.isArray(block.table) ? block.table.map(function (row) { return row.join('\t'); }).join('\n') : '';
-                if (block.type === 'code') return block.code || '';
-                if (block.type === 'image') return [block.alt, block.caption, block.src].filter(Boolean).join('\n');
-                return '';
-            }).filter(function (text) { return String(text || '').trim(); }).join('\n\n');
-        }
-
-        function resolveRequestedDocument() {
-            if (!requestedDocumentId) return false;
-            const article = findTeamArticle(requestedDocumentId);
-            const existing = documents.find(function (doc) {
-                return doc.id === requestedDocumentId || doc.sourceArticleId === requestedDocumentId;
-            });
-            if (existing) {
-                if (article) {
-                    existing.sourceArticleId = article.id;
-                    existing.sourceCategoryId = article.categoryId || existing.sourceCategoryId || null;
-                    existing.sourceAuthor = article.author || existing.sourceAuthor || null;
-                    existing.sourceDescription = article.description || existing.sourceDescription || '';
-                    applyDocumentStatus(existing, article.status, {
-                        now: article.updatedAt || existing.updatedAt || new Date().toISOString(),
-                        publishedAt: article.publishedAt || null,
-                        publishedSignature: existing.publishedSignature || getDocumentSignature(existing)
-                    });
-                    saveDocumentsCollection(false);
-                }
-                activeDocumentId = existing.id;
-                return true;
-            }
-            if (!article) return false;
-            const imported = createDocumentFromArticle(article);
-            documents.push(imported);
-            activeDocumentId = imported.id;
-            saveDocumentsCollection(false);
-            return true;
         }
 
         function loadDocumentCollection() {
@@ -6070,13 +3959,8 @@
                 const savedDocs = Array.isArray(saved) ? saved : saved.documents;
                 if (Array.isArray(savedDocs) && savedDocs.length) {
                     documents = savedDocs.map(normalizeDocument);
-                    const repairedIds = ensureUniqueDocumentIds();
-                    const syncedStatuses = syncLocalDocumentStatusesFromTeamStore();
-                    if (!resolveRequestedDocument()) {
-                        activeDocumentId = saved.activeId || localStorage.getItem(ACTIVE_DOCUMENT_KEY) || documents[0].id;
-                    }
+                    activeDocumentId = saved.activeId || localStorage.getItem(ACTIVE_DOCUMENT_KEY) || documents[0].id;
                     ensureActiveDocument();
-                    if (repairedIds || syncedStatuses) saveDocumentsCollection(false);
                     return;
                 }
             } catch (error) {
@@ -6085,9 +3969,7 @@
 
             const migrated = migrateLegacyDocument();
             documents = [migrated || createDocumentRecord('Untitled document', [])];
-            if (!resolveRequestedDocument()) {
-                activeDocumentId = documents[0].id;
-            }
+            activeDocumentId = documents[0].id;
             saveDocumentsCollection(false);
         }
 
@@ -6113,24 +3995,7 @@
             }
             docTitle.value = doc.title;
             blocks = cloneBlocks(doc.blocks);
-            if (doc.archived) {
-                globalMode = 'preview';
-                app.classList.toggle('is-preview', true);
-                if (editModeBtn) {
-                    editModeBtn.classList.remove('is-active');
-                    editModeBtn.setAttribute('aria-pressed', 'false');
-                }
-                if (previewModeBtn) {
-                    previewModeBtn.classList.add('is-active');
-                    previewModeBtn.setAttribute('aria-pressed', 'true');
-                }
-            }
-            hasDraftChanges = false;
-            draftSaveFailed = false;
             localStorage.setItem(ACTIVE_DOCUMENT_KEY, activeDocumentId);
-            lastSaved.textContent = 'Saved draft ' + formatDocumentTime(doc.updatedAt);
-            saveStateEl.textContent = 'Ready';
-            refreshDraftState();
         }
 
         function saveDocumentsCollection(showFailureToast) {
@@ -6149,9 +4014,9 @@
                     error.code === 22 ||
                     error.code === 1014
                 );
-                saveStateEl.textContent = isQuotaError ? 'Draft storage full' : 'Draft save failed';
+                saveStateEl.textContent = isQuotaError ? 'Storage full' : 'Save failed';
                 lastSaved.textContent = 'Not saved';
-                if (showFailureToast) showToast(isQuotaError ? 'Draft is too large to autosave' : 'Cannot save draft');
+                if (showFailureToast) showToast(isQuotaError ? 'Document is too large to autosave' : 'Cannot save');
                 return false;
             }
         }
@@ -6167,377 +4032,32 @@
             return String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + ' ' + time;
         }
 
-        function formatDocumentDateTime(value) {
-            if (!value) return 'Chưa có dữ liệu';
-            const date = new Date(value);
-            if (Number.isNaN(date.getTime())) return 'Chưa có dữ liệu';
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            const time = String(date.getHours()).padStart(2, '0') + ':' + String(date.getMinutes()).padStart(2, '0');
-            return day + '/' + month + '/' + year + ' ' + time;
-        }
-
-        function getDocumentCreator(doc) {
-            if (!doc) return 'Bạn';
-            return doc.sourceAuthor || doc.author || doc.createdBy || 'Bạn';
-        }
-
-        function renderDocumentStatusBadge() {
-            if (!docStatusBadge) return;
-            const doc = getActiveDocument();
-            const statusMeta = getDocumentStatusMeta(doc && doc.status);
-            docStatusBadge.textContent = doc ? statusMeta.label : '';
-            docStatusBadge.className = 'doc-status-badge' + statusMeta.className;
-            docStatusBadge.classList.toggle('is-visible', !!doc);
-        }
-
-        function renderPaperCategoryBadge() {
-            if (!paperCategoryBadge) return;
-            const doc = getActiveDocument();
-            const categoryName = doc ? resolveDocumentCategoryName(doc) : '';
-            paperCategoryBadge.textContent = categoryName;
-            paperCategoryBadge.setAttribute('title', categoryName);
-            paperCategoryBadge.classList.toggle('is-visible', !!categoryName);
-            const paper = paperCategoryBadge.closest('.paper');
-            if (paper) paper.classList.toggle('has-category-badge', !!categoryName);
-        }
-
-        function renderCategoryLov() {
-            if (!categoryLov || !categoryLovTrigger || !categoryLovLabel || !categoryLovMenu) return;
-            const doc = getActiveDocument();
-            const categories = getTeamCategories();
-            const currentValue = doc && doc.sourceCategoryId ? String(doc.sourceCategoryId) : '';
-            const hasCurrentCategory = currentValue && categories.some(function (category) {
-                return category && String(category.id) === currentValue;
-            });
-            const categoryName = doc ? resolveDocumentCategoryName(doc) : 'Chưa phân loại';
-            const categoryLabel = formatCategoryLovText(categoryName);
-            const emptyCategoryLabel = formatCategoryLovText('Chưa phân loại');
-            const staleOption = hasCurrentCategory || !currentValue
-                ? ''
-                : '<button class="category-lov-option is-active" type="button" role="option" aria-selected="true" data-category-id="' + escapeAttr(currentValue) + '"><span>' + escapeHtml(emptyCategoryLabel) + '</span><svg class="category-lov-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"></path></svg></button>';
-            const optionIcon = '<svg class="category-lov-check" viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"></path></svg>';
-            categoryLovLabel.textContent = categoryLabel;
-            categoryLovTrigger.setAttribute('title', categoryName);
-            categoryLovMenu.innerHTML = '<button class="category-lov-option' + (!currentValue ? ' is-active' : '') + '" type="button" role="option" aria-selected="' + (!currentValue ? 'true' : 'false') + '" data-category-id=""><span>' + escapeHtml(emptyCategoryLabel) + '</span>' + optionIcon + '</button>'
-                + staleOption
-                + categories.map(function (category) {
-                    const value = String(category.id || '');
-                    const isActive = value === currentValue;
-                    return '<button class="category-lov-option' + (isActive ? ' is-active' : '') + '" type="button" role="option" aria-selected="' + (isActive ? 'true' : 'false') + '" data-category-id="' + escapeAttr(value) + '"><span>' + escapeHtml(formatCategoryLovText(category.name || 'Untitled category')) + '</span>' + optionIcon + '</button>';
-                }).join('');
-            categoryLovTrigger.disabled = !doc || !canEditActiveDocument(false) || (!categories.length && !currentValue);
-            categoryLov.classList.toggle('is-disabled', categoryLovTrigger.disabled);
-        }
-
-        function closeCategoryLov() {
-            if (!categoryLov || !categoryLovTrigger) return;
-            categoryLov.classList.remove('is-open');
-            categoryLovTrigger.setAttribute('aria-expanded', 'false');
-        }
-
-        function toggleCategoryLov(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            if (!categoryLov || !categoryLovTrigger || categoryLovTrigger.disabled) return;
-            const isOpen = categoryLov.classList.toggle('is-open');
-            categoryLovTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            if (isOpen) {
-                const activeOption = categoryLovMenu && categoryLovMenu.querySelector('.category-lov-option.is-active');
-                window.requestAnimationFrame(function () {
-                    (activeOption || categoryLovMenu.querySelector('.category-lov-option'))?.focus({ preventScroll: true });
-                });
-            }
-        }
-
-        function selectCategoryLovOption(option) {
-            if (!option) return;
-            updateDocumentCategory(option.dataset.categoryId || '');
-            closeCategoryLov();
-            if (categoryLovTrigger) categoryLovTrigger.focus({ preventScroll: true });
-        }
-
-        function updateDocumentCategory(categoryId) {
-            if (!canEditActiveDocument(true)) return;
-            const doc = getActiveDocument();
-            if (!doc) return;
-            const nextCategoryId = categoryId || null;
-            if ((doc.sourceCategoryId || null) === nextCategoryId) return;
-            const now = new Date().toISOString();
-            doc.sourceCategoryId = nextCategoryId;
-            doc.updatedAt = now;
-            if (!saveDocumentsCollection(true)) return;
-            syncDocumentToTeamStore(doc);
-            lastSaved.textContent = 'Saved draft ' + formatDocumentTime(now);
-            saveStateEl.textContent = 'Category updated';
-            renderCategoryLov();
-            renderPaperCategoryBadge();
-            renderDocuments();
-            if (categoryLov) {
-                categoryLov.classList.remove('is-updating');
-                void categoryLov.offsetWidth;
-                categoryLov.classList.add('is-updating');
-                window.setTimeout(function () {
-                    if (categoryLov) categoryLov.classList.remove('is-updating');
-                }, 460);
-            }
-            showToast('Category updated');
-        }
-
-        function renderFloatingActions() {
-            const doc = getActiveDocument();
-            const isPublished = !!(doc && doc.status === 'published');
-            const isArchived = !!(doc && doc.archived);
-            if (editModeBtn) {
-                editModeBtn.toggleAttribute('disabled', isArchived);
-            }
-            if (docTitle) {
-                docTitle.toggleAttribute('readonly', isArchived);
-                docTitle.setAttribute('aria-readonly', isArchived ? 'true' : 'false');
-            }
-            if (publishActionBtn) {
-                const publishLabel = publishConfirmPending ? 'Confirm publish' : (isPublished && hasUnpublishedChanges ? 'Update published' : isPublished ? 'Published' : 'Publish');
-                publishActionBtn.setAttribute('aria-label', publishLabel);
-                publishActionBtn.toggleAttribute('disabled', isArchived || (isPublished && !hasUnpublishedChanges && !publishConfirmPending));
-                const publishText = publishActionBtn.querySelector('span');
-                if (publishText) publishText.textContent = publishLabel;
-            }
-            if (restoreActionBtn) {
-                restoreActionBtn.classList.toggle('is-hidden', !isArchived);
-                restoreActionBtn.setAttribute('title', 'Restore');
-                restoreActionBtn.setAttribute('aria-label', 'Restore');
-            }
-            if (unpublishActionBtn) {
-                const unpublishLabel = unpublishConfirmPending ? 'Confirm unpublish' : 'Unpublish';
-                unpublishActionBtn.classList.toggle('is-hidden', !isPublished || isArchived);
-                unpublishActionBtn.classList.toggle('is-confirming', unpublishConfirmPending);
-                unpublishActionBtn.setAttribute('title', unpublishLabel);
-                unpublishActionBtn.setAttribute('aria-label', unpublishLabel);
-                const unpublishText = unpublishActionBtn.querySelector('span');
-                if (unpublishText) unpublishText.textContent = unpublishLabel;
-            }
-            if (archiveActionBtn) {
-                const archiveLabel = archiveConfirmPending ? 'Confirm archive' : 'Archive';
-                archiveActionBtn.classList.toggle('is-hidden', isArchived);
-                archiveActionBtn.classList.toggle('is-confirming', archiveConfirmPending);
-                archiveActionBtn.setAttribute('title', archiveLabel);
-                archiveActionBtn.setAttribute('aria-label', archiveLabel);
-                const archiveText = archiveActionBtn.querySelector('span');
-                if (archiveText) archiveText.textContent = archiveLabel;
-            }
-        }
-
-        function clearPublishConfirm() {
-            publishConfirmPending = false;
-            window.clearTimeout(publishConfirmTimer);
-            renderFloatingActions();
-        }
-
-        function clearUnpublishConfirm() {
-            unpublishConfirmPending = false;
-            window.clearTimeout(unpublishConfirmTimer);
-            renderFloatingActions();
-        }
-
-        function clearArchiveConfirm() {
-            archiveConfirmPending = false;
-            window.clearTimeout(archiveConfirmTimer);
-            renderFloatingActions();
-        }
-
-        function closeMoreActions() {
-            if (!moreActions) return;
-            moreActions.classList.remove('is-open');
-            if (moreActionsBtn) moreActionsBtn.setAttribute('aria-expanded', 'false');
-        }
-
-        function closePublishGuard() {
-            pendingNavigation = null;
-            if (!publishGuard) return;
-            publishGuard.classList.remove('is-visible');
-            publishGuard.setAttribute('aria-hidden', 'true');
-        }
-
-        function showPublishGuard(action) {
-            pendingNavigation = action;
-            if (!publishGuard) return;
-            publishGuard.classList.add('is-visible');
-            publishGuard.setAttribute('aria-hidden', 'false');
-            if (publishGuardContinueBtn) publishGuardContinueBtn.focus({ preventScroll: true });
-        }
-
-        function runPendingNavigation() {
-            const action = pendingNavigation;
-            closePublishGuard();
-            if (typeof action === 'function') {
-                bypassPublishGuard = true;
-                try {
-                    action();
-                } finally {
-                    bypassPublishGuard = false;
-                }
-            }
-        }
-
-        function requestDraftNavigation(action) {
-            if (hasDraftChanges || draftSaveFailed) {
-                saveDraft('Saving draft...', false);
-            }
-            refreshDraftState();
-            if (draftSaveFailed) {
-                showToast('Draft save failed');
-                return false;
-            }
-            if (hasUnpublishedChanges) {
-                showPublishGuard(action);
-                return false;
-            }
-            if (typeof action === 'function') action();
-            return true;
-        }
-
-        function leaveWithDraft() {
-            if (hasDraftChanges || draftSaveFailed) {
-                if (!saveDraft('Saving draft...', true)) return;
-            }
-            runPendingNavigation();
-        }
-
-        function publishAndLeave() {
-            if (!publishCurrentDraft(true)) return;
-            runPendingNavigation();
-        }
-
-        function toggleMoreActions(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            if (!moreActions) return;
-            const isOpen = moreActions.classList.toggle('is-open');
-            if (moreActionsBtn) moreActionsBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-
         function renderDocuments() {
             if (!documentList || !documentsEmpty) return;
             const activeDocs = getActiveDocuments();
-            const totalPages = Math.max(1, Math.ceil(activeDocs.length / DOCUMENTS_PAGE_SIZE));
-            documentsPage = Math.min(Math.max(1, documentsPage), totalPages);
-            const pageStart = (documentsPage - 1) * DOCUMENTS_PAGE_SIZE;
-            const pagedDocs = activeDocs.slice(pageStart, pageStart + DOCUMENTS_PAGE_SIZE);
-            if (draftDocumentsFilterBtn) {
-                draftDocumentsFilterBtn.classList.toggle('is-active', documentsFilter === 'draft');
-                draftDocumentsFilterBtn.setAttribute('aria-selected', documentsFilter === 'draft' ? 'true' : 'false');
-            }
-            if (publishedDocumentsFilterBtn) {
-                publishedDocumentsFilterBtn.classList.toggle('is-active', documentsFilter === 'published');
-                publishedDocumentsFilterBtn.setAttribute('aria-selected', documentsFilter === 'published' ? 'true' : 'false');
-            }
-            if (archivedDocumentsFilterBtn) {
-                archivedDocumentsFilterBtn.classList.toggle('is-active', documentsFilter === 'archived');
-                archivedDocumentsFilterBtn.setAttribute('aria-selected', documentsFilter === 'archived' ? 'true' : 'false');
-            }
-            if (documentsPagination) {
-                documentsPagination.innerHTML = ''
-                    + '<button class="documents-page-btn" type="button" title="Previous page" aria-label="Previous documents page" onclick="changeDocumentsPage(-1)" ' + (documentsPage <= 1 ? 'disabled' : '') + '>&lsaquo;</button>'
-                    + '<span class="documents-page-label">' + documentsPage + '/' + totalPages + '</span>'
-                    + '<button class="documents-page-btn" type="button" title="Next page" aria-label="Next documents page" onclick="changeDocumentsPage(1)" ' + (documentsPage >= totalPages ? 'disabled' : '') + '>&rsaquo;</button>';
-            }
             documentsEmpty.classList.toggle('is-visible', !activeDocs.length);
-            const restoreIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>';
-            const duplicateIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path></svg>';
-            const archiveIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>';
-            const deleteIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>';
-            let activeRowRendered = false;
-            documentList.innerHTML = pagedDocs.map(function (doc) {
-                const statusMeta = getDocumentStatusMeta(doc.status);
-                const hasPendingChanges = hasDocumentUnpublishedChanges(doc);
-                const pendingBadge = hasPendingChanges ? '<span class="document-status is-pending">Pending</span>' : '';
-                const isActiveRow = doc.id === activeDocumentId && !activeRowRendered;
-                if (isActiveRow) activeRowRendered = true;
-                const activeClass = isActiveRow ? ' is-active' : '';
-                const rowClick = doc.archived ? '' : ' onclick="openDocument(\'' + escapeAttr(doc.id) + '\')"';
-                const actions = doc.archived
-                    ? '<span class="document-row-action" role="button" tabindex="0" data-tooltip="Restore" aria-label="Restore" onclick="event.stopPropagation(); restoreDocument(\'' + escapeAttr(doc.id) + '\')">' + restoreIcon + '</span>'
-                        + '<span class="document-row-action" role="button" tabindex="0" data-tooltip="Duplicate" aria-label="Duplicate" onclick="event.stopPropagation(); duplicateDocument(\'' + escapeAttr(doc.id) + '\')">' + duplicateIcon + '</span>'
-                        + '<span class="document-row-action is-danger" role="button" tabindex="0" data-tooltip="Delete permanently" aria-label="Delete permanently" onclick="event.stopPropagation(); deleteDocumentPermanently(\'' + escapeAttr(doc.id) + '\')">' + deleteIcon + '</span>'
-                    : '<span class="document-row-action" role="button" tabindex="0" data-tooltip="Duplicate" aria-label="Duplicate" onclick="event.stopPropagation(); duplicateDocument(\'' + escapeAttr(doc.id) + '\')">' + duplicateIcon + '</span>'
-                        + '<span class="document-row-action is-danger" role="button" tabindex="0" data-tooltip="Archive" aria-label="Archive" onclick="event.stopPropagation(); archiveDocument(\'' + escapeAttr(doc.id) + '\')">' + archiveIcon + '</span>';
-                const docTitleText = doc.title || 'Untitled document';
-                const categoryName = resolveDocumentCategoryName(doc);
-                return '<button class="document-row' + activeClass + '" type="button"' + rowClick + '>'
+            documentList.innerHTML = activeDocs.map(function (doc) {
+                const status = doc.status === 'published' ? 'Published' : 'Draft';
+                const activeClass = doc.id === activeDocumentId ? ' is-active' : '';
+                const statusClass = doc.status === 'published' ? ' is-published' : '';
+                return '<button class="document-row' + activeClass + '" type="button" onclick="openDocument(\'' + escapeAttr(doc.id) + '\')">'
                     + '<span class="document-row-main">'
-                    + '<span class="document-row-title" data-full-title="' + escapeAttr(docTitleText) + '">' + escapeHtml(docTitleText) + '</span>'
-                    + '<span class="document-row-category" title="' + escapeAttr(categoryName) + '">' + escapeHtml(categoryName) + '</span>'
-                    + '<span class="document-row-meta"><span class="document-status' + statusMeta.className + '">' + statusMeta.label + '</span>' + pendingBadge + '<span>' + escapeHtml(formatDocumentTime(doc.updatedAt)) + '</span></span>'
+                    + '<span class="document-row-title">' + escapeHtml(doc.title || 'Untitled document') + '</span>'
+                    + '<span class="document-row-meta"><span class="document-status' + statusClass + '">' + status + '</span><span>' + escapeHtml(formatDocumentTime(doc.updatedAt)) + '</span></span>'
                     + '</span>'
                     + '<span class="document-row-actions">'
-                    + actions
+                    + '<span class="document-row-action" role="button" tabindex="0" title="Rename" onclick="event.stopPropagation(); renameDocument(\'' + escapeAttr(doc.id) + '\')">R</span>'
+                    + '<span class="document-row-action" role="button" tabindex="0" title="Duplicate" onclick="event.stopPropagation(); duplicateDocument(\'' + escapeAttr(doc.id) + '\')">D</span>'
+                    + '<span class="document-row-action is-danger" role="button" tabindex="0" title="Archive" onclick="event.stopPropagation(); archiveDocument(\'' + escapeAttr(doc.id) + '\')">x</span>'
                     + '</span>'
                     + '</button>';
             }).join('');
-            updateEllipsisTooltips(documentList);
-        }
-
-        function updateEllipsisTooltips(scope) {
-            const root = scope || document;
-            requestAnimationFrame(function () {
-                root.querySelectorAll('[data-full-title]').forEach(function (element) {
-                    const isOverflowing = element.scrollWidth > element.clientWidth;
-                    element.toggleAttribute('data-tooltip-enabled', isOverflowing);
-                });
-            });
-        }
-
-        function positionTitleTooltip(target) {
-            if (!titleTooltip || !target || !titleTooltip.classList.contains('is-visible')) return;
-            const rect = target.getBoundingClientRect();
-            const tooltipRect = titleTooltip.getBoundingClientRect();
-            const gap = 8;
-            const margin = 14;
-            let left = rect.left;
-            let top = rect.top - tooltipRect.height - gap;
-            left = Math.min(Math.max(margin, left), window.innerWidth - tooltipRect.width - margin);
-            top = Math.min(Math.max(margin, top), window.innerHeight - tooltipRect.height - margin);
-            titleTooltip.style.left = Math.round(left) + 'px';
-            titleTooltip.style.top = Math.round(top) + 'px';
-        }
-
-        function showTitleTooltip(target) {
-            if (!titleTooltip || !target || !target.hasAttribute('data-tooltip-enabled')) return;
-            const fullTitle = target.getAttribute('data-full-title') || '';
-            if (!fullTitle) return;
-            titleTooltip.textContent = fullTitle;
-            titleTooltip.classList.add('is-visible');
-            positionTitleTooltip(target);
-        }
-
-        function hideTitleTooltip() {
-            if (!titleTooltip) return;
-            titleTooltip.classList.remove('is-visible');
-        }
-
-        function changeDocumentsPage(delta) {
-            const totalPages = Math.max(1, Math.ceil(getActiveDocuments().length / DOCUMENTS_PAGE_SIZE));
-            const nextPage = Math.min(Math.max(1, documentsPage + delta), totalPages);
-            if (nextPage === documentsPage) return;
-            documentsPage = nextPage;
-            renderDocuments();
         }
 
         function createDocument() {
-            if (!bypassPublishGuard && hasUnpublishedChanges) {
-                requestDraftNavigation(function () { createDocument(); });
-                return;
-            }
             const doc = createDocumentRecord('Untitled document', []);
             documents.push(doc);
             activeDocumentId = doc.id;
-            documentsFilter = 'draft';
-            documentsPage = 1;
             activeEditId = null;
             deleteConfirmId = null;
             globalMode = 'edit';
@@ -6552,10 +4072,6 @@
         function openDocument(id) {
             const doc = documents.find(function (item) { return item.id === id && !item.archived; });
             if (!doc || doc.id === activeDocumentId) return;
-            if (!bypassPublishGuard && hasUnpublishedChanges) {
-                requestDraftNavigation(function () { openDocument(id); });
-                return;
-            }
             activeDocumentId = doc.id;
             activeEditId = null;
             deleteConfirmId = null;
@@ -6576,27 +4092,17 @@
             doc.updatedAt = new Date().toISOString();
             if (doc.id === activeDocumentId) docTitle.value = trimmed;
             saveDocumentsCollection();
-            refreshDraftState();
             renderDocuments();
             showToast('Renamed');
         }
 
         function duplicateDocument(id) {
-            const source = documents.find(function (item) { return item.id === id; });
+            const source = documents.find(function (item) { return item.id === id && !item.archived; });
             if (!source) return;
-            if (!bypassPublishGuard && source.id !== activeDocumentId && hasUnpublishedChanges) {
-                requestDraftNavigation(function () { duplicateDocument(id); });
-                return;
-            }
             const copy = createDocumentRecord((source.title || 'Untitled document') + ' Copy', source.blocks);
             copy.status = 'draft';
-            copy.archived = false;
-            copy.publishedAt = null;
-            copy.publishedSignature = '';
             documents.push(copy);
             activeDocumentId = copy.id;
-            documentsFilter = 'draft';
-            documentsPage = 1;
             activeEditId = null;
             deleteConfirmId = null;
             ensureActiveDocument();
@@ -6608,17 +4114,14 @@
         function archiveDocument(id) {
             const doc = documents.find(function (item) { return item.id === id && !item.archived; });
             if (!doc) return;
-            applyDocumentStatus(doc, 'archived');
-            syncDocumentStatusToTeamStore(doc);
-            documentsFilter = 'archived';
-            documentsPage = 1;
+            if (!window.confirm('Archive "' + (doc.title || 'Untitled document') + '"?')) return;
+            doc.archived = true;
+            doc.updatedAt = new Date().toISOString();
             if (doc.id === activeDocumentId) {
+                activeDocumentId = null;
                 activeEditId = null;
                 deleteConfirmId = null;
-                hasDraftChanges = false;
-                hasUnpublishedChanges = false;
-                draftSaveFailed = false;
-                saveStateEl.textContent = 'Archived';
+                ensureActiveDocument();
                 render();
             } else {
                 renderDocuments();
@@ -6629,75 +4132,8 @@
 
         function archiveCurrentDocument() {
             const doc = getActiveDocument();
-            if (!doc || doc.status === 'archived') return;
-            if (publishConfirmPending) clearPublishConfirm();
-            if (unpublishConfirmPending) clearUnpublishConfirm();
-            if (!archiveConfirmPending) {
-                archiveConfirmPending = true;
-                window.clearTimeout(archiveConfirmTimer);
-                renderFloatingActions();
-                archiveConfirmTimer = window.setTimeout(clearArchiveConfirm, 3500);
-                return;
-            }
-            window.clearTimeout(archiveConfirmTimer);
-            archiveConfirmPending = false;
+            if (!doc) return;
             archiveDocument(doc.id);
-        }
-
-        function restoreDocument(id) {
-            const doc = documents.find(function (item) { return item.id === id && item.archived; });
-            if (!doc) return;
-            applyDocumentStatus(doc, 'draft');
-            syncDocumentStatusToTeamStore(doc);
-            activeDocumentId = doc.id;
-            documentsFilter = 'draft';
-            documentsPage = 1;
-            activeEditId = null;
-            deleteConfirmId = null;
-            ensureActiveDocument();
-            saveDocumentsCollection();
-            render();
-            showToast('Restored');
-        }
-
-        function restoreCurrentDocument() {
-            const doc = getActiveDocument();
-            if (!doc || doc.status !== 'archived') return;
-            restoreDocument(doc.id);
-        }
-
-        function deleteDocumentPermanently(id) {
-            const doc = documents.find(function (item) { return item.id === id && item.archived; });
-            if (!doc) return;
-            const title = doc.title || 'Untitled document';
-            if (!window.confirm('Delete "' + title + '" permanently?')) return;
-            if (!window.confirm('This cannot be undone. Delete permanently?')) return;
-            deleteDocumentFromTeamStore(doc);
-            documents = documents.filter(function (item) { return item.id !== id; });
-            if (activeDocumentId === id) {
-                activeDocumentId = null;
-                ensureActiveDocument();
-            }
-            saveDocumentsCollection();
-            render();
-            showToast('Deleted permanently');
-        }
-
-        function setDocumentsFilter(filter) {
-            const nextFilter = filter === 'archived' || filter === 'published' ? filter : 'draft';
-            const shouldAnimate = nextFilter !== documentsFilter;
-            documentsFilter = nextFilter;
-            documentsPage = 1;
-            if (shouldAnimate && documentList) {
-                window.clearTimeout(documentsFilterAnimationTimer);
-                documentList.classList.remove('is-filter-switching');
-                void documentList.offsetWidth;
-                documentList.classList.add('is-filter-switching');
-                documentsFilterAnimationTimer = window.setTimeout(function () {
-                    documentList.classList.remove('is-filter-switching');
-                }, 420);
-            }
-            renderDocuments();
         }
 
         function normalizeBlockType(type) {
@@ -6815,7 +4251,6 @@
         }
 
         function loadSample() {
-            if (!canEditActiveDocument(true)) return;
             activeEditId = null;
             docTitle.value = 'Báo cáo hiệu quả kinh doanh 6 tháng đầu năm 2019';
             blocks = [
@@ -6847,7 +4282,6 @@
         }
 
         function addBlock(type, index) {
-            if (!canEditActiveDocument(true)) return;
             const insertAt = typeof index === 'number' ? index : blocks.length;
             const normalizedType = normalizeBlockType(type);
             const now = Date.now();
@@ -6871,7 +4305,6 @@
         }
 
         function duplicateBlock(id) {
-            if (!canEditActiveDocument(true)) return;
             const index = blocks.findIndex((block) => block.id === id);
             if (index < 0) return;
             const copy = JSON.parse(JSON.stringify(blocks[index]));
@@ -6885,7 +4318,6 @@
         }
 
         function deleteBlock(id) {
-            if (!canEditActiveDocument(true)) return;
             const blockEl = blockList.querySelector('[data-id="' + id + '"]');
             if (blockEl) blockEl.classList.add('is-removing');
             window.setTimeout(function () {
@@ -6898,7 +4330,6 @@
         }
 
         function requestDeleteBlock(id) {
-            if (!canEditActiveDocument(true)) return;
             if (deleteConfirmId === id) {
                 deleteBlock(id);
                 return;
@@ -6908,91 +4339,27 @@
         }
 
         function clearCanvas() {
-            if (!canEditActiveDocument(true)) return;
-            if (blocks.length && !window.confirm('Xóa tất cả block trong canvas?')) return;
+            if (blocks.length && !window.confirm('Xoa tat ca block trong canvas?')) return;
             blocks = [];
             activeEditId = null;
             save('Canvas cleared');
             render();
         }
 
-        function publishCurrentDraft(showToastMessage) {
-            const doc = getActiveDocument();
-            if (!doc || doc.status === 'archived') return false;
-            if (!saveDraft('Saving draft...', false)) return false;
-            const now = new Date().toISOString();
-            const wasPublished = doc.status === 'published';
-            applyCurrentDocumentTitle(doc);
-            doc.blocks = cloneBlocks(blocks);
-            applyDocumentStatus(doc, 'published', {
-                now: now,
-                publishedAt: now,
-                publishedSignature: getDocumentSignature(doc)
-            });
-            if (!saveDocumentsCollection(showToastMessage !== false)) return false;
-            syncActiveDocumentToTeamStore();
-            hasDraftChanges = false;
-            draftSaveFailed = false;
-            hasUnpublishedChanges = false;
-            documentsFilter = 'published';
-            documentsPage = 1;
-            lastSaved.textContent = (wasPublished ? 'Updated published ' : 'Published ') + formatDocumentTime(now);
-            saveStateEl.textContent = wasPublished ? 'Published changes' : 'Published';
-            renderDocuments();
-            renderDocumentStatusBadge();
-            renderFloatingActions();
-            if (showToastMessage !== false) showToast(wasPublished ? 'Updated published' : 'Published');
-            return true;
-        }
-
         function publishDocument() {
             const doc = getActiveDocument();
             if (!doc) return;
-            if (doc.status === 'published' && !hasUnpublishedChanges && !hasDraftChanges) return;
-            if (unpublishConfirmPending) clearUnpublishConfirm();
-            if (archiveConfirmPending) clearArchiveConfirm();
-            if (!publishConfirmPending) {
-                publishConfirmPending = true;
-                window.clearTimeout(publishConfirmTimer);
-                renderFloatingActions();
-                publishConfirmTimer = window.setTimeout(clearPublishConfirm, 3500);
-                return;
-            }
-            window.clearTimeout(publishConfirmTimer);
-            publishConfirmPending = false;
-            publishCurrentDraft(true);
-        }
-
-        function unpublishCurrentDocument() {
-            const doc = getActiveDocument();
-            if (!doc || doc.status !== 'published') return;
-            if (publishConfirmPending) clearPublishConfirm();
-            if (archiveConfirmPending) clearArchiveConfirm();
-            if (!unpublishConfirmPending) {
-                unpublishConfirmPending = true;
-                window.clearTimeout(unpublishConfirmTimer);
-                renderFloatingActions();
-                unpublishConfirmTimer = window.setTimeout(clearUnpublishConfirm, 3500);
-                return;
-            }
-            window.clearTimeout(unpublishConfirmTimer);
-            unpublishConfirmPending = false;
             const now = new Date().toISOString();
-            applyCurrentDocumentTitle(doc);
+            doc.title = docTitle.value.trim() || 'Untitled document';
             doc.blocks = cloneBlocks(blocks);
-            applyDocumentStatus(doc, 'draft', { now: now });
+            doc.status = 'published';
+            doc.publishedAt = now;
+            doc.updatedAt = now;
             if (saveDocumentsCollection()) {
-                syncDocumentStatusToTeamStore(doc);
-                hasDraftChanges = false;
-                hasUnpublishedChanges = false;
-                documentsFilter = 'draft';
-                documentsPage = 1;
-                lastSaved.textContent = 'Saved ' + formatDocumentTime(now);
-                saveStateEl.textContent = 'Unpublished';
+                lastSaved.textContent = 'Published ' + formatDocumentTime(now);
+                saveStateEl.textContent = 'Published';
                 renderDocuments();
-                renderDocumentStatusBadge();
-                renderFloatingActions();
-                showToast('Unpublished');
+                showToast('Published');
             }
         }
 
@@ -7026,55 +4393,15 @@
         }
 
         function setMode(mode) {
-            const doc = getActiveDocument();
-            if (mode === 'edit' && doc && doc.archived) {
-                globalMode = 'preview';
-                app.classList.toggle('is-preview', true);
-                if (editModeBtn) {
-                    editModeBtn.classList.remove('is-active');
-                    editModeBtn.setAttribute('aria-pressed', 'false');
-                }
-                if (previewModeBtn) {
-                    previewModeBtn.classList.add('is-active');
-                    previewModeBtn.setAttribute('aria-pressed', 'true');
-                }
-                showToast('Restore document before editing');
-                return;
-            }
-            const nextMode = mode === 'preview' ? 'preview' : 'edit';
-            const shouldAnimate = nextMode !== globalMode;
-            globalMode = nextMode;
+            globalMode = mode === 'preview' ? 'preview' : 'edit';
             if (globalMode === 'preview') activeEditId = null;
-            if (shouldAnimate && app) {
-                window.clearTimeout(modeAnimationTimer);
-                app.classList.remove('is-mode-switching');
-                void app.offsetWidth;
-                app.classList.add('is-mode-switching');
-                modeAnimationTimer = window.setTimeout(function () {
-                    app.classList.remove('is-mode-switching');
-                }, 420);
-            }
             app.classList.toggle('is-preview', globalMode === 'preview');
-            if (editModeBtn) {
-                editModeBtn.classList.toggle('is-active', globalMode === 'edit');
-                editModeBtn.setAttribute('aria-pressed', globalMode === 'edit' ? 'true' : 'false');
-            }
-            if (previewModeBtn) {
-                previewModeBtn.classList.toggle('is-active', globalMode === 'preview');
-                previewModeBtn.setAttribute('aria-pressed', globalMode === 'preview' ? 'true' : 'false');
-            }
-            const url = new URL(window.location);
-            if (globalMode === 'preview') {
-                url.searchParams.set('mode', 'preview');
-            } else {
-                url.searchParams.set('mode', 'edit');
-            }
-            window.history.replaceState({}, '', url);
+            editModeBtn.classList.toggle('is-active', globalMode === 'edit');
+            previewModeBtn.classList.toggle('is-active', globalMode === 'preview');
             render();
         }
 
         function editBlock(id) {
-            if (!canEditActiveDocument(true)) return;
             if (globalMode !== 'edit') return;
             activeEditId = id;
             render();
@@ -7304,7 +4631,6 @@
 
         function handleDocumentClick(event) {
             if (!event.target.closest('.heading-lov, .meta-lov')) closeMetaLovs();
-            if (!event.target.closest('.more-actions')) closeMoreActions();
             if (!event.target.closest('img, .image-resize-handle')) hideImageResizeHandle();
             if (!event.target.closest('.table-edit-panel')) clearActiveTableTools();
             if (deleteConfirmId && !event.target.closest('.toolbar')) {
@@ -7315,7 +4641,7 @@
             if (event.target.closest('.block-drag, .block-content-view, .image-resize-handle')) return;
             if (globalMode !== 'edit' || !activeEditId) return;
             if (event.target.closest('.block.is-editing')) return;
-            if (event.target.closest('.palette-card, .sidebar, .topbar, .category-lov, .toast, .drag-ghost')) return;
+            if (event.target.closest('.palette-card, .sidebar, .topbar, .floating-actions, .toast, .drag-ghost')) return;
             closeActiveEditor();
         }
 
@@ -7338,14 +4664,12 @@
         }
 
         function updateBlock(id, patch, rerender) {
-            if (!canEditActiveDocument(false)) return;
             blocks = blocks.map((block) => block.id === id ? { ...block, ...patch } : block);
             save('Autosaved', false);
             if (rerender) render();
         }
 
         function addSiblingSticky(id) {
-            if (!canEditActiveDocument(true)) return;
             const index = blocks.findIndex(function (block) { return block.id === id; });
             if (index < 0) return;
             const source = blocks[index];
@@ -7748,13 +5072,7 @@
             hideImageResizeHandle();
             emptyState.style.display = blocks.length ? 'none' : 'grid';
             blockList.innerHTML = '';
-            blocks.forEach((block, index) => {
-                blockList.appendChild(renderBlock(block, index));
-            });
-            renderDocumentStatusBadge();
-            renderPaperCategoryBadge();
-            renderCategoryLov();
-            renderFloatingActions();
+            blocks.forEach((block, index) => blockList.appendChild(renderBlock(block, index)));
             blockCounter.textContent = blocks.length + ' ' + (blocks.length === 1 ? 'block' : 'blocks');
             renderDocuments();
             renderQuickBlocks();
@@ -8171,25 +5489,23 @@
         }
 
         function renderBlock(block, index) {
-            const canEdit = canEditActiveDocument(false);
-            const isEditing = canEdit && globalMode === 'edit' && activeEditId === block.id;
+            const isEditing = globalMode === 'edit' && activeEditId === block.id;
             const isDeleteConfirming = deleteConfirmId === block.id;
             const copyIcon = '<svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path></svg>';
             const deleteIcon = '<svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>';
             const metaHtml = block.type === 'sticky'
                 ? ''
-                : '<div class="block-meta"><button class="block-drag" type="button" draggable="true" aria-label="Đổi thứ tự">::</button><span class="order">' + String(index + 1).padStart(2, '0') + '</span>' + renderMeta(block) + '</div>';
+                : '<div class="block-meta"><button class="block-drag" type="button" draggable="true" aria-label="Doi thu tu">::</button><span class="order">' + String(index + 1).padStart(2, '0') + '</span>' + renderMeta(block) + '</div>';
             const wrapper = document.createElement('article');
             wrapper.className = 'block' + (isEditing ? ' is-editing' : '');
-            wrapper.id = 'block-' + block.id;
             wrapper.dataset.id = block.id;
             wrapper.dataset.blockId = block.id;
             wrapper.dataset.kind = block.type === 'heading' ? 'heading-' + (block.level || 'h2') : block.type;
-            wrapper.setAttribute('draggable', canEdit && !isEditing ? 'true' : 'false');
+            wrapper.setAttribute('draggable', isEditing ? 'false' : 'true');
             wrapper.innerHTML = [
                 metaHtml,
                 '<div class="block-main">',
-                '<div class="toolbar"><button class="tool-btn tool-icon-btn" type="button" title="Copy" aria-label="Copy block" onclick="duplicateBlock(\'' + block.id + '\')">' + copyIcon + '</button><button class="tool-btn tool-icon-btn is-danger' + (isDeleteConfirming ? ' is-confirming' : '') + '" type="button" title="Xóa" aria-label="Xóa block" onclick="requestDeleteBlock(\'' + block.id + '\')">' + (isDeleteConfirming ? 'X&oacute;a' : deleteIcon) + '</button></div>',
+                '<div class="toolbar"><button class="tool-btn tool-icon-btn" type="button" title="Copy" aria-label="Copy block" onclick="duplicateBlock(\'' + block.id + '\')">' + copyIcon + '</button><button class="tool-btn tool-icon-btn is-danger' + (isDeleteConfirming ? ' is-confirming' : '') + '" type="button" title="Xoa" aria-label="Xoa block" onclick="requestDeleteBlock(\'' + block.id + '\')">' + (isDeleteConfirming ? 'X&oacute;a' : deleteIcon) + '</button></div>',
                 renderContent(block, isEditing),
                 '</div>'
             ].join('');
@@ -8547,7 +5863,7 @@
             const block = blocks.find((item) => item.id === id);
             if (!block) return;
             const next = Array.from({ length: count }, function (_, index) {
-                return (block.columns && block.columns[index]) || 'Cột ' + (index + 1);
+                return (block.columns && block.columns[index]) || 'Cot ' + (index + 1);
             });
             updateBlock(id, { count: count, columns: next }, true);
         }
@@ -8580,7 +5896,7 @@
         function renderContent(block, isEditing) {
             const isView = globalMode === 'preview' || !isEditing;
             const content = renderBlockContent(block, isView);
-            if (canEditActiveDocument(false) && globalMode === 'edit' && isView && block.type !== 'divider') {
+            if (globalMode === 'edit' && isView && block.type !== 'divider') {
                 return '<div class="block-content-view" role="button" tabindex="0" draggable="true" onclick="openBlockFromView(\'' + block.id + '\', event)" onkeydown="handleBlockViewKey(event, \'' + block.id + '\')">' + content + '</div>';
             }
             return content;
@@ -8774,7 +6090,7 @@
 
         function renderImage(block, isView) {
             if (isView) {
-                if (!block.src) return '<div class="view"><p>Chưa có hình ảnh.</p></div>';
+                if (!block.src) return '<div class="view"><p>Chua co hinh anh.</p></div>';
                 const caption = String(block.caption || '').trim();
                 return '<figure class="figure"><img class="image-preview has-image" src="' + escapeAttr(block.src) + '" alt="' + escapeAttr(block.alt || '') + '">' + (caption ? '<figcaption>' + escapeHtml(caption) + '</figcaption>' : '') + '</figure>';
             }
@@ -8818,7 +6134,6 @@
         }
 
         function handleCanvasDragOver(event) {
-            if (!canEditActiveDocument(false)) return;
             event.preventDefault();
             if (!dragging) return;
             setDragTarget(canvas);
@@ -8850,7 +6165,6 @@
         function handleCanvasDrop(event) {
             event.preventDefault();
             event.stopPropagation();
-            if (!canEditActiveDocument(true)) return;
             const dropIndex = getDropIndex(event);
             const type = event.dataTransfer.getData('block-type');
             if (dragging && dragging.source === 'canvas') {
@@ -8877,10 +6191,6 @@
         blockList.addEventListener('drop', handleCanvasDrop);
         canvas.addEventListener('drop', handleCanvasDrop);
         emptyState.addEventListener('drop', handleCanvasDrop);
-        canvas.addEventListener('beforeinput', guardEditableEvent, true);
-        canvas.addEventListener('input', guardEditableEvent, true);
-        canvas.addEventListener('change', guardEditableEvent, true);
-        canvas.addEventListener('paste', guardEditableEvent, true);
 
         canvas.addEventListener('dragleave', function (event) {
             if (!canvas.contains(event.relatedTarget)) {
@@ -8893,116 +6203,15 @@
         filterPalette(paletteSearch.value);
 
         docTitle.addEventListener('input', function () {
-            if (!canEditActiveDocument(false)) {
-                const doc = getActiveDocument();
-                if (doc) docTitle.value = doc.title || 'Untitled document';
-                showToast('Restore document before editing');
-                return;
-            }
             save('Autosaved', false);
         });
 
-        if (categoryLovTrigger) {
-            categoryLovTrigger.addEventListener('click', toggleCategoryLov);
-        }
-        if (categoryLovMenu) {
-            categoryLovMenu.addEventListener('click', function (event) {
-                const option = event.target.closest('.category-lov-option');
-                if (!option) return;
-                event.preventDefault();
-                event.stopPropagation();
-                selectCategoryLovOption(option);
-            });
-            categoryLovMenu.addEventListener('keydown', function (event) {
-                const options = Array.from(categoryLovMenu.querySelectorAll('.category-lov-option'));
-                const currentIndex = options.indexOf(document.activeElement);
-                if (event.key === 'Escape') {
-                    event.preventDefault();
-                    closeCategoryLov();
-                    if (categoryLovTrigger) categoryLovTrigger.focus({ preventScroll: true });
-                    return;
-                }
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    selectCategoryLovOption(document.activeElement.closest('.category-lov-option'));
-                    return;
-                }
-                if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
-                event.preventDefault();
-                const direction = event.key === 'ArrowDown' ? 1 : -1;
-                const nextIndex = currentIndex < 0
-                    ? 0
-                    : (currentIndex + direction + options.length) % options.length;
-                if (options[nextIndex]) options[nextIndex].focus({ preventScroll: true });
-            });
-        }
-
         document.addEventListener('pointerdown', handleDocumentClick);
-        document.addEventListener('pointerdown', function (event) {
-            if (categoryLov && !event.target.closest('#categoryLov')) closeCategoryLov();
-        });
-        document.addEventListener('pointerdown', function (event) {
-            if (publishConfirmPending && !event.target.closest('#publishActionBtn')) clearPublishConfirm();
-            if (unpublishConfirmPending && !event.target.closest('#unpublishActionBtn')) clearUnpublishConfirm();
-            if (archiveConfirmPending && !event.target.closest('#archiveActionBtn')) clearArchiveConfirm();
-        });
-        document.querySelectorAll('.back-link').forEach(function (link) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                const href = link.href;
-                requestDraftNavigation(function () {
-                    window.location.href = href;
-                });
-            });
-        });
-        if (publishGuardContinueBtn) publishGuardContinueBtn.addEventListener('click', closePublishGuard);
-        if (publishGuardLeaveBtn) publishGuardLeaveBtn.addEventListener('click', leaveWithDraft);
-        if (publishGuardPublishBtn) publishGuardPublishBtn.addEventListener('click', publishAndLeave);
-        if (publishGuard) {
-            publishGuard.addEventListener('click', function (event) {
-                if (event.target === publishGuard) closePublishGuard();
-            });
-        }
-
-        function guardEditableEvent(event) {
-            if (canEditActiveDocument(false)) return false;
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            showToast('Restore document before editing');
-            return true;
-        }
-        document.addEventListener('pointerover', function (event) {
-            showTitleTooltip(event.target.closest('[data-full-title]'));
-        });
-        document.addEventListener('pointerout', function (event) {
-            const target = event.target.closest('[data-full-title]');
-            if (target && !target.contains(event.relatedTarget)) hideTitleTooltip();
-        });
-        document.addEventListener('focusin', function (event) {
-            showTitleTooltip(event.target.closest('[data-full-title]'));
-        });
-        document.addEventListener('focusout', hideTitleTooltip);
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && publishGuard && publishGuard.classList.contains('is-visible')) {
-                closePublishGuard();
-                return;
-            }
-            if (event.key === 'Escape') closeMoreActions();
-        });
-        window.addEventListener('beforeunload', function (event) {
-            if (!hasDraftChanges && !draftSaveFailed) return;
-            event.preventDefault();
-            event.returnValue = '';
-        });
         imageResizeHandle.addEventListener('pointerdown', startImageResize);
         window.addEventListener('scroll', positionImageResizeHandle, true);
         window.addEventListener('resize', positionImageResizeHandle);
-        window.addEventListener('scroll', hideTitleTooltip, true);
-        window.addEventListener('resize', hideTitleTooltip);
 
-        function saveDraft(message, showToastMessage) {
+        function save(message, showToastMessage) {
             if (showToastMessage === undefined) showToastMessage = true;
             let doc = getActiveDocument();
             if (!doc) {
@@ -9010,30 +6219,17 @@
                 documents.push(doc);
                 activeDocumentId = doc.id;
             }
-            hasDraftChanges = true;
-            draftSaveFailed = false;
-            refreshDraftState();
             const now = new Date().toISOString();
-            applyCurrentDocumentTitle(doc);
+            doc.title = docTitle.value.trim() || 'Untitled document';
             doc.blocks = cloneBlocks(blocks);
             doc.updatedAt = now;
-            if (!saveDocumentsCollection(showToastMessage)) {
-                draftSaveFailed = true;
-                refreshDraftState();
-                return false;
-            }
-            hasDraftChanges = false;
-            draftSaveFailed = false;
-            lastSaved.textContent = 'Saved draft ' + formatDocumentTime(now);
+            if (message !== 'Published') doc.status = 'draft';
+            if (!saveDocumentsCollection(showToastMessage)) return false;
+            lastSaved.textContent = 'Saved ' + formatDocumentTime(now);
             saveStateEl.textContent = message;
             renderDocuments();
-            refreshDraftState();
             if (showToastMessage) showToast(message);
             return true;
-        }
-
-        function save(message, showToastMessage) {
-            return saveDraft(message, showToastMessage);
         }
 
         function load() {
@@ -9062,16 +6258,6 @@
             return escapeHtml(value).replace(/`/g, '&#96;');
         }
 
-        updateBuilderBackLink();
-        app.classList.toggle('is-preview', globalMode === 'preview');
-        if (editModeBtn) {
-            editModeBtn.classList.toggle('is-active', globalMode === 'edit');
-            editModeBtn.setAttribute('aria-pressed', globalMode === 'edit' ? 'true' : 'false');
-        }
-        if (previewModeBtn) {
-            previewModeBtn.classList.toggle('is-active', globalMode === 'preview');
-            previewModeBtn.setAttribute('aria-pressed', globalMode === 'preview' ? 'true' : 'false');
-        }
         load();
         render();
     </script>

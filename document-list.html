@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "lucide-react": "https://esm.sh/lucide-react@0.468.0?deps=react@18.2.0"
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes flashHighlight {
+            0%, 100% { background-color: rgba(253, 230, 138, 0.7); }
+            50% { background-color: #f59e0b; color: #ffffff; }
+        }
+        .animate-flash-once {
+            animation: flashHighlight 0.7s ease-in-out 1;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(1rem); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-toast-in {
+            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes smartSortMenuIn {
+            from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .smart-sort-lov {
+            min-width: 188px;
+        }
+        .smart-filter-lov {
+            min-width: 150px;
+        }
+        .smart-sort-trigger {
+            width: 100%;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #dbe3ef;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            color: #334155;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            font-size: 13px;
+            font-weight: 800;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease;
+        }
+        .smart-sort-trigger:hover,
+        .smart-sort-lov.is-open .smart-sort-trigger {
+            border-color: #cbd5e1;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12), 0 12px 24px rgba(15, 23, 42, 0.08);
+        }
+        .smart-sort-trigger:active {
+            transform: none;
+        }
+        .smart-sort-chevron {
+            color: #64748b;
+            transition: transform 0.18s ease;
+        }
+        .smart-sort-lov.is-open .smart-sort-chevron {
+            transform: rotate(180deg);
+        }
+        .smart-sort-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 80;
+            width: 100%;
+            min-width: 210px;
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16), 0 8px 18px rgba(15, 23, 42, 0.08);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-8px) scale(0.96);
+            transform-origin: left top;
+        }
+        .smart-sort-lov.is-open .smart-sort-menu {
+            animation: smartSortMenuIn 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            pointer-events: auto;
+        }
+        .smart-filter-lov .smart-sort-menu {
+            min-width: 190px;
+        }
+        .smart-sort-option {
+            width: 100%;
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 0 10px 0 12px;
+            border: 0;
+            border-radius: 11px;
+            background: transparent;
+            color: #475569;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 750;
+            text-align: left;
+            transition: background 0.14s ease, color 0.14s ease, transform 0.14s ease;
+        }
+        .smart-sort-option:hover,
+        .smart-sort-option:focus-visible {
+            background: #f8fafc;
+            color: #0f172a;
+            outline: none;
+            transform: none;
+        }
+        .smart-sort-option.is-active {
+            background: #eef2f7;
+            color: #0f172a;
+        }
+        .smart-sort-check {
+            opacity: 0;
+            transform: scale(0.86);
+            transition: opacity 0.14s ease, transform 0.14s ease;
+        }
+        .smart-sort-option.is-active .smart-sort-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .inline-date-filter {
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #dbe3ef;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            padding: 4px;
+            color: #475569;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+        .inline-date-filter:hover,
+        .inline-date-filter:focus-within,
+        .inline-date-filter.is-active {
+            border-color: #cbd5e1;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12), 0 12px 24px rgba(15, 23, 42, 0.08);
+        }
+        .inline-date-title {
+            padding: 0 7px 0 8px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .date-pill {
+            position: relative;
+            min-height: 32px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            background: #f8fafc;
+            padding: 0 10px;
+            color: #475569;
+            cursor: pointer;
+            transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+        }
+        .date-pill:hover,
+        .date-pill:focus-within {
+            border-color: #e2e8f0;
+            background: #ffffff;
+            color: #0f172a;
+        }
+        .date-pill-label {
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+        }
+        .date-pill-value {
+            min-width: 74px;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 850;
+            white-space: nowrap;
+        }
+        .date-pill-value.is-empty {
+            color: #94a3b8;
+        }
+        .date-pill-icon {
+            width: 14px;
+            height: 14px;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+        .inline-date-separator {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 0 2px;
+        }
+        .date-popover {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 90;
+            width: 286px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 24px 54px rgba(15, 23, 42, 0.16), 0 8px 18px rgba(15, 23, 42, 0.08);
+            animation: smartSortMenuIn 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+        .date-popover-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .date-popover-title {
+            color: #0f172a;
+            font-size: 13px;
+            font-weight: 850;
+        }
+        .date-nav-btn {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #64748b;
+            cursor: pointer;
+            transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+        }
+        .date-nav-btn:hover,
+        .date-nav-btn:focus-visible {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+            color: #0f172a;
+            outline: none;
+        }
+        .date-week-grid,
+        .date-day-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 4px;
+        }
+        .date-weekday {
+            display: grid;
+            place-items: center;
+            height: 24px;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .date-day-btn {
+            height: 32px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: #334155;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 800;
+            transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+        }
+        .date-day-btn:hover,
+        .date-day-btn:focus-visible {
+            background: #f1f5f9;
+            color: #0f172a;
+            outline: none;
+        }
+        .date-day-btn.is-muted {
+            color: #cbd5e1;
+        }
+        .date-day-btn.is-today {
+            box-shadow: inset 0 0 0 1px #cbd5e1;
+        }
+        .date-day-btn.is-selected {
+            background: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.16);
+        }
+        .date-popover-foot {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .date-foot-btn {
+            min-height: 30px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 850;
+            padding: 0 10px;
+        }
+        .date-foot-btn:hover,
+        .date-foot-btn:focus-visible {
+            background: #f8fafc;
+            color: #0f172a;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+    <div id="root"></div>
+
+    <script type="module">
+        import React, { useEffect, useMemo, useState, useRef } from "react";
+        import { createRoot } from "react-dom/client";
+        import {
+            Search,
+            Plus,
+            Folder,
+            File,
+            Menu,
+            X,
+            Pencil,
+            Trash2,
+            BookOpen,
+            ChevronRight,
+            ChevronLeft,
+            ArrowLeft,
+            ArrowRight,
+            ChevronDown,
+            Check,
+            Clock,
+            CalendarDays,
+            User,
+            Link2,
+        } from "lucide-react";
+
+        const h = React.createElement;
+        const DATA_SOURCE = "local";
+        const STORAGE_KEY = "team_documents_dashboard_v1";
+        const BUILDER_DOCUMENTS_STORAGE_KEY = "document_builder_documents_v1";
+        const SEARCH_HISTORY_KEY = "team_documents_search_history_v1";
+        const VIEW_MODES = [
+            { id: "card", title: "Card" },
+            { id: "timeline", title: "Timeline" }
+        ];
+        const SORT_MODES = [
+            { id: "updated-desc", title: "Cập nhật mới nhất" },
+            { id: "created-desc", title: "Ngày tạo mới nhất" },
+            { id: "title-asc", title: "Tên A-Z" }
+        ];
+
+        const initialData = {
+            categories: [
+                { id: "cat-onboarding", name: "Onboarding" },
+                { id: "cat-process", name: "Quy trình" },
+                { id: "cat-technical", name: "Technical" }
+            ],
+            articles: [
+                {
+                    id: "art-welcome",
+                    categoryId: "cat-onboarding",
+                    title: "Checklist thành viên mới",
+                    description: "Những việc cần hoàn tất trong tuần đầu tiên.",
+                    content: "Cấp tài khoản, đọc quy định team, setup công cụ và tham gia buổi sync đầu tiên.",
+                    createdAt: "2026-04-26T08:00:00.000Z",
+                    author: "Phan Hiếu"
+                },
+                {
+                    id: "art-release",
+                    categoryId: "cat-process",
+                    title: "Quy trình release",
+                    description: "",
+                    content: "Kiểm tra checklist QA trước khi release.\nThông báo thay đổi trên kênh team và cập nhật changelog.",
+                    createdAt: "2026-04-26T09:30:00.000Z",
+                    author: "An Nguyễn"
+                },
+                {
+                    id: "art-api",
+                    categoryId: "cat-technical",
+                    title: "Hướng dẫn tích hợp API",
+                    description: "Tài liệu mẫu cho các endpoint nội bộ.",
+                    content: "Mỗi endpoint cần có request sample, response sample và mã lỗi thường gặp.",
+                    createdAt: "2026-04-26T10:00:00.000Z",
+                    author: "Đắc Lê"
+                }
+            ]
+        };
+
+        const createId = (prefix) => `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+        const normalizeStatus = (status) => ["draft", "published", "archived"].includes(status) ? status : "published";
+
+        const syncBuilderDocumentStatus = (article) => {
+            if (DATA_SOURCE !== "local" || !article?.id) return;
+            try {
+                const raw = JSON.parse(localStorage.getItem(BUILDER_DOCUMENTS_STORAGE_KEY) || "{}");
+                const docs = Array.isArray(raw) ? raw : raw.documents;
+                if (!Array.isArray(docs)) return;
+                let changed = false;
+                const status = normalizeStatus(article.status);
+                const nextDocs = docs.map((doc) => {
+                    if (!doc || (doc.id !== article.id && doc.sourceArticleId !== article.id)) return doc;
+                    changed = true;
+                    return {
+                        ...doc,
+                        status,
+                        archived: status === "archived",
+                        publishedAt: article.publishedAt || null,
+                        sourceArticleId: article.id,
+                        sourceCategoryId: article.categoryId || doc.sourceCategoryId || null,
+                        sourceAuthor: article.author || doc.sourceAuthor || null,
+                        sourceDescription: article.description || doc.sourceDescription || "",
+                        updatedAt: article.updatedAt || doc.updatedAt || new Date().toISOString(),
+                        publishedSignature: status === "published" ? doc.publishedSignature || "" : ""
+                    };
+                });
+                if (!changed) return;
+                localStorage.setItem(BUILDER_DOCUMENTS_STORAGE_KEY, JSON.stringify(Array.isArray(raw) ? nextDocs : { ...raw, documents: nextDocs }));
+            } catch (error) {
+                console.warn("Không thể đồng bộ trạng thái sang builder draft.", error);
+            }
+        };
+
+        const deleteBuilderDocumentForArticle = (articleId) => {
+            if (DATA_SOURCE !== "local" || !articleId) return;
+            try {
+                const raw = JSON.parse(localStorage.getItem(BUILDER_DOCUMENTS_STORAGE_KEY) || "{}");
+                const docs = Array.isArray(raw) ? raw : raw.documents;
+                if (!Array.isArray(docs)) return;
+                const nextDocs = docs.filter((doc) => doc && doc.id !== articleId && doc.sourceArticleId !== articleId);
+                if (nextDocs.length === docs.length) return;
+                localStorage.setItem(BUILDER_DOCUMENTS_STORAGE_KEY, JSON.stringify(Array.isArray(raw) ? nextDocs : { ...raw, documents: nextDocs }));
+            } catch (error) {
+                console.warn("KhÃ´ng thá»ƒ xÃ³a draft liÃªn káº¿t trong builder.", error);
+            }
+        };
+
+        const getStatusMeta = (status) => {
+            if (status === "draft") return { label: "Draft", className: "bg-amber-50 text-amber-700 border-amber-200" };
+            if (status === "archived") return { label: "Archived", className: "bg-rose-50 text-rose-700 border-rose-200" };
+            return { label: "Published", className: "bg-emerald-50 text-emerald-700 border-emerald-200" };
+        };
+
+        const normalizeArticle = (article) => {
+            const createdAt = article?.createdAt || new Date().toISOString();
+            return {
+                id: article?.id || createId("art"),
+                categoryId: article?.categoryId || "",
+                title: article?.title || "Untitled document",
+                description: article?.description || "",
+                content: article?.content || "",
+                createdAt,
+                updatedAt: article?.updatedAt || createdAt,
+                publishedAt: article?.publishedAt || null,
+                status: normalizeStatus(article?.status),
+                author: article?.author || "Thành viên"
+            };
+        };
+
+        const normalizeStore = (data) => {
+            const source = data && typeof data === "object" ? data : initialData;
+            return {
+                categories: Array.isArray(source.categories) ? source.categories : [],
+                articles: Array.isArray(source.articles) ? source.articles.map(normalizeArticle) : []
+            };
+        };
+
+        const readStore = () => {
+            if (DATA_SOURCE !== "local") return normalizeStore(initialData);
+
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    const normalized = normalizeStore(initialData);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+                    return normalized;
+                }
+
+                const parsed = JSON.parse(raw);
+                const normalized = normalizeStore(parsed);
+                if (JSON.stringify(parsed) !== JSON.stringify(normalized)) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+                }
+                return normalized;
+            } catch (error) {
+                console.warn("Không thể đọc kho tài liệu. Đang dùng dữ liệu mặc định.", error);
+                return normalizeStore(initialData);
+            }
+        };
+
+        const writeStore = (data) => {
+            if (DATA_SOURCE === "local") {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            }
+            return data;
+        };
+
+        const DataService = {
+            getData() {
+                return readStore();
+            },
+            getCategories() {
+                return readStore().categories;
+            },
+            getArticles() {
+                return readStore().articles;
+            },
+            addCategory(name) {
+                const data = readStore();
+                const category = { id: createId("cat"), name: name.trim() };
+                return writeStore({ ...data, categories: [...data.categories, category] });
+            },
+            reorderCategories(categories) {
+                const data = readStore();
+                return writeStore({ ...data, categories });
+            },
+            updateCategory(id, updates) {
+                const data = readStore();
+                return writeStore({
+                    ...data,
+                    categories: data.categories.map((category) =>
+                        category.id === id ? { ...category, ...updates } : category
+                    )
+                });
+            },
+            deleteCategory(id) {
+                const data = readStore();
+                const fallbackCategory = data.categories.find((category) => category.id !== id);
+                return writeStore({
+                    categories: data.categories.filter((category) => category.id !== id),
+                    articles: data.articles.map((article) =>
+                        article.categoryId === id
+                            ? { ...article, categoryId: fallbackCategory?.id || "" }
+                            : article
+                    )
+                });
+            },
+            addArticle(article) {
+                const data = readStore();
+                const now = new Date().toISOString();
+                const nextArticle = {
+                    ...article,
+                    id: createId("art"),
+                    createdAt: now,
+                    updatedAt: now,
+                    publishedAt: null,
+                    status: "draft",
+                    author: "Bạn"
+                };
+                const nextData = writeStore({ ...data, articles: [nextArticle, ...data.articles] });
+                syncBuilderDocumentStatus(nextArticle);
+                return nextData;
+            },
+            updateArticle(id, updates) {
+                const data = readStore();
+                const now = new Date().toISOString();
+                let updatedArticle = null;
+                const nextData = writeStore({
+                    ...data,
+                    articles: data.articles.map((article) => {
+                        if (article.id !== id) return article;
+                        updatedArticle = {
+                            ...article,
+                            ...updates,
+                            updatedAt: now,
+                            status: normalizeStatus(updates.status || article.status),
+                            publishedAt: updates.publishedAt === undefined ? article.publishedAt || null : updates.publishedAt
+                        };
+                        return updatedArticle;
+                    })
+                });
+                if (updatedArticle) syncBuilderDocumentStatus(updatedArticle);
+                return nextData;
+            },
+            deleteArticle(id) {
+                const data = readStore();
+                const nextData = writeStore({
+                    ...data,
+                    articles: data.articles.filter((article) => article.id !== id)
+                });
+                deleteBuilderDocumentForArticle(id);
+                return nextData;
+            }
+        };
+
+        const IconButton = ({ label, children, className = "", ...props }) =>
+            h("button", {
+                type: "button",
+                "aria-label": label,
+                title: label,
+                className: `inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 ${className}`,
+                ...props
+            }, children);
+
+        const EmptyState = ({ title, text, onAdd, actionLabel = "Thêm tài liệu", actionIcon = Plus }) =>
+            h("div", { className: "flex min-h-[360px] flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 text-center shadow-sm" },
+                h("div", { className: "mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-500" },
+                    h(BookOpen, { className: "h-8 w-8", strokeWidth: 2 })
+                ),
+                h("h2", { className: "text-lg font-bold text-slate-800 tracking-tight" }, title),
+                h("p", { className: "mt-2 max-w-md text-[13px] font-medium leading-6 text-slate-500" }, text),
+                h("button", {
+                    type: "button",
+                    onClick: onAdd,
+                    className: "mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-700 active:scale-95"
+                }, h(actionIcon, { className: "h-4 w-4" }), actionLabel)
+            );
+
+        const SmartSortLov = ({ value, onChange }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const rootRef = useRef(null);
+            const activeMode = SORT_MODES.find((mode) => mode.id === value) || SORT_MODES[0];
+
+            useEffect(() => {
+                if (!isOpen) return undefined;
+                const closeOnPointerDown = (event) => {
+                    if (rootRef.current && !rootRef.current.contains(event.target)) setIsOpen(false);
+                };
+                const closeOnEscape = (event) => {
+                    if (event.key === "Escape") setIsOpen(false);
+                };
+                document.addEventListener("pointerdown", closeOnPointerDown);
+                document.addEventListener("keydown", closeOnEscape);
+                return () => {
+                    document.removeEventListener("pointerdown", closeOnPointerDown);
+                    document.removeEventListener("keydown", closeOnEscape);
+                };
+            }, [isOpen]);
+
+            const selectMode = (modeId) => {
+                onChange(modeId);
+                setIsOpen(false);
+            };
+
+            return h("div", { ref: rootRef, className: `smart-sort-lov relative ml-2 ${isOpen ? "is-open" : ""}` },
+                h("button", {
+                    type: "button",
+                    className: "smart-sort-trigger px-3",
+                    "aria-haspopup": "listbox",
+                    "aria-expanded": isOpen ? "true" : "false",
+                    onClick: () => setIsOpen((current) => !current)
+                },
+                    h("span", { className: "min-w-0 truncate" }, activeMode.title),
+                    h(ChevronDown, { className: "smart-sort-chevron h-4 w-4 shrink-0", strokeWidth: 2.5 })
+                ),
+                h("div", { className: "smart-sort-menu", role: "listbox" },
+                    SORT_MODES.map((mode) => {
+                        const isActive = mode.id === value;
+                        return h("button", {
+                            key: mode.id,
+                            type: "button",
+                            role: "option",
+                            "aria-selected": isActive ? "true" : "false",
+                            className: `smart-sort-option ${isActive ? "is-active" : ""}`,
+                            onClick: () => selectMode(mode.id)
+                        },
+                            h("span", { className: "min-w-0 truncate" }, mode.title),
+                            h(Check, { className: "smart-sort-check h-4 w-4 shrink-0", strokeWidth: 2.5 })
+                        );
+                    })
+                )
+            );
+        };
+
+        const SmartFilterLov = ({ value, onChange, options, ariaLabel }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const rootRef = useRef(null);
+            const activeOption = options.find((option) => option.id === value) || options[0];
+            const isFiltered = value !== "all";
+
+            useEffect(() => {
+                if (!isOpen) return undefined;
+                const closeOnPointerDown = (event) => {
+                    if (rootRef.current && !rootRef.current.contains(event.target)) setIsOpen(false);
+                };
+                const closeOnEscape = (event) => {
+                    if (event.key === "Escape") setIsOpen(false);
+                };
+                document.addEventListener("pointerdown", closeOnPointerDown);
+                document.addEventListener("keydown", closeOnEscape);
+                return () => {
+                    document.removeEventListener("pointerdown", closeOnPointerDown);
+                    document.removeEventListener("keydown", closeOnEscape);
+                };
+            }, [isOpen]);
+
+            const selectOption = (optionId) => {
+                onChange(optionId);
+                setIsOpen(false);
+            };
+
+            return h("div", { ref: rootRef, className: `smart-sort-lov smart-filter-lov relative ${isOpen ? "is-open" : ""}` },
+                h("button", {
+                    type: "button",
+                    className: `smart-sort-trigger px-3 ${isFiltered ? "border-slate-300 bg-white" : ""}`,
+                    "aria-label": ariaLabel,
+                    "aria-haspopup": "listbox",
+                    "aria-expanded": isOpen ? "true" : "false",
+                    onClick: () => setIsOpen((current) => !current)
+                },
+                    h("span", { className: "min-w-0 truncate" }, activeOption.title),
+                    h(ChevronDown, { className: "smart-sort-chevron h-4 w-4 shrink-0", strokeWidth: 2.5 })
+                ),
+                h("div", { className: "smart-sort-menu", role: "listbox" },
+                    options.map((option) => {
+                        const isActive = option.id === value;
+                        return h("button", {
+                            key: option.id,
+                            type: "button",
+                            role: "option",
+                            "aria-selected": isActive ? "true" : "false",
+                            className: `smart-sort-option ${isActive ? "is-active" : ""}`,
+                            onClick: () => selectOption(option.id)
+                        },
+                            h("span", { className: "min-w-0 truncate" }, option.title),
+                            h(Check, { className: "smart-sort-check h-4 w-4 shrink-0", strokeWidth: 2.5 })
+                        );
+                    })
+                )
+            );
+        };
+
+        const ArticleModal = ({ categories, article, onClose, onSave }) => {
+            const [form, setForm] = useState(() => ({
+                categoryId: article?.categoryId || categories[0]?.id || "",
+                title: article?.title || "",
+                description: article?.description || "",
+                content: article?.content || ""
+            }));
+
+            const setField = (field, value) => setForm((current) => ({ ...current, [field]: value }));
+            const isValid = form.title.trim() && form.content.trim() && form.categoryId;
+
+            const submit = (event) => {
+                event.preventDefault();
+                if (!isValid) return;
+                onSave({
+                    categoryId: form.categoryId,
+                    title: form.title.trim(),
+                    description: form.description.trim(),
+                    content: form.content.trim()
+                });
+            };
+
+            return h("div", { className: "fixed inset-0 z-50 grid place-items-center bg-slate-900/35 p-4 backdrop-blur-sm" },
+                h("form", {
+                    onSubmit: submit,
+                    className: "w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
+                },
+                    h("div", { className: "flex items-center justify-between border-b border-slate-200 px-6 py-5" },
+                        h("div", null,
+                            h("h2", { className: "text-xl font-bold tracking-tight text-slate-800" }, article ? "Sửa tài liệu" : "Thêm tài liệu"),
+                            h("p", { className: "mt-1 text-[13px] font-medium text-slate-500" }, "Quản lý nội dung chia sẻ trong team")
+                        ),
+                        h(IconButton, { label: "Đóng", onClick: onClose }, h(X, { className: "h-4 w-4" }))
+                    ),
+                    h("div", { className: "grid gap-4 px-6 py-5" },
+                        h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
+                                "Tiêu đề",
+                            h("input", {
+                                value: form.title,
+                                onChange: (event) => setField("title", event.target.value),
+                                className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
+                                placeholder: "VD: Quy trình xin phê duyệt"
+                            })
+                        ),
+                        h("div", { className: "grid gap-4 md:grid-cols-[1fr_1.2fr]" },
+                            h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
+                                "Danh mục",
+                                h("select", {
+                                    value: form.categoryId,
+                                    onChange: (event) => setField("categoryId", event.target.value),
+                                    className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                                },
+                                    categories.map((category) =>
+                                        h("option", { key: category.id, value: category.id }, category.name)
+                                    )
+                                )
+                            ),
+                            h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
+                                "Mô tả ngắn",
+                                h("input", {
+                                    value: form.description,
+                                    onChange: (event) => setField("description", event.target.value),
+                                    className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
+                                    placeholder: "Để trống nếu muốn lấy dòng đầu của nội dung"
+                                })
+                            )
+                        ),
+                        h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
+                            "Nội dung",
+                            h("textarea", {
+                                value: form.content,
+                                onChange: (event) => setField("content", event.target.value),
+                                rows: 9,
+                                className: "resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium leading-6 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
+                                placeholder: "Nhập nội dung tài liệu..."
+                            })
+                        )
+                    ),
+                    h("div", { className: "flex items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4" },
+                        h("button", {
+                            type: "button",
+                            onClick: onClose,
+                            className: "rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-100"
+                        }, "Hủy"),
+                        h("button", {
+                            type: "submit",
+                            disabled: !isValid,
+                            className: "rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                        }, "Lưu tài liệu")
+                    )
+                )
+            );
+        };
+
+        const CategoryModal = ({ onClose, onSave }) => {
+            const [name, setName] = useState("");
+            const submit = (event) => {
+                event.preventDefault();
+                if (!name.trim()) return;
+                onSave(name);
+            };
+
+            return h("div", { className: "fixed inset-0 z-50 grid place-items-center bg-slate-900/35 p-4 backdrop-blur-sm" },
+                h("form", {
+                    onSubmit: submit,
+                    className: "w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl"
+                },
+                    h("div", { className: "flex items-center justify-between border-b border-slate-200 px-6 py-5" },
+                        h("h2", { className: "text-xl font-bold tracking-tight text-slate-800" }, "Thêm danh mục"),
+                        h(IconButton, { label: "Đóng", onClick: onClose }, h(X, { className: "h-4 w-4" }))
+                    ),
+                    h("div", { className: "px-6 py-5" },
+                        h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
+                            "Tên danh mục",
+                            h("input", {
+                                value: name,
+                                onChange: (event) => setName(event.target.value),
+                                autoFocus: true,
+                                className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
+                                placeholder: "VD: Chính sách"
+                            })
+                        )
+                    ),
+                    h("div", { className: "flex justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4" },
+                        h("button", {
+                            type: "button",
+                            onClick: onClose,
+                            className: "rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-100"
+                        }, "Hủy"),
+                        h("button", {
+                            type: "submit",
+                            className: "rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-700 active:scale-95"
+                        }, "Thêm")
+                    )
+                )
+            );
+        };
+
+        /*
+                        h(IconButton, { label: "Quay lại", onClick: onClose, className: "bg-slate-50 hover:bg-slate-100" }, h(ChevronLeft, { className: "h-5 w-5" })),
+                        h("div", { className: "hidden md:flex items-center gap-3" },
+                            h("span", { className: "rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500" }, categoryName || "Chưa phân loại"),
+                            h("span", { className: "text-sm font-semibold text-slate-400" }, "Chế độ đọc")
+                        )
+                    ),
+                    h("div", { className: "flex items-center gap-3" },
+                        h("button", {
+                            type: "button",
+                            onClick: () => {
+                                const returnUrl = new URL(window.location);
+                                returnUrl.searchParams.set("articleId", article.id);
+                                const returnTo = `document-list.html${returnUrl.search}${returnUrl.hash}`;
+                                window.location.href = `document-builder.html?id=${encodeURIComponent(article.id)}&returnTo=${encodeURIComponent(returnTo)}`;
+                            },
+                            className: "flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-500/30 transition hover:bg-blue-700 active:scale-95"
+                        }, h(Pencil, { className: "h-4 w-4" }), h("span", { className: "hidden sm:inline" }, "Sửa nội dung")),
+                        h("button", {
+                            type: "button",
+                            onClick: () => onCopyLink(article.id),
+                            className: "flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-blue-600 active:scale-95"
+                        }, h(Link, { className: "h-4 w-4" }), h("span", { className: "hidden sm:inline" }, "Sao chép Link")),
+                        h("button", {
+                            type: "button",
+                            onClick: onClose,
+                            className: "rounded-xl bg-slate-100 px-5 py-2.5 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 active:scale-95"
+                        }, "Đóng")
+                    )
+                ),
+                h("div", { className: "mx-auto w-full max-w-3xl px-6 py-12 md:py-20" },
+                    h("span", { className: "mb-6 inline-flex md:hidden items-center rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500" }, categoryName || "Chưa phân loại"),
+                    h("h1", { className: "text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl" }, article.title),
+                    h("div", { className: "mt-8 flex items-center gap-4 border-b border-slate-100 pb-8" },
+                        h("div", { className: "flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-lg font-bold text-blue-600 shadow-inner border border-blue-100" }, article.author?.[0]?.toUpperCase() || "U"),
+                        h("div", null,
+                            h("p", { className: "font-bold text-slate-800" }, article.author || "Thành viên"),
+                            h("p", { className: "text-sm font-medium text-slate-500" }, 
+                                "Cập nhật: ",
+                                new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(article.createdAt))
+                            )
+                        )
+                    ),
+                    h("div", { className: "mt-10 text-[17px] leading-relaxed text-slate-700" },
+                        article.content.split('\n').map((paragraph, idx) => 
+                            paragraph.trim() ? h("p", { key: idx, className: "mb-6" }, paragraph) : h("div", { key: idx, className: "h-4" })
+                        )
+                    )
+                )
+            );
+        */
+
+        const Sidebar = ({
+            categories,
+            articles,
+            activeCategoryId,
+            onSelectCategory,
+            onAddCategory,
+            onUpdateCategory,
+            onDeleteCategory,
+            onReorderCategories,
+            isOpen,
+            onClose
+        }) => {
+            const [draggedCategoryId, setDraggedCategoryId] = useState(null);
+            const [dragOverCategoryId, setDragOverCategoryId] = useState(null);
+            const [dropPosition, setDropPosition] = useState("before");
+            const [editingCategoryId, setEditingCategoryId] = useState(null);
+            const [editingCategoryName, setEditingCategoryName] = useState("");
+            const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+
+            useEffect(() => {
+                const handleClickOutside = () => setDeleteConfirmId(null);
+                document.addEventListener("click", handleClickOutside);
+                return () => document.removeEventListener("click", handleClickOutside);
+            }, []);
+
+            const handleDragStart = (e, id) => {
+                setDraggedCategoryId(id);
+                e.dataTransfer.effectAllowed = "move";
+            };
+            const handleDragOver = (e, id) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = "move";
+                if (id !== draggedCategoryId) {
+                    setDragOverCategoryId(id);
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const y = e.clientY - rect.top;
+                    setDropPosition(y < rect.height / 2 ? "before" : "after");
+                }
+            };
+            const handleDragLeave = () => setDragOverCategoryId(null);
+            const handleDrop = (e, targetId) => {
+                e.preventDefault();
+                setDragOverCategoryId(null);
+                if (!draggedCategoryId || draggedCategoryId === targetId) return;
+
+                const draggedIndex = categories.findIndex((c) => c.id === draggedCategoryId);
+                let targetIndex = categories.findIndex((c) => c.id === targetId);
+
+                if (dropPosition === "after") {
+                    targetIndex += 1;
+                }
+
+                const newCategories = [...categories];
+                const [draggedItem] = newCategories.splice(draggedIndex, 1);
+                
+                if (draggedIndex < targetIndex) {
+                    targetIndex -= 1;
+                }
+                
+                newCategories.splice(targetIndex, 0, draggedItem);
+                
+                onReorderCategories(newCategories);
+                setDraggedCategoryId(null);
+            };
+            const handleDragEnd = () => {
+                setDraggedCategoryId(null);
+                setDragOverCategoryId(null);
+            };
+
+            return h("aside", {
+                className: `${isOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 w-[82vw] max-w-xs border-r border-slate-200 bg-white shadow-sm transition-transform duration-200 md:static md:z-auto md:w-64 md:max-w-none md:translate-x-0 flex flex-col`
+            },
+                h("div", { className: "p-6" },
+                    h("div", { className: "flex items-center justify-between gap-3" },
+                        h("span", { className: "font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap" }, "PWS Workspace"),
+                        h(IconButton, { label: "Đóng sidebar", className: "md:hidden", onClick: onClose }, h(X, { className: "h-4 w-4" }))
+                    )
+                ),
+                h("nav", { className: "flex-1 overflow-auto px-4 space-y-1" },
+                        h("button", {
+                            type: "button",
+                            onClick: () => onSelectCategory("all"),
+                        className: `w-full flex items-center gap-3 p-3 rounded-xl transition-all font-semibold text-sm ${activeCategoryId === "all" ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"}`
+                        },
+                        h(File, { className: "h-5 w-5 shrink-0" }),
+                        h("span", { className: "min-w-0 flex-1 truncate text-left" }, "Tất cả tài liệu"),
+                        h("span", { className: "text-xs font-bold text-slate-400" }, articles.length)
+                        ),
+                    h("div", { className: "mt-6 mb-2 flex items-center justify-between px-3" },
+                        h("span", { className: "text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400" }, "Danh mục"),
+                        h(IconButton, { label: "Thêm danh mục", className: "h-6 w-6 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: onAddCategory },
+                            h(Plus, { className: "h-3.5 w-3.5" })
+                            )
+                        ),
+                            categories.map((category) => {
+                                const count = articles.filter((article) => article.categoryId === category.id).length;
+                                const isEditing = editingCategoryId === category.id;
+                                return h("div", {
+                                    key: category.id,
+                                    draggable: !isEditing,
+                                    onClick: () => {
+                                        if (!isEditing) onSelectCategory(category.id);
+                                    },
+                                    onContextMenu: (e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setEditingCategoryId(category.id);
+                                        setEditingCategoryName(category.name);
+                                    },
+                                    onDragStart: (e) => !isEditing && handleDragStart(e, category.id),
+                                    onDragOver: (e) => !isEditing && handleDragOver(e, category.id),
+                                    onDragLeave: !isEditing ? handleDragLeave : undefined,
+                                    onDrop: (e) => !isEditing && handleDrop(e, category.id),
+                                    onDragEnd: !isEditing ? handleDragEnd : undefined,
+                                    className: `group relative w-full flex items-center gap-3 p-3 rounded-xl transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`
+                                },
+                                h(Folder, { className: "h-5 w-5 shrink-0" }),
+                                isEditing ? h("input", {
+                                    autoFocus: true,
+                                    value: editingCategoryName,
+                                    onClick: (e) => e.stopPropagation(),
+                                    onChange: (e) => setEditingCategoryName(e.target.value),
+                                    onBlur: () => {
+                                        if (editingCategoryName.trim() && editingCategoryName.trim() !== category.name) {
+                                            onUpdateCategory(category.id, { name: editingCategoryName.trim() });
+                                        }
+                                        setEditingCategoryId(null);
+                                    },
+                                    onKeyDown: (e) => {
+                                        if (e.key === "Enter") {
+                                            if (editingCategoryName.trim() && editingCategoryName.trim() !== category.name) {
+                                                onUpdateCategory(category.id, { name: editingCategoryName.trim() });
+                                            }
+                                            setEditingCategoryId(null);
+                                        }
+                                        if (e.key === "Escape") {
+                                            setEditingCategoryId(null);
+                                        }
+                                    },
+                                    className: "min-w-0 flex-1 bg-white border border-blue-400 focus:ring-2 focus:ring-blue-100 rounded px-2 py-1 outline-none text-slate-800"
+                                }) : h("span", { className: "min-w-0 flex-1 truncate text-left" }, category.name),
+                                !isEditing && h("span", { className: "text-xs font-bold text-slate-400 transition-opacity group-hover:opacity-0" }, count),
+                                !isEditing && h("div", { className: `absolute right-2 flex items-center transition-all ${deleteConfirmId === category.id ? "opacity-100" : "opacity-0 group-hover:opacity-100"}` },
+                                    h("button", {
+                                        type: "button",
+                                        onClick: (e) => {
+                                            e.stopPropagation();
+                                            setEditingCategoryId(category.id);
+                                            setEditingCategoryName(category.name);
+                                        },
+                                        className: "p-1.5 rounded-md text-slate-400 hover:bg-blue-100 hover:text-blue-600 transition-all",
+                                        title: "Đổi tên danh mục (Chuột phải)"
+                                    }, h(Pencil, { className: "h-3.5 w-3.5" })),
+                                    h("button", {
+                                        type: "button",
+                                        onClick: (e) => {
+                                            e.stopPropagation();
+                                            if (deleteConfirmId === category.id) {
+                                                onDeleteCategory(category);
+                                                setDeleteConfirmId(null);
+                                            } else {
+                                                setDeleteConfirmId(category.id);
+                                            }
+                                        },
+                                        className: `relative ml-0.5 flex h-7 items-center justify-center overflow-hidden rounded-md transition-all duration-300 ${
+                                            deleteConfirmId === category.id
+                                                ? "w-14 border border-red-200 bg-red-50 text-red-600"
+                                                : "w-7 border border-transparent bg-transparent text-slate-400 hover:bg-red-50 hover:text-red-600"
+                                        }`,
+                                        title: "Xóa danh mục"
+                                    }, 
+                                        h(Trash2, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteConfirmId === category.id ? "scale-50 opacity-0" : "scale-100 opacity-100"}` }),
+                                        h("span", { className: `absolute text-[11px] font-bold whitespace-nowrap transition-all duration-300 ${deleteConfirmId === category.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` }, "Xóa")
+                                    )
+                                )
+                                );
+                            })
+                )
+            );
+        };
+
+        const getPageNumbers = (current, total) => {
+            if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+            if (current <= 4) return [1, 2, 3, 4, 5, "...", total];
+            if (current >= total - 3) return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+            return [1, "...", current - 1, current, current + 1, "...", total];
+        };
+
+        const ItemsPerPageSelect = ({ value, onChange }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const options = [12, 24, 48];
+
+            return h("div", { className: "relative inline-block text-left" },
+                h("button", {
+                    type: "button",
+                    onClick: () => setIsOpen(!isOpen),
+                    onBlur: () => setTimeout(() => setIsOpen(false), 150),
+                    className: "inline-flex min-w-[110px] items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                },
+                    `${value} / trang`,
+                    h(ChevronDown, { className: `h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? "-rotate-180" : ""}` })
+                ),
+                isOpen && h("div", {
+                    className: "absolute bottom-full left-0 z-10 mb-2 w-full origin-bottom-left overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                },
+                    h("div", { className: "py-1" },
+                        options.map(num => h("button", {
+                            key: num,
+                            type: "button",
+                            onClick: () => {
+                                onChange(num);
+                                setIsOpen(false);
+                            },
+                            className: `flex w-full items-center justify-between px-4 py-2.5 text-sm transition hover:bg-slate-50 hover:text-blue-600 ${num === value ? "bg-blue-50 text-blue-700 font-bold" : "text-slate-600 font-semibold"}`
+                        },
+                            `${num} / trang`,
+                            num === value && h(Check, { className: "h-4 w-4 text-blue-600" })
+                        ))
+                    )
+                )
+            );
+        };
+
+        const SkeletonCard = () =>
+            h("div", { className: "rounded-2xl border border-slate-200 bg-white p-5 shadow-sm animate-pulse" },
+                h("div", { className: "grid gap-4" },
+                    h("div", { className: "grid gap-3" },
+                        h("div", { className: "mb-4 h-6 w-24 rounded-full bg-slate-200" }),
+                        h("div", { className: "h-5 w-3/4 rounded bg-slate-200" }),
+                        h("div", { className: "mt-1 h-4 w-full rounded bg-slate-200" }),
+                        h("div", { className: "h-4 w-2/3 rounded bg-slate-200" })
+                    ),
+                    h("div", { className: "flex items-center justify-between gap-2 pt-2" },
+                        h("div", { className: "h-4 w-32 rounded bg-slate-200" }),
+                        h("div", { className: "flex gap-2" },
+                            h("div", { className: "h-9 w-9 rounded-xl bg-slate-200" }),
+                            h("div", { className: "h-9 w-9 rounded-xl bg-slate-200" })
+                        )
+                    )
+                )
+            );
+
+        const SkeletonTimeline = () =>
+            h("div", { className: "relative mb-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm animate-pulse before:absolute before:-left-[33px] before:top-8 before:h-4 before:w-4 before:rounded-full before:border-4 before:border-white before:bg-slate-200" },
+                h("div", { className: "flex items-start gap-4" },
+                    h("div", { className: "mt-1 h-10 w-10 shrink-0 rounded-full bg-slate-200" }),
+                    h("div", { className: "min-w-0 flex-1" },
+                        h("div", { className: "flex flex-col gap-2 md:flex-row md:items-start md:justify-between" },
+                            h("div", { className: "min-w-0 flex-1 w-full" },
+                                h("div", { className: "mb-2 h-5 w-1/2 rounded bg-slate-200" }),
+                                h("div", { className: "h-4 w-3/4 rounded bg-slate-200" })
+                            ),
+                            h("div", { className: "flex shrink-0 items-center gap-2" },
+                                h("div", { className: "h-6 w-24 rounded-full bg-slate-200" }),
+                                h("div", { className: "h-4 w-28 rounded bg-slate-200" }),
+                                h("div", { className: "hidden h-9 w-9 rounded-xl bg-slate-200 md:block" }),
+                                h("div", { className: "hidden h-9 w-9 rounded-xl bg-slate-200 md:block" })
+                            )
+                        )
+                    )
+                )
+            );
+
+        const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+        const highlightText = (text, query) => {
+            if (!query || !query.trim()) return text;
+            const escapedQuery = escapeRegExp(query.trim());
+            const parts = text.split(new RegExp(`(${escapedQuery})`, "gi"));
+            return parts.map((part, i) =>
+                part.toLowerCase() === query.trim().toLowerCase()
+                    ? h("mark", { key: i, className: "animate-flash-once bg-amber-200 text-amber-950 rounded-sm px-0.5 font-medium bg-opacity-70" }, part)
+                    : part
+            );
+        };
+
+        const App = () => {
+            const params = useMemo(() => new URLSearchParams(window.location.search), []);
+
+            const [data, setData] = useState(() => DataService.getData());
+            const [activeCategoryId, setActiveCategoryId] = useState(params.get("c") || "all");
+            const [query, setQuery] = useState(params.get("q") || "");
+            const [editingArticle, setEditingArticle] = useState(null);
+            const [isArticleModalOpen, setIsArticleModalOpen] = useState(false);
+            const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+            const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+            const [viewMode, setViewMode] = useState(params.get("v") || "card");
+            const [currentPage, setCurrentPage] = useState(Number(params.get("p")) || 1);
+            const [itemsPerPage, setItemsPerPage] = useState(Number(params.get("limit")) || 12);
+            const [isNavigating, setIsNavigating] = useState(false);
+            const [isSearchFocused, setIsSearchFocused] = useState(false);
+            const [searchHistory, setSearchHistory] = useState(() => {
+                try {
+                    return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]");
+                } catch {
+                    return [];
+                }
+            });
+            const [toast, setToast] = useState(null);
+            const [filterAuthor, setFilterAuthor] = useState(params.get("author") || "all");
+            const [filterStatus, setFilterStatus] = useState(params.get("status") || "all");
+            const [filterDateFrom, setFilterDateFrom] = useState(params.get("from") || "");
+            const [filterDateTo, setFilterDateTo] = useState(params.get("to") || "");
+            const [sortMode, setSortMode] = useState(params.get("sort") || "updated-desc");
+            const [deleteArticleConfirmId, setDeleteArticleConfirmId] = useState(null);
+            const [openDateFilter, setOpenDateFilter] = useState(null);
+            const [calendarMonth, setCalendarMonth] = useState(() => new Date());
+            const dateFilterRef = useRef(null);
+
+            useEffect(() => {
+                const articleId = params.get("articleId");
+                if (articleId) {
+                    const returnUrl = new URL(window.location);
+                    returnUrl.searchParams.delete("articleId");
+                    const returnTo = `document-list.html${returnUrl.search}${returnUrl.hash}`;
+                    window.location.replace(`document-builder.html?id=${encodeURIComponent(articleId)}&mode=preview&returnTo=${encodeURIComponent(returnTo)}`);
+                }
+            }, []);
+
+            useEffect(() => {
+                const handleStorage = (event) => {
+                    if (event.key !== STORAGE_KEY) return;
+                    setData(DataService.getData());
+                };
+                window.addEventListener("storage", handleStorage);
+                return () => window.removeEventListener("storage", handleStorage);
+            }, []);
+
+            const getBuilderUrl = (articleId, mode = "preview") => {
+                const returnUrl = new URL(window.location);
+                returnUrl.searchParams.delete("articleId");
+                const returnTo = `document-list.html${returnUrl.search}${returnUrl.hash}`;
+                return `document-builder.html?id=${encodeURIComponent(articleId)}&mode=${encodeURIComponent(mode)}&returnTo=${encodeURIComponent(returnTo)}`;
+            };
+
+            const openArticleInBuilder = (articleId) => {
+                window.location.href = getBuilderUrl(articleId, "preview");
+            };
+
+            const copyArticleLink = (articleId) => {
+                const url = new URL(getBuilderUrl(articleId, "preview"), window.location.href);
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url.toString()).then(
+                        () => showToast("Đã sao chép liên kết tài liệu"),
+                        () => showToast(url.toString())
+                    );
+                    return;
+                }
+                showToast(url.toString());
+            };
+
+            useEffect(() => {
+                const handleClickOutside = () => setDeleteArticleConfirmId(null);
+                document.addEventListener("click", handleClickOutside);
+                return () => document.removeEventListener("click", handleClickOutside);
+            }, []);
+
+            useEffect(() => {
+                if (!toast) return;
+                const timer = setTimeout(() => setToast(null), 3000);
+                return () => clearTimeout(timer);
+            }, [toast]);
+
+            const showToast = (message) => {
+                setToast({ message, id: Date.now() });
+            };
+
+            const isInitialMount = useRef(true);
+            useEffect(() => {
+                if (isInitialMount.current) {
+                    isInitialMount.current = false;
+                    return;
+                }
+                setCurrentPage(1);
+            }, [query, activeCategoryId, viewMode, itemsPerPage, filterAuthor, filterStatus, filterDateFrom, filterDateTo, sortMode]);
+
+            useEffect(() => {
+                setIsNavigating(true);
+                const timer = setTimeout(() => setIsNavigating(false), 400);
+                return () => clearTimeout(timer);
+            }, [currentPage, itemsPerPage, viewMode, activeCategoryId, query, filterAuthor, filterStatus, filterDateFrom, filterDateTo, sortMode]);
+
+            useEffect(() => {
+                const url = new URL(window.location);
+                if (activeCategoryId !== "all") url.searchParams.set("c", activeCategoryId);
+                else url.searchParams.delete("c");
+                
+                if (query) url.searchParams.set("q", query);
+                else url.searchParams.delete("q");
+
+                if (viewMode !== "card") url.searchParams.set("v", viewMode);
+                else url.searchParams.delete("v");
+
+                if (currentPage !== 1) url.searchParams.set("p", currentPage);
+                else url.searchParams.delete("p");
+
+                if (itemsPerPage !== 12) url.searchParams.set("limit", itemsPerPage);
+                else url.searchParams.delete("limit");
+
+                if (filterAuthor !== "all") url.searchParams.set("author", filterAuthor);
+                else url.searchParams.delete("author");
+
+                if (filterStatus !== "all") url.searchParams.set("status", filterStatus);
+                else url.searchParams.delete("status");
+
+                if (filterDateFrom) url.searchParams.set("from", filterDateFrom);
+                else url.searchParams.delete("from");
+
+                if (filterDateTo) url.searchParams.set("to", filterDateTo);
+                else url.searchParams.delete("to");
+
+                if (sortMode !== "updated-desc") url.searchParams.set("sort", sortMode);
+                else url.searchParams.delete("sort");
+
+                window.history.replaceState({}, "", url);
+            }, [activeCategoryId, query, viewMode, currentPage, itemsPerPage, filterAuthor, filterStatus, filterDateFrom, filterDateTo, sortMode]);
+
+            useEffect(() => {
+                if (!query.trim()) return;
+                const timer = setTimeout(() => {
+                    const keyword = query.trim();
+                    setSearchHistory(prev => {
+                        const next = [keyword, ...prev.filter(k => k.toLowerCase() !== keyword.toLowerCase())].slice(0, 5);
+                        localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+                        return next;
+                    });
+                }, 1000);
+                return () => clearTimeout(timer);
+            }, [query]);
+
+            useEffect(() => {
+                if (!openDateFilter) return undefined;
+                const closeOnPointerDown = (event) => {
+                    if (dateFilterRef.current && !dateFilterRef.current.contains(event.target)) setOpenDateFilter(null);
+                };
+                const closeOnEscape = (event) => {
+                    if (event.key === "Escape") setOpenDateFilter(null);
+                };
+                document.addEventListener("pointerdown", closeOnPointerDown);
+                document.addEventListener("keydown", closeOnEscape);
+                return () => {
+                    document.removeEventListener("pointerdown", closeOnPointerDown);
+                    document.removeEventListener("keydown", closeOnEscape);
+                };
+            }, [openDateFilter]);
+
+            useEffect(() => {
+                if (activeCategoryId !== "all" && !data.categories.some((category) => category.id === activeCategoryId)) {
+                    setActiveCategoryId("all");
+                }
+            }, [activeCategoryId, data.categories]);
+
+            const categoryById = useMemo(() => {
+                return data.categories.reduce((map, category) => {
+                    map[category.id] = category;
+                    return map;
+                }, {});
+            }, [data.categories]);
+
+            const visibleArticles = useMemo(() => {
+                const normalizedQuery = query.trim().toLowerCase();
+                const fromDate = filterDateFrom ? new Date(filterDateFrom).getTime() : null;
+                // Cộng thêm 1 ngày để bao gồm trọn vẹn "Đến ngày"
+                const toDate = filterDateTo ? new Date(filterDateTo).getTime() + 86400000 - 1 : null;
+
+                const filtered = data.articles.filter((article) => {
+                    const inCategory = activeCategoryId === "all" || article.categoryId === activeCategoryId;
+                    const matchesQuery = !normalizedQuery ||
+                        article.title.toLowerCase().includes(normalizedQuery) ||
+                        article.content.toLowerCase().includes(normalizedQuery);
+                    const matchesAuthor = filterAuthor === "all" || (filterAuthor === "me" && article.author === "Bạn");
+                    const matchesStatus = filterStatus === "all" || article.status === filterStatus;
+                    
+                    const articleDate = new Date(article.updatedAt || article.createdAt).getTime();
+                    const matchesDateFrom = !fromDate || articleDate >= fromDate;
+                    const matchesDateTo = !toDate || articleDate <= toDate;
+
+                    return inCategory && matchesQuery && matchesAuthor && matchesStatus && matchesDateFrom && matchesDateTo;
+                });
+
+                return filtered.sort((a, b) => {
+                    if (sortMode === "created-desc") {
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }
+                    if (sortMode === "title-asc") {
+                        return String(a.title || "").localeCompare(String(b.title || ""), "vi", { sensitivity: "base" });
+                    }
+                    return new Date(b.updatedAt || b.createdAt).getTime() - new Date(a.updatedAt || a.createdAt).getTime();
+                });
+            }, [activeCategoryId, data.articles, query, filterAuthor, filterStatus, filterDateFrom, filterDateTo, sortMode]);
+
+            const activeCategory = activeCategoryId === "all"
+                ? null
+                : data.categories.find((category) => category.id === activeCategoryId);
+            const currentView = VIEW_MODES.find((mode) => mode.id === viewMode) || VIEW_MODES[0];
+            const parseDateValue = (value) => {
+                if (!value) return null;
+                const parts = String(value).split("-").map(Number);
+                if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            };
+            const toDateValue = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, "0");
+                const day = String(date.getDate()).padStart(2, "0");
+                return `${year}-${month}-${day}`;
+            };
+            const formatDateChip = (value) => {
+                if (!value) return "Chọn ngày";
+                const parts = String(value).split("-");
+                if (parts.length !== 3) return value;
+                return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            };
+            const openCalendar = (type, value) => {
+                if (openDateFilter === type) {
+                    setOpenDateFilter(null);
+                    return;
+                }
+                const selectedDate = parseDateValue(value);
+                setCalendarMonth(selectedDate || new Date());
+                setOpenDateFilter(type);
+            };
+            const setCalendarDate = (type, date) => {
+                const value = toDateValue(date);
+                if (type === "from") setFilterDateFrom(value);
+                else setFilterDateTo(value);
+                setOpenDateFilter(null);
+            };
+            const renderDateCalendar = () => {
+                if (!openDateFilter) return null;
+                const selectedValue = openDateFilter === "from" ? filterDateFrom : filterDateTo;
+                const selectedDate = parseDateValue(selectedValue);
+                const todayValue = toDateValue(new Date());
+                const monthStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+                const gridStart = new Date(monthStart);
+                gridStart.setDate(monthStart.getDate() - monthStart.getDay());
+                const days = Array.from({ length: 42 }, (_, index) => {
+                    const day = new Date(gridStart);
+                    day.setDate(gridStart.getDate() + index);
+                    return day;
+                });
+                const monthLabel = monthStart.toLocaleDateString("vi-VN", { month: "long", year: "numeric" });
+                const changeMonth = (offset) => {
+                    setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + offset, 1));
+                };
+                const clearDate = () => {
+                    if (openDateFilter === "from") setFilterDateFrom("");
+                    else setFilterDateTo("");
+                    setOpenDateFilter(null);
+                };
+                return h("div", { className: "date-popover", role: "dialog", "aria-label": "Chọn ngày" },
+                    h("div", { className: "date-popover-head" },
+                        h("span", { className: "date-popover-title" }, monthLabel),
+                        h("div", { className: "flex items-center gap-1" },
+                            h("button", { type: "button", className: "date-nav-btn", onClick: () => changeMonth(-1), "aria-label": "Tháng trước" }, h(ArrowLeft, { className: "h-4 w-4" })),
+                            h("button", { type: "button", className: "date-nav-btn", onClick: () => changeMonth(1), "aria-label": "Tháng sau" }, h(ArrowRight, { className: "h-4 w-4" }))
+                        )
+                    ),
+                    h("div", { className: "date-week-grid" }, ["CN", "T2", "T3", "T4", "T5", "T6", "T7"].map((day) =>
+                        h("span", { key: day, className: "date-weekday" }, day)
+                    )),
+                    h("div", { className: "date-day-grid" }, days.map((day) => {
+                        const value = toDateValue(day);
+                        const isMuted = day.getMonth() !== monthStart.getMonth();
+                        const isSelected = selectedDate && value === toDateValue(selectedDate);
+                        const isToday = value === todayValue;
+                        return h("button", {
+                            key: value,
+                            type: "button",
+                            className: `date-day-btn ${isMuted ? "is-muted" : ""} ${isToday ? "is-today" : ""} ${isSelected ? "is-selected" : ""}`,
+                            onClick: () => setCalendarDate(openDateFilter, day)
+                        }, day.getDate());
+                    })),
+                    h("div", { className: "date-popover-foot" },
+                        h("button", { type: "button", className: "date-foot-btn", onClick: clearDate }, "Clear"),
+                        h("button", { type: "button", className: "date-foot-btn", onClick: () => setCalendarDate(openDateFilter, new Date()) }, "Today")
+                    )
+                );
+            };
+
+            const totalPages = Math.max(1, Math.ceil(visibleArticles.length / itemsPerPage));
+            const paginatedArticles = useMemo(() => {
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                return visibleArticles.slice(startIndex, startIndex + itemsPerPage);
+            }, [visibleArticles, currentPage, itemsPerPage]);
+
+            const groupedArticles = useMemo(() => {
+                if (viewMode !== "timeline") return null;
+                if (sortMode === "title-asc") {
+                    return [["Tên A-Z", paginatedArticles]];
+                }
+                const groups = {};
+                paginatedArticles.forEach(article => {
+                    const date = new Date(sortMode === "created-desc" ? article.createdAt : (article.updatedAt || article.createdAt));
+                    const monthYear = `Tháng ${date.getMonth() + 1}, ${date.getFullYear()}`;
+                    if (!groups[monthYear]) groups[monthYear] = [];
+                    groups[monthYear].push(article);
+                });
+                return Object.entries(groups).sort((a, b) => {
+                    const firstDate = sortMode === "created-desc" ? b[1][0].createdAt : (b[1][0].updatedAt || b[1][0].createdAt);
+                    const secondDate = sortMode === "created-desc" ? a[1][0].createdAt : (a[1][0].updatedAt || a[1][0].createdAt);
+                    return new Date(firstDate) - new Date(secondDate);
+                });
+            }, [paginatedArticles, viewMode, sortMode]);
+
+            const refresh = (nextData) => setData(nextData);
+
+            const openCreateArticle = () => {
+                setEditingArticle(null);
+                setIsArticleModalOpen(true);
+            };
+
+            const saveArticle = (payload) => {
+                const isEdit = !!editingArticle;
+                const nextData = editingArticle
+                    ? DataService.updateArticle(editingArticle.id, payload)
+                    : DataService.addArticle(payload);
+                refresh(nextData);
+                setIsArticleModalOpen(false);
+                setEditingArticle(null);
+                showToast(isEdit ? "Đã cập nhật tài liệu thành công" : "Đã thêm tài liệu mới");
+            };
+
+            const addCategory = (name) => {
+                const nextData = DataService.addCategory(name);
+                refresh(nextData);
+                setActiveCategoryId(nextData.categories[nextData.categories.length - 1].id);
+                setIsCategoryModalOpen(false);
+                showToast("Đã thêm danh mục mới");
+            };
+
+            const updateCategory = (id, updates) => {
+                refresh(DataService.updateCategory(id, updates));
+                showToast("Đã đổi tên danh mục");
+            };
+
+            const removeCategory = (category) => {
+                refresh(DataService.deleteCategory(category.id));
+                if (activeCategoryId === category.id) setActiveCategoryId("all");
+                showToast("Đã xóa danh mục");
+            };
+
+            const deleteArticle = (article) => {
+                refresh(DataService.deleteArticle(article.id));
+                showToast("Đã xóa tài liệu");
+                setDeleteArticleConfirmId(null);
+            };
+
+            const renderArticle = (article, isCard, isTimeline) => {
+                const preview = article.description || article.content.split("\n").find(Boolean) || "Chưa có nội dung xem trước.";
+                const statusMeta = getStatusMeta(article.status);
+                const statusLabel = statusMeta.label;
+                const statusClass = statusMeta.className;
+                const showStatusBadge = article.status !== "published";
+                const updatedLabel = new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(article.updatedAt || article.createdAt));
+                return h("article", {
+                    key: article.id,
+                    onClick: () => openArticleInBuilder(article.id),
+                    className: `group relative bg-white transition-all cursor-pointer ${
+                        isCard
+                            ? "rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-blue-400"
+                            : "mb-4 rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-blue-400 hover:shadow-md before:absolute before:-left-[33px] before:top-8 before:h-4 before:w-4 before:rounded-full before:border-4 before:border-white before:bg-blue-500 before:shadow-sm"
+                    }`
+                },
+                    h("div", { className: `${isCard ? "grid gap-4" : "flex items-start gap-4"}` },
+                        h("div", {
+                            className: isCard
+                                ? "hidden"
+                                : "mt-1 grid h-10 w-10 shrink-0 place-items-center rounded-full bg-blue-50 text-blue-600 shadow-inner border border-blue-100"
+                        },
+                            h(File, { className: "h-5 w-5" })
+                        ),
+                        h("div", { className: "min-w-0 flex-1" },
+                            h("div", { className: `${isCard ? "grid gap-3" : "flex flex-col gap-2 md:flex-row md:items-start md:justify-between"}` },
+                                h("div", { className: "min-w-0" },
+                                    isCard && h("div", { className: "mb-4 flex flex-wrap items-center gap-2" },
+                                        h("span", { className: "inline-flex max-w-full items-center rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500" },
+                                            categoryById[article.categoryId]?.name || "Chưa phân loại"
+                                        ),
+                                        showStatusBadge && h("span", { className: `inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${statusClass}` }, statusLabel)
+                                    ),
+                                    h("h3", { className: `${isCard ? "text-[18px]" : "text-base"} text-slate-800 tracking-tight font-bold truncate group-hover:text-blue-600 transition-colors` }, highlightText(article.title, query)),
+                                    h("p", { className: `mt-1.5 text-slate-500 font-medium truncate text-[13px] leading-relaxed` }, highlightText(preview, query))
+                                ),
+                                h("div", { className: `${isCard ? "flex items-center justify-between gap-2 pt-4 mt-2 border-t border-slate-100" : "flex shrink-0 items-center gap-2"}` },
+                                    isTimeline && h("span", { className: "max-w-36 truncate rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500" },
+                                        categoryById[article.categoryId]?.name || "Chưa phân loại"
+                                    ),
+                                    isTimeline && showStatusBadge && h("span", { className: `shrink-0 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${statusClass}` }, statusLabel),
+                                    h("div", { className: "flex min-w-0 items-center gap-2.5 text-[12px] font-semibold text-slate-400" },
+                                        h("span", { className: "inline-flex items-center gap-1.5 truncate" },
+                                            h("div", { className: "w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[8px]" }, article.author?.[0]?.toUpperCase() || "U"),
+                                            article.author || "Thành viên"
+                                        ),
+                                        h("span", { className: "h-1 w-1 shrink-0 rounded-full bg-slate-300" }),
+                                        h("span", { className: "truncate flex items-center gap-1.5" }, 
+                                            h(Clock, { className: "w-3.5 h-3.5" }),
+                                            "Cập nhật: ",
+                                            updatedLabel
+                                        )
+                                    ),
+                                    h("div", { className: `flex gap-1.5 transition-opacity ${deleteArticleConfirmId === article.id ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100"}` },
+                                        h(IconButton, {
+                                            label: "Sao chép link đọc",
+                                            className: "w-8 h-8",
+                                            onClick: (e) => {
+                                                e.stopPropagation();
+                                                copyArticleLink(article.id);
+                                            }
+                                        }, h(Link2, { className: "h-3.5 w-3.5" })),
+                                        h(IconButton, {
+                                            label: "Sửa trong builder",
+                                            className: "w-8 h-8",
+                                            onClick: (e) => {
+                                                e.stopPropagation();
+                                                window.location.href = getBuilderUrl(article.id, "edit");
+                                            }
+                                        }, h(Pencil, { className: "h-3.5 w-3.5" })),
+                                        h("button", {
+                                            type: "button",
+                                            onClick: (e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                if (deleteArticleConfirmId === article.id) {
+                                                    deleteArticle(article);
+                                                } else {
+                                                    setDeleteArticleConfirmId(article.id);
+                                                }
+                                            },
+                                            className: `relative flex h-8 items-center justify-center overflow-hidden rounded-xl border shadow-sm transition-all duration-300 ${
+                                                deleteArticleConfirmId === article.id
+                                                    ? "w-16 border-red-200 bg-red-50 text-red-600"
+                                                    : "w-8 border-slate-200 bg-white text-slate-500 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                                            }`,
+                                            title: "Xóa tài liệu"
+                                        },
+                                            h(Trash2, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteArticleConfirmId === article.id ? "scale-50 opacity-0" : "scale-100 opacity-100"}` }),
+                                            h("span", { className: `absolute text-[11px] font-bold whitespace-nowrap transition-all duration-300 ${deleteArticleConfirmId === article.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` }, "Xóa")
+                                        )
+                                    )
+                                )
+                            ),
+                            null
+                        )
+                    )
+                );
+            };
+
+            const startItem = (currentPage - 1) * itemsPerPage + 1;
+            const endItem = Math.min(currentPage * itemsPerPage, visibleArticles.length);
+
+            const paginationUI = visibleArticles.length > 0 && h("div", { className: "mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 sm:flex-row" },
+                h("div", { className: "flex items-center gap-3 text-sm font-semibold text-slate-500" },
+                    h("span", null, `Hiển thị ${startItem} - ${endItem} trong ${visibleArticles.length} tài liệu`),
+                    h(ItemsPerPageSelect, { value: itemsPerPage, onChange: setItemsPerPage })
+                ),
+                h("div", { className: "flex items-center gap-1" },
+                    h("button", {
+                        type: "button",
+                        disabled: currentPage === 1,
+                        onClick: () => setCurrentPage(p => p - 1),
+                        className: "inline-flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    }, h(ChevronLeft, { className: "h-4 w-4" })),
+                    getPageNumbers(currentPage, totalPages).map((page, index) =>
+                        page === '...' ? h("span", { key: `ellipsis-${index}`, className: "px-2 font-bold text-slate-400" }, "...") :
+                        h("button", {
+                            key: page,
+                            type: "button",
+                            onClick: () => setCurrentPage(page),
+                            className: `inline-flex h-8 min-w-[2rem] items-center justify-center rounded-xl px-2 text-sm font-bold shadow-sm transition ${currentPage === page ? 'bg-blue-600 text-white border border-blue-600' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600'}`
+                        }, page)
+                    ),
+                    h("button", {
+                        type: "button",
+                        disabled: currentPage === totalPages,
+                        onClick: () => setCurrentPage(p => p + 1),
+                        className: "inline-flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    }, h(ChevronRight, { className: "h-4 w-4" }))
+                )
+            );
+
+            return h("div", { className: "flex min-h-screen font-sans", style: { fontFamily: "'Inter', sans-serif" } },
+                isSidebarOpen && h("button", {
+                    type: "button",
+                    "aria-label": "Đóng sidebar",
+                    className: "fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm md:hidden",
+                    onClick: () => setIsSidebarOpen(false)
+                }),
+                h(Sidebar, {
+                    categories: data.categories,
+                    articles: data.articles,
+                    activeCategoryId,
+                    onSelectCategory: (id) => {
+                        setActiveCategoryId(id);
+                        setIsSidebarOpen(false);
+                    },
+                    onAddCategory: () => setIsCategoryModalOpen(true),
+                    onUpdateCategory: updateCategory,
+                    onDeleteCategory: removeCategory,
+                    onReorderCategories: (newCategories) => {
+                        refresh(DataService.reorderCategories(newCategories));
+                    },
+                    isOpen: isSidebarOpen,
+                    onClose: () => setIsSidebarOpen(false)
+                }),
+                h("main", { className: "min-w-0 flex-1 h-screen overflow-auto bg-slate-50" },
+                    h("div", { className: "p-4 md:p-8 max-w-7xl mx-auto w-full" },
+                        h("div", { className: "flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-3 bg-white px-5 py-4 rounded-2xl border border-slate-200 shadow-sm relative z-20" },
+                            h("div", { className: "absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" }),
+                            h("div", { className: "flex items-center gap-4" },
+                                h(IconButton, { label: "Mở sidebar", className: "md:hidden", onClick: () => setIsSidebarOpen(true) }, h(Menu, { className: "h-4 w-4" })),
+                                h("div", null,
+                                    h("h1", { className: "text-2xl font-bold text-slate-800 flex items-center gap-3 tracking-tight" },
+                                        h("div", { className: "hidden md:flex w-10 h-10 bg-blue-50 text-blue-600 rounded-xl items-center justify-center border border-blue-100 shadow-inner" },
+                                            h(BookOpen, { className: "h-5 w-5" })
+                                        ),
+                                        activeCategory?.name || "Tất cả tài liệu"
+                                    )
+                                )
+                            ),
+                            h("div", { className: "flex w-full md:w-auto gap-3 items-center" },
+                                h("div", { className: "relative w-full md:w-64 group" },
+                                    h(Search, { className: "absolute left-3.5 top-3 w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" }),
+                                    h("input", {
+                                        value: query,
+                                        onChange: (event) => setQuery(event.target.value),
+                                        onFocus: () => setIsSearchFocused(true),
+                                        onBlur: () => setTimeout(() => setIsSearchFocused(false), 200),
+                                        className: "w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium",
+                                        placeholder: "Tìm kiếm tài liệu..."
+                                    }),
+                                    query && h("button", {
+                                        type: "button",
+                                        onClick: () => setQuery(""),
+                                        className: "absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
+                                    }, h(X, { className: "h-4 w-4" })),
+                                    isSearchFocused && searchHistory.length > 0 && h("div", {
+                                        className: "absolute top-[calc(100%+4px)] left-0 right-0 z-30 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+                                    },
+                                        h("div", { className: "bg-slate-50 px-3 py-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-200 flex justify-between items-center" }, 
+                                            "Tìm kiếm gần đây",
+                                            h("button", {
+                                                type: "button",
+                                                className: "hover:text-slate-700 transition",
+                                                onMouseDown: (e) => {
+                                                    e.preventDefault();
+                                                    setSearchHistory([]);
+                                                    localStorage.removeItem(SEARCH_HISTORY_KEY);
+                                                }
+                                            }, "Xóa")
+                                        ),
+                                        h("ul", { className: "py-1" },
+                                            searchHistory.map((item, i) => h("li", { key: i },
+                                                h("button", {
+                                                    type: "button",
+                                                    className: "flex w-full items-center gap-2.5 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors",
+                                                    onMouseDown: (e) => {
+                                                        e.preventDefault();
+                                                        setQuery(item);
+                                                        setIsSearchFocused(false);
+                                                    }
+                                                },
+                                                    h(Clock, { className: "h-3.5 w-3.5 text-slate-400" }),
+                                                    item
+                                                )
+                                            ))
+                                        )
+                                    )
+                                ),
+                                h("button", {
+                                    type: "button",
+                                    onClick: openCreateArticle,
+                                    disabled: data.categories.length === 0,
+                                    className: "bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all text-sm flex items-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                                }, h(Plus, { className: "h-4 w-4 pointer-events-none" }), h("span", { className: "hidden sm:inline" }, "Tài liệu"))
+                            )
+                        ),
+                        h("div", { className: "mb-6 flex flex-wrap items-center gap-2" },
+                            VIEW_MODES.map((mode) =>
+                                h("button", {
+                                    key: mode.id,
+                                    type: "button",
+                                    onClick: () => setViewMode(mode.id),
+                                    className: `rounded-xl px-4 py-2 text-sm font-bold transition-all ${viewMode === mode.id ? "bg-slate-800 text-white shadow-md" : "bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-800"}`
+                                }, mode.title)
+                            ),
+                            h(SmartSortLov, { value: sortMode, onChange: setSortMode }),
+                            h(SmartFilterLov, {
+                                value: filterAuthor,
+                                onChange: setFilterAuthor,
+                                ariaLabel: "Tạo bởi",
+                                options: [
+                                    { id: "all", title: "Tạo bởi: Tất cả" },
+                                    { id: "me", title: "Tạo bởi: Tôi" }
+                                ]
+                            }),
+                            h(SmartFilterLov, {
+                                value: filterStatus,
+                                onChange: setFilterStatus,
+                                ariaLabel: "Trạng thái",
+                                options: [
+                                    { id: "all", title: "Trạng thái: Tất cả" },
+                                    { id: "draft", title: "Draft" },
+                                    { id: "published", title: "Published" },
+                                    { id: "archived", title: "Archived" }
+                                ]
+                            }),
+                            h("div", { ref: dateFilterRef, className: `inline-date-filter relative ${filterDateFrom || filterDateTo ? "is-active" : ""}` },
+                                h("span", { className: "inline-date-title" }, "Thời gian"),
+                                h("button", { type: "button", className: `date-pill ${openDateFilter === "from" ? "is-open" : ""}`, onClick: () => openCalendar("from", filterDateFrom) },
+                                    h("span", { className: "date-pill-label" }, "Từ"),
+                                    h("span", { className: `date-pill-value ${filterDateFrom ? "" : "is-empty"}` }, formatDateChip(filterDateFrom)),
+                                    h(CalendarDays, { className: "date-pill-icon", strokeWidth: 2.4 })
+                                ),
+                                h("span", { className: "inline-date-separator" }, "đến"),
+                                h("button", { type: "button", className: `date-pill ${openDateFilter === "to" ? "is-open" : ""}`, onClick: () => openCalendar("to", filterDateTo) },
+                                    h("span", { className: `date-pill-value ${filterDateTo ? "" : "is-empty"}` }, formatDateChip(filterDateTo)),
+                                    h(CalendarDays, { className: "date-pill-icon", strokeWidth: 2.4 })
+                                ),
+                                renderDateCalendar()
+                            ),
+                            h("span", { className: "ml-auto text-sm font-bold text-slate-400" },
+                                `${visibleArticles.length} tài liệu`
+                            )
+                        ),
+                            data.categories.length === 0
+                                ? h(EmptyState, {
+                                    title: "Chưa có danh mục",
+                                    text: "Tạo danh mục đầu tiên để bắt đầu sắp xếp tài liệu của team.",
+                                    onAdd: () => setIsCategoryModalOpen(true),
+                                    actionLabel: "Thêm danh mục"
+                                })
+                                : isNavigating
+                                    ? h("div", null,
+                                        h("div", { className: viewMode === "card" ? "grid gap-4 md:grid-cols-2 xl:grid-cols-3" : "flex flex-col gap-8" },
+                                            viewMode === "timeline"
+                                                ? h("div", null,
+                                                    h("div", { className: "mb-4 h-5 w-32 rounded bg-slate-200 animate-pulse" }),
+                                                    h("div", { className: "grid gap-0 border-l border-slate-200 pl-5" },
+                                                        Array.from({ length: 3 }).map((_, i) => h(SkeletonTimeline, { key: `sk-tl-${i}` }))
+                                                    )
+                                                )
+                                                : Array.from({ length: Math.min(itemsPerPage, 6) }).map((_, i) => h(SkeletonCard, { key: `sk-card-${i}` }))
+                                        ),
+                                        paginationUI
+                                    )
+                                    : visibleArticles.length === 0
+                                        ? query || filterAuthor !== "all" || filterStatus !== "all" || filterDateFrom || filterDateTo
+                                            ? h(EmptyState, {
+                                                title: "Không tìm thấy kết quả",
+                                                text: query ? `Không có tài liệu nào khớp với từ khóa "${query}" và bộ lọc hiện tại.` : "Không có tài liệu nào khớp với bộ lọc hiện tại.",
+                                                actionLabel: "Xóa bộ lọc",
+                                                actionIcon: X,
+                                                onAdd: () => {
+                                                    setQuery("");
+                                                    setFilterAuthor("all");
+                                                    setFilterStatus("all");
+                                                    setFilterDateFrom("");
+                                                    setFilterDateTo("");
+                                                }
+                                            })
+                                            : h(EmptyState, {
+                                                title: "Chưa có tài liệu",
+                                                text: "Danh mục này chưa có tài liệu nào. Hãy tạo tài liệu đầu tiên.",
+                                                onAdd: openCreateArticle
+                                            })
+                                        : h("div", null,
+                                            h("div", {
+                                                className: viewMode === "card"
+                                                    ? "grid gap-4 md:grid-cols-2 xl:grid-cols-3"
+                                                    : "flex flex-col gap-8"
+                                            },
+                                                viewMode === "timeline"
+                                                    ? groupedArticles.map(([monthYear, articles]) =>
+                                                        h("div", { key: monthYear },
+                                                            h("h3", { className: "mb-4 text-sm font-bold text-slate-900" }, monthYear),
+                                                            h("div", { className: "grid gap-0 border-l border-slate-200 pl-5" },
+                                                                articles.map((article) => renderArticle(article, false, true))
+                                                            )
+                                                        )
+                                                    )
+                                                    : paginatedArticles.map((article) => renderArticle(article, true, false))
+                                            ),
+                                            paginationUI
+                                        )
+                    )
+                ),
+                isArticleModalOpen && h(ArticleModal, {
+                    categories: data.categories,
+                    article: editingArticle,
+                    onClose: () => {
+                        setIsArticleModalOpen(false);
+                        setEditingArticle(null);
+                    },
+                    onSave: saveArticle
+                }),
+                isCategoryModalOpen && h(CategoryModal, {
+                    onClose: () => setIsCategoryModalOpen(false),
+                    onSave: addCategory
+                }),
+                toast && h("div", {
+                    key: toast.id,
+                    className: "fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-xl border border-blue-200 bg-white px-5 py-3.5 text-sm font-bold text-blue-900 shadow-xl animate-toast-in"
+                },
+                    h("div", { className: "flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600" },
+                        h(Check, { className: "h-5 w-5" })
+                    ),
+                    toast.message
+                )
+            );
+        };
+
+        createRoot(document.getElementById("root")).render(h(App));
+    </script>
+</body>
+</html>
