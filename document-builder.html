@@ -300,6 +300,43 @@
             color: #ffffff;
         }
 
+        .documents-search {
+            position: relative;
+            display: block;
+            margin: 0 0 12px;
+        }
+
+        .documents-search .search-icon {
+            left: 11px;
+            width: 15px;
+            height: 15px;
+        }
+
+        .documents-search-input {
+            width: 100%;
+            min-height: 34px;
+            padding: 0 12px 0 34px;
+            border: 1px solid #e4e4e7;
+            border-radius: 10px;
+            background: #ffffff;
+            color: var(--text);
+            outline: none;
+            font-size: 12px;
+            font-weight: 700;
+            transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .documents-search-input::placeholder {
+            color: #a1a1aa;
+            font-weight: 700;
+        }
+
+        .documents-search-input:focus {
+            border-color: #bfdbfe;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
         .documents-title {
             margin: 0;
             color: #a1a1aa;
@@ -405,6 +442,27 @@
             line-height: 1.2;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }
+
+        .document-row-description {
+            display: block;
+            overflow: hidden;
+            margin-top: 4px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 650;
+            line-height: 1.25;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .document-row-title mark,
+        .document-row-description mark {
+            padding: 0 2px;
+            border-radius: 4px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font: inherit;
         }
 
         .title-tooltip {
@@ -815,12 +873,12 @@
 
         .palette-card[data-type="callout"] .palette-icon {
             background: #ffffff;
-            color: #3f3f46;
+            color: var(--accent);
         }
 
         .palette-card[data-type="todo"] .palette-icon {
             background: #ffffff;
-            color: #3f3f46;
+            color: var(--accent);
         }
 
         .palette-name {
@@ -1024,7 +1082,7 @@
 
         .paper {
             position: relative;
-            width: min(100%, 980px);
+            width: min(100%, 1080px);
             min-height: 420px;
             margin: 0 auto;
             padding: 56px 64px 72px;
@@ -1063,6 +1121,90 @@
 
         .app.is-preview .paper-category-badge.is-visible {
             display: inline-flex;
+        }
+
+        .paper-fixed-header {
+            display: grid;
+            gap: 14px;
+            margin: 24px 0 18px;
+        }
+
+        .paper-title-input,
+        .paper-description-input {
+            position: relative;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #18181b;
+            font-family: "Google Sans Flex", sans-serif;
+            letter-spacing: 0;
+            outline: none;
+            transition: background 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .paper-title-input {
+            min-height: 54px;
+            padding: 6px 0;
+            font-size: 42px;
+            line-height: 1.12;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .paper-description-input {
+            min-height: 32px;
+            padding: 4px 0;
+            color: #3f3f46;
+            font-size: 16px;
+            line-height: 1.55;
+            font-weight: 500;
+            overflow: hidden;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .paper-title-input[data-empty="true"]::before,
+        .paper-description-input[data-empty="true"]::before {
+            position: absolute;
+            left: 0;
+            color: #a1a1aa;
+        }
+
+        .paper-title-input[data-empty="true"]::before {
+            top: 6px;
+        }
+
+        .paper-description-input[data-empty="true"]::before {
+            top: 4px;
+        }
+
+        .paper-title-input[data-empty="true"]::before,
+        .paper-description-input[data-empty="true"]::before {
+            content: attr(data-placeholder);
+            pointer-events: none;
+        }
+
+        .app:not(.is-preview) .paper-title-input,
+        .app:not(.is-preview) .paper-description-input {
+            padding-left: 0;
+            padding-right: 0;
+            background: transparent;
+        }
+
+        .app:not(.is-preview) .paper-title-input[data-empty="true"]::before,
+        .app:not(.is-preview) .paper-description-input[data-empty="true"]::before {
+            left: 0;
+        }
+
+        .app:not(.is-preview) .paper-title-input:focus,
+        .app:not(.is-preview) .paper-description-input:focus {
+            box-shadow: none;
+        }
+
+        .paper-title-input[aria-readonly="true"],
+        .paper-description-input[aria-readonly="true"] {
+            cursor: default;
         }
 
         .empty {
@@ -1108,9 +1250,9 @@
 
         .quick-blocks {
             display: none;
-            width: min(100%, 980px);
+            width: min(100%, 1080px);
             margin: 10px auto 0;
-            padding: 0 4px;
+            padding: 0;
         }
 
         .quick-blocks.is-hidden {
@@ -1144,6 +1286,9 @@
         .quick-block-btn {
             height: 28px;
             padding: 0 8px 0 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             border: 0;
             border-right: 1px solid #f4f4f5;
             background: transparent;
@@ -1154,6 +1299,17 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
             transition: background 0.16s ease, color 0.16s ease;
+        }
+
+        .quick-block-btn svg {
+            width: 14px;
+            height: 14px;
+            flex: 0 0 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .quick-pin-btn {
@@ -3353,105 +3509,6 @@
             transform: translateY(0);
         }
 
-        .publish-guard {
-            position: fixed;
-            inset: 0;
-            z-index: 1200;
-            display: grid;
-            place-items: center;
-            padding: 24px;
-            background: rgba(15, 23, 42, 0.34);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.18s ease;
-        }
-
-        .publish-guard.is-visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .publish-guard-dialog {
-            width: min(100%, 440px);
-            padding: 18px;
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            border-radius: 16px;
-            background: #ffffff;
-            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
-            transform: translateY(8px) scale(0.98);
-            transition: transform 0.18s ease;
-        }
-
-        .publish-guard.is-visible .publish-guard-dialog {
-            transform: translateY(0) scale(1);
-        }
-
-        .publish-guard-kicker {
-            margin: 0 0 8px;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        .publish-guard-title {
-            margin: 0;
-            color: #0f172a;
-            font-size: 20px;
-            line-height: 1.2;
-        }
-
-        .publish-guard-text {
-            margin: 10px 0 0;
-            color: #475569;
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .publish-guard-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 18px;
-        }
-
-        .publish-guard-btn {
-            min-height: 36px;
-            padding: 0 12px;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            background: #ffffff;
-            color: #475569;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 850;
-            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
-        }
-
-        .publish-guard-btn:hover,
-        .publish-guard-btn:focus-visible {
-            border-color: #bfdbfe;
-            background: var(--accent-soft);
-            color: var(--accent);
-            outline: none;
-            transform: translateY(-1px);
-        }
-
-        .publish-guard-btn.is-primary {
-            border-color: var(--accent);
-            background: var(--accent);
-            color: #ffffff;
-        }
-
-        .publish-guard-btn.is-primary:hover,
-        .publish-guard-btn.is-primary:focus-visible {
-            border-color: var(--accent-strong);
-            background: var(--accent-strong);
-            color: #ffffff;
-        }
-
         @page {
             size: A4;
             margin: 16mm;
@@ -3507,7 +3564,7 @@
                 display: none !important;
             }
 
-            .paper.has-category-badge .blocks {
+            .paper.has-category-badge .paper-fixed-header {
                 padding-top: 34px !important;
             }
 
@@ -4414,7 +4471,7 @@
         }
 
         .paper {
-            width: min(100%, 900px);
+            width: min(100%, 1080px);
             min-height: 520px;
             padding: clamp(34px, 5vw, 58px) clamp(30px, 6vw, 68px) 72px;
             border-color: #e5e7eb;
@@ -4447,7 +4504,7 @@
         }
 
         .quick-blocks {
-            width: min(100%, 900px);
+            width: min(100%, 1080px);
         }
 
         .quick-block-item {
@@ -4562,19 +4619,19 @@
         .paper-back-link {
             position: absolute;
             top: 0;
-            left: max(18px, calc(50% - 544px));
+            left: max(18px, calc(50% - 590px));
             z-index: 20;
         }
 
         .app .quick-blocks {
-            width: min(100%, 980px);
+            width: min(100%, 1080px);
         }
 
         .doc-status-badge {
-            position: fixed;
-            top: 24px;
-            right: 32px;
-            z-index: 115;
+            position: absolute;
+            top: 22px;
+            right: 24px;
+            z-index: 12;
             display: none;
             align-items: center;
             min-height: 28px;
@@ -4694,6 +4751,14 @@
                 padding: 18px;
             }
 
+            .paper-title-input {
+                font-size: 32px;
+            }
+
+            .paper-description-input {
+                font-size: 15px;
+            }
+
             .block-meta,
             .toolbar {
                 position: relative;
@@ -4780,6 +4845,12 @@
                     <button class="documents-filter-btn" id="publishedDocumentsFilterBtn" type="button" role="tab" aria-selected="false" title="Published" onclick="setDocumentsFilter('published')"><span>Published</span></button>
                     <button class="documents-filter-btn" id="archivedDocumentsFilterBtn" type="button" role="tab" aria-selected="false" title="Archived" onclick="setDocumentsFilter('archived')"><span>Archived</span></button>
                 </div>
+                <label class="documents-search" for="documentsSearch">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M11 5a6 6 0 1 0 0 12a6 6 0 0 0 0-12Zm8 14-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input class="documents-search-input" id="documentsSearch" type="search" placeholder="Search title or description">
+                </label>
                 <div class="document-list" id="documentList"></div>
                 <div class="documents-empty" id="documentsEmpty">No documents in this view.</div>
             </div>
@@ -4942,6 +5013,10 @@
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>
                                 <span>Restore</span>
                             </button>
+                            <button class="topbar-action is-icon is-danger is-hidden" type="button" id="discardActionBtn" title="Discard unpublished changes" aria-label="Discard unpublished changes" onclick="discardCurrentChanges();">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 1 1 0 11H11"></path></svg>
+                                <span>Discard changes</span>
+                            </button>
                             <button class="topbar-action is-icon is-hidden" type="button" id="unpublishActionBtn" title="Unpublish" aria-label="Unpublish" onclick="unpublishCurrentDocument();">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"></path><path d="m17 16-5 5-5-5"></path><path d="M5 9V5h14v4"></path></svg>
                                 <span>Unpublish</span>
@@ -4964,6 +5039,7 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path><path d="M21 12H9"></path></svg>
                     </a>
                     <div class="paper">
+                        <div class="doc-status-badge" id="docStatusBadge"></div>
                         <div class="paper-category-badge" id="paperCategoryBadge"></div>
                         <div class="category-lov" id="categoryLov">
                             <button class="category-lov-trigger" id="categoryLovTrigger" type="button" aria-label="Danh mục" aria-haspopup="listbox" aria-expanded="false">
@@ -4971,6 +5047,10 @@
                                 <svg class="category-lov-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
                             </button>
                             <div class="category-lov-menu" id="categoryLovMenu" role="listbox" aria-label="Danh mục"></div>
+                        </div>
+                        <div class="paper-fixed-header" id="paperFixedHeader">
+                            <div id="paperTitleInput" class="paper-title-input" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Nhập tên tài liệu" data-empty="true" aria-label="Tiêu đề tài liệu"></div>
+                            <div id="paperDescriptionInput" class="paper-description-input" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Mô tả ngắn" data-empty="true" aria-label="Mô tả ngắn"></div>
                         </div>
                         <div class="empty" id="emptyState">
                             <div>
@@ -4990,21 +5070,6 @@
             </section>
         </section>
     </main>
-
-    <div class="doc-status-badge" id="docStatusBadge"></div>
-
-    <div class="publish-guard" id="publishGuard" role="dialog" aria-modal="true" aria-labelledby="publishGuardTitle" aria-hidden="true">
-        <div class="publish-guard-dialog">
-            <p class="publish-guard-kicker">Draft saved</p>
-            <h2 class="publish-guard-title" id="publishGuardTitle">Có thay đổi chưa publish</h2>
-            <p class="publish-guard-text">Bản nháp đã được lưu trong builder, nhưng nội dung public/list vẫn chưa được cập nhật. Bạn muốn xử lý thế nào trước khi rời khỏi tài liệu này?</p>
-            <div class="publish-guard-actions">
-                <button class="publish-guard-btn" type="button" id="publishGuardContinueBtn">Continue editing</button>
-                <button class="publish-guard-btn" type="button" id="publishGuardLeaveBtn">Leave with draft</button>
-                <button class="publish-guard-btn is-primary" type="button" id="publishGuardPublishBtn">Publish &amp; leave</button>
-            </div>
-        </div>
-    </div>
 
     <div class="toast" id="toast">Saved</div>
     <div class="drag-ghost" id="dragGhost" aria-hidden="true"></div>
@@ -5027,6 +5092,9 @@
         const quickBlockBar = document.getElementById('quickBlockBar');
         const quickBlockBarEmpty = document.getElementById('quickBlockBarEmpty');
         const docTitle = document.getElementById('docTitle');
+        const documentsSearch = document.getElementById('documentsSearch');
+        const paperTitleInput = document.getElementById('paperTitleInput');
+        const paperDescriptionInput = document.getElementById('paperDescriptionInput');
         const documentList = document.getElementById('documentList');
         const documentsEmpty = document.getElementById('documentsEmpty');
         const blockCounter = document.getElementById('blockCounter');
@@ -5036,6 +5104,7 @@
         const previewModeBtn = document.getElementById('previewModeBtn');
         const publishActionBtn = document.getElementById('publishActionBtn');
         const restoreActionBtn = document.getElementById('restoreActionBtn');
+        const discardActionBtn = document.getElementById('discardActionBtn');
         const unpublishActionBtn = document.getElementById('unpublishActionBtn');
         const archiveActionBtn = document.getElementById('archiveActionBtn');
         const moreActions = document.getElementById('moreActions');
@@ -5050,10 +5119,6 @@
         const categoryLovTrigger = document.getElementById('categoryLovTrigger');
         const categoryLovLabel = document.getElementById('categoryLovLabel');
         const categoryLovMenu = document.getElementById('categoryLovMenu');
-        const publishGuard = document.getElementById('publishGuard');
-        const publishGuardContinueBtn = document.getElementById('publishGuardContinueBtn');
-        const publishGuardLeaveBtn = document.getElementById('publishGuardLeaveBtn');
-        const publishGuardPublishBtn = document.getElementById('publishGuardPublishBtn');
         const toast = document.getElementById('toast');
         const dragGhost = document.getElementById('dragGhost');
         const titleTooltip = document.getElementById('titleTooltip');
@@ -5079,6 +5144,7 @@
         let documents = [];
         let activeDocumentId = null;
         let documentsFilter = 'draft';
+        let documentsSearchQuery = '';
         let documentsPage = 1;
         let globalMode = 'preview';
         let activeEditId = null;
@@ -5105,6 +5171,8 @@
         let modeAnimationTimer = null;
         let publishConfirmPending = false;
         let publishConfirmTimer = null;
+        let discardConfirmPending = false;
+        let discardConfirmTimer = null;
         let unpublishConfirmPending = false;
         let unpublishConfirmTimer = null;
         let archiveConfirmPending = false;
@@ -5113,7 +5181,6 @@
         let hasDraftChanges = false;
         let hasUnpublishedChanges = false;
         let draftSaveFailed = false;
-        let pendingNavigation = null;
         let bypassPublishGuard = false;
         const requestParams = new URLSearchParams(window.location.search);
         const requestedDocumentId = requestParams.get('id') || requestParams.get('doc') || '';
@@ -5620,6 +5687,40 @@
             return JSON.parse(JSON.stringify(Array.isArray(sourceBlocks) ? sourceBlocks : []));
         }
 
+        function clonePublishedSnapshot(snapshot) {
+            if (!snapshot || typeof snapshot !== 'object') return null;
+            return {
+                title: String(snapshot.title || 'Untitled document').trim() || 'Untitled document',
+                sourceDescription: String(snapshot.sourceDescription || ''),
+                blocks: cloneBlocks(snapshot.blocks),
+                sourceCategoryId: snapshot.sourceCategoryId || null,
+                publishedAt: snapshot.publishedAt || null
+            };
+        }
+
+        function createPublishedSnapshot(doc, publishedAt) {
+            if (!doc) return null;
+            return {
+                title: String(doc.title || 'Untitled document').trim() || 'Untitled document',
+                sourceDescription: String(doc.sourceDescription || ''),
+                blocks: cloneBlocks(doc.blocks),
+                sourceCategoryId: doc.sourceCategoryId || null,
+                publishedAt: publishedAt || doc.publishedAt || null
+            };
+        }
+
+        function createPublishedSnapshotFromArticle(article) {
+            if (!article || normalizeDocumentStatus(article.status, article.status === 'archived') !== 'published') return null;
+            const articleBlocks = Array.isArray(article.builderBlocks) ? cloneBlocks(article.builderBlocks) : createBlocksFromArticle(article);
+            return {
+                title: String(article.title || 'Untitled document').trim() || 'Untitled document',
+                sourceDescription: String(article.description || ''),
+                blocks: articleBlocks,
+                sourceCategoryId: article.categoryId || null,
+                publishedAt: article.publishedAt || article.updatedAt || null
+            };
+        }
+
         function getBuilderBackHref() {
             if (requestedReturnTo && !/^(?:javascript:|data:)/i.test(requestedReturnTo)) {
                 return requestedReturnTo;
@@ -5656,9 +5757,11 @@
             if (nextStatus === 'published') {
                 doc.publishedAt = opts.publishedAt || now;
                 doc.publishedSignature = opts.publishedSignature || getDocumentSignature(doc);
+                doc.publishedSnapshot = clonePublishedSnapshot(opts.publishedSnapshot) || createPublishedSnapshot(doc, doc.publishedAt);
             } else {
                 doc.publishedAt = null;
                 doc.publishedSignature = '';
+                doc.publishedSnapshot = null;
             }
             return doc;
         }
@@ -5669,19 +5772,89 @@
             return { label: 'Draft', className: '' };
         }
 
-        function getDocumentTitleFromBlocks(fallbackTitle) {
-            const headingBlocks = blocks.filter(function (block) {
-                return block && block.type === 'heading' && String(block.text || '').trim();
-            });
-            const primaryHeading = headingBlocks.find(function (block) { return block.level === 'h1'; }) || headingBlocks[0];
-            if (primaryHeading) return String(primaryHeading.text || '').trim();
-            return String(fallbackTitle || docTitle.value || '').trim() || 'Untitled document';
+        function getHeaderTitleValue(fallbackTitle) {
+            const paperTitle = getPaperTitleText().trim();
+            const sidebarTitle = docTitle ? String(docTitle.value || '').trim() : '';
+            return paperTitle || sidebarTitle || String(fallbackTitle || '').trim() || 'Untitled document';
+        }
+
+        function getActiveHeaderTitleInput() {
+            if (paperTitleInput && document.activeElement === paperTitleInput) return paperTitleInput;
+            if (docTitle && document.activeElement === docTitle) return docTitle;
+            return null;
+        }
+
+        function getHeaderTitleDraftValue(fallbackTitle) {
+            const activeTitleInput = getActiveHeaderTitleInput();
+            if (activeTitleInput === paperTitleInput) return getPaperTitleText().trim();
+            if (activeTitleInput) return String(activeTitleInput.value || '').trim();
+            return getHeaderTitleValue(fallbackTitle);
+        }
+
+        function syncHeaderTitleInputs(value) {
+            const nextTitle = String(value || '');
+            if (docTitle && document.activeElement !== docTitle && docTitle.value !== nextTitle) {
+                docTitle.value = nextTitle;
+            }
+            if (paperTitleInput && document.activeElement !== paperTitleInput && getPaperTitleText() !== nextTitle) {
+                setPaperTitleText(nextTitle);
+            }
+        }
+
+        function getPaperTitleText() {
+            if (!paperTitleInput) return '';
+            const text = paperTitleInput.innerText !== undefined
+                ? paperTitleInput.innerText
+                : paperTitleInput.textContent;
+            return String(text || '').replace(/\u00a0/g, ' ');
+        }
+
+        function updatePaperTitleEmptyState() {
+            if (!paperTitleInput) return;
+            paperTitleInput.dataset.empty = getPaperTitleText().trim() ? 'false' : 'true';
+        }
+
+        function setPaperTitleText(value) {
+            if (!paperTitleInput) return;
+            const nextValue = String(value || '');
+            if (getPaperTitleText() !== nextValue) {
+                paperTitleInput.textContent = nextValue;
+            }
+            updatePaperTitleEmptyState();
+        }
+
+        function getPaperDescriptionText() {
+            if (!paperDescriptionInput) return '';
+            const text = paperDescriptionInput.innerText !== undefined
+                ? paperDescriptionInput.innerText
+                : paperDescriptionInput.textContent;
+            return String(text || '').replace(/\u00a0/g, ' ');
+        }
+
+        function updatePaperDescriptionEmptyState() {
+            if (!paperDescriptionInput) return;
+            paperDescriptionInput.dataset.empty = getPaperDescriptionText().trim() ? 'false' : 'true';
+        }
+
+        function setPaperDescriptionText(value) {
+            if (!paperDescriptionInput) return;
+            const nextValue = String(value || '');
+            if (getPaperDescriptionText() !== nextValue) {
+                paperDescriptionInput.textContent = nextValue;
+            }
+            updatePaperDescriptionEmptyState();
+        }
+
+        function getHeaderDescriptionValue() {
+            updatePaperDescriptionEmptyState();
+            return getPaperDescriptionText().trim();
         }
 
         function applyCurrentDocumentTitle(doc) {
-            const nextTitle = getDocumentTitleFromBlocks(doc && doc.title);
+            const nextTitle = getHeaderTitleDraftValue(doc && doc.title);
             if (doc) doc.title = nextTitle;
-            if (docTitle && docTitle.value !== nextTitle) docTitle.value = nextTitle;
+            syncHeaderTitleInputs(nextTitle);
+            if (doc && paperDescriptionInput) doc.sourceDescription = getHeaderDescriptionValue();
             return nextTitle;
         }
 
@@ -5705,6 +5878,7 @@
         function getActiveDocuments() {
             return documents
                 .filter(matchesDocumentsFilter)
+                .filter(matchesDocumentsSearch)
                 .sort(function (a, b) { return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); });
         }
 
@@ -5741,10 +5915,98 @@
             return doc.status === 'draft' || hasDocumentUnpublishedChanges(doc);
         }
 
+        function matchesDocumentsSearch(doc) {
+            const phrase = getDocumentsSearchPhrase();
+            const terms = getDocumentsSearchTerms();
+            if (!terms.length) return true;
+            const haystack = normalizeHeaderText([
+                doc && doc.title,
+                doc && doc.sourceDescription,
+                doc && doc.description
+            ].join(' '));
+            if (phrase && haystack.indexOf(phrase) >= 0) return true;
+            return terms.every(function (term) {
+                return haystack.indexOf(term) >= 0;
+            });
+        }
+
+        function getDocumentsSearchPhrase() {
+            return normalizeHeaderText(documentsSearchQuery);
+        }
+
+        function getDocumentsSearchTerms() {
+            return getDocumentsSearchPhrase()
+                .split(' ')
+                .filter(Boolean)
+                .filter(function (term, index, terms) {
+                    return terms.indexOf(term) === index;
+                });
+        }
+
+        function escapeRegExp(value) {
+            return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function getDocumentsSearchMatchRanges(value) {
+            const text = String(value || '');
+            const phrase = getDocumentsSearchPhrase();
+            const terms = getDocumentsSearchTerms().sort(function (a, b) {
+                return b.length - a.length;
+            });
+            const needles = phrase && phrase.indexOf(' ') >= 0 ? [phrase].concat(terms) : terms;
+            const ranges = [];
+            if (!needles.length || !text) return ranges;
+            for (let index = 0; index < text.length; index += 1) {
+                const normalizedTail = normalizeSearchText(text.slice(index));
+                const matchedTerm = needles.find(function (needle) {
+                    return normalizedTail.indexOf(needle) === 0;
+                });
+                if (!matchedTerm) continue;
+                let end = index;
+                while (end < text.length && normalizeSearchText(text.slice(index, end)).length < matchedTerm.length) {
+                    end += 1;
+                }
+                ranges.push([index, Math.max(end, index + 1)]);
+                index = Math.max(end - 1, index);
+            }
+            return ranges;
+        }
+
+        function getDocumentsSearchExcerpt(value, radius) {
+            const text = String(value || '');
+            const ranges = getDocumentsSearchMatchRanges(text);
+            const limit = radius || 34;
+            if (!ranges.length) return text;
+            const firstRange = ranges[0];
+            const start = Math.max(0, firstRange[0] - limit);
+            const end = Math.min(text.length, firstRange[1] + limit);
+            if (start === 0 && end === text.length) return text;
+            return (start > 0 ? '...' : '') + text.slice(start, end).trim() + (end < text.length ? '...' : '');
+        }
+
+        function hasDocumentsSearchMatch(value) {
+            return getDocumentsSearchMatchRanges(value).length > 0;
+        }
+
+        function highlightDocumentsSearch(value) {
+            const text = String(value || '');
+            const ranges = getDocumentsSearchMatchRanges(text);
+            if (!ranges.length) return escapeHtml(text);
+            let html = '';
+            let cursor = 0;
+            ranges.forEach(function (range) {
+                html += escapeHtml(text.slice(cursor, range[0]));
+                html += '<mark>' + escapeHtml(text.slice(range[0], range[1])) + '</mark>';
+                cursor = range[1];
+            });
+            html += escapeHtml(text.slice(cursor));
+            return html;
+        }
+
         function createDocumentRecord(title, sourceBlocks, metadata) {
             const now = new Date().toISOString();
             const meta = metadata || {};
-            return {
+            return migrateFixedHeaderBlocks({
                 id: meta.id || documentUid(),
                 title: title || 'Untitled document',
                 blocks: cloneBlocks(sourceBlocks),
@@ -5753,12 +6015,13 @@
                 updatedAt: meta.updatedAt || now,
                 publishedAt: meta.publishedAt || null,
                 publishedSignature: meta.publishedSignature || '',
+                publishedSnapshot: clonePublishedSnapshot(meta.publishedSnapshot),
                 archived: normalizeDocumentStatus(meta.status, meta.archived) === 'archived',
                 sourceArticleId: meta.sourceArticleId || null,
                 sourceCategoryId: meta.sourceCategoryId || null,
                 sourceAuthor: meta.sourceAuthor || null,
                 sourceDescription: meta.sourceDescription || ''
-            };
+            });
         }
 
         function normalizeDocument(raw) {
@@ -5774,32 +6037,108 @@
                 updatedAt: raw && raw.updatedAt ? raw.updatedAt : now,
                 publishedAt: raw && raw.publishedAt ? raw.publishedAt : null,
                 publishedSignature: raw && raw.publishedSignature ? String(raw.publishedSignature) : '',
+                publishedSnapshot: clonePublishedSnapshot(raw && raw.publishedSnapshot),
                 archived: isArchived,
                 sourceArticleId: raw && raw.sourceArticleId ? String(raw.sourceArticleId) : null,
                 sourceCategoryId: raw && raw.sourceCategoryId ? String(raw.sourceCategoryId) : null,
                 sourceAuthor: raw && raw.sourceAuthor ? String(raw.sourceAuthor) : null,
                 sourceDescription: raw && raw.sourceDescription ? String(raw.sourceDescription) : ''
             };
+            migrateFixedHeaderBlocks(normalized);
             if (normalized.status === 'published' && !normalized.publishedSignature) {
+                normalized.publishedSignature = getDocumentSignature(normalized);
+            }
+            if (
+                normalized.status === 'published' &&
+                !normalized.publishedSnapshot &&
+                (normalized.publishedSignature === getDocumentSignature(normalized) || normalized.publishedSignature === getLegacyDocumentSignature(normalized))
+            ) {
+                normalized.publishedSnapshot = createPublishedSnapshot(normalized, normalized.publishedAt);
                 normalized.publishedSignature = getDocumentSignature(normalized);
             }
             if (normalized.status !== 'published') {
                 normalized.publishedAt = null;
                 normalized.publishedSignature = '';
+                normalized.publishedSnapshot = null;
             }
             return normalized;
+        }
+
+        function normalizeHeaderText(value) {
+            return normalizeSearchText(value);
+        }
+
+        function normalizeSearchText(value) {
+            return String(value || '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'D')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toLowerCase();
+        }
+
+        function migrateFixedHeaderBlocks(doc) {
+            if (!doc || !Array.isArray(doc.blocks)) return doc;
+            const nextBlocks = cloneBlocks(doc.blocks);
+            const titleText = normalizeHeaderText(doc.title || 'Untitled document');
+            const descriptionText = normalizeHeaderText(doc.sourceDescription || '');
+            if (
+                nextBlocks[0] &&
+                nextBlocks[0].type === 'heading' &&
+                nextBlocks[0].level === 'h1' &&
+                normalizeHeaderText(nextBlocks[0].text) === titleText
+            ) {
+                nextBlocks.shift();
+            }
+            if (
+                descriptionText &&
+                nextBlocks[0] &&
+                nextBlocks[0].type === 'callout' &&
+                (nextBlocks[0].tone || 'info') === 'info' &&
+                normalizeHeaderText(nextBlocks[0].text) === descriptionText
+            ) {
+                nextBlocks.shift();
+            }
+            doc.blocks = nextBlocks;
+            return doc;
         }
 
         function getDocumentSignature(doc) {
             return JSON.stringify({
                 title: String((doc && doc.title) || 'Untitled document').trim() || 'Untitled document',
+                description: String((doc && doc.sourceDescription) || '').trim(),
+                categoryId: (doc && doc.sourceCategoryId) || null,
                 blocks: cloneBlocks(doc && doc.blocks)
             });
         }
 
-        function getCurrentDraftSignature() {
+        function getLegacyDocumentSignature(doc) {
             return JSON.stringify({
-                title: String(docTitle.value || '').trim() || 'Untitled document',
+                title: String((doc && doc.title) || 'Untitled document').trim() || 'Untitled document',
+                description: String((doc && doc.sourceDescription) || '').trim(),
+                blocks: cloneBlocks(doc && doc.blocks)
+            });
+        }
+
+        function getPublishedSnapshotSignature(snapshot) {
+            const safeSnapshot = clonePublishedSnapshot(snapshot);
+            if (!safeSnapshot) return '';
+            return JSON.stringify({
+                title: safeSnapshot.title,
+                description: String(safeSnapshot.sourceDescription || '').trim(),
+                categoryId: safeSnapshot.sourceCategoryId || null,
+                blocks: cloneBlocks(safeSnapshot.blocks)
+            });
+        }
+
+        function getCurrentDraftSignature() {
+            const doc = getActiveDocument();
+            return JSON.stringify({
+                title: getHeaderTitleValue(),
+                description: getHeaderDescriptionValue(),
+                categoryId: (doc && doc.sourceCategoryId) || null,
                 blocks: cloneBlocks(blocks)
             });
         }
@@ -5844,6 +6183,19 @@
             return data.articles.find(function (article) { return article.id === id; }) || null;
         }
 
+        function getRestorablePublishedSnapshot(doc) {
+            if (!doc || doc.status !== 'published' || doc.archived) return null;
+            const savedSnapshot = clonePublishedSnapshot(doc.publishedSnapshot);
+            if (savedSnapshot) return savedSnapshot;
+            const article = findTeamArticle(doc.sourceArticleId || doc.id);
+            return createPublishedSnapshotFromArticle(article);
+        }
+
+        function canDiscardCurrentChanges() {
+            const doc = getActiveDocument();
+            return !!(doc && doc.status === 'published' && !doc.archived && hasUnpublishedChanges && getRestorablePublishedSnapshot(doc));
+        }
+
         function getTeamCategories() {
             const data = readTeamDocumentStore();
             return data && Array.isArray(data.categories) ? data.categories : [];
@@ -5857,11 +6209,12 @@
                 return item && String(item.id) === String(categoryId);
             });
             const name = category && String(category.name || '').trim();
-            return name || 'Chưa phân loại';
+            return name ? name.replace(/\bphan\b/gi, 'phân') : 'Chưa phân loại';
         }
 
         function formatCategoryLovText(value) {
-            return String(value || 'Chưa phân loại').toLocaleUpperCase('vi-VN');
+            const text = String(value || 'Chưa phân loại').replace(/\bphan\b/gi, 'phân');
+            return text.toLocaleUpperCase('vi-VN');
         }
 
         function plainTextToHtml(value) {
@@ -5876,12 +6229,9 @@
         }
 
         function createBlocksFromArticle(article) {
+            if (article && Array.isArray(article.builderBlocks)) return cloneBlocks(article.builderBlocks);
+            if (!String(article && article.content || '').trim()) return [];
             const blocksFromArticle = [];
-            const title = article && article.title ? String(article.title) : 'Untitled document';
-            blocksFromArticle.push({ ...defaultBlock('heading'), level: 'h1', text: title });
-            if (article && article.description) {
-                blocksFromArticle.push({ ...defaultBlock('callout'), tone: 'info', text: String(article.description) });
-            }
             blocksFromArticle.push({ ...defaultBlock('text'), html: plainTextToHtml(article && article.content) });
             return blocksFromArticle;
         }
@@ -5902,7 +6252,8 @@
             applyDocumentStatus(doc, article.status, {
                 now: article.updatedAt || article.createdAt || new Date().toISOString(),
                 publishedAt: article.publishedAt || null,
-                publishedSignature: getDocumentSignature(doc)
+                publishedSignature: getDocumentSignature(doc),
+                publishedSnapshot: createPublishedSnapshot(doc, article.publishedAt || null)
             });
             return doc;
         }
@@ -5918,8 +6269,9 @@
                 ...currentArticle,
                 id: sourceId,
                 title: doc.title,
-                description: doc.sourceDescription || currentArticle.description || '',
-                content: blocksToPlainText(doc.blocks, doc.title),
+                description: doc.sourceDescription || '',
+                content: blocksToPlainText(doc.blocks),
+                builderBlocks: cloneBlocks(doc.blocks),
                 author: currentArticle.author || doc.sourceAuthor || 'Bạn',
                 categoryId: doc.sourceCategoryId || '',
                 status: normalizeDocumentStatus(doc.status, doc.archived),
@@ -5949,9 +6301,31 @@
             const currentArticle = data.articles[articleIndex];
             data.articles[articleIndex] = {
                 ...currentArticle,
+                title: doc.title || currentArticle.title || 'Untitled document',
+                description: doc.sourceDescription || '',
+                content: blocksToPlainText(doc.blocks),
+                builderBlocks: cloneBlocks(doc.blocks),
+                categoryId: doc.sourceCategoryId || currentArticle.categoryId || '',
                 status: normalizeDocumentStatus(doc.status, doc.archived),
                 updatedAt: doc.updatedAt || new Date().toISOString(),
                 publishedAt: doc.publishedAt || null
+            };
+            writeTeamDocumentStore(data);
+        }
+
+        function syncDocumentHeaderToTeamStore(doc) {
+            const sourceId = doc && (doc.sourceArticleId || doc.id);
+            if (!doc || !sourceId) return;
+            const data = readTeamDocumentStore();
+            if (!data || !Array.isArray(data.articles)) return;
+            const articleIndex = data.articles.findIndex(function (article) { return article.id === sourceId; });
+            if (articleIndex < 0) return;
+            const currentArticle = data.articles[articleIndex];
+            data.articles[articleIndex] = {
+                ...currentArticle,
+                title: doc.title || 'Untitled document',
+                description: doc.sourceDescription || '',
+                updatedAt: doc.updatedAt || new Date().toISOString()
             };
             writeTeamDocumentStore(data);
         }
@@ -5980,6 +6354,7 @@
                 const nextArchived = nextStatus === 'archived';
                 const nextPublishedAt = article.publishedAt || null;
                 if (
+                    doc.title !== (article.title || 'Untitled document') ||
                     doc.status !== nextStatus ||
                     doc.archived !== nextArchived ||
                     (doc.publishedAt || null) !== nextPublishedAt ||
@@ -5987,6 +6362,7 @@
                     doc.sourceDescription !== (article.description || '')
                 ) {
                     changed = true;
+                    doc.title = article.title || 'Untitled document';
                     doc.status = nextStatus;
                     doc.archived = nextArchived;
                     doc.publishedAt = nextPublishedAt;
@@ -5995,7 +6371,13 @@
                     doc.sourceAuthor = article.author || doc.sourceAuthor || null;
                     doc.sourceDescription = article.description || '';
                     if (nextStatus !== 'published') doc.publishedSignature = '';
+                    if (nextStatus !== 'published') doc.publishedSnapshot = null;
                     if (nextStatus === 'published' && !doc.publishedSignature) doc.publishedSignature = getDocumentSignature(doc);
+                    if (nextStatus === 'published' && !doc.publishedSnapshot) doc.publishedSnapshot = createPublishedSnapshotFromArticle(article) || createPublishedSnapshot(doc, nextPublishedAt);
+                }
+                if (nextStatus === 'published' && !doc.publishedSnapshot) {
+                    doc.publishedSnapshot = createPublishedSnapshotFromArticle(article) || createPublishedSnapshot(doc, nextPublishedAt);
+                    changed = true;
                 }
             });
             return changed;
@@ -6011,26 +6393,37 @@
             return (wrapper.textContent || '').trim();
         }
 
-        function blocksToPlainText(sourceBlocks, titleToSkip) {
-            let skippedTitle = false;
-            const normalizedTitle = String(titleToSkip || '').trim().toLowerCase();
+        function getBlockPlainText(block) {
+            if (!block) return '';
+            if (block.type === 'heading') return block.text || '';
+            if (block.type === 'text') return stripHtmlToText(block.html);
+            if (block.type === 'bulleted' || block.type === 'numbered' || block.type === 'todo') return block.itemsText || '';
+            if (block.type === 'quote' || block.type === 'callout' || block.type === 'sticky') return block.text || '';
+            if (block.type === 'columns') return Array.isArray(block.columns) ? block.columns.join('\n') : '';
+            if (block.type === 'table') return Array.isArray(block.table) ? block.table.map(function (row) { return row.join('\t'); }).join('\n') : '';
+            if (block.type === 'code') return block.code || '';
+            if (block.type === 'image') return [block.alt, block.caption, block.src].filter(Boolean).join('\n');
+            return '';
+        }
+
+        function normalizeBodyText(value) {
+            return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        }
+
+        function isMeaningfulBodyText(value) {
+            const normalized = normalizeBodyText(value);
+            return !!normalized && normalized !== 'nhập nội dung tài liệu...' && normalized !== 'nhập nội dung...' && normalized !== 'tiêu đề';
+        }
+
+        function hasPublishableBody(sourceBlocks) {
+            return cloneBlocks(sourceBlocks).some(function (block) {
+                return isMeaningfulBodyText(getBlockPlainText(block));
+            });
+        }
+
+        function blocksToPlainText(sourceBlocks) {
             return cloneBlocks(sourceBlocks).map(function (block) {
-                if (!skippedTitle && block.type === 'heading' && block.level === 'h1') {
-                    const headingText = String(block.text || '').trim();
-                    if (headingText && headingText.toLowerCase() === normalizedTitle) {
-                        skippedTitle = true;
-                        return '';
-                    }
-                }
-                if (block.type === 'heading') return block.text || '';
-                if (block.type === 'text') return stripHtmlToText(block.html);
-                if (block.type === 'bulleted' || block.type === 'numbered' || block.type === 'todo') return block.itemsText || '';
-                if (block.type === 'quote' || block.type === 'callout' || block.type === 'sticky') return block.text || '';
-                if (block.type === 'columns') return Array.isArray(block.columns) ? block.columns.join('\n') : '';
-                if (block.type === 'table') return Array.isArray(block.table) ? block.table.map(function (row) { return row.join('\t'); }).join('\n') : '';
-                if (block.type === 'code') return block.code || '';
-                if (block.type === 'image') return [block.alt, block.caption, block.src].filter(Boolean).join('\n');
-                return '';
+                return getBlockPlainText(block);
             }).filter(function (text) { return String(text || '').trim(); }).join('\n\n');
         }
 
@@ -6042,14 +6435,17 @@
             });
             if (existing) {
                 if (article) {
+                    const articleSnapshot = createPublishedSnapshotFromArticle(article);
+                    existing.title = article.title || existing.title || 'Untitled document';
                     existing.sourceArticleId = article.id;
                     existing.sourceCategoryId = article.categoryId || existing.sourceCategoryId || null;
                     existing.sourceAuthor = article.author || existing.sourceAuthor || null;
-                    existing.sourceDescription = article.description || existing.sourceDescription || '';
+                    existing.sourceDescription = article.description || '';
                     applyDocumentStatus(existing, article.status, {
                         now: article.updatedAt || existing.updatedAt || new Date().toISOString(),
                         publishedAt: article.publishedAt || null,
-                        publishedSignature: existing.publishedSignature || getDocumentSignature(existing)
+                        publishedSignature: articleSnapshot ? getPublishedSnapshotSignature(articleSnapshot) : existing.publishedSignature || getDocumentSignature(existing),
+                        publishedSnapshot: existing.publishedSnapshot || articleSnapshot
                     });
                     saveDocumentsCollection(false);
                 }
@@ -6111,7 +6507,10 @@
                 }
                 activeDocumentId = doc.id;
             }
+            migrateFixedHeaderBlocks(doc);
             docTitle.value = doc.title;
+            setPaperTitleText(doc.title || 'Untitled document');
+            setPaperDescriptionText(doc.sourceDescription || '');
             blocks = cloneBlocks(doc.blocks);
             if (doc.archived) {
                 globalMode = 'preview';
@@ -6127,6 +6526,8 @@
             }
             hasDraftChanges = false;
             draftSaveFailed = false;
+            discardConfirmPending = false;
+            window.clearTimeout(discardConfirmTimer);
             localStorage.setItem(ACTIVE_DOCUMENT_KEY, activeDocumentId);
             lastSaved.textContent = 'Saved draft ' + formatDocumentTime(doc.updatedAt);
             saveStateEl.textContent = 'Ready';
@@ -6203,6 +6604,40 @@
             if (paper) paper.classList.toggle('has-category-badge', !!categoryName);
         }
 
+        function renderFixedHeader() {
+            const doc = getActiveDocument();
+            const isReadonly = globalMode === 'preview' || isActiveDocumentArchived();
+            const activeTitleInput = getActiveHeaderTitleInput();
+            const title = activeTitleInput === paperTitleInput
+                ? getPaperTitleText()
+                : activeTitleInput
+                    ? activeTitleInput.value
+                    : (doc ? String(doc.title || 'Untitled document') : 'Untitled document');
+            const description = doc ? String(doc.sourceDescription || '') : '';
+            syncHeaderTitleInputs(title);
+            if (paperDescriptionInput && document.activeElement !== paperDescriptionInput && getPaperDescriptionText() !== description) {
+                setPaperDescriptionText(description);
+            }
+            if (paperTitleInput) {
+                paperTitleInput.contentEditable = isReadonly ? 'false' : 'true';
+                paperTitleInput.setAttribute('aria-readonly', isReadonly ? 'true' : 'false');
+                paperTitleInput.tabIndex = isReadonly ? -1 : 0;
+                updatePaperTitleEmptyState();
+            }
+            if (paperDescriptionInput) {
+                paperDescriptionInput.contentEditable = isReadonly ? 'false' : 'true';
+                paperDescriptionInput.setAttribute('aria-readonly', isReadonly ? 'true' : 'false');
+                paperDescriptionInput.tabIndex = isReadonly ? -1 : 0;
+            }
+            resizePaperDescription();
+        }
+
+        function resizePaperDescription() {
+            if (!paperDescriptionInput) return;
+            paperDescriptionInput.style.height = '';
+            updatePaperDescriptionEmptyState();
+        }
+
         function renderCategoryLov() {
             if (!categoryLov || !categoryLovTrigger || !categoryLovLabel || !categoryLovMenu) return;
             const doc = getActiveDocument();
@@ -6273,6 +6708,7 @@
             syncDocumentToTeamStore(doc);
             lastSaved.textContent = 'Saved draft ' + formatDocumentTime(now);
             saveStateEl.textContent = 'Category updated';
+            refreshDraftState();
             renderCategoryLov();
             renderPaperCategoryBadge();
             renderDocuments();
@@ -6310,6 +6746,17 @@
                 restoreActionBtn.setAttribute('title', 'Restore');
                 restoreActionBtn.setAttribute('aria-label', 'Restore');
             }
+            if (discardActionBtn) {
+                const canDiscard = canDiscardCurrentChanges();
+                const discardLabel = discardConfirmPending ? 'Confirm discard' : 'Discard unpublished changes';
+                discardActionBtn.classList.toggle('is-hidden', !canDiscard && !discardConfirmPending);
+                discardActionBtn.classList.toggle('is-confirming', discardConfirmPending);
+                discardActionBtn.toggleAttribute('disabled', !canDiscard);
+                discardActionBtn.setAttribute('title', discardLabel);
+                discardActionBtn.setAttribute('aria-label', discardLabel);
+                const discardText = discardActionBtn.querySelector('span');
+                if (discardText) discardText.textContent = discardLabel;
+            }
             if (unpublishActionBtn) {
                 const unpublishLabel = unpublishConfirmPending ? 'Confirm unpublish' : 'Unpublish';
                 unpublishActionBtn.classList.toggle('is-hidden', !isPublished || isArchived);
@@ -6336,6 +6783,12 @@
             renderFloatingActions();
         }
 
+        function clearDiscardConfirm() {
+            discardConfirmPending = false;
+            window.clearTimeout(discardConfirmTimer);
+            renderFloatingActions();
+        }
+
         function clearUnpublishConfirm() {
             unpublishConfirmPending = false;
             window.clearTimeout(unpublishConfirmTimer);
@@ -6354,34 +6807,6 @@
             if (moreActionsBtn) moreActionsBtn.setAttribute('aria-expanded', 'false');
         }
 
-        function closePublishGuard() {
-            pendingNavigation = null;
-            if (!publishGuard) return;
-            publishGuard.classList.remove('is-visible');
-            publishGuard.setAttribute('aria-hidden', 'true');
-        }
-
-        function showPublishGuard(action) {
-            pendingNavigation = action;
-            if (!publishGuard) return;
-            publishGuard.classList.add('is-visible');
-            publishGuard.setAttribute('aria-hidden', 'false');
-            if (publishGuardContinueBtn) publishGuardContinueBtn.focus({ preventScroll: true });
-        }
-
-        function runPendingNavigation() {
-            const action = pendingNavigation;
-            closePublishGuard();
-            if (typeof action === 'function') {
-                bypassPublishGuard = true;
-                try {
-                    action();
-                } finally {
-                    bypassPublishGuard = false;
-                }
-            }
-        }
-
         function requestDraftNavigation(action) {
             if (hasDraftChanges || draftSaveFailed) {
                 saveDraft('Saving draft...', false);
@@ -6391,24 +6816,15 @@
                 showToast('Draft save failed');
                 return false;
             }
-            if (hasUnpublishedChanges) {
-                showPublishGuard(action);
-                return false;
+            if (typeof action === 'function') {
+                bypassPublishGuard = true;
+                try {
+                    action();
+                } finally {
+                    bypassPublishGuard = false;
+                }
             }
-            if (typeof action === 'function') action();
             return true;
-        }
-
-        function leaveWithDraft() {
-            if (hasDraftChanges || draftSaveFailed) {
-                if (!saveDraft('Saving draft...', true)) return;
-            }
-            runPendingNavigation();
-        }
-
-        function publishAndLeave() {
-            if (!publishCurrentDraft(true)) return;
-            runPendingNavigation();
         }
 
         function toggleMoreActions(event) {
@@ -6446,6 +6862,7 @@
                     + '<span class="documents-page-label">' + documentsPage + '/' + totalPages + '</span>'
                     + '<button class="documents-page-btn" type="button" title="Next page" aria-label="Next documents page" onclick="changeDocumentsPage(1)" ' + (documentsPage >= totalPages ? 'disabled' : '') + '>&rsaquo;</button>';
             }
+            documentsEmpty.textContent = documentsSearchQuery.trim() ? 'No documents match this search.' : 'No documents in this view.';
             documentsEmpty.classList.toggle('is-visible', !activeDocs.length);
             const restoreIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>';
             const duplicateIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path></svg>';
@@ -6467,11 +6884,21 @@
                     : '<span class="document-row-action" role="button" tabindex="0" data-tooltip="Duplicate" aria-label="Duplicate" onclick="event.stopPropagation(); duplicateDocument(\'' + escapeAttr(doc.id) + '\')">' + duplicateIcon + '</span>'
                         + '<span class="document-row-action is-danger" role="button" tabindex="0" data-tooltip="Archive" aria-label="Archive" onclick="event.stopPropagation(); archiveDocument(\'' + escapeAttr(doc.id) + '\')">' + archiveIcon + '</span>';
                 const docTitleText = doc.title || 'Untitled document';
+                const docDescriptionText = String(doc.sourceDescription || doc.description || '').trim();
+                const hasSearch = !!documentsSearchQuery.trim();
+                const titleMatchesSearch = hasSearch && hasDocumentsSearchMatch(docTitleText);
+                const descriptionMatchesSearch = hasSearch && hasDocumentsSearchMatch(docDescriptionText);
+                const displayTitleText = titleMatchesSearch ? getDocumentsSearchExcerpt(docTitleText, 14) : docTitleText;
+                const displayDescriptionText = descriptionMatchesSearch ? getDocumentsSearchExcerpt(docDescriptionText, 18) : docDescriptionText;
+                const descriptionHtml = hasSearch && docDescriptionText && descriptionMatchesSearch
+                    ? '<span class="document-row-description" title="' + escapeAttr(docDescriptionText) + '">' + highlightDocumentsSearch(displayDescriptionText) + '</span>'
+                    : '';
                 const categoryName = resolveDocumentCategoryName(doc);
                 return '<button class="document-row' + activeClass + '" type="button"' + rowClick + '>'
                     + '<span class="document-row-main">'
-                    + '<span class="document-row-title" data-full-title="' + escapeAttr(docTitleText) + '">' + escapeHtml(docTitleText) + '</span>'
+                    + '<span class="document-row-title" data-full-title="' + escapeAttr(docTitleText) + '">' + highlightDocumentsSearch(displayTitleText) + '</span>'
                     + '<span class="document-row-category" title="' + escapeAttr(categoryName) + '">' + escapeHtml(categoryName) + '</span>'
+                    + descriptionHtml
                     + '<span class="document-row-meta"><span class="document-status' + statusMeta.className + '">' + statusMeta.label + '</span>' + pendingBadge + '<span>' + escapeHtml(formatDocumentTime(doc.updatedAt)) + '</span></span>'
                     + '</span>'
                     + '<span class="document-row-actions">'
@@ -6589,10 +7016,7 @@
                 return;
             }
             const copy = createDocumentRecord((source.title || 'Untitled document') + ' Copy', source.blocks);
-            copy.status = 'draft';
-            copy.archived = false;
-            copy.publishedAt = null;
-            copy.publishedSignature = '';
+            applyDocumentStatus(copy, 'draft');
             documents.push(copy);
             activeDocumentId = copy.id;
             documentsFilter = 'draft';
@@ -6631,6 +7055,7 @@
             const doc = getActiveDocument();
             if (!doc || doc.status === 'archived') return;
             if (publishConfirmPending) clearPublishConfirm();
+            if (discardConfirmPending) clearDiscardConfirm();
             if (unpublishConfirmPending) clearUnpublishConfirm();
             if (!archiveConfirmPending) {
                 archiveConfirmPending = true;
@@ -6779,6 +7204,33 @@
             return merged.slice(0, 10);
         }
 
+        function getQuickBlockIcon(type) {
+            const normalized = normalizeBlockType(type);
+            if (normalized === 'text') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M9 13h6"></path><path d="M9 17h4"></path></svg>';
+            if (normalized === 'heading') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14"></path><path d="M18 5v14"></path><path d="M6 12h12"></path></svg>';
+            if (normalized === 'bulleted') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h11"></path><path d="M8 12h11"></path><path d="M8 18h11"></path><path d="M4 6h.01"></path><path d="M4 12h.01"></path><path d="M4 18h.01"></path></svg>';
+            if (normalized === 'numbered') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6h10"></path><path d="M10 12h10"></path><path d="M10 18h10"></path><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M4 14h2l-2 4h2"></path></svg>';
+            if (normalized === 'todo') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h4"></path><path d="M11 6.5h9"></path><path d="m4 13 2 2 3-4"></path><path d="M11 14h9"></path><path d="M4 19h4"></path><path d="M11 19h9"></path></svg>';
+            if (normalized === 'quote') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12H5.5a3.5 3.5 0 0 1 3.5-3.5V7a5 5 0 0 0-5 5v5h4z"></path><path d="M19 12h-2.5A3.5 3.5 0 0 1 20 8.5V7a5 5 0 0 0-5 5v5h4z"></path></svg>';
+            if (normalized === 'callout') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 20h19z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>';
+            if (normalized === 'columns') return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="6" height="14" rx="1.5"></rect><rect x="14" y="5" width="6" height="14" rx="1.5"></rect></svg>';
+            if (normalized === 'table') return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M4 10h16"></path><path d="M9 5v14"></path><path d="M15 5v14"></path></svg>';
+            if (normalized === 'code') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 9-4 3 4 3"></path><path d="m16 9 4 3-4 3"></path><path d="m14 5-4 14"></path></svg>';
+            if (normalized === 'image') return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.5"></circle><path d="m7 17 4-4 3 3 2-2 3 3"></path></svg>';
+            if (normalized === 'sticky') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a2 2 0 0 1 2 2v9l-5 5H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path><path d="M15 20v-5h5"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>';
+            if (normalized === 'divider') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"></path><path d="M7 8h10"></path><path d="M7 16h10"></path></svg>';
+            return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>';
+        }
+
+        function decorateQuickBlockIcons(container) {
+            if (!container) return;
+            container.querySelectorAll('.quick-block-btn').forEach(function (button) {
+                const match = String(button.getAttribute('onclick') || '').match(/addBlock\('([^']+)'\)/);
+                if (!match || button.querySelector('svg')) return;
+                button.insertAdjacentHTML('afterbegin', getQuickBlockIcon(match[1]));
+            });
+        }
+
         function renderQuickBlocks() {
             const html = getFrequentBlockTypes().map(function (type) {
                 const isPinned = pinnedBlockTypes.indexOf(type) >= 0;
@@ -6787,10 +7239,12 @@
             }).join('');
             if (quickBlockBar) {
                 quickBlockBar.innerHTML = html;
+                decorateQuickBlockIcons(quickBlockBar);
                 quickBlockBar.classList.toggle('is-hidden', !blocks.length);
             }
             if (quickBlockBarEmpty) {
                 quickBlockBarEmpty.innerHTML = html;
+                decorateQuickBlockIcons(quickBlockBarEmpty);
                 quickBlockBarEmpty.classList.toggle('is-hidden', !!blocks.length);
             }
         }
@@ -6818,9 +7272,9 @@
             if (!canEditActiveDocument(true)) return;
             activeEditId = null;
             docTitle.value = 'Báo cáo hiệu quả kinh doanh 6 tháng đầu năm 2019';
+            setPaperTitleText('Báo cáo hiệu quả kinh doanh 6 tháng đầu năm 2019');
+            setPaperDescriptionText('Tài liệu này tổng hợp kết quả kinh doanh H1/2019 theo phong cách trình bày sạch, rõ lớp thông tin và phù hợp khi xuất PDF từ trình duyệt.');
             blocks = [
-                { ...defaultBlock('heading'), level: 'h1', text: 'Báo cáo hiệu quả kinh doanh 6 tháng đầu năm 2019' },
-                { ...defaultBlock('text'), html: '<p>Tài liệu này tổng hợp kết quả kinh doanh H1/2019 theo phong cách trình bày sạch, rõ lớp thông tin và phù hợp khi xuất PDF từ trình duyệt.</p>' },
                 { ...defaultBlock('callout'), tone: 'info', text: 'Kỳ phân tích: H1/2019. Kỳ so sánh: H1/2018. Dữ liệu tháng 7/2019 chưa đầy đủ nên không dùng để kết luận xu hướng.' },
                 { ...defaultBlock('divider') },
                 { ...defaultBlock('heading'), text: 'I. Tổng quan chung' },
@@ -6919,15 +7373,22 @@
         function publishCurrentDraft(showToastMessage) {
             const doc = getActiveDocument();
             if (!doc || doc.status === 'archived') return false;
+            if (!hasPublishableBody(blocks)) {
+                saveStateEl.textContent = 'Add content before publish';
+                if (showToastMessage !== false) showToast('Thêm nội dung trước khi publish');
+                return false;
+            }
             if (!saveDraft('Saving draft...', false)) return false;
             const now = new Date().toISOString();
             const wasPublished = doc.status === 'published';
             applyCurrentDocumentTitle(doc);
             doc.blocks = cloneBlocks(blocks);
+            const publishedSnapshot = createPublishedSnapshot(doc, now);
             applyDocumentStatus(doc, 'published', {
                 now: now,
                 publishedAt: now,
-                publishedSignature: getDocumentSignature(doc)
+                publishedSignature: getDocumentSignature(doc),
+                publishedSnapshot: publishedSnapshot
             });
             if (!saveDocumentsCollection(showToastMessage !== false)) return false;
             syncActiveDocumentToTeamStore();
@@ -6949,6 +7410,13 @@
             const doc = getActiveDocument();
             if (!doc) return;
             if (doc.status === 'published' && !hasUnpublishedChanges && !hasDraftChanges) return;
+            if (!hasPublishableBody(blocks)) {
+                clearPublishConfirm();
+                saveStateEl.textContent = 'Add content before publish';
+                showToast('Thêm nội dung trước khi publish');
+                return;
+            }
+            if (discardConfirmPending) clearDiscardConfirm();
             if (unpublishConfirmPending) clearUnpublishConfirm();
             if (archiveConfirmPending) clearArchiveConfirm();
             if (!publishConfirmPending) {
@@ -6963,10 +7431,54 @@
             publishCurrentDraft(true);
         }
 
+        function discardCurrentChanges() {
+            const doc = getActiveDocument();
+            const snapshot = getRestorablePublishedSnapshot(doc);
+            if (!doc || !snapshot || !canDiscardCurrentChanges()) return;
+            if (publishConfirmPending) clearPublishConfirm();
+            if (unpublishConfirmPending) clearUnpublishConfirm();
+            if (archiveConfirmPending) clearArchiveConfirm();
+            if (!discardConfirmPending) {
+                discardConfirmPending = true;
+                window.clearTimeout(discardConfirmTimer);
+                renderFloatingActions();
+                discardConfirmTimer = window.setTimeout(clearDiscardConfirm, 3500);
+                return;
+            }
+            window.clearTimeout(discardConfirmTimer);
+            discardConfirmPending = false;
+            const now = new Date().toISOString();
+            doc.title = snapshot.title;
+            doc.sourceDescription = snapshot.sourceDescription || '';
+            doc.sourceCategoryId = snapshot.sourceCategoryId || null;
+            doc.blocks = cloneBlocks(snapshot.blocks);
+            doc.status = 'published';
+            doc.archived = false;
+            doc.publishedAt = snapshot.publishedAt || doc.publishedAt || now;
+            doc.publishedSnapshot = clonePublishedSnapshot(snapshot);
+            doc.publishedSignature = getDocumentSignature(doc);
+            doc.updatedAt = now;
+            blocks = cloneBlocks(doc.blocks);
+            activeEditId = null;
+            deleteConfirmId = null;
+            hasDraftChanges = false;
+            draftSaveFailed = false;
+            hasUnpublishedChanges = false;
+            if (!saveDocumentsCollection(true)) return;
+            syncDocumentToTeamStore(doc);
+            documentsFilter = 'published';
+            documentsPage = 1;
+            lastSaved.textContent = 'Restored published ' + formatDocumentTime(now);
+            saveStateEl.textContent = 'Published';
+            render();
+            showToast('Discarded changes');
+        }
+
         function unpublishCurrentDocument() {
             const doc = getActiveDocument();
             if (!doc || doc.status !== 'published') return;
             if (publishConfirmPending) clearPublishConfirm();
+            if (discardConfirmPending) clearDiscardConfirm();
             if (archiveConfirmPending) clearArchiveConfirm();
             if (!unpublishConfirmPending) {
                 unpublishConfirmPending = true;
@@ -6985,22 +7497,18 @@
                 syncDocumentStatusToTeamStore(doc);
                 hasDraftChanges = false;
                 hasUnpublishedChanges = false;
+                draftSaveFailed = false;
                 documentsFilter = 'draft';
                 documentsPage = 1;
                 lastSaved.textContent = 'Saved ' + formatDocumentTime(now);
-                saveStateEl.textContent = 'Unpublished';
-                renderDocuments();
-                renderDocumentStatusBadge();
-                renderFloatingActions();
-                showToast('Unpublished');
+                saveStateEl.textContent = 'Draft';
+                render();
+                showToast('Back to draft');
             }
         }
 
         function getPrintFooterTitle() {
-            const heading = blocks.find(function (block) {
-                return block.type === 'heading' && String(block.text || '').trim();
-            });
-            return heading ? String(heading.text || '').trim() : (docTitle.value.trim() || 'Untitled document');
+            return getHeaderTitleValue();
         }
 
         function exportPdf() {
@@ -7315,7 +7823,7 @@
             if (event.target.closest('.block-drag, .block-content-view, .image-resize-handle')) return;
             if (globalMode !== 'edit' || !activeEditId) return;
             if (event.target.closest('.block.is-editing')) return;
-            if (event.target.closest('.palette-card, .sidebar, .topbar, .category-lov, .toast, .drag-ghost')) return;
+            if (event.target.closest('.palette-card, .sidebar, .topbar, .category-lov, .paper-fixed-header, .toast, .drag-ghost')) return;
             closeActiveEditor();
         }
 
@@ -7753,6 +8261,7 @@
             });
             renderDocumentStatusBadge();
             renderPaperCategoryBadge();
+            renderFixedHeader();
             renderCategoryLov();
             renderFloatingActions();
             blockCounter.textContent = blocks.length + ' ' + (blocks.length === 1 ? 'block' : 'blocks');
@@ -8888,9 +9397,38 @@
             }
         });
 
+        function pastePlainEditableText(event, afterPaste) {
+            event.preventDefault();
+            const text = ((event.clipboardData || window.clipboardData) && (event.clipboardData || window.clipboardData).getData('text/plain')) || '';
+            document.execCommand('insertText', false, text);
+            if (afterPaste) window.requestAnimationFrame(afterPaste);
+        }
+
         setupPalette();
         attachPaletteDnD();
         filterPalette(paletteSearch.value);
+
+        function saveFixedHeader() {
+            if (!canEditActiveDocument(false)) {
+                const doc = getActiveDocument();
+                if (doc) {
+                    setPaperTitleText(doc.title || 'Untitled document');
+                    setPaperDescriptionText(doc.sourceDescription || '');
+                    if (docTitle) docTitle.value = doc.title || 'Untitled document';
+                }
+                resizePaperDescription();
+                showToast('Restore document before editing');
+                return;
+            }
+            resizePaperDescription();
+            updatePaperTitleEmptyState();
+            const doc = getActiveDocument();
+            if (doc) {
+                doc.title = getHeaderTitleDraftValue(doc.title);
+                doc.sourceDescription = getHeaderDescriptionValue();
+            }
+            if (save('Autosaved', false)) syncDocumentHeaderToTeamStore(getActiveDocument());
+        }
 
         docTitle.addEventListener('input', function () {
             if (!canEditActiveDocument(false)) {
@@ -8899,8 +9437,62 @@
                 showToast('Restore document before editing');
                 return;
             }
+            if (paperTitleInput && document.activeElement !== paperTitleInput) setPaperTitleText(docTitle.value);
             save('Autosaved', false);
         });
+        docTitle.addEventListener('blur', function () {
+            const nextTitle = getHeaderTitleValue();
+            docTitle.value = nextTitle;
+            setPaperTitleText(nextTitle);
+            const doc = getActiveDocument();
+            if (doc && !doc.title) {
+                doc.title = nextTitle;
+                save('Autosaved', false);
+            }
+        });
+
+        if (documentsSearch) {
+            documentsSearch.addEventListener('input', function () {
+                documentsSearchQuery = documentsSearch.value || '';
+                documentsPage = 1;
+                renderDocuments();
+            });
+        }
+
+        if (paperTitleInput) {
+            paperTitleInput.addEventListener('input', saveFixedHeader);
+            paperTitleInput.addEventListener('blur', function () {
+                const nextTitle = getHeaderTitleValue();
+                setPaperTitleText(nextTitle);
+                if (docTitle) docTitle.value = nextTitle;
+                const doc = getActiveDocument();
+                if (doc && !doc.title) {
+                    doc.title = nextTitle;
+                    save('Autosaved', false);
+                }
+            });
+            paperTitleInput.addEventListener('keydown', function (event) {
+                if (event.key !== 'Enter') return;
+                event.preventDefault();
+                paperTitleInput.blur();
+            });
+            paperTitleInput.addEventListener('paste', function (event) {
+                pastePlainEditableText(event, function () {
+                    updatePaperTitleEmptyState();
+                    saveFixedHeader();
+                });
+            });
+        }
+
+        if (paperDescriptionInput) {
+            paperDescriptionInput.addEventListener('input', saveFixedHeader);
+            paperDescriptionInput.addEventListener('blur', function () {
+                setPaperDescriptionText(getHeaderDescriptionValue());
+            });
+            paperDescriptionInput.addEventListener('paste', function (event) {
+                pastePlainEditableText(event, saveFixedHeader);
+            });
+        }
 
         if (categoryLovTrigger) {
             categoryLovTrigger.addEventListener('click', toggleCategoryLov);
@@ -8943,6 +9535,7 @@
         });
         document.addEventListener('pointerdown', function (event) {
             if (publishConfirmPending && !event.target.closest('#publishActionBtn')) clearPublishConfirm();
+            if (discardConfirmPending && !event.target.closest('#discardActionBtn')) clearDiscardConfirm();
             if (unpublishConfirmPending && !event.target.closest('#unpublishActionBtn')) clearUnpublishConfirm();
             if (archiveConfirmPending && !event.target.closest('#archiveActionBtn')) clearArchiveConfirm();
         });
@@ -8955,15 +9548,6 @@
                 });
             });
         });
-        if (publishGuardContinueBtn) publishGuardContinueBtn.addEventListener('click', closePublishGuard);
-        if (publishGuardLeaveBtn) publishGuardLeaveBtn.addEventListener('click', leaveWithDraft);
-        if (publishGuardPublishBtn) publishGuardPublishBtn.addEventListener('click', publishAndLeave);
-        if (publishGuard) {
-            publishGuard.addEventListener('click', function (event) {
-                if (event.target === publishGuard) closePublishGuard();
-            });
-        }
-
         function guardEditableEvent(event) {
             if (canEditActiveDocument(false)) return false;
             if (event) {
@@ -8985,10 +9569,7 @@
         });
         document.addEventListener('focusout', hideTitleTooltip);
         document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && publishGuard && publishGuard.classList.contains('is-visible')) {
-                closePublishGuard();
-                return;
-            }
+            if (event.key === 'Escape') clearDiscardConfirm();
             if (event.key === 'Escape') closeMoreActions();
         });
         window.addEventListener('beforeunload', function (event) {
@@ -9006,7 +9587,7 @@
             if (showToastMessage === undefined) showToastMessage = true;
             let doc = getActiveDocument();
             if (!doc) {
-                doc = createDocumentRecord(docTitle.value.trim() || 'Untitled document', blocks);
+                doc = createDocumentRecord(getHeaderTitleValue(), blocks, { sourceDescription: getHeaderDescriptionValue() });
                 documents.push(doc);
                 activeDocumentId = doc.id;
             }
