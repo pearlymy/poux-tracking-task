@@ -17,6 +17,13 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        .scrollbar-hidden {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hidden::-webkit-scrollbar {
+            display: none;
+        }
         @keyframes flashHighlight {
             0%, 100% { background-color: rgba(253, 230, 138, 0.7); }
             50% { background-color: #f59e0b; color: #ffffff; }
@@ -362,15 +369,10 @@
         } from "lucide-react";
 
         const h = React.createElement;
-        const requestParams = new URLSearchParams(window.location.search);
-        const IS_EMBEDDED = requestParams.get("embedded") === "1";
-        const DOCUMENT_SCOPE = (requestParams.get("scope") || "").trim();
-        const DOCUMENT_SCOPE_TITLE = (requestParams.get("scopeTitle") || "").trim();
-        const scopedStorageKey = (baseKey) => DOCUMENT_SCOPE ? `${baseKey}__${encodeURIComponent(DOCUMENT_SCOPE)}` : baseKey;
         const DATA_SOURCE = "local";
-        const STORAGE_KEY = scopedStorageKey("team_documents_dashboard_v1");
-        const BUILDER_DOCUMENTS_STORAGE_KEY = scopedStorageKey("document_builder_documents_v1");
-        const SEARCH_HISTORY_KEY = scopedStorageKey("team_documents_search_history_v1");
+        const STORAGE_KEY = "team_documents_dashboard_v1";
+        const BUILDER_DOCUMENTS_STORAGE_KEY = "document_builder_documents_v1";
+        const SEARCH_HISTORY_KEY = "team_documents_search_history_v1";
         const VIEW_MODES = [
             { id: "card", title: "Card" },
             { id: "timeline", title: "Timeline" }
@@ -381,7 +383,7 @@
             { id: "title-asc", title: "Tên A-Z" }
         ];
 
-        const defaultInitialData = {
+        const initialData = {
             categories: [
                 { id: "cat-onboarding", name: "Onboarding" },
                 { id: "cat-process", name: "Quy trình" },
@@ -417,15 +419,6 @@
                 }
             ]
         };
-
-        const scopedInitialData = {
-            categories: [
-                { id: "cat-general", name: "General" }
-            ],
-            articles: []
-        };
-
-        const initialData = DOCUMENT_SCOPE ? scopedInitialData : defaultInitialData;
 
         const createId = (prefix) => `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
@@ -830,35 +823,7 @@
                                 onChange: (event) => setField("title", event.target.value),
                                 className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
                                 placeholder: "VD: Quy trình xin phê duyệt"
-                            }),
-                            false && isCreatingCategory && h("div", {
-                                className: "group relative flex min-w-[220px] shrink-0 items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
-                                onMouseLeave: cancelEmptyCreateCategory
-                            },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
-                                h("input", {
-                                    autoFocus: true,
-                                    value: newCategoryName,
-                                    onClick: (e) => e.stopPropagation(),
-                                    onChange: (e) => setNewCategoryName(e.target.value),
-                                    onBlur: () => {
-                                        if (newCategoryName.trim()) saveNewCategory();
-                                        else setIsCreatingCategory(false);
-                                    },
-                                    onKeyDown: (e) => {
-                                        if (e.key === "Enter") saveNewCategory();
-                                        if (e.key === "Escape") {
-                                            setNewCategoryName("");
-                                            setIsCreatingCategory(false);
-                                        }
-                                    },
-                                    className: "min-w-0 flex-1 rounded border border-blue-400 bg-white px-2 py-1 text-slate-800 outline-none focus:ring-2 focus:ring-blue-100",
-                                    placeholder: "Nhập tên danh mục..."
-                                })
-                            ),
-                            !isCreatingCategory && h(IconButton, { label: "Thêm danh mục", className: "h-9 w-9 shrink-0 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
-                                h(Plus, { className: "h-3.5 w-3.5" })
-                            )
+                            })
                         ),
                         h("div", { className: "grid gap-4 md:grid-cols-[1fr_1.2fr]" },
                             h("label", { className: "grid gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500" },
@@ -891,35 +856,7 @@
                                 rows: 9,
                                 className: "resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium leading-6 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
                                 placeholder: "Nhập nội dung tài liệu..."
-                            }),
-                            false && isCreatingCategory && h("div", {
-                                className: "group relative flex min-w-[220px] shrink-0 items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
-                                onMouseLeave: cancelEmptyCreateCategory
-                            },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
-                                h("input", {
-                                    autoFocus: true,
-                                    value: newCategoryName,
-                                    onClick: (e) => e.stopPropagation(),
-                                    onChange: (e) => setNewCategoryName(e.target.value),
-                                    onBlur: () => {
-                                        if (newCategoryName.trim()) saveNewCategory();
-                                        else setIsCreatingCategory(false);
-                                    },
-                                    onKeyDown: (e) => {
-                                        if (e.key === "Enter") saveNewCategory();
-                                        if (e.key === "Escape") {
-                                            setNewCategoryName("");
-                                            setIsCreatingCategory(false);
-                                        }
-                                    },
-                                    className: "min-w-0 flex-1 rounded border border-blue-400 bg-white px-2 py-1 text-slate-800 outline-none focus:ring-2 focus:ring-blue-100",
-                                    placeholder: "Nhập tên danh mục..."
-                                })
-                            ),
-                            !isCreatingCategory && h(IconButton, { label: "Thêm danh mục", className: "h-9 w-9 shrink-0 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
-                                h(Plus, { className: "h-3.5 w-3.5" })
-                            )
+                            })
                         )
                     ),
                     h("div", { className: "flex items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4" },
@@ -964,35 +901,7 @@
                                 autoFocus: true,
                                 className: "h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10",
                                 placeholder: "VD: Chính sách"
-                            }),
-                            isCreatingCategory && h("div", {
-                                className: "group relative flex min-w-[220px] shrink-0 items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
-                                onMouseLeave: cancelEmptyCreateCategory
-                            },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
-                                h("input", {
-                                    autoFocus: true,
-                                    value: newCategoryName,
-                                    onClick: (e) => e.stopPropagation(),
-                                    onChange: (e) => setNewCategoryName(e.target.value),
-                                    onBlur: () => {
-                                        if (newCategoryName.trim()) saveNewCategory();
-                                        else setIsCreatingCategory(false);
-                                    },
-                                    onKeyDown: (e) => {
-                                        if (e.key === "Enter") saveNewCategory();
-                                        if (e.key === "Escape") {
-                                            setNewCategoryName("");
-                                            setIsCreatingCategory(false);
-                                        }
-                                    },
-                                    className: "min-w-0 flex-1 rounded border border-blue-400 bg-white px-2 py-1 text-slate-800 outline-none focus:ring-2 focus:ring-blue-100",
-                                    placeholder: "Nhập tên danh mục..."
-                                })
-                            ),
-                            !isCreatingCategory && h(IconButton, { label: "Thêm danh mục", className: "h-9 w-9 shrink-0 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
-                                h(Plus, { className: "h-3.5 w-3.5" })
-                            )
+                            })
                         )
                     ),
                     h("div", { className: "flex justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4" },
@@ -1156,36 +1065,36 @@
                 if (createCategoryRequest) startCreateCategory();
             }, [createCategoryRequest]);
 
-            return h("div", {
-                className: "min-w-0 flex-1"
+            return h("aside", {
+                className: `${isOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 w-[82vw] max-w-xs border-r border-slate-200 bg-white shadow-sm transition-transform duration-200 md:static md:z-auto md:w-64 md:max-w-none md:translate-x-0 flex flex-col`
             },
-                h("div", { className: "hidden" },
+                h("div", { className: "p-6" },
                     h("div", { className: "flex items-center justify-between gap-3" },
-                        h("span", { className: "font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap" }, "Danh má»¥c tÃ i liá»‡u"),
-                        h(IconButton, { label: "Đóng sidebar", className: "hidden", onClick: onClose }, h(X, { className: "h-4 w-4" }))
+                        h("span", { className: "font-bold text-slate-800 text-lg tracking-tight whitespace-nowrap" }, "PWS Workspace"),
+                        h(IconButton, { label: "Đóng sidebar", className: "md:hidden", onClick: onClose }, h(X, { className: "h-4 w-4" }))
                     )
                 ),
-                h("nav", { className: "flex min-w-0 items-center gap-1.5 overflow-x-auto py-1" },
+                h("nav", { className: "flex-1 overflow-auto px-4 space-y-1" },
                         h("button", {
                             type: "button",
                             onClick: () => onSelectCategory("all"),
-                        className: `flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${activeCategoryId === "all" ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"}`
+                        className: `w-full flex items-center gap-3 p-3 rounded-xl transition-all font-semibold text-sm ${activeCategoryId === "all" ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"}`
                         },
-                        h(File, { className: "h-4 w-4 shrink-0" }),
+                        h(File, { className: "h-5 w-5 shrink-0" }),
                         h("span", { className: "min-w-0 flex-1 truncate text-left" }, "Tất cả tài liệu"),
-                        h("span", { className: "ml-0.5 text-xs font-bold text-slate-400" }, articles.length)
+                        h("span", { className: "text-xs font-bold text-slate-400" }, articles.length)
                         ),
-                    false && h("div", { className: "contents" },
-                        false && h("span", { className: "text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400" }, "Danh mục"),
-                        h(IconButton, { label: "Thêm danh mục", className: "h-9 w-9 shrink-0 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
+                    h("div", { className: "mt-6 mb-2 flex items-center justify-between px-3" },
+                        h("span", { className: "text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400" }, "Danh mục"),
+                        h(IconButton, { label: "Thêm danh mục", className: "h-6 w-6 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
                             h(Plus, { className: "h-3.5 w-3.5" })
                             )
                         ),
-                            false && isCreatingCategory && h("div", {
-                                className: "group relative flex min-w-[220px] shrink-0 items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
+                            isCreatingCategory && h("div", {
+                                className: "group relative w-full flex items-center gap-3 p-3 rounded-xl bg-blue-50 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
                                 onMouseLeave: cancelEmptyCreateCategory
                             },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
+                                h(Folder, { className: "h-5 w-5 shrink-0" }),
                                 h("input", {
                                     autoFocus: true,
                                     value: newCategoryName,
@@ -1226,9 +1135,9 @@
                                     onDragLeave: !isEditing ? handleDragLeave : undefined,
                                     onDrop: (e) => !isEditing && handleDrop(e, category.id),
                                     onDragEnd: !isEditing ? handleDragEnd : undefined,
-                                    className: `group relative flex max-w-[220px] shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`
+                                    className: `group relative w-full flex items-center gap-3 p-3 rounded-xl transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`
                                 },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
+                                h(Folder, { className: "h-5 w-5 shrink-0" }),
                                 isEditing ? h("input", {
                                     autoFocus: true,
                                     value: editingCategoryName,
@@ -1253,8 +1162,8 @@
                                     },
                                     className: "min-w-0 flex-1 bg-white border border-blue-400 focus:ring-2 focus:ring-blue-100 rounded px-2 py-1 outline-none text-slate-800"
                                 }) : h("span", { className: "min-w-0 flex-1 truncate text-left" }, category.name),
-                                !isEditing && h("span", { className: `ml-0.5 text-xs font-bold text-slate-400 transition-opacity ${deleteConfirmId === category.id ? "opacity-0" : "group-hover:opacity-0"}` }, count),
-                                !isEditing && h("div", { className: `ml-0.5 flex shrink-0 items-center gap-0.5 transition-all ${deleteConfirmId === category.id ? "w-[88px] opacity-100" : "w-0 opacity-0 group-hover:w-[62px] group-hover:opacity-100"}` },
+                                !isEditing && h("span", { className: "text-xs font-bold text-slate-400 transition-opacity group-hover:opacity-0" }, count),
+                                !isEditing && h("div", { className: `absolute right-2 flex items-center transition-all ${deleteConfirmId === category.id ? "opacity-100" : "opacity-0 group-hover:opacity-100"}` },
                                     h("button", {
                                         type: "button",
                                         onClick: (e) => {
@@ -1288,35 +1197,7 @@
                                     )
                                 )
                                 );
-                            }),
-                            isCreatingCategory && h("div", {
-                                className: "group relative flex min-w-[220px] shrink-0 items-center gap-2 rounded-xl bg-blue-50 px-3 py-2 text-blue-600 font-semibold text-sm shadow-inner ring-1 ring-blue-100",
-                                onMouseLeave: cancelEmptyCreateCategory
-                            },
-                                h(Folder, { className: "h-4 w-4 shrink-0" }),
-                                h("input", {
-                                    autoFocus: true,
-                                    value: newCategoryName,
-                                    onClick: (e) => e.stopPropagation(),
-                                    onChange: (e) => setNewCategoryName(e.target.value),
-                                    onBlur: () => {
-                                        if (newCategoryName.trim()) saveNewCategory();
-                                        else setIsCreatingCategory(false);
-                                    },
-                                    onKeyDown: (e) => {
-                                        if (e.key === "Enter") saveNewCategory();
-                                        if (e.key === "Escape") {
-                                            setNewCategoryName("");
-                                            setIsCreatingCategory(false);
-                                        }
-                                    },
-                                    className: "min-w-0 flex-1 rounded border border-blue-400 bg-white px-2 py-1 text-slate-800 outline-none focus:ring-2 focus:ring-blue-100",
-                                    placeholder: "Nhập tên danh mục..."
-                                })
-                            ),
-                            !isCreatingCategory && h(IconButton, { label: "Thêm danh mục", className: "h-9 w-9 shrink-0 border-transparent bg-transparent hover:bg-slate-100 shadow-none hover:shadow-none", onClick: startCreateCategory },
-                                h(Plus, { className: "h-3.5 w-3.5" })
-                            )
+                            })
                 )
             );
         };
@@ -1480,8 +1361,6 @@
             const [itemsPerPage, setItemsPerPage] = useState(Number(params.get("limit")) || 12);
             const [isNavigating, setIsNavigating] = useState(false);
             const [isSearchFocused, setIsSearchFocused] = useState(false);
-            const [isSearchExpanded, setIsSearchExpanded] = useState(Boolean(params.get("q")));
-            const searchInputRef = useRef(null);
             const [searchHistory, setSearchHistory] = useState(() => {
                 try {
                     return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]");
@@ -1505,31 +1384,12 @@
             const dateFilterRef = useRef(null);
 
             useEffect(() => {
-                if (!isSearchExpanded) return;
-                searchInputRef.current?.focus();
-            }, [isSearchExpanded]);
-
-            const getListUrl = () => {
-                const returnUrl = new URL(window.location.href);
-                returnUrl.searchParams.delete("articleId");
-                return `document-list.html${returnUrl.search}${returnUrl.hash}`;
-            };
-
-            const getBuilderUrl = (articleId, mode = "preview") => {
-                const builderParams = new URLSearchParams();
-                builderParams.set("id", articleId);
-                builderParams.set("mode", mode);
-                if (IS_EMBEDDED) builderParams.set("embedded", "1");
-                if (DOCUMENT_SCOPE) builderParams.set("scope", DOCUMENT_SCOPE);
-                if (DOCUMENT_SCOPE_TITLE) builderParams.set("scopeTitle", DOCUMENT_SCOPE_TITLE);
-                builderParams.set("returnTo", getListUrl());
-                return `document-builder.html?${builderParams.toString()}`;
-            };
-
-            useEffect(() => {
                 const articleId = params.get("articleId");
                 if (articleId) {
-                    window.location.replace(getBuilderUrl(articleId, "preview"));
+                    const returnUrl = new URL(window.location);
+                    returnUrl.searchParams.delete("articleId");
+                    const returnTo = `document-list.html${returnUrl.search}${returnUrl.hash}`;
+                    window.location.replace(`document-builder.html?id=${encodeURIComponent(articleId)}&mode=preview&returnTo=${encodeURIComponent(returnTo)}`);
                 }
             }, []);
 
@@ -1541,6 +1401,13 @@
                 window.addEventListener("storage", handleStorage);
                 return () => window.removeEventListener("storage", handleStorage);
             }, []);
+
+            const getBuilderUrl = (articleId, mode = "preview") => {
+                const returnUrl = new URL(window.location);
+                returnUrl.searchParams.delete("articleId");
+                const returnTo = `document-list.html${returnUrl.search}${returnUrl.hash}`;
+                return `document-builder.html?id=${encodeURIComponent(articleId)}&mode=${encodeURIComponent(mode)}&returnTo=${encodeURIComponent(returnTo)}`;
+            };
 
             const openArticleInBuilder = (article) => {
                 const articleId = typeof article === "string" ? article : article?.id;
@@ -2284,74 +2151,63 @@
                 },
             ].filter(Boolean);
 
-            return h("div", { className: "flex min-h-screen flex-col font-sans", style: { fontFamily: "'Inter', sans-serif" } },
+            return h("div", { className: "flex min-h-screen font-sans", style: { fontFamily: "'Inter', sans-serif" } },
                 isSidebarOpen && h("button", {
                     type: "button",
                     "aria-label": "Đóng sidebar",
                     className: "fixed inset-0 z-30 bg-slate-900/20 backdrop-blur-sm md:hidden",
                     onClick: () => setIsSidebarOpen(false)
                 }),
-                h("main", { className: "min-w-0 flex-1 overflow-auto bg-slate-50" },
-                    h("div", { className: "p-4 md:p-8 max-w-7xl mx-auto w-full" },
+                h(Sidebar, {
+                    categories: data.categories,
+                    articles: articlesMatchingGlobalFilters,
+                    activeCategoryId,
+                    onSelectCategory: (id) => {
+                        setActiveCategoryId(id);
+                        setIsSidebarOpen(false);
+                    },
+                    onAddCategory: addCategory,
+                    onUpdateCategory: updateCategory,
+                    onDeleteCategory: removeCategory,
+                    onReorderCategories: (newCategories) => {
+                        refresh(DataService.reorderCategories(newCategories));
+                    },
+                    createCategoryRequest: categoryCreateRequest,
+                    isOpen: isSidebarOpen,
+                    onClose: () => setIsSidebarOpen(false)
+                }),
+                h("main", { className: "scrollbar-hidden min-w-0 flex-1 h-screen overflow-auto bg-slate-50" },
+                    h("div", { className: "w-full px-10 py-4 md:px-14 md:py-8" },
                         h("div", { className: "flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-3 bg-white px-5 py-4 rounded-2xl border border-slate-200 shadow-sm relative z-20" },
                             h("div", { className: "absolute top-0 left-0 w-1.5 h-full bg-blue-500 rounded-l-2xl" }),
-                            h("div", { className: "flex w-full min-w-0 flex-1 items-center gap-4" },
-                                h(IconButton, { label: "Mở sidebar", className: "hidden", onClick: () => setIsSidebarOpen(true) }, h(Menu, { className: "h-4 w-4" })),
-                                h("div", { className: "shrink-0" },
+                            h("div", { className: "flex items-center gap-4" },
+                                h(IconButton, { label: "Mở sidebar", className: "md:hidden", onClick: () => setIsSidebarOpen(true) }, h(Menu, { className: "h-4 w-4" })),
+                                h("div", null,
                                     h("h1", { className: "text-2xl font-bold text-slate-800 flex items-center gap-3 tracking-tight" },
                                         h("div", { className: "hidden md:flex w-10 h-10 bg-blue-50 text-blue-600 rounded-xl items-center justify-center border border-blue-100 shadow-inner" },
                                             h(BookOpen, { className: "h-5 w-5" })
                                         ),
-                                        null
+                                        activeCategory?.name || "Tất cả tài liệu"
                                     )
-                                ),
-                                h(Sidebar, {
-                                    categories: data.categories,
-                                    articles: articlesMatchingGlobalFilters,
-                                    activeCategoryId,
-                                    onSelectCategory: (id) => {
-                                        setActiveCategoryId(id);
-                                        setIsSidebarOpen(false);
-                                    },
-                                    onAddCategory: addCategory,
-                                    onUpdateCategory: updateCategory,
-                                    onDeleteCategory: removeCategory,
-                                    onReorderCategories: (newCategories) => {
-                                        refresh(DataService.reorderCategories(newCategories));
-                                    },
-                                    createCategoryRequest: categoryCreateRequest,
-                                    isOpen: isSidebarOpen,
-                                    onClose: () => setIsSidebarOpen(false)
-                                })
+                                )
                             ),
-                            h("div", { className: "flex w-full items-center justify-end gap-3 md:w-auto" },
-                                h("div", { className: `${isSearchExpanded ? "w-full md:w-64" : "w-11"} relative shrink-0 transition-all duration-200 group` },
+                            h("div", { className: "flex w-full md:w-auto gap-3 items-center" },
+                                h("div", { className: "relative w-full md:w-64 group" },
                                     h(Search, { className: "absolute left-3.5 top-3 w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" }),
                                     h("input", {
-                                        ref: searchInputRef,
                                         value: searchInput,
                                         onChange: (event) => setSearchInput(event.target.value),
                                         onFocus: () => setIsSearchFocused(true),
-                                        onBlur: () => setTimeout(() => {
-                                            setIsSearchFocused(false);
-                                            if (!searchInput.trim()) setIsSearchExpanded(false);
-                                        }, 200),
-                                        className: `${isSearchExpanded ? "opacity-100" : "pointer-events-none opacity-0"} w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium`,
+                                        onBlur: () => setTimeout(() => setIsSearchFocused(false), 200),
+                                        className: "w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium",
                                         placeholder: "Tìm kiếm tài liệu..."
                                     }),
                                     searchInput && h("button", {
                                         type: "button",
-                                        onMouseDown: (event) => event.preventDefault(),
                                         onClick: clearSearch,
                                         className: "absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-200 hover:text-slate-600"
                                     }, h(X, { className: "h-4 w-4" })),
-                                    !isSearchExpanded && h("button", {
-                                        type: "button",
-                                        onClick: () => setIsSearchExpanded(true),
-                                        className: "absolute inset-0 flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 focus:border-blue-400 focus:outline-none focus:ring-4 focus:ring-blue-500/10",
-                                        "aria-label": "TÃ¬m kiáº¿m tÃ i liá»‡u"
-                                    }, h(Search, { className: "h-4 w-4" })),
-                                    isSearchExpanded && isSearchFocused && searchHistory.length > 0 && h("div", {
+                                    isSearchFocused && searchHistory.length > 0 && h("div", {
                                         className: "absolute top-[calc(100%+4px)] left-0 right-0 z-30 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg ring-1 ring-black ring-opacity-5"
                                     },
                                         h("div", { className: "bg-slate-50 px-3 py-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-200 flex justify-between items-center" }, 

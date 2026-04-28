@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrospective</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --surface-soft: #f4f5f7;
+            --border: rgba(25, 28, 31, 0.08);
+            --border-strong: rgba(25, 28, 31, 0.14);
+            --text: #191c1f;
+            --muted: #8b949e;
+            --primary: #000000;
+            --primary-hover: #191c1f;
+            --danger: #ff2e55;
+            --danger-soft: #fff0f3;
+            --loved: #00c853;
+            --loved-soft: #ffffff;
+            --loathed: #ff2e55;
+            --loathed-soft: #ffffff;
+            --longed: #0055ff;
+            --longed-soft: #ffffff;
+            --learned: #191c1f;
+            --learned-soft: #ffffff;
+            --action: #0055ff;
+            --action-soft: #eef4ff;
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.45;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .app-header {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px 24px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .eyebrow {
+            margin: 0 0 6px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            font-size: 30px;
+            line-height: 1.18;
+        }
+
+        .header-copy {
+            margin-bottom: 0;
+            color: var(--muted);
+            max-width: 650px;
+        }
+
+        .project-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .project-select {
+            min-width: 250px;
+            height: 40px;
+            border: 1px solid var(--border-strong);
+            border-radius: 6px;
+            background: var(--surface);
+            color: var(--text);
+            padding: 0 10px;
+        }
+
+        .app-shell {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px 28px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: none;
+        }
+
+        .project-form,
+        .project-meta,
+        .actions-panel {
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .project-form {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.4fr) minmax(160px, 0.8fr) minmax(150px, 0.6fr) auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .field label {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--border-strong);
+            border-radius: 6px;
+            background: #ffffff;
+            color: var(--text);
+            padding: 9px 10px;
+        }
+
+        textarea {
+            min-height: 86px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid #4c9aff;
+            outline-offset: 1px;
+            border-color: var(--primary);
+        }
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: 6px;
+            min-height: 38px;
+            padding: 8px 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            border-color: var(--border-strong);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-soft);
+        }
+
+        .btn-danger {
+            background: #ffffff;
+            border-color: #ffbdad;
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-soft);
+        }
+
+        .btn-small {
+            min-height: 32px;
+            padding: 6px 9px;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.2fr) minmax(160px, 0.6fr) minmax(150px, 0.5fr) auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .retro-board {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .retro-column {
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            min-width: 0;
+            overflow: hidden;
+            box-shadow: none;
+        }
+
+        .column-header {
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .column-header h2 {
+            margin: 0 0 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 18px;
+            line-height: 1.25;
+        }
+
+        .column-header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .note-count {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .tone-loved .column-header {
+            background: var(--loved-soft);
+            border-top: 4px solid var(--loved);
+        }
+
+        .tone-loathed .column-header {
+            background: var(--loathed-soft);
+            border-top: 4px solid var(--loathed);
+        }
+
+        .tone-longed .column-header {
+            background: var(--longed-soft);
+            border-top: 4px solid var(--longed);
+        }
+
+        .tone-learned .column-header {
+            background: var(--learned-soft);
+            border-top: 4px solid var(--learned);
+        }
+
+        .note-list {
+            display: grid;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .note-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px;
+            min-width: 0;
+            box-shadow: none;
+        }
+
+        .note-card p {
+            margin-bottom: 12px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .note-footer,
+        .action-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .vote-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #cce0ff;
+            border-radius: 999px;
+            background: #e9f2ff;
+            color: var(--primary-hover);
+            padding: 5px 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .vote-btn:hover {
+            background: #d8e9ff;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .note-form {
+            display: grid;
+            gap: 8px;
+            padding: 0 12px 12px;
+        }
+
+        .inline-edit-form {
+            display: grid;
+            gap: 8px;
+        }
+
+        .empty-state {
+            border: 1px dashed var(--border-strong);
+            border-radius: var(--radius);
+            background: var(--surface-soft);
+            color: var(--muted);
+            padding: 14px;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+
+        .actions-panel {
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .action-form {
+            display: grid;
+            grid-template-columns: minmax(260px, 1.4fr) minmax(150px, 0.5fr) minmax(150px, 0.45fr) auto;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 14px;
+        }
+
+        .action-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .action-card {
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--action);
+            border-radius: var(--radius);
+            background: #ffffff;
+            padding: 12px;
+            box-shadow: none;
+        }
+
+        .action-title {
+            margin-bottom: 10px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .action-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 4px 9px;
+            font-size: 12px;
+            font-weight: 800;
+            border: 1px solid transparent;
+        }
+
+        .status-open {
+            background: #f4f5f7;
+            color: #44546f;
+            border-color: var(--border);
+        }
+
+        .status-doing {
+            background: #fff7d6;
+            color: #946f00;
+            border-color: #f5cd47;
+        }
+
+        .status-done {
+            background: #e3fcef;
+            color: #216e4e;
+            border-color: #7ee2b8;
+        }
+
+        .no-project {
+            padding: 28px;
+            text-align: center;
+        }
+
+        @media (max-width: 1120px) {
+            .retro-board {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .project-form,
+            .project-meta,
+            .action-form {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .app-header {
+                padding: 18px 16px 14px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .project-controls {
+                justify-content: stretch;
+            }
+
+            .project-select,
+            .project-controls .btn {
+                width: 100%;
+            }
+
+            .app-shell {
+                padding: 0 16px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .project-form,
+            .project-meta,
+            .retro-board,
+            .action-form {
+                grid-template-columns: 1fr;
+            }
+
+            .button-row,
+            .note-footer,
+            .action-footer,
+            .section-header {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .button-row .btn,
+            .card-actions,
+            .card-actions .btn,
+            .action-footer .btn {
+                width: 100%;
+            }
+
+            .card-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Squared fintech dashboard skin */
+        :root {
+            --bg: #f6f7f9;
+            --surface: #ffffff;
+            --surface-soft: #eef1f5;
+            --border: transparent;
+            --border-strong: transparent;
+            --text: #111827;
+            --muted: #6b7280;
+            --primary: #111827;
+            --primary-hover: #000000;
+            --danger: #dc2626;
+            --danger-soft: #fef2f2;
+            --loved: #16a34a;
+            --loved-soft: #f0fdf4;
+            --loathed: #dc2626;
+            --loathed-soft: #fef2f2;
+            --longed: #2563eb;
+            --longed-soft: #eff6ff;
+            --learned: #0891b2;
+            --learned-soft: #ecfeff;
+            --action: #2563eb;
+            --action-soft: #eff6ff;
+            --radius: 8px;
+            --radius-md: 6px;
+            --radius-sm: 4px;
+            --accent: #2563eb;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 15px;
+        }
+
+        .app-header {
+            max-width: 1360px;
+            padding: 28px 24px 18px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        h1 {
+            margin-bottom: 6px;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .header-copy {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .app-shell {
+            max-width: 1360px;
+            padding: 0 24px 32px;
+        }
+
+        .project-controls {
+            gap: 10px;
+        }
+
+        .project-select,
+        input,
+        select,
+        textarea {
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            background: #f1f3f6;
+            color: var(--text);
+            padding: 11px 12px;
+            font-size: 15px;
+        }
+
+        .project-select {
+            min-width: 280px;
+            height: 42px;
+            padding: 0 12px;
+        }
+
+        textarea {
+            min-height: 96px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            outline: 3px solid rgba(37, 99, 235, 0.14);
+            outline-offset: 0;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: none;
+        }
+
+        .project-form,
+        .project-meta,
+        .actions-panel {
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .btn {
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            min-height: 40px;
+            padding: 9px 14px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface-soft);
+            border-color: transparent;
+            color: var(--text);
+        }
+
+        .panel .btn-secondary,
+        .retro-column .btn-secondary {
+            background: #f1f3f6;
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-soft);
+        }
+
+        .btn-danger {
+            background: var(--danger-soft);
+            border-color: transparent;
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-soft);
+        }
+
+        .btn-small {
+            min-height: 32px;
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+        }
+
+        .retro-board {
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .retro-column {
+            background: var(--surface-soft);
+            border: none;
+            border-radius: var(--radius);
+            box-shadow: none;
+        }
+
+        .column-header {
+            position: relative;
+            padding: 16px 16px 13px;
+            border-bottom: none;
+            background: transparent;
+        }
+
+        .column-header::before {
+            content: "";
+            position: absolute;
+            top: 22px;
+            left: 16px;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            background: var(--text);
+        }
+
+        .tone-loved .column-header,
+        .tone-loathed .column-header,
+        .tone-longed .column-header,
+        .tone-learned .column-header {
+            background: transparent;
+            border-top: none;
+        }
+
+        .tone-loved .column-header::before {
+            background: var(--loved);
+        }
+
+        .tone-loathed .column-header::before {
+            background: var(--loathed);
+        }
+
+        .tone-longed .column-header::before {
+            background: var(--accent);
+        }
+
+        .tone-learned .column-header::before {
+            background: var(--learned);
+        }
+
+        .column-header h2 {
+            margin-left: 16px;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .column-header p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .note-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 24px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: #ffffff;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .note-list {
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .note-card,
+        .action-card {
+            border: none;
+            border-radius: var(--radius-md);
+            background: #ffffff;
+            box-shadow: 0 1px 2px rgba(17, 24, 39, 0.05);
+        }
+
+        .note-card {
+            padding: 14px;
+        }
+
+        .note-card p {
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+
+        .vote-btn {
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--longed-soft);
+            color: var(--accent);
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .vote-btn:hover {
+            background: #dbeafe;
+        }
+
+        .note-form {
+            padding: 0 12px 12px;
+        }
+
+        .empty-state {
+            border: none;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.56);
+            color: var(--muted);
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
+        .actions-panel {
+            background: var(--surface);
+        }
+
+        .action-card {
+            padding: 14px;
+        }
+
+        .action-title {
+            font-size: 16px;
+            font-weight: 750;
+        }
+
+        .action-meta {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .pill {
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-open {
+            background: var(--surface-soft);
+            color: var(--muted);
+        }
+
+        .status-doing {
+            background: var(--longed-soft);
+            color: var(--accent);
+        }
+
+        .status-done {
+            background: var(--loved-soft);
+            color: #15803d;
+        }
+
+        .no-project {
+            padding: 28px;
+        }
+
+        @media (max-width: 760px) {
+            .app-header {
+                padding: 26px 16px 18px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .app-shell {
+                padding: 0 16px 28px;
+            }
+
+            .project-select {
+                min-width: 0;
+            }
+
+            .button-row .btn,
+            .card-actions .btn,
+            .action-footer .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div>
+            <p class="eyebrow">4Ls Retrospective</p>
+            <h1>Retrospective</h1>
+            <p class="header-copy">A clean board for project context, team feedback, votes, and next actions.</p>
+        </div>
+        <div class="project-controls" id="projectControls"></div>
+    </header>
+
+    <main class="app-shell" id="app"></main>
+
+    <script>
+        const STORAGE_KEY = "retrospective_4ls_v1";
+        const CATEGORIES = [
+            {
+                key: "loved",
+                title: "Loved",
+                icon: "💚",
+                helper: "Điều đã hoạt động tốt và nên tiếp tục.",
+                placeholder: "Ví dụ: Team phối hợp nhanh khi xử lý blocker."
+            },
+            {
+                key: "loathed",
+                title: "Loathed",
+                icon: "💔",
+                helper: "Điều gây khó chịu, cản trở hoặc cần dừng lại.",
+                placeholder: "Ví dụ: Requirement đổi muộn nhưng không có ghi chú rõ."
+            },
+            {
+                key: "longed",
+                title: "Longed for",
+                icon: "💡",
+                helper: "Điều team ước có thêm để làm tốt hơn.",
+                placeholder: "Ví dụ: Cần checklist UAT rõ trước khi release."
+            },
+            {
+                key: "learned",
+                title: "Learned",
+                icon: "🧠",
+                helper: "Bài học rút ra từ thành công hoặc sai sót.",
+                placeholder: "Ví dụ: Viết User Guide song song với test sẽ giảm rủi ro bàn giao."
+            }
+        ];
+        const STATUS_OPTIONS = ["Open", "Doing", "Done"];
+
+        let state = {
+            activeProjectId: "",
+            projects: []
+        };
+        let showingProjectForm = false;
+        let editingNote = null;
+        let editingActionId = null;
+
+        function uid(prefix) {
+            return `${prefix}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        }
+
+        function todayString() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, "0");
+            const day = String(today.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
+        function sampleState() {
+            const projectId = uid("project");
+            const lovedNoteId = uid("note");
+            const loathedNoteId = uid("note");
+            const learnedNoteId = uid("note");
+
+            return {
+                activeProjectId: projectId,
+                projects: [
+                    {
+                        id: projectId,
+                        name: "Go-live Sprint 14",
+                        period: "Sprint 14",
+                        retroDate: "2026-04-27",
+                        notes: {
+                            loved: [
+                                {
+                                    id: lovedNoteId,
+                                    text: "Release ổn định, không gặp downtime trong khung go-live.",
+                                    votes: 3,
+                                    createdAt: new Date().toISOString()
+                                }
+                            ],
+                            loathed: [
+                                {
+                                    id: loathedNoteId,
+                                    text: "Tài liệu vận hành được chuẩn bị muộn nên team support mất thêm thời gian hỏi lại context.",
+                                    votes: 2,
+                                    createdAt: new Date().toISOString()
+                                }
+                            ],
+                            longed: [
+                                {
+                                    id: uid("note"),
+                                    text: "Có checklist pre-release thống nhất giữa BA, QA, Dev và Ops.",
+                                    votes: 1,
+                                    createdAt: new Date().toISOString()
+                                }
+                            ],
+                            learned: [
+                                {
+                                    id: learnedNoteId,
+                                    text: "User Guide nên được viết song song với quá trình test, không chờ đến sát ngày bàn giao.",
+                                    votes: 4,
+                                    createdAt: new Date().toISOString()
+                                }
+                            ]
+                        },
+                        actions: [
+                            {
+                                id: uid("action"),
+                                text: "Thêm task User Guide vào Definition of Done của mỗi sprint.",
+                                owner: "BA",
+                                dueDate: "2026-05-03",
+                                status: "Open",
+                                sourceNoteId: learnedNoteId
+                            },
+                            {
+                                id: uid("action"),
+                                text: "Tạo checklist pre-release và review trước go-live ít nhất 2 ngày.",
+                                owner: "PM",
+                                dueDate: "2026-05-05",
+                                status: "Doing",
+                                sourceNoteId: null
+                            }
+                        ]
+                    }
+                ]
+            };
+        }
+
+        function normalizeProject(project) {
+            const notes = project.notes || {};
+
+            return {
+                id: project.id || uid("project"),
+                name: project.name || "Untitled project",
+                period: project.period || "",
+                retroDate: project.retroDate || todayString(),
+                notes: {
+                    loved: Array.isArray(notes.loved) ? notes.loved : [],
+                    loathed: Array.isArray(notes.loathed) ? notes.loathed : [],
+                    longed: Array.isArray(notes.longed) ? notes.longed : [],
+                    learned: Array.isArray(notes.learned) ? notes.learned : []
+                },
+                actions: Array.isArray(project.actions) ? project.actions : []
+            };
+        }
+
+        function normalizeState(parsedState) {
+            if (!parsedState || !Array.isArray(parsedState.projects)) {
+                return sampleState();
+            }
+
+            const projects = parsedState.projects.map(normalizeProject);
+            const activeProjectId = projects.some((project) => project.id === parsedState.activeProjectId)
+                ? parsedState.activeProjectId
+                : (projects[0] ? projects[0].id : "");
+
+            return {
+                activeProjectId,
+                projects
+            };
+        }
+
+        function loadState() {
+            const savedState = localStorage.getItem(STORAGE_KEY);
+
+            if (!savedState) {
+                state = sampleState();
+                saveState();
+                return;
+            }
+
+            try {
+                state = normalizeState(JSON.parse(savedState));
+            } catch (error) {
+                state = sampleState();
+                saveState();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getActiveProject() {
+            return state.projects.find((project) => project.id === state.activeProjectId) || null;
+        }
+
+        function getStatusClass(status) {
+            return {
+                Open: "status-open",
+                Doing: "status-doing",
+                Done: "status-done"
+            }[status] || "status-open";
+        }
+
+        function renderProjectControls() {
+            const controlsEl = document.getElementById("projectControls");
+
+            controlsEl.innerHTML = `
+                <select class="project-select" aria-label="Project" onchange="setActiveProject(this.value)" ${state.projects.length === 0 ? "disabled" : ""}>
+                    ${state.projects.length === 0
+                        ? `<option>Chưa có kỳ Retro nào</option>`
+                        : state.projects.map((project) => `
+                            <option value="${project.id}" ${project.id === state.activeProjectId ? "selected" : ""}>
+                                ${escapeHtml(project.name)}
+                            </option>
+                        `).join("")
+                    }
+                </select>
+                <button class="btn btn-primary" type="button" onclick="showProjectForm()">+ Project</button>
+            `;
+        }
+
+        function renderApp() {
+            renderProjectControls();
+
+            const appEl = document.getElementById("app");
+            const activeProject = getActiveProject();
+
+            appEl.innerHTML = `
+                ${showingProjectForm ? renderProjectForm() : ""}
+                ${activeProject ? renderProject(activeProject) : renderNoProject()}
+            `;
+        }
+
+        function renderProjectForm() {
+            return `
+                <form class="project-form" onsubmit="addProject(event)">
+                    <div class="field">
+                        <label for="newProjectName">Tên kỳ Retro</label>
+                        <input id="newProjectName" name="name" type="text" placeholder="VD: Retro Sprint 15" required>
+                    </div>
+                    <div class="field">
+                        <label for="newProjectPeriod">Sprint / Period</label>
+                        <input id="newProjectPeriod" name="period" type="text" placeholder="Giai đoạn">
+                    </div>
+                    <div class="field">
+                        <label for="newProjectDate">Ngày thực hiện</label>
+                        <input id="newProjectDate" name="retroDate" type="date" value="${todayString()}">
+                    </div>
+                    <div class="button-row">
+                        <button class="btn btn-secondary" type="button" onclick="hideProjectForm()">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Create</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function renderNoProject() {
+            return `
+                <section class="no-project">
+                    <h2>Chưa có đợt Retrospective nào</h2>
+                    <p class="muted">Tạo project đầu tiên để bắt đầu ghi nhận 4Ls feedback và action items cùng team.</p>
+                </section>
+            `;
+        }
+
+        function renderProject(project) {
+            return `
+                <section class="project-meta">
+                    <div class="field">
+                        <label for="projectName">Tên Retro</label>
+                        <input id="projectName" type="text" value="${escapeHtml(project.name)}" oninput="updateProjectField('name', this.value)">
+                    </div>
+                    <div class="field">
+                        <label for="projectPeriod">Sprint / Period</label>
+                        <input id="projectPeriod" type="text" value="${escapeHtml(project.period)}" oninput="updateProjectField('period', this.value)">
+                    </div>
+                    <div class="field">
+                        <label for="projectDate">Ngày thực hiện</label>
+                        <input id="projectDate" type="date" value="${escapeHtml(project.retroDate)}" onchange="updateProjectField('retroDate', this.value)">
+                    </div>
+                    <button class="btn btn-danger" type="button" onclick="deleteProject('${project.id}')">Xóa Retro</button>
+                </section>
+
+                <section class="retro-board">
+                    ${CATEGORIES.map((category) => renderColumn(project, category)).join("")}
+                </section>
+
+                ${renderActions(project)}
+            `;
+        }
+
+        function renderColumn(project, category) {
+            const notes = project.notes[category.key] || [];
+
+            return `
+                <section class="retro-column tone-${category.key}">
+                    <div class="column-header">
+                        <div class="column-header-left">
+                            <span style="font-size:18px">${category.icon}</span>
+                            <h2>${category.title}</h2>
+                        </div>
+                        <span class="note-count">${notes.length}</span>
+                    </div>
+                    <div class="note-list">
+                        ${notes.length === 0 ? `<div class="empty-state">Chưa có note.</div>` : notes.map((note) => renderNote(category.key, note)).join("")}
+                    </div>
+                    <form class="note-form" onsubmit="addNote(event, '${category.key}')">
+                        <textarea name="text" placeholder="${escapeHtml(category.placeholder)}" required></textarea>
+                        <div class="note-form-actions">
+                            <button class="btn btn-secondary btn-small" type="submit">Thêm Note</button>
+                        </div>
+                    </form>
+                </section>
+            `;
+        }
+
+        function renderNote(categoryKey, note) {
+            const isEditing = editingNote
+                && editingNote.categoryKey === categoryKey
+                && editingNote.noteId === note.id;
+                
+            const votes = Number(note.votes) || 0;
+
+            if (isEditing) {
+                return `
+                    <article class="note-card">
+                        <form class="inline-edit-form" onsubmit="saveNoteEdit(event, '${categoryKey}', '${note.id}')">
+                            <textarea name="text" required>${escapeHtml(note.text)}</textarea>
+                            <div class="button-row">
+                                <button class="btn btn-secondary btn-small" type="button" onclick="cancelNoteEdit()">Cancel</button>
+                                <button class="btn btn-primary btn-small" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </article>
+                `;
+            }
+
+            return `
+                <article class="note-card">
+                    <p>${escapeHtml(note.text)}</p>
+                    <div class="note-footer">
+                        <button class="vote-btn ${votes > 0 ? 'has-votes' : ''}" type="button" onclick="voteNote('${categoryKey}', '${note.id}')">
+                            👍 ${votes}
+                        </button>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary btn-small" type="button" onclick="startNoteEdit('${categoryKey}', '${note.id}')">Edit</button>
+                            <button class="btn btn-danger btn-small icon-btn" type="button" title="Delete note" onclick="deleteNote('${categoryKey}', '${note.id}')">×</button>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderActions(project) {
+            return `
+                <section class="actions-panel">
+                    <div class="section-header">
+                        <h2>Action Items</h2>
+                        <p>${project.actions.length} Task</p>
+                    </div>
+                    <form class="action-form" onsubmit="addAction(event)">
+                        <div class="field">
+                            <label for="actionText">Action</label>
+                            <input id="actionText" name="text" type="text" placeholder="Việc cần làm tiếp theo" required>
+                        </div>
+                        <div class="field">
+                            <label for="actionOwner">Owner</label>
+                            <input id="actionOwner" name="owner" type="text" placeholder="Phân công">
+                        </div>
+                        <div class="field">
+                            <label for="actionDueDate">Due date</label>
+                            <input id="actionDueDate" name="dueDate" type="date">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Add action</button>
+                    </form>
+                    <div class="action-list">
+                        ${project.actions.length === 0 ? `<div class="empty-state">Chưa có action item.</div>` : project.actions.map(renderAction).join("")}
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderAction(action) {
+            if (editingActionId === action.id) {
+                return `
+                    <article class="action-card" style="display:block;">
+                        <form class="action-form" onsubmit="saveActionEdit(event, '${action.id}')">
+                            <div class="field">
+                                <label>Action</label>
+                                <input name="text" type="text" value="${escapeHtml(action.text)}" required>
+                            </div>
+                            <div class="field">
+                                <label>Owner</label>
+                                <input name="owner" type="text" value="${escapeHtml(action.owner)}">
+                            </div>
+                            <div class="field">
+                                <label>Due date</label>
+                                <input name="dueDate" type="date" value="${escapeHtml(action.dueDate)}">
+                            </div>
+                            <div class="field">
+                                <label>Status</label>
+                                <select name="status">
+                                    ${STATUS_OPTIONS.map((status) => `
+                                        <option value="${status}" ${status === action.status ? "selected" : ""}>${status}</option>
+                                    `).join("")}
+                                </select>
+                            </div>
+                            <div class="button-row">
+                                <button class="btn btn-secondary btn-small" type="button" onclick="cancelActionEdit()">Cancel</button>
+                                <button class="btn btn-primary btn-small" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </article>
+                `;
+            }
+
+            return `
+                <article class="action-card">
+                    <div class="action-info">
+                        <div class="action-title">${escapeHtml(action.text)}</div>
+                        <div class="action-meta">
+                            <span class="pill ${getStatusClass(action.status)}">${escapeHtml(action.status || "Open")}</span>
+                            <span class="action-owner"><div class="avatar-mini">${(action.owner || "U")[0].toUpperCase()}</div> ${escapeHtml(action.owner || "Unassigned")}</span>
+                            <span>⏳ ${escapeHtml(action.dueDate || "No date")}</span>
+                        </div>
+                    </div>
+                    <div class="action-footer">
+                        <button class="btn btn-secondary btn-small" style="margin-right:6px;" type="button" onclick="startActionEdit('${action.id}')">Edit</button>
+                        <button class="btn btn-danger btn-small icon-btn" type="button" title="Delete action" onclick="deleteAction('${action.id}')">×</button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function showProjectForm() {
+            showingProjectForm = true;
+            renderApp();
+            const input = document.getElementById("newProjectName");
+            if (input) {
+                input.focus();
+            }
+        }
+
+        function hideProjectForm() {
+            showingProjectForm = false;
+            renderApp();
+        }
+
+        function addProject(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.currentTarget);
+            const name = String(formData.get("name") || "").trim();
+
+            if (!name) {
+                return;
+            }
+
+            const project = {
+                id: uid("project"),
+                name,
+                period: String(formData.get("period") || "").trim(),
+                retroDate: String(formData.get("retroDate") || "") || todayString(),
+                notes: {
+                    loved: [],
+                    loathed: [],
+                    longed: [],
+                    learned: []
+                },
+                actions: []
+            };
+
+            state.projects.push(project);
+            state.activeProjectId = project.id;
+            showingProjectForm = false;
+            editingNote = null;
+            editingActionId = null;
+            saveState();
+            renderApp();
+        }
+
+        function setActiveProject(projectId) {
+            state.activeProjectId = projectId;
+            editingNote = null;
+            editingActionId = null;
+            saveState();
+            renderApp();
+        }
+
+        function updateProjectField(field, value) {
+            const project = getActiveProject();
+
+            if (!project || !["name", "period", "retroDate"].includes(field)) {
+                return;
+            }
+
+            project[field] = value;
+            saveState();
+
+            if (field === "name") {
+                renderProjectControls();
+            }
+        }
+
+        function deleteProject(projectId) {
+            const project = state.projects.find((item) => item.id === projectId);
+
+            if (!project || !confirm(`Delete project "${project.name}" and all retro data?`)) {
+                return;
+            }
+
+            state.projects = state.projects.filter((item) => item.id !== projectId);
+            state.activeProjectId = state.projects[0] ? state.projects[0].id : "";
+            editingNote = null;
+            editingActionId = null;
+            saveState();
+            renderApp();
+        }
+
+        function addNote(event, categoryKey) {
+            event.preventDefault();
+
+            const project = getActiveProject();
+            const form = event.currentTarget;
+            const text = String(new FormData(form).get("text") || "").trim();
+
+            if (!project || !text || !project.notes[categoryKey]) {
+                return;
+            }
+
+            project.notes[categoryKey].push({
+                id: uid("note"),
+                text,
+                votes: 0,
+                createdAt: new Date().toISOString()
+            });
+
+            saveState();
+            renderApp();
+        }
+
+        function voteNote(categoryKey, noteId) {
+            const note = findNote(categoryKey, noteId);
+
+            if (!note) {
+                return;
+            }
+
+            note.votes = (Number(note.votes) || 0) + 1;
+            saveState();
+            renderApp();
+        }
+
+        function startNoteEdit(categoryKey, noteId) {
+            editingNote = { categoryKey, noteId };
+            editingActionId = null;
+            renderApp();
+        }
+
+        function cancelNoteEdit() {
+            editingNote = null;
+            renderApp();
+        }
+
+        function saveNoteEdit(event, categoryKey, noteId) {
+            event.preventDefault();
+
+            const note = findNote(categoryKey, noteId);
+            const text = String(new FormData(event.currentTarget).get("text") || "").trim();
+
+            if (!note || !text) {
+                return;
+            }
+
+            note.text = text;
+            editingNote = null;
+            saveState();
+            renderApp();
+        }
+
+        function deleteNote(categoryKey, noteId) {
+            const project = getActiveProject();
+
+            if (!project || !project.notes[categoryKey]) {
+                return;
+            }
+
+            project.notes[categoryKey] = project.notes[categoryKey].filter((note) => note.id !== noteId);
+            editingNote = null;
+            saveState();
+            renderApp();
+        }
+
+        function findNote(categoryKey, noteId) {
+            const project = getActiveProject();
+
+            if (!project || !project.notes[categoryKey]) {
+                return null;
+            }
+
+            return project.notes[categoryKey].find((note) => note.id === noteId) || null;
+        }
+
+        function addAction(event) {
+            event.preventDefault();
+
+            const project = getActiveProject();
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+            const text = String(formData.get("text") || "").trim();
+
+            if (!project || !text) {
+                return;
+            }
+
+            project.actions.push({
+                id: uid("action"),
+                text,
+                owner: String(formData.get("owner") || "").trim(),
+                dueDate: String(formData.get("dueDate") || ""),
+                status: "Open",
+                sourceNoteId: null
+            });
+
+            saveState();
+            renderApp();
+        }
+
+        function startActionEdit(actionId) {
+            editingActionId = actionId;
+            editingNote = null;
+            renderApp();
+        }
+
+        function cancelActionEdit() {
+            editingActionId = null;
+            renderApp();
+        }
+
+        function saveActionEdit(event, actionId) {
+            event.preventDefault();
+
+            const project = getActiveProject();
+
+            if (!project) {
+                return;
+            }
+
+            const action = project.actions.find((item) => item.id === actionId);
+            const formData = new FormData(event.currentTarget);
+            const text = String(formData.get("text") || "").trim();
+
+            if (!action || !text) {
+                return;
+            }
+
+            action.text = text;
+            action.owner = String(formData.get("owner") || "").trim();
+            action.dueDate = String(formData.get("dueDate") || "");
+            action.status = STATUS_OPTIONS.includes(String(formData.get("status")))
+                ? String(formData.get("status"))
+                : "Open";
+
+            editingActionId = null;
+            saveState();
+            renderApp();
+        }
+
+        function deleteAction(actionId) {
+            const project = getActiveProject();
+
+            if (!project) {
+                return;
+            }
+
+            project.actions = project.actions.filter((action) => action.id !== actionId);
+            editingActionId = null;
+            saveState();
+            renderApp();
+        }
+
+        loadState();
+        renderApp();
+    </script>
+</body>
+</html>

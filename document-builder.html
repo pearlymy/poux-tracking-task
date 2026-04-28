@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50V0z' fill='%232563EB'/><path d='M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50V0z' fill='%23F97316'/><path d='M35 50l10 10 20-20' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2000,6 +2001,14 @@
 
         .view p {
             margin: 0 0 2em;
+        }
+
+        .block[data-kind="text"] .view p {
+            margin: 0 0 0.55em;
+        }
+
+        .block[data-kind="text"] .view p:last-child {
+            margin-bottom: 0;
         }
 
         .view a {
@@ -5076,10 +5085,17 @@
     <div class="title-tooltip" id="titleTooltip" role="tooltip"></div>
 
     <script>
-        const STORAGE_KEY = 'document_builder_state_v4';
-        const DOCUMENTS_STORAGE_KEY = 'document_builder_documents_v1';
-        const ACTIVE_DOCUMENT_KEY = 'document_builder_active_document_v1';
-        const TEAM_DOCUMENTS_STORAGE_KEY = 'team_documents_dashboard_v1';
+        const requestParams = new URLSearchParams(window.location.search);
+        const requestedDocumentScope = (requestParams.get('scope') || '').trim();
+        const requestedScopeTitle = (requestParams.get('scopeTitle') || '').trim();
+        const requestedEmbedded = requestParams.get('embedded') === '1';
+        function scopedStorageKey(baseKey) {
+            return requestedDocumentScope ? baseKey + '__' + encodeURIComponent(requestedDocumentScope) : baseKey;
+        }
+        const STORAGE_KEY = scopedStorageKey('document_builder_state_v4');
+        const DOCUMENTS_STORAGE_KEY = scopedStorageKey('document_builder_documents_v1');
+        const ACTIVE_DOCUMENT_KEY = scopedStorageKey('document_builder_active_document_v1');
+        const TEAM_DOCUMENTS_STORAGE_KEY = scopedStorageKey('team_documents_dashboard_v1');
         const BLOCK_USAGE_KEY = 'document_builder_block_usage_v1';
         const PINNED_BLOCKS_KEY = 'document_builder_pinned_blocks_v1';
         const SIDEBAR_WIDTH_KEY = 'document_builder_sidebar_width_v1';
@@ -5182,7 +5198,6 @@
         let hasUnpublishedChanges = false;
         let draftSaveFailed = false;
         let bypassPublishGuard = false;
-        const requestParams = new URLSearchParams(window.location.search);
         const requestedDocumentId = requestParams.get('id') || requestParams.get('doc') || '';
         const requestedReturnTo = requestParams.get('returnTo') || '';
         const requestedMode = requestParams.get('mode') || requestParams.get('view') || '';
@@ -5724,6 +5739,14 @@
         function getBuilderBackHref() {
             if (requestedReturnTo && !/^(?:javascript:|data:)/i.test(requestedReturnTo)) {
                 return requestedReturnTo;
+            }
+            if (requestedDocumentScope || requestedEmbedded || requestedScopeTitle) {
+                const params = new URLSearchParams();
+                if (requestedEmbedded) params.set('embedded', '1');
+                if (requestedDocumentScope) params.set('scope', requestedDocumentScope);
+                if (requestedScopeTitle) params.set('scopeTitle', requestedScopeTitle);
+                const query = params.toString();
+                return query ? 'document-list.html?' + query : 'document-list.html';
             }
             return 'document-list.html';
         }
