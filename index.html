@@ -356,6 +356,10 @@
             cursor: grab;
         }
 
+        .task-card.is-status-lov-open {
+            z-index: 80;
+        }
+
         .task-card:active {
             cursor: grabbing;
         }
@@ -666,6 +670,11 @@
             background: #ffffff;
             box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
             z-index: 50;
+        }
+
+        .tag-name.is-status-lov-open,
+        .tag-name:has(.tag-status-lov) {
+            z-index: 90;
         }
 
         .tag-status-lov-option {
@@ -1093,6 +1102,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .sidebar {
+            width: 16rem;
             flex-shrink: 0;
             transition: width 0.28s ease, box-shadow 0.28s ease;
             overflow-x: visible;
@@ -1312,7 +1322,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.375rem 0 0.375rem 1rem;
+            padding: 0.375rem 0 0.375rem 0.45rem;
             font-size: 0.875rem;
             color: #64748b;
             border-left: 1px solid transparent;
@@ -1446,12 +1456,68 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .document-page-row {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 0.25rem;
-            overflow: hidden;
+            overflow: visible;
             transform-origin: left center;
             transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+        }
+
+        .document-page-row.is-divider {
+            min-height: 1.5rem;
+            cursor: grab;
+            gap: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .document-page-row.is-divider:active {
+            cursor: grabbing;
+        }
+
+        .document-branch-ghost {
+            opacity: 0.45;
+            background: #eff6ff;
+            border-radius: 0.75rem;
+        }
+
+        .document-branch-drag {
+            cursor: grabbing !important;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
+        }
+
+        .document-divider-label {
+            flex-shrink: 0;
+            max-width: 7rem;
+            overflow: hidden;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .document-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(148, 163, 184, 0.45) 0%, rgba(148, 163, 184, 0.08) 100%);
+        }
+
+        .document-page-row.is-divider .document-page-actions {
+            width: 1.75rem;
+            min-width: 1.75rem;
+        }
+
+        .document-page-row.is-divider:hover .document-page-actions,
+        .document-page-row.is-divider:focus-within .document-page-actions {
+            width: 1.75rem;
+            min-width: 1.75rem;
         }
 
         .document-page-row.is-entering {
@@ -1462,6 +1528,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             flex: 1;
             min-width: 0;
             overflow: hidden;
+            gap: 0.45rem;
         }
 
         .document-page-row .member-name {
@@ -1496,19 +1563,74 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             align-items: center;
             justify-content: flex-end;
             flex-shrink: 0;
-            gap: 0.15rem;
-            max-width: 0;
-            overflow: hidden;
+            width: 1.75rem;
+            min-width: 1.75rem;
+            overflow: visible;
             opacity: 0;
             pointer-events: none;
-            transition: max-width 0.16s ease, opacity 0.12s ease;
+            transition: opacity 0.12s ease;
         }
 
         .document-page-row:hover .document-page-actions,
         .document-page-row:focus-within .document-page-actions {
-            max-width: 5.25rem;
             opacity: 1;
             pointer-events: auto;
+        }
+
+        .document-action-menu-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.75rem;
+            width: 1.75rem;
+            border-radius: 999px;
+            color: #94a3b8;
+        }
+
+        .document-action-menu-btn:hover,
+        .document-action-menu-btn.is-active {
+            background: #eef6ff;
+            color: #2563eb;
+        }
+
+        .document-action-popover {
+            position: absolute;
+            top: calc(100% + 0.2rem);
+            right: 0;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            width: 2rem;
+            padding: 0.15rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 999px;
+            background: #ffffff;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.14);
+        }
+
+        .document-action-popover .menu-action-btn {
+            height: 1.7rem;
+            width: 1.7rem;
+            min-width: 1.7rem;
+        }
+
+        .document-visibility-badge {
+            flex-shrink: 0;
+            border-radius: 999px;
+            background: #f1f5f9;
+            padding: 0.08rem 0.3rem;
+            color: #64748b;
+            font-size: 0.56rem;
+            font-weight: 800;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .document-privacy-toggle:hover,
+        .document-privacy-toggle.is-active {
+            background: #eef6ff;
+            color: #2563eb;
         }
 
         .document-delete-toggle {
@@ -1567,10 +1689,57 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .document-inline-form {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 0.45rem;
             padding: 0.45rem 0 0.35rem 1rem;
             border-left: 1px solid #bfdbfe;
             animation: documentInlineReveal 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .document-privacy-controls,
+        .document-share-list,
+        .document-permission-panel {
+            flex-basis: 100%;
+            min-width: 0;
+        }
+
+        .document-privacy-controls,
+        .document-share-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .document-privacy-chip,
+        .document-share-chip {
+            min-height: 1.55rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0 0.5rem;
+            transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+        }
+
+        .document-privacy-chip.is-active,
+        .document-share-chip.is-active {
+            border-color: #bfdbfe;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .document-share-list.is-hidden {
+            display: none;
+        }
+
+        .document-permission-panel {
+            margin: 0.25rem 0 0.35rem;
+            padding: 0.45rem 0 0.4rem 0.65rem;
+            border-left: 1px solid #bfdbfe;
+            animation: documentInlineReveal 0.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .branch-menu-stack {
@@ -5653,7 +5822,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
 <body class="selection:bg-blue-100 selection:text-blue-900">
     <div class="app-shell">
-        <aside id="sidebar" class="sidebar w-64 h-screen bg-white border-r border-slate-200 flex flex-col shadow-sm">
+        <aside id="sidebar" class="sidebar h-screen bg-white border-r border-slate-200 flex flex-col shadow-sm">
             <div class="p-6">
                 <div class="sidebar-header flex items-center gap-3">
                     <div class="sidebar-header-main flex items-center gap-3 min-w-0 pr-12">
@@ -5683,7 +5852,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                         </svg>
                     </button>
                     <div id="trackingMenu" class="accordion-content max-h-0">
-                        <ul id="trackingList" class="py-2 space-y-1 pl-9 border-l border-slate-100"></ul>
+                        <ul id="trackingList" class="py-2 space-y-1 pl-4 border-l border-slate-100"></ul>
                     </div>
                 </div>
 
@@ -5709,9 +5878,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                         </div>
                     </div>
                     <div id="documentMenu" class="accordion-content max-h-0">
-                        <div class="branch-menu-stack space-y-1 pl-9">
+                        <div class="branch-menu-stack space-y-1 pl-4">
                             <div id="documentCreateForm" class="document-inline-form hidden">
                                 <input id="documentCreateInput" type="text" class="document-inline-input" placeholder="Tên page mới..." maxlength="60">
+                                <input id="documentCreateVisibility" type="hidden" value="team">
                                 <div class="document-inline-actions">
                                     <button type="button" id="documentCreateSaveBtn" class="menu-action-btn" aria-label="Lưu page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -5724,6 +5894,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                                         </svg>
                                     </button>
                                 </div>
+                                <div class="document-privacy-controls" id="documentCreatePrivacyControls"></div>
+                                <div class="document-share-list is-hidden" id="documentCreateShareList"></div>
                             </div>
                             <div id="documentList" class="space-y-1"></div>
                         </div>
@@ -5801,9 +5973,6 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     </div>
                     Task Tracking Elite
                 </h1>
-                <p class="text-slate-500 mt-2 text-[13px] font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-400"></i> Bảng điều khiển tiến độ dự án 2024
-                </p>
             </div>
 
             <div class="flex w-full md:w-auto gap-3 items-center">
@@ -6589,9 +6758,15 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
             const [isCreatingCategory, setIsCreatingCategory] = useState(false);
             const [newCategoryName, setNewCategoryName] = useState("");
             const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+            const [openCategoryActionId, setOpenCategoryActionId] = useState(null);
 
             useEffect(() => {
-                const handleClickOutside = () => setDeleteConfirmId(null);
+                const handleClickOutside = (event) => {
+                    setDeleteConfirmId(null);
+                    if (!event.target.closest("[data-category-action-root]")) {
+                        setOpenCategoryActionId(null);
+                    }
+                };
                 document.addEventListener("click", handleClickOutside);
                 return () => document.removeEventListener("click", handleClickOutside);
             }, []);
@@ -6719,7 +6894,10 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                     key: category.id,
                                     draggable: !isEditing,
                                     onClick: () => {
-                                        if (!isEditing) onSelectCategory(category.id);
+                                        if (!isEditing) {
+                                            setOpenCategoryActionId(null);
+                                            onSelectCategory(category.id);
+                                        }
                                     },
                                     onContextMenu: (e) => {
                                         e.preventDefault();
@@ -6732,7 +6910,8 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                     onDragLeave: !isEditing ? handleDragLeave : undefined,
                                     onDrop: (e) => !isEditing && handleDrop(e, category.id),
                                     onDragEnd: !isEditing ? handleDragEnd : undefined,
-                                    className: `group relative flex max-w-[220px] shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`
+                                    className: `group relative flex max-w-[220px] shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${openCategoryActionId === category.id ? "z-50" : ""} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`,
+                                    "data-category-action-root": true
                                 },
                                 h(Folder, { className: "h-4 w-4 shrink-0" }),
                                 isEditing ? h("input", {
@@ -6759,38 +6938,55 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                     },
                                     className: "min-w-0 flex-1 bg-white border border-blue-400 focus:ring-2 focus:ring-blue-100 rounded px-2 py-1 outline-none text-slate-800"
                                 }) : h("span", { className: "min-w-0 flex-1 truncate text-left" }, category.name),
-                                !isEditing && h("span", { className: `ml-0.5 text-xs font-bold text-slate-400 transition-opacity ${deleteConfirmId === category.id ? "opacity-0" : "group-hover:opacity-0"}` }, count),
-                                !isEditing && h("div", { className: `ml-0.5 flex shrink-0 items-center gap-0.5 transition-all ${deleteConfirmId === category.id ? "w-[88px] opacity-100" : "w-0 opacity-0 group-hover:w-[62px] group-hover:opacity-100"}` },
+                                !isEditing && h("span", { className: `ml-0.5 text-xs font-bold text-slate-400 transition-opacity ${openCategoryActionId === category.id ? "opacity-0" : "group-hover:opacity-0"}` }, count),
+                                !isEditing && h("div", { className: "relative ml-0.5 flex h-7 w-7 shrink-0 items-center justify-center" },
                                     h("button", {
                                         type: "button",
                                         onClick: (e) => {
                                             e.stopPropagation();
-                                            setEditingCategoryId(category.id);
-                                            setEditingCategoryName(category.name);
+                                            setDeleteConfirmId(null);
+                                            setOpenCategoryActionId(openCategoryActionId === category.id ? null : category.id);
                                         },
-                                        className: "p-1.5 rounded-md text-slate-400 hover:bg-blue-100 hover:text-blue-600 transition-all",
-                                        title: "Đổi tên danh mục (Chuột phải)"
-                                    }, h(Pencil, { className: "h-3.5 w-3.5" })),
-                                    h("button", {
-                                        type: "button",
-                                        onClick: (e) => {
-                                            e.stopPropagation();
-                                            if (deleteConfirmId === category.id) {
-                                                onDeleteCategory(category);
-                                                setDeleteConfirmId(null);
-                                            } else {
-                                                setDeleteConfirmId(category.id);
-                                            }
+                                        className: `flex h-7 w-7 items-center justify-center rounded-full text-slate-400 opacity-0 transition-opacity hover:bg-blue-100 hover:text-blue-600 group-hover:opacity-100 ${openCategoryActionId === category.id ? "bg-blue-100 text-blue-600 opacity-100" : ""}`,
+                                        title: "Mở thao tác danh mục"
+                                    }, h("span", { className: "text-lg leading-none" }, "⋮")),
+                                    openCategoryActionId === category.id && h("div", {
+                                        className: "absolute right-0 top-[calc(100%+4px)] z-50 flex w-8 flex-col items-center gap-1 rounded-full border border-slate-200 bg-white p-1 shadow-xl",
+                                        onClick: (e) => e.stopPropagation()
+                                    },
+                                        h("button", {
+                                            type: "button",
+                                            onClick: (e) => {
+                                                e.stopPropagation();
+                                                setOpenCategoryActionId(null);
+                                                setEditingCategoryId(category.id);
+                                                setEditingCategoryName(category.name);
+                                            },
+                                            className: "flex h-6 w-6 items-center justify-center rounded-full text-slate-400 transition hover:bg-blue-100 hover:text-blue-600",
+                                            title: "Đổi tên danh mục"
+                                        }, h(Pencil, { className: "h-3.5 w-3.5" })),
+                                        h("button", {
+                                            type: "button",
+                                            onClick: (e) => {
+                                                e.stopPropagation();
+                                                if (deleteConfirmId === category.id) {
+                                                    onDeleteCategory(category);
+                                                    setDeleteConfirmId(null);
+                                                    setOpenCategoryActionId(null);
+                                                } else {
+                                                    setDeleteConfirmId(category.id);
+                                                }
+                                            },
+                                            className: `relative flex h-6 items-center justify-center overflow-hidden rounded-full transition-all duration-300 ${
+                                                deleteConfirmId === category.id
+                                                    ? "w-12 border border-red-200 bg-red-50 text-red-600"
+                                                    : "w-6 border border-transparent bg-transparent text-slate-400 hover:bg-red-50 hover:text-red-600"
+                                            }`,
+                                            title: "Xóa danh mục"
                                         },
-                                        className: `relative ml-0.5 flex h-7 items-center justify-center overflow-hidden rounded-md transition-all duration-300 ${
-                                            deleteConfirmId === category.id
-                                                ? "w-14 border border-red-200 bg-red-50 text-red-600"
-                                                : "w-7 border border-transparent bg-transparent text-slate-400 hover:bg-red-50 hover:text-red-600"
-                                        }`,
-                                        title: "Xóa danh mục"
-                                    }, 
-                                        h(Trash2, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteConfirmId === category.id ? "scale-50 opacity-0" : "scale-100 opacity-100"}` }),
-                                        h("span", { className: `absolute text-[11px] font-bold whitespace-nowrap transition-all duration-300 ${deleteConfirmId === category.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` }, "Xóa")
+                                            h(Trash2, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteConfirmId === category.id ? "scale-50 opacity-0" : "scale-100 opacity-100"}` }),
+                                            h("span", { className: `absolute text-[10px] font-bold whitespace-nowrap transition-all duration-300 ${deleteConfirmId === category.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` }, "Xóa")
+                                        )
                                     )
                                 )
                                 );
@@ -8073,6 +8269,13 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
             const [page, setPage] = useState(initialPage);
 
             const showPage = (nextPage) => {
+                if (!nextPage) {
+                    window.POUX_DOCUMENT_WORKSPACE_ACTIVE = true;
+                    window.POUX_DOCUMENT_WORKSPACE_PAGE = null;
+                    window.POUX_PENDING_DOCUMENT_PAGE = null;
+                    setPage(null);
+                    return;
+                }
                 const normalizedPage = normalizeWorkspacePage(nextPage);
                 window.POUX_DOCUMENT_WORKSPACE_ACTIVE = true;
                 window.POUX_DOCUMENT_WORKSPACE_PAGE = normalizedPage;
@@ -9024,7 +9227,8 @@ function togglePersonalMode(select) {
             tag.dataset.userKey = normalizedAssignee.user_key;
             tag.dataset.workflowState = workflowMeta.stateCode;
             tag.setAttribute('onclick', `toggleAssigneeStatusLov('${ticketId}', '${normalizedAssignee.user_key}', event)`);
-            tag.className = `tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}`;
+            const isStatusLovOpen = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key) === openAssigneeStatusLovKey;
+            tag.className = `tag-name ${getWorkflowStateClass(workflowMeta.stateCode)} ${isStatusLovOpen ? 'is-status-lov-open' : ''}`;
             tag.setAttribute('title', `${user.full_name} - ${workflowMeta.stateName}`);
             tag.setAttribute('style', `--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;`);
             tag.innerHTML = `<span class="tag-label">${user.full_name}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}`;
@@ -9037,7 +9241,8 @@ function togglePersonalMode(select) {
             if (!user) return '';
             const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
             const workflowColor = getColorOptionMeta(workflowMeta.colorTheme).hex;
-            return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)}" data-user-key="${normalizedAssignee.user_key}" data-workflow-state="${workflowMeta.stateCode}" onclick="toggleAssigneeStatusLov('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', event)" title="${escapeHtml(`${user.full_name} - ${workflowMeta.stateName}`)}" style="--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;"><span class="tag-label">${escapeHtml(user.full_name)}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}</div>`;
+            const isStatusLovOpen = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key) === openAssigneeStatusLovKey;
+            return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)} ${isStatusLovOpen ? 'is-status-lov-open' : ''}" data-user-key="${normalizedAssignee.user_key}" data-workflow-state="${workflowMeta.stateCode}" onclick="toggleAssigneeStatusLov('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', event)" title="${escapeHtml(`${user.full_name} - ${workflowMeta.stateName}`)}" style="--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;"><span class="tag-label">${escapeHtml(user.full_name)}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}</div>`;
         }
 
         function renderAssigneeTags(assignees, ticketId = '') {
@@ -11326,6 +11531,11 @@ function togglePersonalMode(select) {
             if (!card) return;
             setCardState(card, state);
             card.innerHTML = renderTaskCardInnerHtml(state);
+            const normalizedState = normalizeTicketState(state);
+            const isStatusLovOpen = normalizedState?.assignees?.some((record) => (
+                getAssigneeStatusLovKey(normalizedState.ticket_id, record.user_key) === openAssigneeStatusLovKey
+            ));
+            card.classList.toggle('is-status-lov-open', !!isStatusLovOpen);
         }
 
         function createTaskCardElement(state) {
@@ -11932,24 +12142,128 @@ function openInlineForm() {
             }
         };
         const branchState = {
-            document: { pages: [], editingId: null, activeId: 'doc-po', deleteConfirmId: null, removingId: null, animatingId: null, invalidTimeouts: { create: null, edit: null } }
+            document: { pages: [], editingId: null, permissionEditingId: null, actionMenuId: null, activeId: 'doc-po', deleteConfirmId: null, removingId: null, animatingId: null, createVisibility: 'team', createSharedUserIds: [], invalidTimeouts: { create: null, edit: null } }
         };
 
         function getBranchConfig(branchKey) { return branchConfigs[branchKey]; }
         function getBranchState(branchKey) { return branchState[branchKey]; }
 
-        function getBranchPage(branchKey, pageId) {
+        function isBranchDivider(item) {
+            return item?.type === 'divider';
+        }
+
+        function isBranchPage(item) {
+            return !!item && !isBranchDivider(item);
+        }
+
+        function normalizeBranchVisibility(value) {
+            return ['team', 'personal', 'shared'].includes(value) ? value : 'team';
+        }
+
+        function normalizeBranchSharedUsers(value) {
+            return Array.from(new Set((Array.isArray(value) ? value : [])
+                .map((userKey) => normalizeUserKey(userKey))
+                .filter((userKey) => userKey && USERS[userKey] && USERS[userKey].is_active)));
+        }
+
+        function normalizeBranchItem(item, config) {
+            if (!item || typeof item !== 'object') return null;
+            if (item.type === 'divider') {
+                return {
+                    type: 'divider',
+                    id: item.id || `${config.pageIdPrefix}-divider-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                    label: String(item.label || '').trim()
+                };
+            }
+            const id = String(item.id || '').trim();
+            const name = String(item.name || '').trim();
+            if (!id || !name) return null;
+            const ownerUserId = normalizeUserKey(item.ownerUserId || item.owner_user_id || CURRENT_USER_ID);
+            return {
+                ...item,
+                type: 'page',
+                id,
+                name,
+                visibility: normalizeBranchVisibility(item.visibility),
+                ownerUserId: USERS[ownerUserId] ? ownerUserId : CURRENT_USER_ID,
+                sharedUserIds: normalizeBranchSharedUsers(item.sharedUserIds || item.shared_user_ids)
+            };
+        }
+
+        function normalizeBranchItems(items, config) {
+            return (Array.isArray(items) ? items : [])
+                .map((item) => normalizeBranchItem(item, config))
+                .filter(Boolean);
+        }
+
+        function getFirstBranchPage(branchKey) {
+            return getBranchState(branchKey)?.pages.find((page) => isBranchPage(page) && canViewBranchPage(page)) || null;
+        }
+
+        function getRawBranchPage(branchKey, pageId) {
             const state = getBranchState(branchKey);
             if (!state) return null;
-            return state.pages.find((page) => page.id === pageId) || null;
+            return state.pages.find((page) => isBranchPage(page) && page.id === pageId) || null;
+        }
+
+        function getBranchPage(branchKey, pageId) {
+            const page = getRawBranchPage(branchKey, pageId);
+            return page && canViewBranchPage(page) ? page : null;
+        }
+
+        function canManageBranchPage(page) {
+            return isBranchPage(page) && (isAdminUser(CURRENT_USER_ID) || page.ownerUserId === CURRENT_USER_ID);
+        }
+
+        function canViewBranchPage(page) {
+            if (!isBranchPage(page)) return true;
+            if (isAdminUser(CURRENT_USER_ID) || page.ownerUserId === CURRENT_USER_ID) return true;
+            if (page.visibility === 'personal') return false;
+            if (page.visibility === 'shared') return page.sharedUserIds.includes(CURRENT_USER_ID);
+            const teamUsers = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode());
+            return !teamUsers.length || teamUsers.includes(CURRENT_USER_ID);
+        }
+
+        function getBranchVisibleItems(branchKey) {
+            const state = getBranchState(branchKey);
+            if (!state) return [];
+            const hasVisiblePageBefore = (index) => state.pages.slice(0, index).some((item) => isBranchPage(item) && canViewBranchPage(item));
+            const hasVisiblePageAfter = (index) => state.pages.slice(index + 1).some((item) => isBranchPage(item) && canViewBranchPage(item));
+            const hasAnyVisiblePage = state.pages.some((item) => isBranchPage(item) && canViewBranchPage(item));
+            return state.pages.reduce((items, item, index) => {
+                if (isBranchPage(item)) {
+                    if (canViewBranchPage(item)) items.push(item);
+                    return items;
+                }
+                const hasDividerLabel = String(item?.label || '').trim();
+                const shouldShowDivider = hasDividerLabel
+                    ? hasAnyVisiblePage
+                    : hasVisiblePageBefore(index) && hasVisiblePageAfter(index);
+                if (isBranchDivider(item) && shouldShowDivider && !isBranchDivider(items[items.length - 1])) {
+                    items.push(item);
+                }
+                return items;
+            }, []);
+        }
+
+        function getBranchVisibilityLabel(page) {
+            if (page.visibility === 'personal') return 'Me';
+            if (page.visibility === 'shared') return 'Share';
+            return 'Team';
         }
 
         function showDocumentWorkspace(pageId) {
             const documentState = getBranchState('document');
-            const page = getBranchPage('document', pageId) || documentState.pages[0] || null;
+            const page = getBranchPage('document', pageId) || getFirstBranchPage('document');
             if (!page) {
+                documentState.activeId = null;
                 clearMemberActiveStates();
                 window.POUX_DOCUMENT_WORKSPACE_ACTIVE = true;
+                window.POUX_PENDING_DOCUMENT_PAGE = null;
+                window.POUX_DOCUMENT_WORKSPACE_PAGE = null;
+                if (window.PouxDocumentWorkspace && typeof window.PouxDocumentWorkspace.showPage === 'function') {
+                    window.PouxDocumentWorkspace.showPage(null);
+                }
                 setWorkspaceView('document');
                 syncActiveNavState();
                 return;
@@ -11977,18 +12291,60 @@ function openInlineForm() {
                 try {
                     const parsedPages = JSON.parse(savedPages);
                     if (Array.isArray(parsedPages) && parsedPages.length > 0) {
-                        state.pages = parsedPages;
+                        const normalizedPages = normalizeBranchItems(parsedPages, config);
+                        if (!normalizedPages.length) throw new Error('No valid document pages');
+                        state.pages = normalizedPages;
+                        if (!getBranchPage(branchKey, state.activeId)) {
+                            state.activeId = getFirstBranchPage(branchKey)?.id || null;
+                        }
+                        saveBranchPages(branchKey);
                         return;
                     }
                 } catch (error) {
                 }
             }
-            state.pages = config.defaultPages.map((page) => ({ ...page }));
+            state.pages = normalizeBranchItems(config.defaultPages, config);
         }
 
         function saveBranchPages(branchKey) {
             const config = getBranchConfig(branchKey);
             localStorage.setItem(config.storageKey, JSON.stringify(getBranchState(branchKey).pages));
+        }
+
+        function initializeBranchSortable(branchKey) {
+            const config = getBranchConfig(branchKey);
+            const state = getBranchState(branchKey);
+            const list = document.getElementById(config.listId);
+            if (!list || typeof Sortable === 'undefined' || list.dataset.sortableInitialized === 'true') return;
+
+            new Sortable(list, {
+                animation: 150,
+                filter: '.is-editing, .document-inline-form, .document-page-actions, button, input',
+                preventOnFilter: false,
+                ghostClass: 'document-branch-ghost',
+                dragClass: 'document-branch-drag',
+                onStart: () => {
+                    state.deleteConfirmId = null;
+                },
+                onEnd: () => {
+                    const orderedIds = Array.from(list.querySelectorAll(`[${config.rowAttr}]`))
+                        .map((row) => row.getAttribute(config.rowAttr))
+                        .filter(Boolean);
+                    const itemById = new Map(state.pages.map((item) => [item.id, item]));
+                    const orderedVisibleItems = orderedIds.map((id) => itemById.get(id)).filter(Boolean);
+                    let visibleIndex = 0;
+                    state.pages = state.pages.map((item) => {
+                        if (!orderedIds.includes(item.id)) return item;
+                        const nextItem = orderedVisibleItems[visibleIndex];
+                        visibleIndex += 1;
+                        return nextItem || item;
+                    });
+                    saveBranchPages(branchKey);
+                    renderBranchPages(branchKey);
+                }
+            });
+
+            list.dataset.sortableInitialized = 'true';
         }
 
         function syncBranchMenuHeight(branchKey) {
@@ -12037,17 +12393,50 @@ function openInlineForm() {
             setTimeout(callback, duration);
         }
 
+        function renderBranchPermissionPanel(branchKey, page) {
+            if (!canManageBranchPage(page)) return '';
+            const teamUsers = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode());
+            const shareList = page.visibility === 'shared'
+                ? `<div class="document-share-list">
+                    ${teamUsers.map((userKey) => {
+                        const user = USERS[userKey];
+                        const isActive = page.sharedUserIds.includes(userKey);
+                        const isOwner = userKey === page.ownerUserId;
+                        return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-permission-share-user="${userKey}" data-page-id="${page.id}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
+                    }).join('')}
+                </div>`
+                : '';
+            return `
+                <div class="document-permission-panel" data-permission-panel-id="${page.id}">
+                    <div class="document-privacy-controls">
+                        ${['team', 'personal', 'shared'].map((mode) => {
+                            const label = mode === 'personal' ? 'Cá nhân' : (mode === 'shared' ? 'Share' : 'Team');
+                            return `<button type="button" class="document-privacy-chip ${page.visibility === mode ? 'is-active' : ''}" data-permission-visibility="${mode}" data-page-id="${page.id}">${label}</button>`;
+                        }).join('')}
+                        <button type="button" class="document-privacy-chip ${branchKey}-permission-close-btn" data-page-id="${page.id}">Đóng</button>
+                    </div>
+                    ${shareList}
+                </div>
+            `;
+        }
+
         function renderBranchPages(branchKey) {
             const config = getBranchConfig(branchKey);
             const state = getBranchState(branchKey);
             const list = document.getElementById(config.listId);
+            const visibleItems = getBranchVisibleItems(branchKey);
+            if (state.activeId && !getBranchPage(branchKey, state.activeId)) {
+                state.activeId = getFirstBranchPage(branchKey)?.id || null;
+                if (branchKey === 'document' && currentWorkspaceView === 'document') showDocumentWorkspace(state.activeId);
+            }
 
-            list.innerHTML = state.pages.map((page, index) => {
+            let visiblePageIndex = 0;
+            list.innerHTML = visibleItems.map((page) => {
                 if (page.id === state.editingId) {
                     return `
-                        <div class="document-page-row is-editing">
+                        <div class="document-page-row is-editing" ${config.rowAttr}="${page.id}" data-branch-item-id="${page.id}">
                             <div class="document-inline-form w-full">
-                                <input type="text" class="document-inline-input ${branchKey}-edit-input" data-page-id="${page.id}" value="${page.name.replace(/"/g, '&quot;')}" maxlength="60">
+                                <input type="text" class="document-inline-input ${branchKey}-edit-input" data-page-id="${page.id}" value="${escapeHtml(page.name)}" maxlength="60">
                                 <div class="document-inline-actions">
                                     <button type="button" class="menu-action-btn ${branchKey}-edit-save-btn" data-page-id="${page.id}" aria-label="Lưu tên page">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -12065,34 +12454,89 @@ function openInlineForm() {
                     `;
                 }
 
+                if (isBranchDivider(page)) {
+                    const deleteButtonClass = state.deleteConfirmId === page.id
+                        ? `menu-action-btn delete document-delete-toggle is-confirming ${branchKey}-delete-toggle`
+                        : `menu-action-btn delete document-delete-toggle ${branchKey}-delete-toggle`;
+                    const rowClass = ['document-page-row', 'is-divider', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
+                    const dividerLabel = String(page.label || '').trim();
+                    const isActionMenuOpen = state.actionMenuId === page.id;
+                    return `
+                        <div class="${rowClass}" ${config.rowAttr}="${page.id}" data-branch-item-id="${page.id}" data-branch-item-type="divider">
+                            ${dividerLabel ? `<span class="document-divider-label">${escapeHtml(dividerLabel)}</span>` : ''}
+                            <span class="document-divider-line" aria-hidden="true"></span>
+                            <div class="document-page-actions">
+                                <button type="button" class="menu-action-btn document-action-menu-btn ${isActionMenuOpen ? 'is-active' : ''} ${branchKey}-action-menu-btn" data-page-id="${page.id}" aria-label="Mở thao tác line">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="5" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="12" cy="19" r="1.7"></circle>
+                                    </svg>
+                                </button>
+                                ${isActionMenuOpen ? `
+                                    <div class="document-action-popover">
+                                        <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa line">
+                                            <span class="document-delete-icon" aria-hidden="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
+                                                </svg>
+                                            </span>
+                                            <span class="document-delete-label">Xóa</span>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                visiblePageIndex += 1;
                 const activeClass = state.activeId === page.id ? 'member-link is-active' : 'member-link';
                 const deleteButtonClass = state.deleteConfirmId === page.id
                     ? `menu-action-btn delete document-delete-toggle is-confirming ${branchKey}-delete-toggle`
                     : `menu-action-btn delete document-delete-toggle ${branchKey}-delete-toggle`;
                 const rowClass = ['document-page-row', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
+                const canManage = canManageBranchPage(page);
+                const isActionMenuOpen = state.actionMenuId === page.id;
 
                 return `
-                    <div class="${rowClass}" ${config.rowAttr}="${page.id}">
+                    <div class="${rowClass}" ${config.rowAttr}="${page.id}" data-branch-item-id="${page.id}" data-branch-item-type="page">
                         <a href="#" class="${activeClass}" data-member-group="${config.memberGroup}" data-page-id="${page.id}">
-                            <span class="member-index">${index + 1}</span>
-                            <span class="member-name">${page.name}</span>
+                            <span class="member-index">${visiblePageIndex}</span>
+                            <span class="member-name">${escapeHtml(page.name)}</span>
+                            <span class="document-visibility-badge">${getBranchVisibilityLabel(page)}</span>
                         </a>
-                        <div class="document-page-actions">
-                            <button type="button" class="menu-action-btn ${branchKey}-edit-btn" data-page-id="${page.id}" aria-label="Sửa tên page">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            </button>
-                            <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa page">
-                                <span class="document-delete-icon" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
+                        ${canManage ? `
+                            <div class="document-page-actions">
+                                <button type="button" class="menu-action-btn document-action-menu-btn ${isActionMenuOpen ? 'is-active' : ''} ${branchKey}-action-menu-btn" data-page-id="${page.id}" aria-label="Mở thao tác page">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="5" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="12" cy="19" r="1.7"></circle>
                                     </svg>
-                                </span>
-                                <span class="document-delete-label">Xóa</span>
-                            </button>
-                        </div>
+                                </button>
+                                ${isActionMenuOpen ? `
+                                    <div class="document-action-popover">
+                                        <button type="button" class="menu-action-btn ${branchKey}-edit-btn" data-page-id="${page.id}" aria-label="Sửa tên page">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="menu-action-btn document-privacy-toggle ${state.permissionEditingId === page.id ? 'is-active' : ''} ${branchKey}-permission-btn" data-page-id="${page.id}" aria-label="Chỉnh quyền page">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5s1.343 3.5 3 3.5zM5 20a7 7 0 0114 0" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa page">
+                                            <span class="document-delete-icon" aria-hidden="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
+                                                </svg>
+                                            </span>
+                                            <span class="document-delete-label">Xóa</span>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
                     </div>
+                    ${state.permissionEditingId === page.id ? renderBranchPermissionPanel(branchKey, page) : ''}
                 `;
             }).join('');
 
@@ -12100,7 +12544,18 @@ function openInlineForm() {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
                     event.stopPropagation();
+                    state.actionMenuId = null;
                     startEditBranchPage(branchKey, button.dataset.pageId);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-action-menu-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    state.deleteConfirmId = null;
+                    state.actionMenuId = state.actionMenuId === button.dataset.pageId ? null : button.dataset.pageId;
+                    renderBranchPages(branchKey);
                 });
             });
 
@@ -12110,11 +12565,50 @@ function openInlineForm() {
                     event.stopPropagation();
                     const pageId = button.dataset.pageId;
                     if (state.deleteConfirmId === pageId) {
+                        state.actionMenuId = null;
                         deleteBranchPage(branchKey, pageId);
                         return;
                     }
                     state.deleteConfirmId = pageId;
                     renderBranchPages(branchKey);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-permission-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const page = getRawBranchPage(branchKey, button.dataset.pageId);
+                    if (!canManageBranchPage(page)) return;
+                    state.deleteConfirmId = null;
+                    state.actionMenuId = null;
+                    state.permissionEditingId = state.permissionEditingId === page.id ? null : page.id;
+                    renderBranchPages(branchKey);
+                });
+            });
+
+            document.querySelectorAll(`.${branchKey}-permission-close-btn`).forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    state.permissionEditingId = null;
+                    renderBranchPages(branchKey);
+                });
+            });
+
+            document.querySelectorAll('[data-permission-visibility]').forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    updateBranchPageVisibility(branchKey, button.dataset.pageId, button.dataset.permissionVisibility);
+                });
+            });
+
+            document.querySelectorAll('[data-permission-share-user]').forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    toggleBranchPageSharedUser(branchKey, button.dataset.pageId, button.dataset.permissionShareUser);
                 });
             });
 
@@ -12152,6 +12646,7 @@ function openInlineForm() {
                 }, 0);
             });
 
+            initializeBranchSortable(branchKey);
             initializeSelectableMembers();
             syncBranchMenuHeight(branchKey);
         }
@@ -12162,10 +12657,14 @@ function openInlineForm() {
             const createForm = document.getElementById(config.createFormId);
             const createInput = document.getElementById(config.createInputId);
             state.editingId = null;
+            state.permissionEditingId = null;
             state.deleteConfirmId = null;
+            state.createVisibility = 'team';
+            state.createSharedUserIds = [];
             createForm.classList.remove('hidden');
             createInput.value = '';
             clearBranchInvalidState(branchKey, 'create');
+            renderBranchCreatePrivacyControls(branchKey);
             if (!accordionState[config.menuId]) toggleAccordion(config.menuId, config.chevronId);
             syncBranchMenuHeight(branchKey);
             setTimeout(() => createInput.focus(), 0);
@@ -12175,8 +12674,78 @@ function openInlineForm() {
             const config = getBranchConfig(branchKey);
             document.getElementById(config.createFormId).classList.add('hidden');
             document.getElementById(config.createInputId).value = '';
+            getBranchState(branchKey).createVisibility = 'team';
+            getBranchState(branchKey).createSharedUserIds = [];
+            renderBranchCreatePrivacyControls(branchKey);
             clearBranchInvalidState(branchKey, 'create');
             syncBranchMenuHeight(branchKey);
+        }
+
+        function renderBranchCreatePrivacyControls(branchKey) {
+            const state = getBranchState(branchKey);
+            const visibilityInput = document.getElementById('documentCreateVisibility');
+            const controls = document.getElementById('documentCreatePrivacyControls');
+            const shareList = document.getElementById('documentCreateShareList');
+            if (!visibilityInput || !controls || !shareList) return;
+            const visibility = normalizeBranchVisibility(state.createVisibility);
+            state.createVisibility = visibility;
+            visibilityInput.value = visibility;
+            controls.innerHTML = ['team', 'personal', 'shared'].map((mode) => {
+                const label = mode === 'personal' ? 'Cá nhân' : (mode === 'shared' ? 'Share' : 'Team');
+                return `<button type="button" class="document-privacy-chip ${visibility === mode ? 'is-active' : ''}" data-create-visibility="${mode}">${label}</button>`;
+            }).join('');
+            shareList.classList.toggle('is-hidden', visibility !== 'shared');
+            shareList.innerHTML = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode()).map((userKey) => {
+                const user = USERS[userKey];
+                const isActive = state.createSharedUserIds.includes(userKey);
+                const isOwner = userKey === CURRENT_USER_ID;
+                return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-create-share-user="${userKey}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
+            }).join('');
+            syncBranchMenuHeight(branchKey);
+        }
+
+        function setBranchCreateVisibility(branchKey, visibility) {
+            const state = getBranchState(branchKey);
+            state.createVisibility = normalizeBranchVisibility(visibility);
+            renderBranchCreatePrivacyControls(branchKey);
+        }
+
+        function toggleBranchCreateSharedUser(branchKey, userKey) {
+            const state = getBranchState(branchKey);
+            const normalizedUserKey = normalizeUserKey(userKey);
+            if (!normalizedUserKey || normalizedUserKey === CURRENT_USER_ID) return;
+            state.createSharedUserIds = state.createSharedUserIds.includes(normalizedUserKey)
+                ? state.createSharedUserIds.filter((key) => key !== normalizedUserKey)
+                : [...state.createSharedUserIds, normalizedUserKey];
+            renderBranchCreatePrivacyControls(branchKey);
+        }
+
+        function updateBranchPageVisibility(branchKey, pageId, visibility) {
+            const state = getBranchState(branchKey);
+            const page = getRawBranchPage(branchKey, pageId);
+            if (!canManageBranchPage(page)) return;
+            page.visibility = normalizeBranchVisibility(visibility);
+            if (page.visibility !== 'shared') page.sharedUserIds = [];
+            state.permissionEditingId = page.id;
+            saveBranchPages(branchKey);
+            renderBranchPages(branchKey);
+            if (branchKey === 'document' && currentWorkspaceView === 'document' && state.activeId === page.id && !canViewBranchPage(page)) {
+                showDocumentWorkspace(getFirstBranchPage(branchKey)?.id || null);
+            }
+        }
+
+        function toggleBranchPageSharedUser(branchKey, pageId, userKey) {
+            const page = getRawBranchPage(branchKey, pageId);
+            if (!canManageBranchPage(page)) return;
+            const normalizedUserKey = normalizeUserKey(userKey);
+            if (!normalizedUserKey || normalizedUserKey === page.ownerUserId) return;
+            page.visibility = 'shared';
+            page.sharedUserIds = page.sharedUserIds.includes(normalizedUserKey)
+                ? page.sharedUserIds.filter((key) => key !== normalizedUserKey)
+                : [...page.sharedUserIds, normalizedUserKey];
+            page.sharedUserIds = normalizeBranchSharedUsers(page.sharedUserIds).filter((key) => key !== page.ownerUserId);
+            saveBranchPages(branchKey);
+            renderBranchPages(branchKey);
         }
 
         function createBranchPage(branchKey) {
@@ -12188,7 +12757,29 @@ function openInlineForm() {
                 showBranchInvalidInputState(branchKey, 'create', createInput);
                 return;
             }
-            const newPage = { id: `${config.pageIdPrefix}-${Date.now()}`, name: trimmedName };
+            const dividerMatch = trimmedName.match(/^(.*?)\s*---$/);
+            if (dividerMatch) {
+                const newDivider = {
+                    type: 'divider',
+                    id: `${config.pageIdPrefix}-divider-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                    label: dividerMatch[1].trim()
+                };
+                state.pages.push(newDivider);
+                state.animatingId = newDivider.id;
+                saveBranchPages(branchKey);
+                closeBranchCreateForm(branchKey);
+                renderBranchPages(branchKey);
+                setTimeout(() => { state.animatingId = null; }, 320);
+                return;
+            }
+            const newPage = {
+                type: 'page',
+                id: `${config.pageIdPrefix}-${Date.now()}`,
+                name: trimmedName,
+                visibility: normalizeBranchVisibility(state.createVisibility),
+                ownerUserId: CURRENT_USER_ID,
+                sharedUserIds: normalizeBranchSharedUsers(state.createSharedUserIds).filter((userKey) => userKey !== CURRENT_USER_ID)
+            };
             state.pages.push(newPage);
             state.activeId = newPage.id;
             state.animatingId = newPage.id;
@@ -12201,8 +12792,12 @@ function openInlineForm() {
 
         function startEditBranchPage(branchKey, pageId) {
             const state = getBranchState(branchKey);
+            const page = getRawBranchPage(branchKey, pageId);
+            if (!canManageBranchPage(page)) return;
             closeBranchCreateForm(branchKey);
             state.deleteConfirmId = null;
+            state.permissionEditingId = null;
+            state.actionMenuId = null;
             animateBranchRowExit(branchKey, pageId, 'is-edit-transitioning', () => {
                 state.editingId = pageId;
                 renderBranchPages(branchKey);
@@ -12220,9 +12815,9 @@ function openInlineForm() {
 
         function saveEditedBranchPage(branchKey, pageId) {
             const state = getBranchState(branchKey);
-            const page = state.pages.find((item) => item.id === pageId);
+            const page = getRawBranchPage(branchKey, pageId);
             const editInput = document.querySelector(`.${branchKey}-edit-input[data-page-id="${pageId}"]`);
-            if (!page || !editInput) return;
+            if (!canManageBranchPage(page) || !editInput) return;
             const trimmedName = editInput.value.trim();
             if (!trimmedName) {
                 showBranchInvalidInputState(branchKey, 'edit', editInput);
@@ -12241,16 +12836,19 @@ function openInlineForm() {
 
         function deleteBranchPage(branchKey, pageId) {
             const state = getBranchState(branchKey);
+            const deletedItem = state.pages.find((item) => item.id === pageId);
+            if (isBranchPage(deletedItem) && !canManageBranchPage(deletedItem)) return;
             state.deleteConfirmId = null;
+            state.actionMenuId = null;
             state.removingId = pageId;
             animateBranchRowExit(branchKey, pageId, 'is-removing', () => {
                 state.pages = state.pages.filter((item) => item.id !== pageId);
-                if (state.activeId === pageId) state.activeId = state.pages[0]?.id || null;
+                if (state.activeId === pageId) state.activeId = getFirstBranchPage(branchKey)?.id || null;
                 if (state.editingId === pageId) state.editingId = null;
                 state.removingId = null;
                 saveBranchPages(branchKey);
                 renderBranchPages(branchKey);
-                if (branchKey === 'document' && currentWorkspaceView === 'document') showDocumentWorkspace(state.activeId);
+                if (branchKey === 'document' && currentWorkspaceView === 'document' && isBranchPage(deletedItem)) showDocumentWorkspace(state.activeId);
             }, 300);
         }
 
@@ -12313,6 +12911,10 @@ function openInlineForm() {
             }
             renderInlinePicSelection();
             renderTrackingList(teamKey);
+            if (getBranchState('document')) {
+                renderBranchCreatePrivacyControls('document');
+                renderBranchPages('document');
+            }
             initializeCurrentUserProfile();
             applyBoardFilter();
             if (updateUrl && currentWorkspaceView === 'board') {
@@ -12366,8 +12968,9 @@ function openInlineForm() {
                 if (!event.target.closest('.document-page-actions')) {
                     Object.keys(branchConfigs).forEach((branchKey) => {
                         const state = getBranchState(branchKey);
-                        if (state.deleteConfirmId !== null) {
+                        if (state.deleteConfirmId !== null || state.actionMenuId !== null) {
                             state.deleteConfirmId = null;
+                            state.actionMenuId = null;
                             renderBranchPages(branchKey);
                         }
                     });
@@ -12394,6 +12997,20 @@ function openInlineForm() {
                 event.stopPropagation();
                 closeBranchCreateForm(branchKey);
             });
+            document.getElementById('documentCreatePrivacyControls')?.addEventListener('click', (event) => {
+                const button = event.target.closest('[data-create-visibility]');
+                if (!button) return;
+                event.preventDefault();
+                event.stopPropagation();
+                setBranchCreateVisibility(branchKey, button.dataset.createVisibility);
+            });
+            document.getElementById('documentCreateShareList')?.addEventListener('click', (event) => {
+                const button = event.target.closest('[data-create-share-user]');
+                if (!button) return;
+                event.preventDefault();
+                event.stopPropagation();
+                toggleBranchCreateSharedUser(branchKey, button.dataset.createShareUser);
+            });
             document.getElementById(config.createInputId).addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
@@ -12405,6 +13022,7 @@ function openInlineForm() {
                 }
             });
             document.getElementById(config.createInputId).addEventListener('input', () => clearBranchInvalidState(branchKey, 'create'));
+            renderBranchCreatePrivacyControls(branchKey);
         }
 
         function clearNavActiveStates() {
