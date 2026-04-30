@@ -46,6 +46,25 @@
             --po-text-muted: #64748B;
             --po-alert-bg: var(--app-primary-soft);
             --po-alert-text: var(--app-primary-text-strong);
+            --lov-duration: 260ms;
+            --lov-close-duration: 180ms;
+            --lov-option-duration: 220ms;
+            --lov-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --lov-exit-ease: cubic-bezier(0.4, 0, 1, 1);
+            --lov-translate: -6px;
+            --lov-option-translate: 5px;
+            --lov-scale: 0.97;
+            --appear-duration: 280ms;
+            --appear-item-duration: 240ms;
+            --appear-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --appear-translate: 8px;
+            --appear-scale: 0.985;
+            --tooltip-bg: #0f172a;
+            --tooltip-color: #ffffff;
+            --tooltip-offset: 0.55rem;
+            --tooltip-arrow-offset: 0.33rem;
+            --tooltip-side-offset: 10px;
+            --tooltip-side-arrow-offset: 6px;
         }
 
         .app-btn-primary,
@@ -597,6 +616,7 @@
         .tag-name {
             --dot-color: #94a3b8;
             position: relative;
+            z-index: 1;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -610,11 +630,10 @@
             box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
             white-space: nowrap;
             line-height: 1;
-            transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+            transition: box-shadow 0.16s ease, filter 0.16s ease;
         }
 
         .tag-name:hover {
-            transform: translateY(-1px);
             box-shadow: 0 14px 24px rgba(15, 23, 42, 0.14);
             filter: saturate(1.05);
         }
@@ -665,40 +684,68 @@
             right: 0;
             min-width: 148px;
             padding: 6px;
-            border-radius: 12px;
-            border: 1px solid #dbe4f0;
-            background: #ffffff;
-            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
-            z-index: 50;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16), 0 8px 18px rgba(15, 23, 42, 0.08);
+            z-index: 1000;
+            transform-origin: top right;
+            will-change: opacity, transform;
+            animation: smartSortMenuIn var(--lov-duration) var(--lov-ease) both;
+        }
+
+        .tag-status-lov.is-closing {
+            pointer-events: none;
+            animation: tagStatusLovOut var(--lov-close-duration) var(--lov-exit-ease) both;
         }
 
         .tag-name.is-status-lov-open,
         .tag-name:has(.tag-status-lov) {
-            z-index: 90;
+            z-index: 1000;
         }
 
         .tag-status-lov-option {
             width: 100%;
+            min-height: 34px;
             border: 0;
-            border-radius: 9px;
+            border-radius: 11px;
             background: transparent;
             color: #475569;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 9px;
-            font-size: 11px;
+            padding: 0 10px 0 12px;
+            font-size: 13px;
             font-weight: 800;
             text-align: left;
             text-transform: none;
             letter-spacing: 0;
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(var(--lov-option-translate));
+            animation: tagStatusLovOptionIn var(--lov-option-duration) var(--lov-ease) both;
+            animation-delay: calc(var(--option-index, 0) * 18ms + 54ms);
+            transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
         }
 
-        .tag-status-lov-option:hover,
+        .tag-status-lov-option:hover {
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
         .tag-status-lov-option.is-active {
-            background: #eff6ff;
-            color: #1d4ed8;
+            background: #eef2f7;
+            color: #0f172a;
+        }
+
+        .tag-status-lov-option:hover {
+            transform: none;
+        }
+
+        .tag-status-lov.is-closing .tag-status-lov-option {
+            animation: none;
+            opacity: 1;
+            transform: none;
         }
 
         .tag-status-lov-dot {
@@ -707,6 +754,42 @@
             border-radius: 999px;
             background: var(--status-option-color);
             box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 4px 10px color-mix(in srgb, var(--status-option-color) 24%, transparent);
+        }
+
+        @keyframes tagStatusLovIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes tagStatusLovOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
+            }
+        }
+
+        @keyframes tagStatusLovOptionIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--lov-option-translate));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .tag-name.workflow-backlog {
@@ -888,10 +971,15 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .card-actions-wrap {
             position: absolute; top: 12px; right: 12px;
             display: flex; gap: 6px; z-index: 10;
-            opacity: 0; transform: translateX(5px); transition: all 0.2s ease;
+            opacity: 0; transform: translateX(5px); pointer-events: none;
+            transition: opacity 0.16s ease, transform 0.16s ease;
         }
-        .task-card:hover .card-actions-wrap {
-            opacity: 1; transform: translateX(0);
+        .task-card:hover .card-actions-wrap,
+        .task-card.is-status-lov-open .card-actions-wrap {
+            opacity: 1; transform: translateX(0); pointer-events: auto;
+        }
+        .task-card.is-status-lov-open .card-actions-wrap {
+            transition: none;
         }
         .icon-btn {
             display: flex; justify-content: center; align-items: center;
@@ -1004,8 +1092,36 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             transition: max-height 0.34s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
+        .accordion-content.is-open {
+            overflow: visible;
+        }
+
         .kanban-scroll-shell {
             position: relative;
+        }
+
+        .task-view-content {
+            opacity: 0;
+            transition: opacity 120ms ease;
+            will-change: opacity;
+        }
+
+        .task-view-panel.is-active .task-view-content,
+        .task-view-content.is-active {
+            opacity: 1;
+        }
+
+        .task-view-panel.is-leaving .task-view-content,
+        .task-view-content.is-leaving {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #taskListBody.task-view-content {
+            opacity: 1;
+            transform: none;
+            transition: none;
+            will-change: auto;
         }
 
         .kanban-scroll-area {
@@ -1017,6 +1133,1019 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
         .kanban-scroll-area::-webkit-scrollbar {
             height: 10px;
+        }
+
+        .task-view-switch {
+            --task-view-index: 0;
+            --task-view-ease: cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.3rem;
+            border: 1px solid #dbe4f0;
+            border-radius: 0.875rem;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                0 8px 22px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+        }
+
+        .task-view-switch-indicator {
+            position: absolute;
+            top: 0.3rem;
+            bottom: 0.3rem;
+            left: 0.3rem;
+            width: calc((100% - 0.85rem) / 2);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 0.65rem;
+            background: #ffffff;
+            box-shadow:
+                0 10px 22px rgba(37, 99, 235, 0.12),
+                0 2px 5px rgba(15, 23, 42, 0.08);
+            transform: translateX(calc(var(--task-view-index, 0) * (100% + 0.25rem)));
+            transition:
+                transform 360ms var(--task-view-ease),
+                box-shadow 220ms ease,
+                border-color 220ms ease;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .task-view-switch-btn {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 4.55rem;
+            min-height: 2.15rem;
+            padding: 0 0.8rem;
+            border-radius: 0.65rem;
+            color: #64748b;
+            font-size: 0.82rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: color 180ms ease, transform 220ms var(--task-view-ease);
+        }
+
+        .task-view-switch-btn:hover {
+            color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .task-view-switch-btn i {
+            font-size: 0.78rem;
+            opacity: 0.78;
+            transition: opacity 180ms ease, transform 220ms var(--task-view-ease);
+        }
+
+        .task-view-switch-btn.is-active {
+            color: #1d4ed8;
+        }
+
+        .task-view-switch-btn.is-active i {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .task-list-group-control {
+            position: relative;
+            z-index: 30;
+            display: none;
+            flex: 0 0 auto;
+            overflow: visible;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 140ms ease, visibility 140ms ease;
+            pointer-events: none;
+        }
+
+        .task-list-group-control.is-visible,
+        .task-list-group-control.is-hiding {
+            display: block;
+        }
+
+        .task-list-group-control.is-visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .task-list-group-control:has(.task-list-group-popover:not(.hidden)) {
+            z-index: 90;
+            overflow: visible;
+        }
+
+        .task-list-group-control.is-hiding {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .task-list-group-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            min-height: 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            padding: 0 0.8rem;
+            color: #475569;
+            font-size: 0.82rem;
+            font-weight: 800;
+            white-space: nowrap;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+        }
+
+        .task-list-group-btn:hover,
+        .task-list-group-btn.is-active,
+        .task-list-group-btn.is-open {
+            border-color: #bfdbfe;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .task-list-group-popover {
+            position: absolute;
+            top: calc(100% + 0.45rem);
+            right: 0;
+            z-index: 130;
+            min-width: 13rem;
+            transform-origin: top right;
+        }
+
+        .task-list-view {
+            --task-list-columns: minmax(190px, 260fr) minmax(240px, 360fr) minmax(130px, 180fr) minmax(120px, 160fr) minmax(145px, 170fr);
+            --task-list-min-width: 1194px;
+            margin-top: 1.25rem;
+            overflow: visible;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            background: #ffffff;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        .task-list-header-cell {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            gap: 0.4rem;
+            align-items: flex-start;
+            position: relative;
+            padding-right: 0.45rem;
+        }
+
+        .task-list-header-title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .task-list-header-cell[data-task-list-column="deadline"] .task-list-header-title-row {
+            width: 100%;
+        }
+
+        .task-list-header-label {
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .task-list-header-control-row {
+            display: flex;
+            width: 100%;
+            min-width: 0;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .task-list-filter-icon-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.45rem;
+            height: 1.45rem;
+            border-radius: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.68rem;
+            transition: background-color 0.16s ease, color 0.16s ease;
+        }
+
+        .task-list-filter-icon-btn:hover,
+        .task-list-filter-icon-btn.is-open {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .task-list-filter-icon-btn.is-sort-desc {
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.22);
+        }
+
+        .task-list-filter-icon-btn.is-sort-desc:hover,
+        .task-list-filter-icon-btn.is-sort-desc.is-open {
+            background: #1d4ed8;
+            color: #ffffff;
+        }
+
+        .task-list-filter-icon-btn.is-active:not(.app-tooltip)::after {
+            content: "";
+            position: absolute;
+            top: 0.18rem;
+            right: 0.16rem;
+            width: 0.38rem;
+            height: 0.38rem;
+            border-radius: 999px;
+            background: #2563eb;
+            box-shadow: 0 0 0 2px #ffffff;
+        }
+
+        .task-list-filter-popover {
+            position: absolute;
+            top: calc(100% + 0.35rem);
+            left: 0;
+            z-index: 120;
+            min-width: 11rem;
+            max-height: 14rem;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            padding: 0.45rem;
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
+            transform-origin: top left;
+            will-change: opacity, transform;
+            animation: taskListPopoverIn var(--lov-duration) var(--lov-ease) both;
+        }
+
+        .task-list-filter-popover.hidden {
+            display: none;
+        }
+
+        .task-list-filter-popover.is-closing {
+            pointer-events: none;
+            animation: taskListPopoverOut var(--lov-close-duration) var(--lov-exit-ease) both;
+        }
+
+        .task-list-filter-popover.task-list-group-popover {
+            left: 0;
+            right: auto;
+            z-index: 180;
+            min-width: 15rem;
+            max-height: none;
+            transform-origin: top left;
+            overflow: visible;
+        }
+
+        .task-list-filter-options {
+            display: grid;
+            gap: 0.15rem;
+        }
+
+        .task-list-filter-option {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            border-radius: 0.55rem;
+            padding: 0.5rem 0.6rem;
+            color: #475569;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(var(--lov-option-translate));
+            animation: taskListOptionIn var(--lov-option-duration) var(--lov-ease) both;
+            animation-delay: calc(var(--task-list-option-index, 0) * 18ms + 54ms);
+            transition: background-color 150ms ease, color 150ms ease;
+        }
+
+        .task-list-filter-option:hover,
+        .task-list-filter-option.is-active {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .task-list-filter-option-check {
+            opacity: 0;
+            color: #2563eb;
+            font-size: 0.72rem;
+            transition: opacity 150ms ease;
+        }
+
+        .task-list-filter-option.is-active .task-list-filter-option-check {
+            opacity: 1;
+        }
+
+        .task-list-group-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 0.35rem;
+            padding-bottom: 0.35rem;
+        }
+
+        .task-list-group-action {
+            display: inline-flex;
+            min-height: 1.9rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            border-radius: 0.55rem;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 0.72rem;
+            font-weight: 900;
+            opacity: 0;
+            transform: translateY(var(--lov-option-translate));
+            animation: taskListOptionIn var(--lov-option-duration) var(--lov-ease) both;
+            animation-delay: calc(var(--task-list-option-index, 0) * 18ms + 46ms);
+            transition: background-color 150ms ease, color 150ms ease, opacity 150ms ease;
+        }
+
+        .task-list-group-action:hover:not(:disabled) {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .task-list-group-action:disabled {
+            cursor: not-allowed;
+            background: #f8fafc;
+            color: #cbd5e1;
+            opacity: 0.72;
+            box-shadow: none;
+        }
+
+        .task-list-group-action:disabled i,
+        .task-list-group-action:disabled span {
+            color: #cbd5e1;
+        }
+
+        .task-list-filter-popover.is-closing .task-list-filter-option,
+        .task-list-filter-popover.is-closing .task-list-group-action {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes taskListPopoverIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes taskListPopoverOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
+            }
+        }
+
+        @keyframes taskListOptionIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--lov-option-translate));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .tag-status-lov,
+            .tag-status-lov.is-closing,
+            .tag-status-lov-option,
+            .task-list-filter-popover,
+            .task-list-filter-popover.is-closing,
+            .task-list-filter-option,
+            .task-list-group-action,
+            .member-lov-panel,
+            .member-single-lov-panel,
+            .smart-sort-menu,
+            .smart-sort-lov.is-open .smart-sort-menu,
+            .date-popover,
+            .task-checklist-datepicker.open .dp-popup {
+                animation: none !important;
+                transition-duration: 0.01ms !important;
+                transform: none !important;
+            }
+
+            .tag-status-lov,
+            .tag-status-lov-option,
+            .task-list-filter-popover,
+            .task-list-filter-option,
+            .task-list-group-action,
+            .member-lov-panel,
+            .member-single-lov-panel,
+            .smart-sort-lov.is-open .smart-sort-menu,
+            .date-popover,
+            .task-checklist-datepicker.open .dp-popup {
+                opacity: 1 !important;
+            }
+
+            .tag-status-lov.is-closing,
+            .task-list-filter-popover.is-closing {
+                opacity: 0 !important;
+            }
+        }
+
+        .task-list-control {
+            min-height: 1.85rem;
+            max-width: 100%;
+            min-width: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.55rem;
+            background: #ffffff;
+            padding: 0 0.45rem;
+            color: #475569;
+            font-size: 0.72rem;
+            font-weight: 800;
+            outline: none;
+            transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .task-list-control:focus {
+            border-color: #60a5fa;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .task-list-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            min-height: 1.85rem;
+            width: 1.85rem;
+            border-radius: 0.55rem;
+            color: #64748b;
+            font-size: 0.72rem;
+            font-weight: 900;
+            transition: background-color 0.16s ease, color 0.16s ease;
+        }
+
+        .task-list-reset:hover {
+            background: #f1f5f9;
+            color: #2563eb;
+        }
+
+        .task-list-reset:disabled {
+            cursor: not-allowed;
+            background: transparent;
+            color: #cbd5e1;
+            opacity: 0.45;
+            box-shadow: none;
+        }
+
+        .task-list-reset:disabled:hover {
+            background: transparent;
+            color: #cbd5e1;
+        }
+
+        .task-list-header-cell[data-task-list-column="deadline"] .task-list-reset {
+            margin-left: auto;
+        }
+
+        .task-list-column-resize-handle {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.65rem;
+            z-index: 10;
+            display: flex;
+            width: 0.65rem;
+            height: calc(100% + 0.5rem);
+            cursor: col-resize;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            touch-action: none;
+        }
+
+        .task-list-column-resize-handle::after {
+            content: "";
+            width: 2px;
+            height: 70%;
+            border-radius: 999px;
+            background: transparent;
+            transition: background-color 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .task-list-column-resize-handle:hover::after,
+        .task-list-column-resize-handle:focus-visible::after,
+        .task-list-column-resize-handle.is-dragging::after {
+            background: #60a5fa;
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.18);
+        }
+
+        body.task-list-resize-active,
+        body.task-list-resize-active * {
+            cursor: col-resize !important;
+            user-select: none;
+        }
+
+        .task-list-header,
+        .task-list-row {
+            display: grid;
+            grid-template-columns: var(--task-list-columns);
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .task-list-header {
+            position: sticky;
+            top: 0;
+            z-index: 60;
+            border-bottom: 1px solid #e2e8f0;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            background: #f8fafc;
+            padding: 0.8rem 40px;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+        }
+
+        .tracking-skeleton {
+            position: relative;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #e2e8f0;
+        }
+
+        .tracking-skeleton::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.68), transparent);
+            animation: trackingSkeletonShimmer 1.15s ease-in-out infinite;
+        }
+
+        .tracking-skeleton-card {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 0.85rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            background: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        .tracking-skeleton-row {
+            display: grid;
+            grid-template-columns: var(--task-list-columns);
+            gap: 1rem;
+            align-items: center;
+            padding: 0.95rem 40px;
+            border-bottom: 1px solid #f1f5f9;
+            background: #ffffff;
+        }
+
+        .tracking-skeleton-line {
+            height: 0.75rem;
+        }
+
+        .tracking-skeleton-line.is-title {
+            height: 0.95rem;
+            width: min(82%, 13rem);
+        }
+
+        .tracking-skeleton-line.is-short {
+            width: 62%;
+        }
+
+        .tracking-skeleton-pill {
+            width: 4.8rem;
+            height: 1.55rem;
+            border-radius: 999px;
+        }
+
+        @keyframes trackingSkeletonShimmer {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .task-list-row {
+            position: relative;
+            z-index: 0;
+            min-height: 4.75rem;
+            padding: 0.9rem 40px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background-color 0.16s ease;
+        }
+
+        .task-list-row:has(.tag-status-lov),
+        .task-list-row:has(.tag-name.is-status-lov-open) {
+            z-index: 30;
+        }
+
+        .task-list-row:hover {
+            background: #f8fafc;
+        }
+
+        .task-list-row:last-child {
+            border-bottom: 0;
+        }
+
+        .task-list-row.is-soft-enter {
+            animation: taskListRowSoftEnter 0.2s ease-out both;
+            animation-delay: calc(var(--row-index, 0) * 12ms);
+        }
+
+        @keyframes taskListRowSoftEnter {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .task-list-row-value {
+            min-width: 0;
+            opacity: 1;
+            transform: none;
+            will-change: auto;
+        }
+
+        .task-list-index {
+            display: inline-flex;
+            flex: 0 0 auto;
+            min-width: 1.35rem;
+            align-items: center;
+            justify-content: flex-start;
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .task-list-group-section {
+            --group-accent: #2563eb;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .task-list-group-section:last-child {
+            border-bottom: 0;
+        }
+
+        .task-list-group-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            width: 100%;
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 4px solid var(--group-accent);
+            background: #f8fafc;
+            padding: 0.72rem 40px;
+            color: #334155;
+            text-align: left;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .task-list-group-heading:hover {
+            background: #eff6ff;
+        }
+
+        .task-list-group-title {
+            display: inline-flex;
+            min-width: 0;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1e293b;
+            font-size: 0.86rem;
+            font-weight: 800;
+            transition: color 0.2s ease;
+        }
+
+        .task-list-group-heading:hover .task-list-group-title {
+            color: var(--group-accent);
+        }
+
+        .task-list-group-toggle {
+            display: inline-flex;
+            width: 1.35rem;
+            height: 1.35rem;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            color: var(--group-accent);
+            transition: background-color 0.24s ease, transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .task-list-group-heading:hover .task-list-group-toggle {
+            background: color-mix(in srgb, var(--group-accent) 10%, #ffffff);
+        }
+
+        .task-list-group-toggle i {
+            font-size: 0.72rem;
+            transform: rotate(90deg);
+            transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .task-list-group-section.is-collapsed .task-list-group-toggle i {
+            transform: rotate(0deg);
+        }
+
+        .task-list-group-icon {
+            display: inline-flex;
+            width: 1.55rem;
+            height: 1.55rem;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--group-accent) 12%, #ffffff);
+            color: var(--group-accent);
+            transition: background-color 0.24s ease, box-shadow 0.24s ease, transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .task-list-group-heading:hover .task-list-group-icon {
+            background: color-mix(in srgb, var(--group-accent) 18%, #ffffff);
+            box-shadow: 0 8px 18px color-mix(in srgb, var(--group-accent) 18%, transparent);
+            transform: scale(1.06);
+        }
+
+        .task-list-group-icon i {
+            font-size: 0.78rem;
+        }
+
+        .task-list-group-count {
+            flex-shrink: 0;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--group-accent) 14%, #ffffff);
+            padding: 0.28rem 0.65rem;
+            color: var(--group-accent);
+            font-size: 0.7rem;
+            font-weight: 900;
+        }
+
+        .task-list-group-body {
+            display: grid;
+            grid-template-rows: 1fr;
+            clip-path: inset(0 0 0 0 round 0);
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.28s ease,
+                transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+                clip-path 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .task-list-group-body-inner {
+            min-height: 0;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .task-list-group-body-inner .task-list-row-value {
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 0.28s ease calc(var(--row-index, 0) * 22ms),
+                transform 0.34s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--row-index, 0) * 22ms);
+        }
+
+        .task-list-group-section.is-collapsed .task-list-group-body {
+            grid-template-rows: 0fr;
+            clip-path: inset(0 0 100% 0 round 0);
+            opacity: 0;
+            transform: translateY(-0.35rem);
+        }
+
+        .task-list-group-section.is-collapsed .task-list-group-body-inner {
+            transform: translateY(-0.45rem);
+        }
+
+        .task-list-group-section.is-collapsed .task-list-group-body-inner .task-list-row-value {
+            animation: none;
+            opacity: 0;
+            transform: translateY(-0.35rem);
+            transition-delay: 0ms;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .task-view-panel,
+            .task-view-switch-indicator,
+            .task-view-switch-btn,
+            .task-list-group-btn,
+            .task-list-group-control {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .task-view-panel,
+            .task-view-switch-btn,
+            .task-list-group-control,
+            .task-list-group-btn {
+                opacity: 1;
+                transform: none !important;
+            }
+
+            .task-list-group-toggle,
+            .task-list-group-toggle i,
+            .task-list-group-icon,
+            .task-list-empty,
+            .task-list-row.is-soft-enter,
+            .task-list-group-body,
+            .task-list-group-body-inner,
+            .task-list-group-body-inner .task-list-row-value,
+            .task-list-row-value {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        .task-list-title {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-width: 0;
+            color: #172554;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+            transition: color 0.16s ease;
+        }
+
+        .task-list-row:hover .task-list-title {
+            color: #2563eb;
+        }
+
+        .task-list-desc {
+            min-width: 0;
+            color: #64748b;
+            font-size: 0.82rem;
+            font-weight: 600;
+            line-height: 1.45;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .task-list-pic-cell {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            min-width: 0;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .task-list-pic-cell:has(.tag-status-lov),
+        .task-list-pic-cell:has(.tag-name.is-status-lov-open) {
+            z-index: 40;
+        }
+
+        .task-list-deadline-cell {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+        }
+
+        .task-list-status {
+            display: inline-flex;
+            width: fit-content;
+            max-width: 100%;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--status-color) 28%, #ffffff);
+            background: color-mix(in srgb, var(--status-color) 10%, #ffffff);
+            padding: 0.38rem 0.7rem;
+            color: var(--status-color);
+            font-size: 0.78rem;
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .task-list-status-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            flex-shrink: 0;
+            border-radius: 999px;
+            background: var(--status-color);
+            box-shadow: 0 0 0 2px #ffffff, 0 4px 10px color-mix(in srgb, var(--status-color) 24%, transparent);
+        }
+
+        .task-list-pic {
+            display: inline-flex;
+            width: fit-content;
+            max-width: 100%;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            background: #eff6ff;
+            padding: 0.35rem 0.65rem 0.35rem 0.4rem;
+            color: #1d4ed8;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .task-list-avatar {
+            display: inline-flex;
+            height: 1.35rem;
+            width: 1.35rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 0.62rem;
+            font-weight: 900;
+        }
+
+        .task-list-date {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            border: 1px solid #e2e8f0;
+            padding: 0.35rem 0.65rem;
+            color: #475569;
+            font-size: 0.78rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .task-list-empty {
+            padding: 2rem 1rem;
+            color: #94a3b8;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-align: center;
+            animation: taskListEmptyIn 0.18s ease-out both;
+        }
+
+        @keyframes taskListEmptyIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .task-list-view {
+                overflow-x: auto;
+                overflow-y: visible;
+            }
+
+            .task-list-header,
+            .task-list-row,
+            .task-list-group-heading,
+            .tracking-skeleton-row,
+            .task-list-empty {
+                min-width: var(--task-list-min-width, 52rem);
+            }
         }
 
         .kanban-scroll-nav-group {
@@ -1146,40 +2275,146 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             transform: translateX(1.5px);
         }
 
-        .nav-tooltip {
+        .app-tooltip,
+        .tooltip-btn {
             position: relative;
         }
 
-        .nav-tooltip::after {
+        .app-tooltip[data-tooltip]::after,
+        .tooltip-btn[data-tooltip]::after {
             content: attr(data-tooltip);
             position: absolute;
-            left: calc(100% + 0.75rem);
-            top: 50%;
-            transform: translateY(-50%) translateX(-4px);
-            padding: 0.45rem 0.65rem;
-            border-radius: 0.75rem;
-            background: #0f172a;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 0.42rem 0.6rem;
+            border-radius: 0.65rem;
+            background: var(--tooltip-bg);
+            color: var(--tooltip-color);
+            font-size: 11px;
+            font-weight: 700;
             line-height: 1;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+            user-select: none;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
             transition: opacity 0.18s ease, transform 0.18s ease;
-            z-index: 30;
+            z-index: 120;
         }
 
-        .tooltip-top::after {
+        .app-tooltip[data-tooltip]::before,
+        .tooltip-btn[data-tooltip]::before {
+            content: "";
+            position: absolute;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--tooltip-bg);
+            opacity: 0;
+            pointer-events: none;
+            transform: rotate(45deg);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            z-index: 119;
+        }
+
+        .app-tooltip[data-tooltip]::after,
+        .app-tooltip-top[data-tooltip]::after {
             left: 50%;
             top: auto;
-            bottom: calc(100% + 0.6rem);
+            bottom: calc(100% + var(--tooltip-offset));
             transform: translateX(-50%) translateY(4px);
         }
 
-        .tooltip-top:hover::after {
+        .app-tooltip[data-tooltip]::before,
+        .app-tooltip-top[data-tooltip]::before {
+            left: 50%;
+            top: auto;
+            bottom: calc(100% + var(--tooltip-arrow-offset));
+            transform: translateX(-50%) translateY(4px) rotate(45deg);
+        }
+
+        .app-tooltip[data-tooltip]:hover::after,
+        .app-tooltip[data-tooltip]:focus-visible::after,
+        .app-tooltip-top[data-tooltip]:hover::after,
+        .app-tooltip-top[data-tooltip]:focus-visible::after {
+            opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        .app-tooltip[data-tooltip]:hover::before,
+        .app-tooltip[data-tooltip]:focus-visible::before,
+        .app-tooltip-top[data-tooltip]:hover::before,
+        .app-tooltip-top[data-tooltip]:focus-visible::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) rotate(45deg);
+        }
+
+        .app-tooltip-left[data-tooltip]::after,
+        .tooltip-btn[data-tooltip]::after {
+            right: calc(100% + var(--tooltip-side-offset));
+            top: 50%;
+            bottom: auto;
+            left: auto;
+            transform: translateY(-50%) translateX(4px);
+        }
+
+        .app-tooltip-left[data-tooltip]::before,
+        .tooltip-btn[data-tooltip]::before {
+            right: calc(100% + var(--tooltip-side-arrow-offset));
+            top: 50%;
+            bottom: auto;
+            left: auto;
+            transform: translateY(-50%) translateX(4px) rotate(45deg);
+        }
+
+        .app-tooltip-left[data-tooltip]:hover::after,
+        .app-tooltip-left[data-tooltip]:focus-visible::after,
+        .tooltip-btn[data-tooltip]:hover::after,
+        .tooltip-btn[data-tooltip]:focus-visible::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .app-tooltip-left[data-tooltip]:hover::before,
+        .app-tooltip-left[data-tooltip]:focus-visible::before,
+        .tooltip-btn[data-tooltip]:hover::before,
+        .tooltip-btn[data-tooltip]:focus-visible::before {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0) rotate(45deg);
+        }
+
+        .app-tooltip-right[data-tooltip]::after {
+            left: calc(100% + var(--tooltip-side-offset));
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            transform: translateY(-50%) translateX(-4px);
+        }
+
+        .app-tooltip-right[data-tooltip]::before {
+            left: calc(100% + var(--tooltip-side-arrow-offset));
+            top: 50%;
+            right: auto;
+            bottom: auto;
+            transform: translateY(-50%) translateX(-4px) rotate(45deg);
+        }
+
+        .app-tooltip-right[data-tooltip]:hover::after,
+        .app-tooltip-right[data-tooltip]:focus-visible::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .app-tooltip-right[data-tooltip]:hover::before,
+        .app-tooltip-right[data-tooltip]:focus-visible::before {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0) rotate(45deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .app-tooltip[data-tooltip]::before,
+            .app-tooltip[data-tooltip]::after,
+            .tooltip-btn[data-tooltip]::before,
+            .tooltip-btn[data-tooltip]::after {
+                transition: none !important;
+            }
         }
 
         .sidebar-label,
@@ -1566,13 +2801,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             width: 1.75rem;
             min-width: 1.75rem;
             overflow: visible;
-            opacity: 0;
-            pointer-events: none;
+            opacity: 1;
+            pointer-events: auto;
             transition: opacity 0.12s ease;
         }
 
         .document-page-row:hover .document-page-actions,
-        .document-page-row:focus-within .document-page-actions {
+        .document-page-row:focus-within .document-page-actions,
+        .document-page-row.is-action-menu-open .document-page-actions {
             opacity: 1;
             pointer-events: auto;
         }
@@ -1581,7 +2817,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 1.75rem;
+            height: 1.7rem;
             width: 1.75rem;
             border-radius: 999px;
             color: #94a3b8;
@@ -1601,7 +2837,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             display: flex;
             flex-direction: column;
             gap: 0.15rem;
-            width: 2rem;
+            width: 2.05rem;
             padding: 0.15rem;
             border: 1px solid #e2e8f0;
             border-radius: 999px;
@@ -1639,8 +2875,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             align-items: center;
             justify-content: center;
             height: 1.75rem;
-            width: 1.75rem;
-            min-width: 1.75rem;
+            width: 1.7rem;
+            min-width: 1.7rem;
             padding: 0;
             border-radius: 9999px;
             overflow: hidden;
@@ -1655,13 +2891,14 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .document-delete-toggle.is-confirming {
-            width: 3.55rem;
-            min-width: 3.55rem;
+            width: 1.7rem;
+            min-width: 1.7rem;
             background: #fff1f2;
             color: #e11d48;
         }
 
         .document-delete-icon,
+        .document-delete-confirm-icon,
         .document-delete-label {
             position: absolute;
             inset: 0;
@@ -1672,18 +2909,28 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .document-delete-label {
+            display: none;
             opacity: 0;
             font-size: 11px;
             font-weight: 700;
             white-space: nowrap;
         }
 
+        .document-delete-confirm-icon {
+            opacity: 0;
+        }
+
         .document-delete-toggle.is-confirming .document-delete-icon {
             opacity: 0;
         }
 
-        .document-delete-toggle.is-confirming .document-delete-label {
+        .document-delete-toggle.is-confirming .document-delete-confirm-icon {
             opacity: 1;
+        }
+
+        .document-delete-toggle.is-confirming .document-delete-label {
+            display: none;
+            opacity: 0;
         }
 
         .document-inline-form {
@@ -1703,11 +2950,34 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             min-width: 0;
         }
 
-        .document-privacy-controls,
-        .document-share-list {
+        .document-privacy-controls {
             display: flex;
             flex-wrap: wrap;
             gap: 0.25rem;
+        }
+
+        .document-share-list {
+            display: grid;
+            gap: 0.35rem;
+            margin: 0.1rem 0 0 0.55rem;
+            padding: 0.45rem 0 0.1rem 0.65rem;
+            border-left: 1px solid #bfdbfe;
+        }
+
+        .document-share-title {
+            color: #94a3b8;
+            font-size: 0.62rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .document-share-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            min-width: 0;
         }
 
         .document-privacy-chip,
@@ -1722,6 +2992,18 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             font-weight: 800;
             padding: 0 0.5rem;
             transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+        }
+
+        .document-share-chip {
+            min-height: 1.45rem;
+            background: #f8fafc;
+            font-size: 0.66rem;
+            padding: 0 0.55rem;
+        }
+
+        .document-share-chip:disabled {
+            cursor: not-allowed;
+            opacity: 0.56;
         }
 
         .document-privacy-chip.is-active,
@@ -1919,17 +3201,33 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             margin-right: 0;
         }
 
-        .sidebar.collapsed .nav-tooltip::after {
-            left: 50%;
-            top: auto;
-            bottom: calc(100% + 0.45rem);
-            transform: translateX(-50%) translateY(4px);
+        .sidebar:not(.collapsed) .nav-item.app-tooltip-top[data-tooltip]::before,
+        .sidebar:not(.collapsed) .nav-item.app-tooltip-top[data-tooltip]::after {
+            display: none;
         }
 
-        .sidebar.collapsed .nav-item:hover::after,
-        .sidebar.collapsed a.nav-item:hover::after {
+        .sidebar.collapsed .app-tooltip-top[data-tooltip]::after {
+            bottom: calc(100% + var(--tooltip-offset));
+        }
+
+        .sidebar.collapsed .app-tooltip-top[data-tooltip]::before {
+            bottom: calc(100% + var(--tooltip-arrow-offset));
+        }
+
+        .sidebar.collapsed .nav-item.app-tooltip-top:hover::after,
+        .sidebar.collapsed .nav-item.app-tooltip-top:focus-visible::after,
+        .sidebar.collapsed a.nav-item.app-tooltip-top:hover::after,
+        .sidebar.collapsed a.nav-item.app-tooltip-top:focus-visible::after {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        .sidebar.collapsed .nav-item.app-tooltip-top:hover::before,
+        .sidebar.collapsed .nav-item.app-tooltip-top:focus-visible::before,
+        .sidebar.collapsed a.nav-item.app-tooltip-top:hover::before,
+        .sidebar.collapsed a.nav-item.app-tooltip-top:focus-visible::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) rotate(45deg);
         }
 
         .sidebar.collapsed .profile-card {
@@ -2409,7 +3707,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .state-color-lov .member-single-lov-panel {
-            animation: roleScopeLovFadeIn 0.16s ease;
+            animation: roleScopeLovFadeIn var(--lov-duration) var(--lov-ease) both;
         }
 
         .state-color-lov .member-single-lov-list {
@@ -2459,6 +3757,55 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             font-size: 12px;
             font-weight: 700;
             color: #334155;
+        }
+
+        .app-appear {
+            animation: appAppearIn var(--appear-duration) var(--appear-ease) both;
+            will-change: opacity, transform;
+        }
+
+        .app-appear-list > .app-appear-item,
+        .app-appear-item {
+            opacity: 0;
+            transform: translateY(var(--appear-translate));
+            animation: appAppearItemIn var(--appear-item-duration) var(--appear-ease) both;
+            animation-delay: calc(var(--appear-index, 0) * 24ms);
+            will-change: opacity, transform;
+        }
+
+        @keyframes appAppearIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--appear-translate)) scale(var(--appear-scale));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes appAppearItemIn {
+            from {
+                opacity: 0;
+                transform: translateY(var(--appear-translate));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .app-appear,
+            .app-appear-list > .app-appear-item,
+            .app-appear-item,
+            .tracking-skeleton::after {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
         }
 
         .admin-panel {
@@ -2561,37 +3908,6 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .org-icon-btn i {
             font-size: 0.82rem;
             line-height: 1;
-        }
-
-        .tooltip-btn {
-            position: relative;
-        }
-
-        .tooltip-btn::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            right: calc(100% + 10px);
-            top: 50%;
-            transform: translateY(-50%) translateX(4px);
-            padding: 0.42rem 0.6rem;
-            border-radius: 0.65rem;
-            background: rgba(15, 23, 42, 0.92);
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            user-select: none;
-            transition: opacity 0.18s ease, transform 0.18s ease;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
-            z-index: 5;
-        }
-
-        .tooltip-btn:hover::after,
-        .tooltip-btn:focus-visible::after {
-            opacity: 1;
-            transform: translateY(-50%) translateX(0);
         }
 
         .org-node-indent {
@@ -2839,7 +4155,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16);
             overflow: hidden;
             transform-origin: top center;
-            animation: memberLovFadeIn 0.18s ease;
+            will-change: opacity, transform;
+            animation: memberLovFadeIn var(--lov-duration) var(--lov-ease) both;
         }
 
         .member-lov-columns {
@@ -2993,11 +4310,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
             overflow: hidden;
             transform-origin: top center;
-            animation: memberLovFadeIn 0.18s ease;
+            will-change: opacity, transform;
+            animation: memberLovFadeIn var(--lov-duration) var(--lov-ease) both;
         }
 
         .role-scope-lov .member-single-lov-panel {
-            animation: roleScopeLovFadeIn 0.16s ease;
+            animation: roleScopeLovFadeIn var(--lov-duration) var(--lov-ease) both;
         }
 
         .member-single-lov-list {
@@ -3058,12 +4376,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         @keyframes roleScopeLovFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-4px);
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -3111,7 +4429,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         @keyframes memberLovFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-6px) scale(0.98);
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
             }
 
             to {
@@ -4297,14 +5615,27 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .task-checklist-tooltip.tooltip-btn::after {
             right: 50%;
             top: auto;
-            bottom: calc(100% + 8px);
+            bottom: calc(100% + var(--tooltip-offset));
             transform: translateX(50%) translateY(4px);
             z-index: 120;
+        }
+
+        .task-checklist-tooltip.tooltip-btn::before {
+            right: 50%;
+            top: auto;
+            bottom: calc(100% + var(--tooltip-arrow-offset));
+            transform: translateX(50%) translateY(4px) rotate(45deg);
+            z-index: 119;
         }
 
         .task-checklist-tooltip.tooltip-btn:hover::after,
         .task-checklist-tooltip.tooltip-btn:focus-visible::after {
             transform: translateX(50%) translateY(0);
+        }
+
+        .task-checklist-tooltip.tooltip-btn:hover::before,
+        .task-checklist-tooltip.tooltip-btn:focus-visible::before {
+            transform: translateX(50%) translateY(0) rotate(45deg);
         }
 
         .task-checklist-summary-tag {
@@ -4476,7 +5807,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         @keyframes checklistPopoverIn {
             from {
                 opacity: 0;
-                transform: translateY(-8px) scale(0.98);
+                transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
             }
 
             to {
@@ -4486,7 +5817,8 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         }
 
         .task-checklist-datepicker.open .dp-popup {
-            animation: checklistPopoverIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+            animation: checklistPopoverIn var(--lov-duration) var(--lov-ease) both;
         }
 
         .task-checklist-datepicker .dp-header {
@@ -5499,7 +6831,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes smartSortMenuIn {
-            from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+            from { opacity: 0; transform: translateY(var(--lov-translate)) scale(var(--lov-scale)); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .smart-sort-lov {
@@ -5519,7 +6851,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             border-radius: 14px;
             background: linear-gradient(180deg, #ffffff, #f8fafc);
             color: #334155;
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            box-shadow: none;
             font-size: 13px;
             font-weight: 800;
             outline: none;
@@ -5529,7 +6861,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .smart-sort-lov.is-open .smart-sort-trigger {
             border-color: #cbd5e1;
             background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12), 0 12px 24px rgba(15, 23, 42, 0.08);
+            box-shadow: none;
         }
         .smart-sort-trigger:active {
             transform: none;
@@ -5555,11 +6887,12 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16), 0 8px 18px rgba(15, 23, 42, 0.08);
             opacity: 0;
             pointer-events: none;
-            transform: translateY(-8px) scale(0.96);
+            transform: translateY(var(--lov-translate)) scale(var(--lov-scale));
             transform-origin: left top;
+            will-change: opacity, transform;
         }
         .smart-sort-lov.is-open .smart-sort-menu {
-            animation: smartSortMenuIn 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            animation: smartSortMenuIn var(--lov-duration) var(--lov-ease) both;
             pointer-events: auto;
         }
         .smart-filter-lov .smart-sort-menu {
@@ -5611,7 +6944,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             border: 1px solid #dbe3ef;
             border-radius: 14px;
             background: linear-gradient(180deg, #ffffff, #f8fafc);
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            box-shadow: none;
             padding: 4px;
             color: #475569;
             transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -5621,7 +6954,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
         .inline-date-filter.is-active {
             border-color: #cbd5e1;
             background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12), 0 12px 24px rgba(15, 23, 42, 0.08);
+            box-shadow: none;
         }
         .inline-date-title {
             padding: 0 7px 0 8px;
@@ -5689,7 +7022,9 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 24px 54px rgba(15, 23, 42, 0.16), 0 8px 18px rgba(15, 23, 42, 0.08);
-            animation: smartSortMenuIn 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+            transform-origin: left top;
+            will-change: opacity, transform;
+            animation: smartSortMenuIn var(--lov-duration) var(--lov-ease) both;
         }
         .date-popover-head {
             display: flex;
@@ -5840,7 +7175,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
 
             <nav class="sidebar-nav flex-1 px-4 space-y-1">
                 <div>
-                    <button onclick="toggleAccordion('trackingMenu', 'trackingChevron')" class="nav-item nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tracking task" data-nav-target="trackingMenu">
+                    <button onclick="toggleAccordion('trackingMenu', 'trackingChevron')" class="nav-item app-tooltip app-tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tracking task" data-nav-target="trackingMenu">
                         <div class="flex items-center gap-3 min-w-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -5857,7 +7192,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                 </div>
 
                 <div>
-                    <div id="documentNavItem" class="nav-item nav-item-branch nav-tooltip tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tài liệu" data-nav-target="documentMenu" data-menu-id="documentMenu" data-chevron-id="documentChevron">
+                    <div id="documentNavItem" class="nav-item nav-item-branch app-tooltip app-tooltip-top w-full flex items-center justify-between p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all group" data-tooltip="Tài liệu" data-nav-target="documentMenu" data-menu-id="documentMenu" data-chevron-id="documentChevron">
                         <div class="flex items-center gap-3 min-w-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -5902,7 +7237,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     </div>
                 </div>
 
-                <a href="#" class="nav-item nav-tooltip tooltip-top flex items-center gap-3 p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all" data-tooltip="Admin" data-nav-link="admin">
+                <a href="#" class="nav-item app-tooltip app-tooltip-top flex items-center gap-3 p-3 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all" data-tooltip="Admin" data-nav-link="admin">
                     <svg xmlns="http://www.w3.org/2000/svg" class="nav-item-leading h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -5947,7 +7282,7 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                             </div>
                         </div>
                     </div>
-                    <button class="profile-logout nav-tooltip tooltip-top flex items-center justify-center" data-tooltip="Log out">
+                    <button class="profile-logout app-tooltip app-tooltip-top flex items-center justify-center" data-tooltip="Log out">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1" />
                         </svg>
@@ -5976,17 +7311,35 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             </div>
 
             <div class="flex w-full md:w-auto gap-3 items-center">
+                <div id="taskListGroupControl" class="task-list-group-control">
+                    <button type="button" id="taskListGroupButton" class="task-list-group-btn" onclick="toggleTaskListPopover('group', event)" aria-label="Group list tracking" aria-expanded="false">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span id="taskListGroupButtonLabel">Group</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="taskListGroupPopover" class="task-list-filter-popover task-list-group-popover hidden" onclick="event.stopPropagation()">
+                        <div id="taskListGroupOptions" class="task-list-filter-options" role="menu" aria-label="Group list tracking"></div>
+                    </div>
+                </div>
+
+                <div class="task-view-switch" aria-label="Chọn kiểu hiển thị task">
+                    <span class="task-view-switch-indicator" aria-hidden="true"></span>
+                    <button type="button" class="task-view-switch-btn is-active" data-task-view-mode="board" aria-pressed="true">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span>Board</span>
+                    </button>
+                    <button type="button" class="task-view-switch-btn" data-task-view-mode="list" aria-pressed="false">
+                        <i class="fa-solid fa-list"></i>
+                        <span>List</span>
+                    </button>
+                </div>
+
                 <div class="relative w-full md:w-64 group">
                     <i
                         class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
                     <input type="text" placeholder="Tìm kiếm Task..."
                         class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 transition-all text-sm font-medium">
                 </div>
-
-                <button type="button"
-                    class="app-btn-secondary rounded-xl px-4 py-2.5 text-sm">
-                    <i class="fa-solid fa-filter pointer-events-none text-slate-400"></i> Lọc
-                </button>
 
                 <button type="button" onclick="openInlineForm()"
                     class="app-btn-primary rounded-xl px-5 py-2.5 text-sm whitespace-nowrap">
@@ -5995,18 +7348,70 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
             </div>
         </div>
 
-        <div class="kanban-scroll-shell">
-            <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
-                <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+        <div class="kanban-scroll-shell task-view-panel is-active">
+            <div class="task-view-content">
+                <div class="kanban-scroll-nav-group" aria-label="Điều hướng cột Kanban">
+                    <button type="button" id="kanbanScrollLeft" class="kanban-scroll-nav" aria-label="Xem các cột phía trước">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button type="button" id="kanbanScrollRight" class="kanban-scroll-nav" aria-label="Xem thêm cột phía sau">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div id="kanbanScrollArea" class="kanban-scroll-area">
+                    <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
+                </div>
             </div>
-            <div id="kanbanScrollArea" class="kanban-scroll-area">
-                <div id="kanbanBoard" class="flex gap-6 items-start flex-nowrap pb-6"></div>
+        </div>
+
+        <div id="taskListView" class="task-list-view task-view-panel hidden">
+            <div class="task-list-header">
+                <div class="task-list-header-cell" data-task-list-column="title">
+                    <span class="task-list-header-label">Tiêu đề</span>
+                    <button type="button" class="task-list-column-resize-handle" data-task-list-resize-column="title" aria-label="Kéo giãn cột Tiêu đề"></button>
+                </div>
+                <div class="task-list-header-cell" data-task-list-column="desc">
+                    <span class="task-list-header-label">Mô tả công việc</span>
+                    <button type="button" class="task-list-column-resize-handle" data-task-list-resize-column="desc" aria-label="Kéo giãn cột Mô tả công việc"></button>
+                </div>
+                <div class="task-list-header-cell" data-task-list-column="pic">
+                    <div class="task-list-header-title-row">
+                        <span class="task-list-header-label">PIC</span>
+                        <button type="button" id="taskListPicFilterButton" class="task-list-filter-icon-btn app-tooltip app-tooltip-top" onclick="toggleTaskListPicFilter(event)" aria-label="Lọc list theo PIC" data-tooltip="Lọc theo PIC">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                    <button type="button" class="task-list-column-resize-handle" data-task-list-resize-column="pic" aria-label="Kéo giãn cột PIC"></button>
+                    <div id="taskListPicFilterPopover" class="task-list-filter-popover hidden" onclick="event.stopPropagation()">
+                        <div id="taskListPicFilterOptions" class="task-list-filter-options" role="menu" aria-label="Lọc list theo PIC"></div>
+                    </div>
+                </div>
+                <div class="task-list-header-cell" data-task-list-column="status">
+                    <div class="task-list-header-title-row">
+                        <span class="task-list-header-label">Status</span>
+                        <button type="button" id="taskListStatusFilterButton" class="task-list-filter-icon-btn app-tooltip app-tooltip-top" onclick="toggleTaskListPopover('status', event)" aria-label="Lọc list theo status" data-tooltip="Lọc theo status">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                    <button type="button" class="task-list-column-resize-handle" data-task-list-resize-column="status" aria-label="Kéo giãn cột Status"></button>
+                    <div id="taskListStatusFilterPopover" class="task-list-filter-popover hidden" onclick="event.stopPropagation()">
+                        <div id="taskListStatusFilterOptions" class="task-list-filter-options" role="menu" aria-label="Lọc list theo status"></div>
+                    </div>
+                </div>
+                <div class="task-list-header-cell" data-task-list-column="deadline">
+                    <div class="task-list-header-title-row">
+                        <span class="task-list-header-label">Ngày hết hạn</span>
+                        <button type="button" id="taskListDeadlineSortButton" class="task-list-filter-icon-btn app-tooltip app-tooltip-top" onclick="cycleTaskListDeadlineSort(event)" aria-label="Sắp xếp ngày hết hạn: đang gần nhất. Click để đổi sang xa nhất" data-tooltip="Sort hiện tại: gần nhất">
+                            <i class="fa-solid fa-arrow-down-short-wide"></i>
+                        </button>
+                        <button type="button" id="taskListResetButton" class="task-list-reset app-tooltip app-tooltip-top" onclick="resetTaskListControls()" aria-label="Bỏ hết filter list" data-tooltip="Bỏ hết filter">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                    <button type="button" class="task-list-column-resize-handle" data-task-list-resize-column="deadline" aria-label="Kéo giãn cột Ngày hết hạn"></button>
+                </div>
             </div>
+            <div id="taskListBody" class="task-view-content"></div>
         </div>
                     </section>
                     <section id="documentWorkspaceView" class="hidden document-workspace w-full">
@@ -6031,10 +7436,10 @@ position: absolute; top: calc(100% + 8px); left: 0; background: #FFFFFF;
                     </div>
                 </div>
 
-                <div class="admin-panel" data-admin-panel="org"></div>
-                <div class="admin-panel" data-admin-panel="roles"></div>
-                <div class="admin-panel" data-admin-panel="states"></div>
-                <div class="admin-panel" data-admin-panel="logs"></div>
+                <div class="admin-panel app-appear" data-admin-panel="org"></div>
+                <div class="admin-panel app-appear" data-admin-panel="roles"></div>
+                <div class="admin-panel app-appear" data-admin-panel="states"></div>
+                <div class="admin-panel app-appear" data-admin-panel="logs"></div>
             </section>
         </div>
     </div>
@@ -6435,12 +7840,12 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
         const ViewModeSwitch = ({ value, onChange }) => {
             const activeIndex = Math.max(0, VIEW_MODES.findIndex((mode) => mode.id === value));
             return h("div", {
-                className: "relative inline-grid grid-cols-2 rounded-xl border border-slate-200 bg-white p-1 shadow-sm",
+                className: "relative inline-grid grid-cols-2 rounded-xl border border-slate-200 bg-white p-1",
                 role: "tablist",
                 "aria-label": "Chá»n kiá»ƒu hiá»ƒn thá»‹"
             },
                 h("span", {
-                    className: "pointer-events-none absolute left-1 top-1 h-[calc(100%-0.5rem)] w-[calc((100%-0.5rem)/2)] rounded-lg bg-slate-800 shadow-md transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    className: "pointer-events-none absolute left-1 top-1 h-[calc(100%-0.5rem)] w-[calc((100%-0.5rem)/2)] rounded-lg bg-slate-800 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
                     style: { transform: activeIndex === 1 ? "translateX(100%)" : "translateX(0)" }
                 }),
                 VIEW_MODES.map((mode) => {
@@ -6846,11 +8251,11 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                         h(IconButton, { label: "Đóng sidebar", className: "hidden", onClick: onClose }, h(X, { className: "h-4 w-4" }))
                     )
                 ),
-                h("nav", { className: "flex min-w-0 items-center gap-1.5 overflow-x-auto py-1" },
+                h("nav", { className: "flex min-w-0 flex-wrap items-center gap-1.5 overflow-visible py-1" },
                         h("button", {
                             type: "button",
                             onClick: () => onSelectCategory("all"),
-                        className: `flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${activeCategoryId === "all" ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"}`
+                        className: `flex shrink-0 items-center gap-1.5 rounded-xl border px-3 py-2 transition-all font-semibold text-sm ${activeCategoryId === "all" ? "border-blue-100 bg-blue-50 text-blue-600" : "border-transparent text-slate-600 hover:bg-blue-50 hover:text-blue-600"}`
                         },
                         h(File, { className: "h-4 w-4 shrink-0" }),
                         h("span", { className: "min-w-0 flex-1 truncate text-left" }, "Tất cả tài liệu"),
@@ -6910,7 +8315,7 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                     onDragLeave: !isEditing ? handleDragLeave : undefined,
                                     onDrop: (e) => !isEditing && handleDrop(e, category.id),
                                     onDragEnd: !isEditing ? handleDragEnd : undefined,
-                                    className: `group relative flex max-w-[220px] shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 transition-all font-semibold text-sm ${isEditing ? "bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "bg-blue-50 text-blue-600 shadow-inner ring-1 ring-blue-100" : "text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${openCategoryActionId === category.id ? "z-50" : ""} ${draggedCategoryId === category.id ? "opacity-50 border border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`,
+                                    className: `group relative flex max-w-[220px] shrink-0 items-center gap-1.5 rounded-xl border px-3 py-2 transition-all font-semibold text-sm ${isEditing ? "border-blue-100 bg-blue-50 text-blue-600" : "cursor-grab active:cursor-grabbing"} ${activeCategoryId === category.id && !isEditing ? "border-blue-100 bg-blue-50 text-blue-600" : "border-transparent text-slate-600 hover:bg-blue-50 hover:text-blue-600"} ${openCategoryActionId === category.id ? "z-50" : ""} ${draggedCategoryId === category.id ? "opacity-50 border-dashed border-slate-400" : ""} ${dragOverCategoryId === category.id ? (dropPosition === "before" ? "relative before:absolute before:-top-px before:left-0 before:right-0 before:h-[2px] before:bg-blue-500 before:z-10" : "relative after:absolute after:-bottom-px after:left-0 after:right-0 after:h-[2px] after:bg-blue-500 after:z-10") : ""}`,
                                     "data-category-action-root": true
                                 },
                                 h(Folder, { className: "h-4 w-4 shrink-0" }),
@@ -6977,15 +8382,15 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                                     setDeleteConfirmId(category.id);
                                                 }
                                             },
-                                            className: `relative flex h-6 items-center justify-center overflow-hidden rounded-full transition-all duration-300 ${
+                                            className: `relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full transition-all duration-300 ${
                                                 deleteConfirmId === category.id
-                                                    ? "w-12 border border-red-200 bg-red-50 text-red-600"
-                                                    : "w-6 border border-transparent bg-transparent text-slate-400 hover:bg-red-50 hover:text-red-600"
+                                                    ? "border border-red-200 bg-red-50 text-red-600"
+                                                    : "border border-transparent bg-transparent text-slate-400 hover:bg-red-50 hover:text-red-600"
                                             }`,
-                                            title: "Xóa danh mục"
+                                            "aria-label": deleteConfirmId === category.id ? "Xác nhận xóa danh mục" : "Xóa danh mục"
                                         },
                                             h(Trash2, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteConfirmId === category.id ? "scale-50 opacity-0" : "scale-100 opacity-100"}` }),
-                                            h("span", { className: `absolute text-[10px] font-bold whitespace-nowrap transition-all duration-300 ${deleteConfirmId === category.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` }, "Xóa")
+                                            h(X, { className: `absolute h-3.5 w-3.5 transition-all duration-300 ${deleteConfirmId === category.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}` })
                                         )
                                     )
                                 )
@@ -7811,7 +9216,6 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                 h("div", { className: `${isCard ? "min-w-0" : "min-w-0 flex-1"}` },
                                     isCard && h("div", { className: "mb-4 flex flex-wrap items-center gap-2" },
                                         renderCategoryPicker(false),
-                                        isFreshDraft && h("span", { className: "inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-600" }, "Draft mới"),
                                         showStatusBadge && h("span", { className: `inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${statusClass}` }, statusLabel)
                                     ),
                                     isQuickEditing
@@ -7849,7 +9253,6 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
                                                 ? h("h3", { className: `${isBlankDraft ? "text-slate-400" : "text-slate-800 group-hover:text-blue-600"} min-w-0 max-w-full break-words text-base tracking-tight font-bold transition-colors`, style: { overflowWrap: "anywhere" } },
                                                     h("span", null, highlightTextFast(displayTitle, query)),
                                                     (isFreshDraft || showStatusBadge) && h("span", { className: "inline-block w-2.5" }),
-                                                    isFreshDraft && h("span", { className: "shrink-0 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-600" }, "Draft mới"),
                                                     showStatusBadge && h("span", { className: `shrink-0 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${statusClass}` }, statusLabel)
                                                 )
                                                 : h("h3", { className: `${isCard ? "text-[18px]" : "text-base"} ${isBlankDraft ? "text-slate-400" : "text-slate-800 group-hover:text-blue-600"} tracking-tight font-bold transition-colors`, style: { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" } }, highlightTextFast(displayTitle, query)),
@@ -8361,11 +9764,15 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
         ].sort((a, b) => a.orderIndex - b.orderIndex);
 
         const BOARD_STORAGE_KEY = 'kanban_board_state_v3';
+        const ALL_TRACKING_USERS_KEY = '__all__';
+        const ALL_TRACKING_USERS_ROUTE_VALUE = 'all';
         const TASK_CHECKLIST_STATUS_FILTER_STORAGE_KEY = 'task_checklist_status_filter_v1';
         const TASK_CHECKLIST_USER_FILTER_STORAGE_KEY = 'task_checklist_user_filter_v1';
         const TASK_CHECKLIST_COLLAPSED_STORAGE_KEY = 'task_checklist_collapsed_v1';
         const TASK_DOCUMENTS_COLLAPSED_STORAGE_KEY = 'task_documents_collapsed_v1';
         let sortableInstances = [];
+        let isTaskCardDragging = false;
+        let suppressTaskCardClickUntil = 0;
         let boardTickets = [];
         let currentTaskDetailTicketId = null;
         let taskDetailDrawerCloseTimeout = null;
@@ -8386,6 +9793,8 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
         let currentTaskCommentReplyId = '';
         let currentTaskCommentReactionMenuId = '';
         let openAssigneeStatusLovKey = '';
+        let closingAssigneeStatusLovKey = '';
+        let assigneeStatusLovCloseTimeout = null;
         const TASK_COMMENT_REACTION_OPTIONS = [
             { key: 'like', emoji: '👍', label: 'Like' },
             { key: 'haha', emoji: '😂', label: 'Haha' },
@@ -8548,6 +9957,7 @@ import React, { useEffect, useMemo, useState, useRef } from "react";
             }).join('');
 
             updateKanbanScrollNavState();
+            ensureSortableColumns();
         }
 
         function updateKanbanScrollNavState() {
@@ -8979,6 +10389,33 @@ function togglePersonalMode(select) {
             return getCardAssignees(card).map((record) => record.user_key);
         }
 
+        function isAllTrackingUsersKey(userKey) {
+            return userKey === ALL_TRACKING_USERS_KEY;
+        }
+
+        function normalizeTrackingUserKey(userKey) {
+            const rawUserKey = String(userKey || '').trim();
+            if (rawUserKey.toLowerCase() === ALL_TRACKING_USERS_ROUTE_VALUE || rawUserKey === ALL_TRACKING_USERS_KEY) {
+                return ALL_TRACKING_USERS_KEY;
+            }
+            return normalizeUserKey(rawUserKey) || '';
+        }
+
+        function getTrackingRouteUserValue(userKey) {
+            return isAllTrackingUsersKey(userKey) ? ALL_TRACKING_USERS_ROUTE_VALUE : userKey;
+        }
+
+        function getCurrentSortedTeamUserKeys(teamKey = selectedTeamCode) {
+            return getSortedTrackingUsers(getUsersByTeamCode(teamKey));
+        }
+
+        function getTicketTeamAssignee(ticketState, teamUsers = getCurrentSortedTeamUserKeys()) {
+            if (!ticketState || ticketState.is_personal) return null;
+            return teamUsers
+                .map((userKey) => getTicketAssignee(ticketState, userKey))
+                .find(Boolean) || null;
+        }
+
         function getBoardTrackingUserKey() {
             return activeTrackingUserKey || CURRENT_USER_ID;
         }
@@ -9023,11 +10460,20 @@ function togglePersonalMode(select) {
             }).length;
         }
 
+        function getTaskCountForTeam(teamKey = selectedTeamCode) {
+            const teamUsers = new Set(getUsersByTeamCode(teamKey));
+            if (!teamUsers.size) return 0;
+            return boardTickets.filter((ticketState) => {
+                if (ticketState.is_personal) return false;
+                return (ticketState.assignees || []).some((record) => teamUsers.has(record.user_key));
+            }).length;
+        }
+
         function getPreferredTrackingUserKey(teamUsers) {
             if (!teamUsers.length) return null;
+            if (isAllTrackingUsersKey(activeTrackingUserKey)) return ALL_TRACKING_USERS_KEY;
             if (activeTrackingUserKey && teamUsers.includes(activeTrackingUserKey)) return activeTrackingUserKey;
-            if (teamUsers.includes(CURRENT_USER_ID)) return CURRENT_USER_ID;
-            return teamUsers[0];
+            return ALL_TRACKING_USERS_KEY;
         }
 
         function getTrackingRouteFromUrl() {
@@ -9035,7 +10481,7 @@ function togglePersonalMode(select) {
             return {
                 workspace: params.get('workspace') || '',
                 team: params.get('team') || '',
-                user: normalizeUserKey(params.get('user') || '') || '',
+                user: normalizeTrackingUserKey(params.get('user') || '') || '',
                 ticket: params.get('ticket') || ''
             };
         }
@@ -9049,7 +10495,7 @@ function togglePersonalMode(select) {
             url.search = '';
             url.searchParams.set('workspace', 'tracking');
             if (team) url.searchParams.set('team', team);
-            if (user) url.searchParams.set('user', user);
+            if (user) url.searchParams.set('user', getTrackingRouteUserValue(user));
             if (ticketId) url.searchParams.set('ticket', ticketId);
             return url;
         }
@@ -9064,12 +10510,12 @@ function togglePersonalMode(select) {
             const nextUrl = buildTrackingUrl({ team: selectedTeamCode, user: userKey, ticketId });
             if (nextUrl.href === window.location.href) return;
             const method = replace ? 'replaceState' : 'pushState';
-            window.history[method]({ workspace: 'tracking', team: selectedTeamCode, user: userKey, ticket: ticketId || '' }, '', nextUrl);
+            window.history[method]({ workspace: 'tracking', team: selectedTeamCode, user: getTrackingRouteUserValue(userKey), ticket: ticketId || '' }, '', nextUrl);
         }
 
         function resolveTrackingRoute(route = getTrackingRouteFromUrl()) {
             const availableTeams = getAvailableTeamCodesForUser(CURRENT_USER_ID);
-            const routeUser = normalizeUserKey(route.user || '') || '';
+            const routeUser = normalizeTrackingUserKey(route.user || '') || '';
             const teamFromUser = routeUser
                 ? availableTeams.find((teamCode) => getUsersByTeamCode(teamCode).includes(routeUser))
                 : null;
@@ -9082,9 +10528,11 @@ function togglePersonalMode(select) {
             const ticketUser = ticketState && !ticketState.is_personal
                 ? (ticketState.assignees || []).map((record) => record.user_key).find((userKey) => teamUsers.includes(userKey))
                 : null;
-            const user = teamUsers.includes(routeUser)
+            const user = isAllTrackingUsersKey(routeUser)
+                ? ALL_TRACKING_USERS_KEY
+                : teamUsers.includes(routeUser)
                 ? routeUser
-                : (ticketUser || getPreferredTrackingUserKey(teamUsers));
+                : (ticketUser || ALL_TRACKING_USERS_KEY);
 
             return {
                 team,
@@ -9103,12 +10551,12 @@ function togglePersonalMode(select) {
                 preferredNavLink = null;
                 activeTrackingUserKey = resolved.user;
                 if (selectedTeamCode !== resolved.team) {
-                    applySelectedTeam(resolved.team, { updateUrl: false });
+                    applySelectedTeam(resolved.team, { updateUrl: false, staticTaskListValues: true });
                 } else {
                     renderTrackingList(resolved.team);
-                    applyBoardFilter();
+                    applyBoardFilter({ staticTaskListValues: true });
                 }
-                setWorkspaceView('board');
+                setWorkspaceView('board', { staticTaskListValues: true });
                 syncActiveNavState();
                 if (resolved.ticket) {
                     openTaskDetailsDrawer(resolved.ticket, { updateUrl: false });
@@ -9143,8 +10591,8 @@ function togglePersonalMode(select) {
             });
         }
 
-        function applyBoardFilter() {
-            renderBoardTickets();
+        function applyBoardFilter(options = {}) {
+            renderBoardTickets({ staticTaskListValues: !!options.staticTaskListValues });
         }
 
         function refreshTrackingSidebarAndBoard() {
@@ -9154,7 +10602,10 @@ function togglePersonalMode(select) {
         }
 
         function applyDefaultInlinePicSelection() {
-            const defaultUserKey = getPreferredTrackingUserKey(getAssignableUserKeys()) || DEFAULT_INLINE_PIC_ID;
+            const assignableUserKeys = getAssignableUserKeys();
+            const defaultUserKey = activeTrackingUserKey && !isAllTrackingUsersKey(activeTrackingUserKey) && assignableUserKeys.includes(activeTrackingUserKey)
+                ? activeTrackingUserKey
+                : (assignableUserKeys.includes(CURRENT_USER_ID) ? CURRENT_USER_ID : (assignableUserKeys[0] || DEFAULT_INLINE_PIC_ID));
             const defaultPicBtn = document.querySelector(`#inlinePicSelection button[data-user-key="${defaultUserKey}"]`);
             if (!defaultPicBtn) return;
 
@@ -9198,15 +10649,16 @@ function togglePersonalMode(select) {
             const normalizedAssignee = normalizeAssigneeRecord(assigneeRecord);
             if (!ticketId || !normalizedAssignee) return '';
             const lovKey = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key);
-            if (openAssigneeStatusLovKey !== lovKey) return '';
+            const isClosing = closingAssigneeStatusLovKey === lovKey;
+            if (openAssigneeStatusLovKey !== lovKey && !isClosing) return '';
             return `
-                <div class="tag-status-lov" onclick="event.stopPropagation()">
-                    ${getWorkflowStates().map((state) => {
+                <div class="tag-status-lov ${isClosing ? 'is-closing' : ''}" onclick="event.stopPropagation()">
+                    ${getWorkflowStates().map((state, index) => {
                         const stateMeta = getStateConfig(state.stateCode) || getDefaultStateCode();
                         const isActive = normalizedAssignee.workflow_state === stateMeta.stateCode;
                         const stateColor = getColorOptionMeta(stateMeta.colorTheme).hex;
                         return `
-                            <button type="button" class="tag-status-lov-option ${isActive ? 'is-active' : ''}" style="--status-option-color:${stateColor}" onclick="selectAssigneeStatus('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', '${escapeHtml(stateMeta.stateCode)}', event)">
+                            <button type="button" class="tag-status-lov-option ${isActive ? 'is-active' : ''}" style="--status-option-color:${stateColor}; --option-index:${index}" onclick="selectAssigneeStatus('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', '${escapeHtml(stateMeta.stateCode)}', event)">
                                 <span class="tag-status-lov-dot" aria-hidden="true"></span>
                                 <span>${escapeHtml(stateMeta.stateName)}</span>
                             </button>
@@ -9227,7 +10679,8 @@ function togglePersonalMode(select) {
             tag.dataset.userKey = normalizedAssignee.user_key;
             tag.dataset.workflowState = workflowMeta.stateCode;
             tag.setAttribute('onclick', `toggleAssigneeStatusLov('${ticketId}', '${normalizedAssignee.user_key}', event)`);
-            const isStatusLovOpen = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key) === openAssigneeStatusLovKey;
+            const lovKey = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key);
+            const isStatusLovOpen = lovKey === openAssigneeStatusLovKey || lovKey === closingAssigneeStatusLovKey;
             tag.className = `tag-name ${getWorkflowStateClass(workflowMeta.stateCode)} ${isStatusLovOpen ? 'is-status-lov-open' : ''}`;
             tag.setAttribute('title', `${user.full_name} - ${workflowMeta.stateName}`);
             tag.setAttribute('style', `--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;`);
@@ -9241,7 +10694,8 @@ function togglePersonalMode(select) {
             if (!user) return '';
             const workflowMeta = getStateConfig(normalizedAssignee.workflow_state) || getDefaultStateCode();
             const workflowColor = getColorOptionMeta(workflowMeta.colorTheme).hex;
-            const isStatusLovOpen = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key) === openAssigneeStatusLovKey;
+            const lovKey = getAssigneeStatusLovKey(ticketId, normalizedAssignee.user_key);
+            const isStatusLovOpen = lovKey === openAssigneeStatusLovKey || lovKey === closingAssigneeStatusLovKey;
             return `<div class="tag-name ${getWorkflowStateClass(workflowMeta.stateCode)} ${isStatusLovOpen ? 'is-status-lov-open' : ''}" data-user-key="${normalizedAssignee.user_key}" data-workflow-state="${workflowMeta.stateCode}" onclick="toggleAssigneeStatusLov('${escapeHtml(ticketId)}', '${escapeHtml(normalizedAssignee.user_key)}', event)" title="${escapeHtml(`${user.full_name} - ${workflowMeta.stateName}`)}" style="--dot-color:${workflowColor}; background-color:${user.color}; border:1px solid ${user.color}; color:#ffffff;"><span class="tag-label">${escapeHtml(user.full_name)}</span><span class="tag-status-dot"></span>${buildAssigneeStatusLovHtml(ticketId, normalizedAssignee)}</div>`;
         }
 
@@ -11292,6 +12746,11 @@ function togglePersonalMode(select) {
         function openTaskDetailsFromCard(card, event) {
             const target = event?.target;
             if (!card || !card.dataset.ticketId) return;
+            if (isTaskCardDragging || Date.now() < suppressTaskCardClickUntil) {
+                event?.preventDefault?.();
+                event?.stopPropagation?.();
+                return;
+            }
             if (target?.closest('.card-actions-wrap, .edit-form, .tag-name, .delete-btn, .edit-btn, button, input, textarea, select, a')) return;
             openTaskDetailsDrawer(card.dataset.ticketId);
         }
@@ -11533,51 +12992,783 @@ function togglePersonalMode(select) {
             card.innerHTML = renderTaskCardInnerHtml(state);
             const normalizedState = normalizeTicketState(state);
             const isStatusLovOpen = normalizedState?.assignees?.some((record) => (
-                getAssigneeStatusLovKey(normalizedState.ticket_id, record.user_key) === openAssigneeStatusLovKey
+                [openAssigneeStatusLovKey, closingAssigneeStatusLovKey].includes(getAssigneeStatusLovKey(normalizedState.ticket_id, record.user_key))
             ));
             card.classList.toggle('is-status-lov-open', !!isStatusLovOpen);
         }
 
-        function createTaskCardElement(state) {
+        function createTaskCardElement(state, boardAssigneeUserKey = '') {
             const card = document.createElement('div');
-            card.className = 'task-card animate-in relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group animate-[fadeIn_0.3s_ease-out]';
+            card.className = 'task-card relative bg-white p-4 rounded-xl border border-blue-400 shadow-md hover:shadow-lg transition-all group';
             card.setAttribute('onclick', 'openTaskDetailsFromCard(this, event)');
             renderTaskCard(card, state);
+            card.dataset.boardAssigneeUserKey = normalizeUserKey(boardAssigneeUserKey) || '';
             return card;
         }
 
-        function renderBoardTickets() {
-            document.querySelectorAll('.kanban-list .task-card').forEach((card) => card.remove());
-
+        function getVisibleBoardTicketEntries() {
             const boardUserKey = getBoardTrackingUserKey();
-            const visibleTickets = boardTickets.filter((ticketState) => {
-                if (ticketState.is_personal) {
-                    return boardUserKey === CURRENT_USER_ID;
-                }
-                return !!getTicketAssignee(ticketState, boardUserKey);
+            const isAllTrackingUsers = isAllTrackingUsersKey(boardUserKey);
+            const teamUsers = getCurrentSortedTeamUserKeys();
+
+            return boardTickets
+                .map((ticketState) => {
+                    if (ticketState.is_personal) {
+                        return isAllTrackingUsers
+                            ? null
+                            : (boardUserKey === CURRENT_USER_ID ? { ticketState, assignee: null } : null);
+                    }
+                    const assignee = isAllTrackingUsers
+                        ? getTicketTeamAssignee(ticketState, teamUsers)
+                        : getTicketAssignee(ticketState, boardUserKey);
+                    return assignee ? { ticketState, assignee } : null;
+                })
+                .filter(Boolean);
+        }
+
+        function renderTaskListPicCell(ticketState, assignee) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+            if (normalizedState.is_personal) {
+                return `<div class="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm ring-1 ring-orange-200" title="Task Cá nhân"></div>`;
+            }
+            return renderAssigneeTags(normalizedState.assignees, normalizedState.ticket_id);
+        }
+
+        function renderTaskListStatusCell(ticketState, assignee) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+            const stateMeta = normalizedState.is_personal
+                ? getDefaultStateCode()
+                : (getStateConfig(assignee?.workflow_state) || getDefaultStateCode());
+            const statusColor = getColorOptionMeta(stateMeta.colorTheme).hex;
+            return `
+                <span class="task-list-status" style="--status-color:${statusColor}">
+                    <span class="task-list-status-dot" aria-hidden="true"></span>
+                    <span>${escapeHtml(stateMeta.stateName)}</span>
+                </span>
+            `;
+        }
+
+        function getTaskListEntryStatusCode(entry) {
+            const normalizedState = normalizeTicketState(entry?.ticketState);
+            if (!normalizedState) return getDefaultStateCode().stateCode;
+            return normalizedState.is_personal
+                ? getDefaultStateCode().stateCode
+                : (getStateConfig(entry?.assignee?.workflow_state)?.stateCode || getDefaultStateCode().stateCode);
+        }
+
+        function getTaskListEntryPicKey(entry) {
+            const normalizedState = normalizeTicketState(entry?.ticketState);
+            if (!normalizedState) return '';
+            if (normalizedState.is_personal) return CURRENT_USER_ID;
+            return normalizeUserKey(entry?.assignee?.user_key) || '';
+        }
+
+        function getTaskListEntryPicKeys(entry) {
+            const normalizedState = normalizeTicketState(entry?.ticketState);
+            if (!normalizedState) return [];
+            if (normalizedState.is_personal) return [CURRENT_USER_ID];
+            return (normalizedState.assignees || [])
+                .map((record) => normalizeUserKey(record.user_key))
+                .filter(Boolean);
+        }
+
+        function getTaskListDeadlineSortValue(entry) {
+            const normalizedState = normalizeTicketState(entry?.ticketState);
+            if (!normalizedState?.date_raw) return Number.MAX_SAFE_INTEGER;
+            const timeValue = new Date(normalizedState.date_raw).getTime();
+            return Number.isFinite(timeValue) ? timeValue : Number.MAX_SAFE_INTEGER;
+        }
+
+        function getFilteredTaskListEntries(entries) {
+            const filteredEntries = entries.filter((entry) => {
+                const picMatches = taskListPicFilter === 'all' || getTaskListEntryPicKeys(entry).includes(taskListPicFilter);
+                const statusMatches = taskListStatusFilter === 'all' || getTaskListEntryStatusCode(entry) === taskListStatusFilter;
+                return picMatches && statusMatches;
             });
 
-            visibleTickets.forEach((ticketState) => {
+            if (taskListDeadlineSort === 'asc') {
+                return filteredEntries.slice().sort((a, b) => getTaskListDeadlineSortValue(a) - getTaskListDeadlineSortValue(b));
+            }
+            if (taskListDeadlineSort === 'desc') {
+                return filteredEntries.slice().sort((a, b) => getTaskListDeadlineSortValue(b) - getTaskListDeadlineSortValue(a));
+            }
+            return filteredEntries;
+        }
+
+        function renderTaskListControls(entries = getVisibleBoardTicketEntries()) {
+            const picFilterOptions = document.getElementById('taskListPicFilterOptions');
+            const statusFilterOptions = document.getElementById('taskListStatusFilterOptions');
+            const groupOptions = document.getElementById('taskListGroupOptions');
+
+            if (picFilterOptions) {
+                const picKeys = Array.from(new Set(entries.flatMap((entry) => getTaskListEntryPicKeys(entry)).filter(Boolean)))
+                    .sort((a, b) => (USERS[a]?.sort || Number.MAX_SAFE_INTEGER) - (USERS[b]?.sort || Number.MAX_SAFE_INTEGER));
+                if (taskListPicFilter !== 'all' && !picKeys.includes(taskListPicFilter)) taskListPicFilter = 'all';
+                const optionItems = [
+                    { value: 'all', label: 'Tất cả' },
+                    ...picKeys.map((userKey) => ({ value: userKey, label: USERS[userKey]?.full_name || userKey }))
+                ];
+                picFilterOptions.innerHTML = optionItems.map((item, index) => {
+                    const isActive = taskListPicFilter === item.value;
+                    return `
+                        <button type="button" class="task-list-filter-option ${isActive ? 'is-active' : ''}" data-task-list-pic-option="${escapeHtml(item.value)}" role="menuitemradio" aria-checked="${isActive ? 'true' : 'false'}" style="--task-list-option-index:${index}" onclick="selectTaskListPicFilter('${escapeHtml(item.value)}', event)">
+                            <span>${escapeHtml(item.label)}</span>
+                            <i class="fa-solid fa-check task-list-filter-option-check" aria-hidden="true"></i>
+                        </button>
+                    `;
+                }).join('');
+            }
+            syncTaskListFilterButtons();
+
+            if (statusFilterOptions) {
+                const statusCodes = Array.from(new Set(entries.map((entry) => getTaskListEntryStatusCode(entry)).filter(Boolean)));
+                if (taskListStatusFilter !== 'all' && !statusCodes.includes(taskListStatusFilter)) taskListStatusFilter = 'all';
+                const optionItems = [
+                    { value: 'all', label: 'Tất cả' },
+                    ...getWorkflowStates()
+                        .filter((state) => statusCodes.includes(state.stateCode))
+                        .map((state) => ({ value: state.stateCode, label: state.stateName }))
+                ];
+                statusFilterOptions.innerHTML = optionItems.map((item, index) => {
+                    const isActive = taskListStatusFilter === item.value;
+                    return `
+                        <button type="button" class="task-list-filter-option ${isActive ? 'is-active' : ''}" role="menuitemradio" aria-checked="${isActive ? 'true' : 'false'}" style="--task-list-option-index:${index}" onclick="selectTaskListStatusFilter('${escapeHtml(item.value)}', event)">
+                            <span>${escapeHtml(item.label)}</span>
+                            <i class="fa-solid fa-check task-list-filter-option-check" aria-hidden="true"></i>
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            if (groupOptions) {
+                const optionItems = [
+                    { value: 'none', label: 'Không group' },
+                    { value: 'pic', label: 'Theo PIC' },
+                    { value: 'status', label: 'Theo Status' },
+                    { value: 'deadline', label: 'Theo ngày hết hạn' }
+                ];
+                const isGroupActionDisabled = taskListGroupMode === 'none';
+                const groupActionsHtml = `
+                    <div class="task-list-group-actions">
+                        <button type="button" class="task-list-group-action ${isGroupActionDisabled ? 'is-disabled' : ''}" style="--task-list-option-index:0" onclick="collapseAllTaskListGroups(event)" ${isGroupActionDisabled ? 'disabled aria-disabled="true"' : ''}>
+                            <i class="fa-solid fa-compress"></i>
+                            <span>Thu tất cả</span>
+                        </button>
+                        <button type="button" class="task-list-group-action ${isGroupActionDisabled ? 'is-disabled' : ''}" style="--task-list-option-index:1" onclick="expandAllTaskListGroups(event)" ${isGroupActionDisabled ? 'disabled aria-disabled="true"' : ''}>
+                            <i class="fa-solid fa-expand"></i>
+                            <span>Mở tất cả</span>
+                        </button>
+                    </div>
+                `;
+                groupOptions.innerHTML = groupActionsHtml + optionItems.map((item, index) => {
+                    const isActive = taskListGroupMode === item.value;
+                    return `
+                        <button type="button" class="task-list-filter-option ${isActive ? 'is-active' : ''}" role="menuitemradio" aria-checked="${isActive ? 'true' : 'false'}" style="--task-list-option-index:${index + 2}" onclick="selectTaskListGroupMode('${escapeHtml(item.value)}', event)">
+                            <span>${escapeHtml(item.label)}</span>
+                            <i class="fa-solid fa-check task-list-filter-option-check" aria-hidden="true"></i>
+                        </button>
+                    `;
+                }).join('');
+            }
+            syncTaskListFilterButtons();
+        }
+
+        function handleTaskListControlChange() {
+            renderTaskListView();
+        }
+
+        function selectTaskListPicFilter(value, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            taskListPicFilter = value || 'all';
+            closeTaskListPopovers({ immediate: true });
+            renderTaskListView();
+        }
+
+        function selectTaskListStatusFilter(value, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            taskListStatusFilter = value || 'all';
+            closeTaskListPopovers({ immediate: true });
+            renderTaskListView();
+        }
+
+        function selectTaskListDeadlineSort(value, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            taskListDeadlineSort = value === 'desc' ? 'desc' : 'asc';
+            closeTaskListPopovers({ immediate: true });
+            renderTaskListView();
+        }
+
+        function cycleTaskListDeadlineSort(event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            selectTaskListDeadlineSort(taskListDeadlineSort === 'desc' ? 'asc' : 'desc', event);
+        }
+
+        function selectTaskListGroupMode(value, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            taskListGroupMode = ['pic', 'status', 'deadline'].includes(value) ? value : 'none';
+            taskListCollapsedGroups.clear();
+            closeTaskListPopovers({ immediate: true });
+            renderTaskListView();
+        }
+
+        function resetTaskListControls() {
+            if (!hasActiveTaskListControls()) return;
+            taskListPicFilter = 'all';
+            taskListStatusFilter = 'all';
+            taskListDeadlineSort = 'asc';
+            taskListGroupMode = 'none';
+            taskListCollapsedGroups.clear();
+            closeTaskListPopovers({ immediate: true });
+            renderTaskListView();
+        }
+
+        function hasActiveTaskListControls() {
+            return taskListPicFilter !== 'all'
+                || taskListStatusFilter !== 'all'
+                || taskListDeadlineSort !== 'asc'
+                || taskListGroupMode !== 'none';
+        }
+
+        function syncTaskListFilterButtons() {
+            const configs = [
+                { key: 'pic', active: taskListPicFilter !== 'all', buttonId: 'taskListPicFilterButton', popoverId: 'taskListPicFilterPopover' },
+                { key: 'status', active: taskListStatusFilter !== 'all', buttonId: 'taskListStatusFilterButton', popoverId: 'taskListStatusFilterPopover' },
+                { key: 'deadline', active: taskListDeadlineSort === 'desc', buttonId: 'taskListDeadlineSortButton' },
+                { key: 'group', active: taskListGroupMode !== 'none', buttonId: 'taskListGroupButton', popoverId: 'taskListGroupPopover' }
+            ];
+            configs.forEach((config) => {
+                const isOpen = openTaskListPopover === config.key;
+                const isClosing = closingTaskListPopover === config.key;
+                const button = document.getElementById(config.buttonId);
+                const popover = document.getElementById(config.popoverId);
+                if (button) {
+                    if (config.key === 'pic') {
+                        const picLabel = taskListPicFilter === 'all'
+                            ? 'Lọc theo PIC'
+                            : `PIC: ${USERS[taskListPicFilter]?.full_name || taskListPicFilter}`;
+                        button.setAttribute('data-tooltip', picLabel);
+                        button.removeAttribute('title');
+                    }
+                    if (config.key === 'status') {
+                        const statusLabel = taskListStatusFilter === 'all'
+                            ? 'Lọc theo status'
+                            : `Status: ${(getStateConfig(taskListStatusFilter) || getDefaultStateCode()).stateName}`;
+                        button.setAttribute('data-tooltip', statusLabel);
+                        button.removeAttribute('title');
+                    }
+                    if (config.key === 'deadline') {
+                        const isDesc = taskListDeadlineSort === 'desc';
+                        const icon = button.querySelector('i');
+                        if (icon) {
+                            icon.className = `fa-solid ${isDesc ? 'fa-arrow-up-wide-short' : 'fa-arrow-down-short-wide'}`;
+                        }
+                        const label = isDesc ? 'xa nhất' : 'gần nhất';
+                        const nextLabel = isDesc ? 'gần nhất' : 'xa nhất';
+                        button.setAttribute('aria-label', `Sắp xếp ngày hết hạn: đang ${label}. Click để đổi sang ${nextLabel}`);
+                        button.setAttribute('data-tooltip', `Sort hiện tại: ${label}`);
+                        button.removeAttribute('title');
+                        button.classList.toggle('is-sort-desc', isDesc);
+                    }
+                    if (config.key === 'group') {
+                        const label = getTaskListGroupModeLabel(taskListGroupMode);
+                        const labelNode = document.getElementById('taskListGroupButtonLabel');
+                        if (labelNode) labelNode.textContent = taskListGroupMode === 'none' ? 'Group' : label;
+                        button.setAttribute('aria-label', `Group list tracking: ${label}`);
+                        button.setAttribute('title', `Group list tracking: ${label}`);
+                    }
+                    button.classList.toggle('is-active', config.active);
+                    button.classList.toggle('is-open', isOpen);
+                    button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                }
+                if (popover) {
+                    popover.classList.toggle('hidden', !isOpen && !isClosing);
+                    popover.classList.toggle('is-open', isOpen);
+                    popover.classList.toggle('is-closing', isClosing);
+                }
+            });
+
+            const resetButton = document.getElementById('taskListResetButton');
+            if (resetButton) {
+                const hasActiveControls = hasActiveTaskListControls();
+                resetButton.disabled = !hasActiveControls;
+                resetButton.setAttribute('aria-disabled', hasActiveControls ? 'false' : 'true');
+                resetButton.setAttribute('data-tooltip', hasActiveControls ? 'Bỏ hết filter' : 'Không có filter để bỏ');
+            }
+        }
+
+        function toggleTaskListPicFilter(event) {
+            toggleTaskListPopover('pic', event);
+        }
+
+        function closeTaskListPicFilter() {
+            closeTaskListPopovers({ immediate: true });
+        }
+
+        function toggleTaskListPopover(popoverKey, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            if (openTaskListPopover === popoverKey) {
+                closeTaskListPopovers();
+                return;
+            }
+            clearTaskListPopoverCloseTimer();
+            closingTaskListPopover = '';
+            openTaskListPopover = popoverKey;
+            syncTaskListFilterButtons();
+        }
+
+        function clearTaskListPopoverCloseTimer() {
+            if (!taskListPopoverCloseTimeout) return;
+            window.clearTimeout(taskListPopoverCloseTimeout);
+            taskListPopoverCloseTimeout = null;
+        }
+
+        function finishTaskListPopoverClose(popoverKey) {
+            if (popoverKey && closingTaskListPopover !== popoverKey) return;
+            closingTaskListPopover = '';
+            taskListPopoverCloseTimeout = null;
+            syncTaskListFilterButtons();
+        }
+
+        function closeTaskListPopovers({ immediate = false } = {}) {
+            const closingKey = openTaskListPopover || closingTaskListPopover;
+            clearTaskListPopoverCloseTimer();
+            if (!closingKey) {
+                openTaskListPopover = '';
+                closingTaskListPopover = '';
+                syncTaskListFilterButtons();
+                return;
+            }
+            openTaskListPopover = '';
+            closingTaskListPopover = closingKey;
+            const shouldCloseImmediately = immediate || window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+            if (shouldCloseImmediately) {
+                closingTaskListPopover = '';
+                taskListPopoverCloseTimeout = null;
+                syncTaskListFilterButtons();
+                return;
+            }
+            syncTaskListFilterButtons();
+            taskListPopoverCloseTimeout = window.setTimeout(() => {
+                finishTaskListPopoverClose(closingKey);
+            }, getLovMotionDurationMs());
+        }
+
+        function renderTaskListDeadlineCell(ticketState) {
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+            const { dateStr, statusTextHtml } = getTaskDateMeta(normalizedState.date_raw);
+            return `
+                <div class="task-list-deadline-cell">
+                    <span class="task-list-date"><i class="fa-regular fa-calendar"></i>${escapeHtml(dateStr)}</span>
+                    ${statusTextHtml || ''}
+                </div>
+            `;
+        }
+
+        function getTaskListRowValueClass(options = {}) {
+            return `task-list-row-value${options.staticValues ? ' is-static' : ''}`;
+        }
+
+        function renderTaskListRow(entry, index = 0, options = {}) {
+            const { ticketState, assignee } = entry || {};
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+            const displayIndex = Math.max(1, (Number.isFinite(index) ? index : 0) + 1);
+            const rowIndex = Math.min(Number.isFinite(index) ? index : 0, 8);
+            const valueClass = getTaskListRowValueClass(options);
+            const rowClass = `task-list-row${options.softEnter ? ' is-soft-enter' : ''}`;
+            return `
+                <div class="${rowClass}" style="--row-index:${rowIndex}" data-ticket-id="${escapeHtml(normalizedState.ticket_id)}" onclick="openTaskDetailsDrawer('${escapeHtml(normalizedState.ticket_id)}')">
+                    <div class="task-list-title ${valueClass}"><span class="task-list-index">${displayIndex}.</span><span>${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</span></div>
+                    <div class="task-list-desc ${valueClass}">${escapeHtml(normalizedState.desc || 'Chưa có mô tả')}</div>
+                    <div class="task-list-pic-cell ${valueClass}">${renderTaskListPicCell(normalizedState, assignee)}</div>
+                    <div class="${valueClass}">${renderTaskListStatusCell(normalizedState, assignee)}</div>
+                    <div class="${valueClass}">${renderTaskListDeadlineCell(normalizedState)}</div>
+                </div>
+            `;
+        }
+
+        function renderTaskListGroupRow(entry, index, options = {}) {
+            const rowIndex = Math.min(Number.isFinite(index) ? index : 0, 8);
+            const { ticketState, assignee } = entry || {};
+            const normalizedState = normalizeTicketState(ticketState);
+            if (!normalizedState) return '';
+            const displayIndex = Math.max(1, (Number.isFinite(index) ? index : 0) + 1);
+            const valueClass = getTaskListRowValueClass(options);
+            const rowClass = `task-list-row${options.softEnter ? ' is-soft-enter' : ''}`;
+            return `
+                <div class="${rowClass}" style="--row-index:${rowIndex}" data-ticket-id="${escapeHtml(normalizedState.ticket_id)}" onclick="openTaskDetailsDrawer('${escapeHtml(normalizedState.ticket_id)}')">
+                    <div class="task-list-title ${valueClass}"><span class="task-list-index">${displayIndex}.</span><span>${escapeHtml(normalizedState.title || 'Task chưa đặt tên')}</span></div>
+                    <div class="task-list-desc ${valueClass}">${escapeHtml(normalizedState.desc || 'Chưa có mô tả')}</div>
+                    <div class="task-list-pic-cell ${valueClass}">${renderTaskListPicCell(normalizedState, assignee)}</div>
+                    <div class="${valueClass}">${renderTaskListStatusCell(normalizedState, assignee)}</div>
+                    <div class="${valueClass}">${renderTaskListDeadlineCell(normalizedState)}</div>
+                </div>
+            `;
+        }
+
+        function getTaskListGroupModeLabel(mode) {
+            if (mode === 'pic') return 'Theo PIC';
+            if (mode === 'status') return 'Theo Status';
+            if (mode === 'deadline') return 'Theo ngày hết hạn';
+            return 'Không group';
+        }
+
+        function getTaskListGroupMeta(entry, mode) {
+            const normalizedState = normalizeTicketState(entry?.ticketState);
+            if (mode === 'pic') {
+                const picKey = getTaskListEntryPicKey(entry);
+                const user = USERS[picKey];
+                return {
+                    key: picKey || 'unassigned',
+                    label: user?.full_name || (picKey ? picKey : 'Chưa giao'),
+                    icon: 'fa-user',
+                    typeLabel: 'PIC',
+                    accentColor: user?.color || '#2563eb'
+                };
+            }
+            if (mode === 'status') {
+                const stateCode = getTaskListEntryStatusCode(entry);
+                const stateMeta = getStateConfig(stateCode) || getDefaultStateCode();
+                const statusColor = getColorOptionMeta(stateMeta.colorTheme).hex || '#7c3aed';
+                return {
+                    key: stateMeta.stateCode,
+                    label: stateMeta.stateName,
+                    icon: 'fa-circle-dot',
+                    typeLabel: 'STATUS',
+                    accentColor: statusColor
+                };
+            }
+            if (mode === 'deadline') {
+                if (!normalizedState?.date_raw) {
+                    return { key: 'no-date', label: 'Chưa có hạn', icon: 'fa-calendar-xmark', typeLabel: 'DEADLINE', accentColor: '#94a3b8' };
+                }
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const taskDate = new Date(normalizedState.date_raw);
+                taskDate.setHours(0, 0, 0, 0);
+                const diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
+                if (diffDays < 0) return { key: 'overdue', label: 'Trễ hạn', icon: 'fa-triangle-exclamation', typeLabel: 'DEADLINE', accentColor: '#ef4444' };
+                if (diffDays === 0) return { key: 'today', label: 'Hôm nay', icon: 'fa-bolt', typeLabel: 'DEADLINE', accentColor: '#f59e0b' };
+                if (diffDays <= 7) return { key: 'next-7', label: '7 ngày tới', icon: 'fa-calendar-week', typeLabel: 'DEADLINE', accentColor: '#2563eb' };
+                return { key: 'later', label: 'Sau đó', icon: 'fa-calendar-days', typeLabel: 'DEADLINE', accentColor: '#64748b' };
+            }
+            return { key: 'none', label: '', icon: 'fa-layer-group', typeLabel: 'GROUP', accentColor: '#2563eb' };
+        }
+
+        function getTaskListGroupOrder(mode) {
+            if (mode === 'pic') {
+                return getCurrentSortedTeamUserKeys().concat(CURRENT_USER_ID, 'unassigned')
+                    .filter((key, index, keys) => key && keys.indexOf(key) === index);
+            }
+            if (mode === 'status') {
+                return getWorkflowStates().map((state) => state.stateCode);
+            }
+            if (mode === 'deadline') {
+                return taskListDeadlineSort === 'desc'
+                    ? ['later', 'next-7', 'today', 'overdue', 'no-date']
+                    : ['overdue', 'today', 'next-7', 'later', 'no-date'];
+            }
+            return [];
+        }
+
+        function groupTaskListEntries(entries) {
+            const groupsByKey = new Map();
+            entries.forEach((entry) => {
+                const meta = getTaskListGroupMeta(entry, taskListGroupMode);
+                if (!groupsByKey.has(meta.key)) {
+                    groupsByKey.set(meta.key, { ...meta, entries: [] });
+                }
+                groupsByKey.get(meta.key).entries.push(entry);
+            });
+
+            const order = getTaskListGroupOrder(taskListGroupMode);
+            return Array.from(groupsByKey.values()).sort((a, b) => {
+                const orderA = order.indexOf(a.key);
+                const orderB = order.indexOf(b.key);
+                if (orderA !== -1 || orderB !== -1) {
+                    return (orderA === -1 ? Number.MAX_SAFE_INTEGER : orderA) - (orderB === -1 ? Number.MAX_SAFE_INTEGER : orderB);
+                }
+                return a.label.localeCompare(b.label, 'vi');
+            });
+        }
+
+        function getCurrentTaskListGroups() {
+            if (taskListGroupMode === 'none') return [];
+            return groupTaskListEntries(getFilteredTaskListEntries(getVisibleBoardTicketEntries()));
+        }
+
+        function getTaskListGroupSection(groupKey) {
+            if (!groupKey) return null;
+            if (window.CSS?.escape) {
+                return document.querySelector(`.task-list-group-section[data-task-list-group="${CSS.escape(groupKey)}"]`);
+            }
+            return Array.from(document.querySelectorAll('.task-list-group-section'))
+                .find((section) => section.dataset.taskListGroup === groupKey) || null;
+        }
+
+        function toggleTaskListGroupCollapse(groupKey, event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            if (!groupKey) return;
+            const section = getTaskListGroupSection(groupKey);
+            const heading = section?.querySelector('.task-list-group-heading');
+            const groupLabel = section?.dataset.taskListGroupLabel || groupKey;
+            const willCollapse = !taskListCollapsedGroups.has(groupKey);
+
+            if (willCollapse) {
+                taskListCollapsedGroups.add(groupKey);
+            } else {
+                taskListCollapsedGroups.delete(groupKey);
+            }
+
+            if (section) section.classList.toggle('is-collapsed', willCollapse);
+            if (heading) {
+                heading.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
+                heading.setAttribute('aria-label', `${willCollapse ? 'Mở' : 'Thu gọn'} nhóm ${groupLabel}`);
+            }
+        }
+
+        function collapseAllTaskListGroups(event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            const groups = getCurrentTaskListGroups();
+            if (!groups.length) return;
+            taskListCollapsedGroups = new Set(groups.map((group) => group.key));
+            closeTaskListPopovers({ immediate: true });
+            syncTaskListGroupCollapseDom();
+        }
+
+        function expandAllTaskListGroups(event) {
+            event?.preventDefault?.();
+            event?.stopPropagation?.();
+            taskListCollapsedGroups.clear();
+            closeTaskListPopovers({ immediate: true });
+            syncTaskListGroupCollapseDom();
+        }
+
+        function syncTaskListGroupCollapseDom() {
+            document.querySelectorAll('.task-list-group-section').forEach((section) => {
+                const groupKey = section.dataset.taskListGroup;
+                const groupLabel = section.dataset.taskListGroupLabel || groupKey;
+                const isCollapsed = taskListCollapsedGroups.has(groupKey);
+                const heading = section.querySelector('.task-list-group-heading');
+                section.classList.toggle('is-collapsed', isCollapsed);
+                if (heading) {
+                    heading.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+                    heading.setAttribute('aria-label', `${isCollapsed ? 'Mở' : 'Thu gọn'} nhóm ${groupLabel}`);
+                }
+            });
+        }
+
+        function pruneTaskListCollapsedGroups(groups) {
+            const visibleKeys = new Set(groups.map((group) => group.key));
+            taskListCollapsedGroups.forEach((groupKey) => {
+                if (!visibleKeys.has(groupKey)) taskListCollapsedGroups.delete(groupKey);
+            });
+        }
+
+        function renderTaskListGroupedView(entries, options = {}) {
+            const groups = groupTaskListEntries(entries);
+            pruneTaskListCollapsedGroups(groups);
+            return groups.map((group) => {
+                const isCollapsed = taskListCollapsedGroups.has(group.key);
+                const actionLabel = `${isCollapsed ? 'Mở' : 'Thu gọn'} nhóm ${group.label}`;
+                return `
+                <div class="task-list-group-section ${isCollapsed ? 'is-collapsed' : ''}" data-task-list-group="${escapeHtml(group.key)}" data-task-list-group-label="${escapeHtml(group.label)}" style="--group-accent:${escapeHtml(group.accentColor || '#2563eb')}">
+                    <button type="button" class="task-list-group-heading" data-task-list-group-toggle="${escapeHtml(group.key)}" onclick="toggleTaskListGroupCollapse(this.dataset.taskListGroupToggle, event)" aria-expanded="${isCollapsed ? 'false' : 'true'}" aria-label="${escapeHtml(actionLabel)}">
+                        <div class="task-list-group-title">
+                            <span class="task-list-group-toggle" aria-hidden="true">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                            <span class="task-list-group-icon">
+                                <i class="fa-solid ${escapeHtml(group.icon)}" aria-hidden="true"></i>
+                            </span>
+                            <span>${escapeHtml(group.label)}</span>
+                        </div>
+                        <span class="task-list-group-count">${group.entries.length} task</span>
+                    </button>
+                    <div class="task-list-group-body">
+                        <div class="task-list-group-body-inner">
+                            ${group.entries.map((entry, index) => renderTaskListGroupRow(entry, index, options)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function clearTrackingSkeletonTimer() {
+            if (!trackingSkeletonTimeout) return;
+            window.clearTimeout(trackingSkeletonTimeout);
+            trackingSkeletonTimeout = null;
+        }
+
+        function renderTaskListSkeleton(rowCount = 6) {
+            const body = document.getElementById('taskListBody');
+            if (!body) return;
+            body.innerHTML = Array.from({ length: rowCount }).map((_, index) => `
+                <div class="tracking-skeleton-row" aria-hidden="true" style="--appear-index:${index}">
+                    <div class="tracking-skeleton tracking-skeleton-line is-title"></div>
+                    <div class="tracking-skeleton tracking-skeleton-line"></div>
+                    <div class="tracking-skeleton tracking-skeleton-pill"></div>
+                    <div class="tracking-skeleton tracking-skeleton-pill"></div>
+                    <div class="tracking-skeleton tracking-skeleton-line is-short"></div>
+                </div>
+            `).join('');
+        }
+
+        function shouldShowTrackingSkeleton(viewMode) {
+            const visibleTickets = getVisibleBoardTicketEntries();
+            if (viewMode === 'list') {
+                const body = document.getElementById('taskListBody');
+                const hasFilteredRows = getFilteredTaskListEntries(visibleTickets).length > 0;
+                return hasFilteredRows && (!body || !body.children.length);
+            }
+            return visibleTickets.length > 0 && !document.querySelector('.kanban-list .task-card');
+        }
+
+        function clearBoardSkeleton() {
+            document.querySelectorAll('.tracking-skeleton-card').forEach((card) => card.remove());
+        }
+
+        function renderBoardSkeleton(cardCount = 3) {
+            clearBoardSkeleton();
+            document.querySelectorAll('.kanban-list .task-card').forEach((card) => card.remove());
+            getWorkflowStates().forEach((state) => {
+                const columnEl = document.getElementById(getStateColumnId(state.stateCode));
+                if (!columnEl) return;
+                const formNode = columnEl.querySelector('.edit-form, form, [data-inline-form]');
+                const skeletonHtml = Array.from({ length: cardCount }).map((_, index) => `
+                    <div class="tracking-skeleton-card" aria-hidden="true" style="--appear-index:${index}">
+                        <div class="tracking-skeleton tracking-skeleton-line is-title"></div>
+                        <div class="tracking-skeleton tracking-skeleton-line"></div>
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="tracking-skeleton tracking-skeleton-pill"></div>
+                            <div class="tracking-skeleton tracking-skeleton-line is-short"></div>
+                        </div>
+                    </div>
+                `).join('');
+                if (formNode) {
+                    formNode.insertAdjacentHTML('afterend', skeletonHtml);
+                } else {
+                    columnEl.insertAdjacentHTML('beforeend', skeletonHtml);
+                }
+            });
+        }
+
+        function showTrackingSkeleton(viewMode, renderContent) {
+            clearTrackingSkeletonTimer();
+            if (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches || !shouldShowTrackingSkeleton(viewMode)) {
+                renderContent?.();
+                return;
+            }
+            if (viewMode === 'list') renderTaskListSkeleton();
+            else renderBoardSkeleton();
+            trackingSkeletonTimeout = window.setTimeout(() => {
+                trackingSkeletonTimeout = null;
+                renderContent?.();
+            }, 180);
+        }
+
+        function renderTaskListView(options = {}) {
+            const body = document.getElementById('taskListBody');
+            if (!body) return;
+            const visibleTickets = getVisibleBoardTicketEntries();
+            renderTaskListControls(visibleTickets);
+            const filteredTickets = getFilteredTaskListEntries(visibleTickets);
+            if (!filteredTickets.length) {
+                body.innerHTML = '<div class="task-list-empty">Không có ticket nào khớp với bộ lọc hiện tại.</div>';
+                return;
+            }
+
+            body.innerHTML = taskListGroupMode === 'none'
+                ? filteredTickets.map((entry, index) => renderTaskListRow(entry, index, options)).join('')
+                : renderTaskListGroupedView(filteredTickets, options);
+        }
+
+        function renderBoardTickets(options = {}) {
+            document.querySelectorAll('.kanban-list .task-card, .kanban-list .tracking-skeleton-card').forEach((card) => card.remove());
+
+            const visibleTickets = getVisibleBoardTicketEntries();
+
+            visibleTickets.forEach(({ ticketState, assignee }) => {
                 const stateCode = ticketState.is_personal
                     ? getDefaultStateCode().stateCode
-                    : getTicketWorkflowState(ticketState, boardUserKey);
+                    : (assignee?.workflow_state || getDefaultStateCode().stateCode);
                 const columnEl = document.getElementById(getStateColumnId(stateCode));
                 if (!columnEl) return;
-                columnEl.appendChild(createTaskCardElement(ticketState));
+                columnEl.appendChild(createTaskCardElement(ticketState, assignee?.user_key || ''));
             });
 
             updateCounts();
+            ensureSortableColumns();
+            renderTaskListView({ staticValues: !!options.staticTaskListValues });
             syncTaskDetailsDrawer();
+        }
+
+        function getLovMotionDurationMs(varName = '--lov-close-duration') {
+            const rawDuration = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+            const match = rawDuration.match(/^([\d.]+)\s*(ms|s)$/i);
+            if (!match) return 180;
+            const value = Number(match[1]);
+            if (!Number.isFinite(value)) return 180;
+            return match[2].toLowerCase() === 's' ? value * 1000 : value;
+        }
+
+        function clearAssigneeStatusLovCloseTimer() {
+            if (!assigneeStatusLovCloseTimeout) return;
+            window.clearTimeout(assigneeStatusLovCloseTimeout);
+            assigneeStatusLovCloseTimeout = null;
+        }
+
+        function finishAssigneeStatusLovClose(lovKey) {
+            if (lovKey && closingAssigneeStatusLovKey !== lovKey) return;
+            closingAssigneeStatusLovKey = '';
+            assigneeStatusLovCloseTimeout = null;
+            renderBoardTickets({ staticTaskListValues: true });
+        }
+
+        function beginAssigneeStatusLovClose(lovKey = openAssigneeStatusLovKey, { immediate = false } = {}) {
+            if (!lovKey && !closingAssigneeStatusLovKey) return false;
+            clearAssigneeStatusLovCloseTimer();
+            openAssigneeStatusLovKey = '';
+            closingAssigneeStatusLovKey = lovKey || closingAssigneeStatusLovKey;
+            const shouldCloseImmediately = immediate || window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+            if (shouldCloseImmediately) {
+                finishAssigneeStatusLovClose(closingAssigneeStatusLovKey);
+                return true;
+            }
+            renderBoardTickets({ staticTaskListValues: true });
+            assigneeStatusLovCloseTimeout = window.setTimeout(() => {
+                finishAssigneeStatusLovClose(lovKey);
+            }, getLovMotionDurationMs());
+            return true;
         }
 
         function toggleAssigneeStatusLov(ticketId, userKey, event) {
             event?.preventDefault?.();
             event?.stopPropagation?.();
+            closeTaskListPopovers({ immediate: true });
             const normalizedUserKey = normalizeUserKey(userKey);
             if (!ticketId || !normalizedUserKey) return;
             const lovKey = getAssigneeStatusLovKey(ticketId, normalizedUserKey);
-            openAssigneeStatusLovKey = openAssigneeStatusLovKey === lovKey ? '' : lovKey;
-            renderBoardTickets();
+            if (openAssigneeStatusLovKey === lovKey) {
+                beginAssigneeStatusLovClose(lovKey);
+                return;
+            }
+            clearAssigneeStatusLovCloseTimer();
+            closingAssigneeStatusLovKey = '';
+            openAssigneeStatusLovKey = lovKey;
+            renderBoardTickets({ staticTaskListValues: true });
         }
 
         function selectAssigneeStatus(ticketId, userKey, stateCode, event) {
@@ -11593,18 +13784,17 @@ function togglePersonalMode(select) {
                 return { ...record, workflow_state: stateMeta.stateCode };
             });
 
-            openAssigneeStatusLovKey = '';
+            const lovKey = openAssigneeStatusLovKey || getAssigneeStatusLovKey(ticketId, normalizedUserKey);
             updateBoardTicket(ticketState.ticket_id, {
                 ...ticketState,
                 assignees: updatedAssignees
             });
+            beginAssigneeStatusLovClose(lovKey);
             saveBoardState();
         }
 
         function closeAssigneeStatusLov() {
-            if (!openAssigneeStatusLovKey) return;
-            openAssigneeStatusLovKey = '';
-            renderBoardTickets();
+            beginAssigneeStatusLovClose();
         }
 
         function cycleAssigneeStatus(tag, event) {
@@ -11653,6 +13843,29 @@ function togglePersonalMode(select) {
                     countEl.innerText = Array.from(columnEl.querySelectorAll('.task-card'))
                         .filter((card) => card.style.display !== 'none').length;
                 }
+            });
+        }
+
+        function syncBoardTicketOrderFromRenderedCards() {
+            const orderedTicketIds = Array.from(document.querySelectorAll('.kanban-list-body .task-card'))
+                .map((card) => card.dataset.ticketId || '')
+                .filter(Boolean)
+                .filter((ticketId, index, ticketIds) => ticketIds.indexOf(ticketId) === index);
+            if (!orderedTicketIds.length) return;
+
+            const ticketById = new Map(boardTickets.map((ticketState) => [ticketState.ticket_id, ticketState]));
+            const orderedVisibleTickets = orderedTicketIds
+                .map((ticketId) => ticketById.get(ticketId))
+                .filter(Boolean);
+            if (!orderedVisibleTickets.length) return;
+
+            const orderedIdSet = new Set(orderedTicketIds);
+            let visibleIndex = 0;
+            boardTickets = boardTickets.map((ticketState) => {
+                if (!orderedIdSet.has(ticketState.ticket_id)) return ticketState;
+                const nextTicketState = orderedVisibleTickets[visibleIndex];
+                visibleIndex += 1;
+                return nextTicketState || ticketState;
             });
         }
 
@@ -11740,32 +13953,59 @@ function togglePersonalMode(select) {
             ghostClass: 'sortable-ghost',
             dragClass: 'sortable-drag',
             easing: "cubic-bezier(0.25, 1, 0.5, 1)",
+            draggable: '.task-card',
+            onStart: function () {
+                isTaskCardDragging = true;
+            },
             onEnd: function (evt) {
                 const card = evt.item;
                 const ticketId = card?.dataset.ticketId;
                 const targetStateCode = evt.to?.closest('.kanban-column')?.dataset.stateCode;
                 const boardUserKey = getBoardTrackingUserKey();
+                suppressTaskCardClickUntil = Date.now() + 250;
 
-                if (ticketId && targetStateCode && boardUserKey) {
-                    updateBoardTicket(ticketId, (ticketState) => setTicketWorkflowState(ticketState, boardUserKey, targetStateCode));
+                try {
+                    if (ticketId && targetStateCode && boardUserKey) {
+                        updateBoardTicket(ticketId, (ticketState) => {
+                            const targetUserKey = isAllTrackingUsersKey(boardUserKey)
+                                ? (normalizeUserKey(card?.dataset.boardAssigneeUserKey) || getTicketTeamAssignee(ticketState)?.user_key)
+                                : boardUserKey;
+                            return targetUserKey
+                                ? setTicketWorkflowState(ticketState, targetUserKey, targetStateCode)
+                                : ticketState;
+                        });
+                    }
+
+                    syncBoardTicketOrderFromRenderedCards();
+                    renderBoardTickets();
+                    saveBoardState();
+                } finally {
+                    setTimeout(() => {
+                        isTaskCardDragging = false;
+                    }, 0);
                 }
-
-                renderBoardTickets();
-                saveBoardState();
             }
         };
 
-        function initSortableColumns() {
-            sortableInstances.forEach(instance => instance.destroy());
-            sortableInstances = getWorkflowStates()
-                .map(state => document.getElementById(getStateColumnId(state.stateCode)))
+        function ensureSortableColumns() {
+            if (typeof Sortable === 'undefined') return;
+            sortableInstances.forEach((instance) => {
+                try {
+                    instance.destroy();
+                } catch (error) {
+                }
+            });
+            sortableInstances = Array.from(document.querySelectorAll('.kanban-list-body'))
                 .filter(Boolean)
                 .map(columnEl => new Sortable(columnEl, sortableConfig));
         }
 
+        function initSortableColumns() {
+            ensureSortableColumns();
+        }
+
         function syncWorkflowStatesToBoard() {
             renderKanbanBoard();
-            initSortableColumns();
             renderBoardTickets();
         }
 
@@ -12116,10 +14356,29 @@ function openInlineForm() {
 
         const TEAM_STORAGE_KEY = 'elite-tracking-selected-team';
         const DOCUMENT_PAGES_STORAGE_KEY = 'elite-tracking-document-pages';
+        const TASK_LIST_COLUMN_WIDTHS_STORAGE_KEY = 'task_list_column_widths_v1';
+        const TASK_LIST_COLUMN_GAP = 16;
+        const TASK_LIST_COLUMN_ORDER = ['title', 'desc', 'pic', 'status', 'deadline'];
+        const TASK_LIST_COLUMN_DEFAULT_WIDTHS = { title: 260, desc: 360, pic: 180, status: 160, deadline: 170 };
+        const TASK_LIST_COLUMN_MIN_WIDTHS = { title: 190, desc: 240, pic: 130, status: 120, deadline: 145 };
         let isSidebarCollapsed = false;
         let selectedTeamCode = null;
         let activeTrackingUserKey = null;
         let currentWorkspaceView = 'board';
+        let currentTaskViewMode = 'board';
+        let taskViewTransitionTimeout = null;
+        let trackingSkeletonTimeout = null;
+        let taskListGroupControlTimeout = null;
+        let taskListPicFilter = 'all';
+        let taskListStatusFilter = 'all';
+        let taskListDeadlineSort = 'asc';
+        let taskListGroupMode = 'none';
+        let taskListCollapsedGroups = new Set();
+        let openTaskListPopover = '';
+        let closingTaskListPopover = '';
+        let taskListPopoverCloseTimeout = null;
+        let taskListColumnWidths = { ...TASK_LIST_COLUMN_DEFAULT_WIDTHS };
+        let taskListColumnResizeState = null;
         let isApplyingTrackingRoute = false;
         let preferredNavTarget = 'trackingMenu';
         let preferredNavLink = null;
@@ -12169,10 +14428,14 @@ function openInlineForm() {
         function normalizeBranchItem(item, config) {
             if (!item || typeof item !== 'object') return null;
             if (item.type === 'divider') {
+                const ownerUserId = normalizeUserKey(item.ownerUserId || item.owner_user_id || CURRENT_USER_ID);
                 return {
                     type: 'divider',
                     id: item.id || `${config.pageIdPrefix}-divider-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-                    label: String(item.label || '').trim()
+                    label: String(item.label || '').trim(),
+                    visibility: normalizeBranchVisibility(item.visibility),
+                    ownerUserId: USERS[ownerUserId] ? ownerUserId : CURRENT_USER_ID,
+                    sharedUserIds: normalizeBranchSharedUsers(item.sharedUserIds || item.shared_user_ids)
                 };
             }
             const id = String(item.id || '').trim();
@@ -12206,22 +14469,36 @@ function openInlineForm() {
             return state.pages.find((page) => isBranchPage(page) && page.id === pageId) || null;
         }
 
+        function getRawBranchItem(branchKey, itemId) {
+            const state = getBranchState(branchKey);
+            if (!state) return null;
+            return state.pages.find((item) => item.id === itemId) || null;
+        }
+
         function getBranchPage(branchKey, pageId) {
             const page = getRawBranchPage(branchKey, pageId);
             return page && canViewBranchPage(page) ? page : null;
         }
 
+        function canManageBranchItem(item) {
+            return !!item && (isAdminUser(CURRENT_USER_ID) || item.ownerUserId === CURRENT_USER_ID);
+        }
+
         function canManageBranchPage(page) {
-            return isBranchPage(page) && (isAdminUser(CURRENT_USER_ID) || page.ownerUserId === CURRENT_USER_ID);
+            return isBranchPage(page) && canManageBranchItem(page);
+        }
+
+        function canViewBranchItem(item) {
+            if (!item) return false;
+            if (isAdminUser(CURRENT_USER_ID) || item.ownerUserId === CURRENT_USER_ID) return true;
+            if (item.visibility === 'personal') return false;
+            if (item.visibility === 'shared') return item.sharedUserIds.includes(CURRENT_USER_ID);
+            const teamUsers = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode());
+            return !teamUsers.length || teamUsers.includes(CURRENT_USER_ID);
         }
 
         function canViewBranchPage(page) {
-            if (!isBranchPage(page)) return true;
-            if (isAdminUser(CURRENT_USER_ID) || page.ownerUserId === CURRENT_USER_ID) return true;
-            if (page.visibility === 'personal') return false;
-            if (page.visibility === 'shared') return page.sharedUserIds.includes(CURRENT_USER_ID);
-            const teamUsers = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode());
-            return !teamUsers.length || teamUsers.includes(CURRENT_USER_ID);
+            return isBranchPage(page) && canViewBranchItem(page);
         }
 
         function getBranchVisibleItems(branchKey) {
@@ -12235,6 +14512,7 @@ function openInlineForm() {
                     if (canViewBranchPage(item)) items.push(item);
                     return items;
                 }
+                if (!canViewBranchItem(item)) return items;
                 const hasDividerLabel = String(item?.label || '').trim();
                 const shouldShowDivider = hasDividerLabel
                     ? hasAnyVisiblePage
@@ -12246,9 +14524,9 @@ function openInlineForm() {
             }, []);
         }
 
-        function getBranchVisibilityLabel(page) {
-            if (page.visibility === 'personal') return 'Me';
-            if (page.visibility === 'shared') return 'Share';
+        function getBranchVisibilityLabel(item) {
+            if (item.visibility === 'personal') return 'Me';
+            if (item.visibility === 'shared') return 'Share';
             return 'Team';
         }
 
@@ -12352,6 +14630,7 @@ function openInlineForm() {
             if (accordionState[config.menuId] && !isSidebarCollapsed) {
                 const menu = document.getElementById(config.menuId);
                 menu.style.maxHeight = menu.scrollHeight + 'px';
+                menu.classList.add('is-open');
             }
         }
 
@@ -12394,16 +14673,19 @@ function openInlineForm() {
         }
 
         function renderBranchPermissionPanel(branchKey, page) {
-            if (!canManageBranchPage(page)) return '';
+            if (!canManageBranchItem(page)) return '';
             const teamUsers = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode());
             const shareList = page.visibility === 'shared'
                 ? `<div class="document-share-list">
-                    ${teamUsers.map((userKey) => {
-                        const user = USERS[userKey];
-                        const isActive = page.sharedUserIds.includes(userKey);
-                        const isOwner = userKey === page.ownerUserId;
-                        return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-permission-share-user="${userKey}" data-page-id="${page.id}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
-                    }).join('')}
+                    <div class="document-share-title">Người được share</div>
+                    <div class="document-share-body">
+                        ${teamUsers.map((userKey) => {
+                            const user = USERS[userKey];
+                            const isActive = page.sharedUserIds.includes(userKey);
+                            const isOwner = userKey === page.ownerUserId;
+                            return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-permission-share-user="${userKey}" data-page-id="${page.id}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
+                        }).join('')}
+                    </div>
                 </div>`
                 : '';
             return `
@@ -12455,17 +14737,19 @@ function openInlineForm() {
                 }
 
                 if (isBranchDivider(page)) {
+                    const canManage = canManageBranchItem(page);
                     const deleteButtonClass = state.deleteConfirmId === page.id
                         ? `menu-action-btn delete document-delete-toggle is-confirming ${branchKey}-delete-toggle`
                         : `menu-action-btn delete document-delete-toggle ${branchKey}-delete-toggle`;
-                    const rowClass = ['document-page-row', 'is-divider', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
                     const dividerLabel = String(page.label || '').trim();
                     const isActionMenuOpen = state.actionMenuId === page.id;
+                    const rowClass = ['document-page-row', 'is-divider', isActionMenuOpen ? 'is-action-menu-open' : '', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
                     return `
                         <div class="${rowClass}" ${config.rowAttr}="${page.id}" data-branch-item-id="${page.id}" data-branch-item-type="divider">
                             ${dividerLabel ? `<span class="document-divider-label">${escapeHtml(dividerLabel)}</span>` : ''}
+                            <span class="document-visibility-badge">${getBranchVisibilityLabel(page)}</span>
                             <span class="document-divider-line" aria-hidden="true"></span>
-                            <div class="document-page-actions">
+                            ${canManage ? `<div class="document-page-actions">
                                 <button type="button" class="menu-action-btn document-action-menu-btn ${isActionMenuOpen ? 'is-active' : ''} ${branchKey}-action-menu-btn" data-page-id="${page.id}" aria-label="Mở thao tác line">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
                                         <circle cx="12" cy="5" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="12" cy="19" r="1.7"></circle>
@@ -12473,18 +14757,28 @@ function openInlineForm() {
                                 </button>
                                 ${isActionMenuOpen ? `
                                     <div class="document-action-popover">
+                                        <button type="button" class="menu-action-btn document-privacy-toggle ${state.permissionEditingId === page.id ? 'is-active' : ''} ${branchKey}-permission-btn" data-page-id="${page.id}" aria-label="Chỉnh quyền line">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5s1.343 3.5 3 3.5zM5 20a7 7 0 0114 0" />
+                                            </svg>
+                                        </button>
                                         <button type="button" class="${deleteButtonClass}" data-page-id="${page.id}" aria-label="Xóa line">
                                             <span class="document-delete-icon" aria-hidden="true">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
                                                 </svg>
                                             </span>
-                                            <span class="document-delete-label">Xóa</span>
+                                            <span class="document-delete-confirm-icon" aria-hidden="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </span>
                                         </button>
                                     </div>
                                 ` : ''}
-                            </div>
+                            </div>` : ''}
                         </div>
+                        ${state.permissionEditingId === page.id ? renderBranchPermissionPanel(branchKey, page) : ''}
                     `;
                 }
 
@@ -12493,9 +14787,9 @@ function openInlineForm() {
                 const deleteButtonClass = state.deleteConfirmId === page.id
                     ? `menu-action-btn delete document-delete-toggle is-confirming ${branchKey}-delete-toggle`
                     : `menu-action-btn delete document-delete-toggle ${branchKey}-delete-toggle`;
-                const rowClass = ['document-page-row', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
                 const canManage = canManageBranchPage(page);
                 const isActionMenuOpen = state.actionMenuId === page.id;
+                const rowClass = ['document-page-row', isActionMenuOpen ? 'is-action-menu-open' : '', state.removingId === page.id ? 'is-removing' : '', state.animatingId === page.id ? 'is-entering' : ''].filter(Boolean).join(' ');
 
                 return `
                     <div class="${rowClass}" ${config.rowAttr}="${page.id}" data-branch-item-id="${page.id}" data-branch-item-type="page">
@@ -12529,7 +14823,11 @@ function openInlineForm() {
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16" />
                                                 </svg>
                                             </span>
-                                            <span class="document-delete-label">Xóa</span>
+                                            <span class="document-delete-confirm-icon" aria-hidden="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </span>
                                         </button>
                                     </div>
                                 ` : ''}
@@ -12578,8 +14876,8 @@ function openInlineForm() {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
                     event.stopPropagation();
-                    const page = getRawBranchPage(branchKey, button.dataset.pageId);
-                    if (!canManageBranchPage(page)) return;
+                    const page = getRawBranchItem(branchKey, button.dataset.pageId);
+                    if (!canManageBranchItem(page)) return;
                     state.deleteConfirmId = null;
                     state.actionMenuId = null;
                     state.permissionEditingId = state.permissionEditingId === page.id ? null : page.id;
@@ -12695,12 +14993,17 @@ function openInlineForm() {
                 return `<button type="button" class="document-privacy-chip ${visibility === mode ? 'is-active' : ''}" data-create-visibility="${mode}">${label}</button>`;
             }).join('');
             shareList.classList.toggle('is-hidden', visibility !== 'shared');
-            shareList.innerHTML = getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode()).map((userKey) => {
-                const user = USERS[userKey];
-                const isActive = state.createSharedUserIds.includes(userKey);
-                const isOwner = userKey === CURRENT_USER_ID;
-                return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-create-share-user="${userKey}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
-            }).join('');
+            shareList.innerHTML = `
+                <div class="document-share-title">Người được share</div>
+                <div class="document-share-body">
+                    ${getUsersByTeamCode(selectedTeamCode || getCurrentTeamCode()).map((userKey) => {
+                        const user = USERS[userKey];
+                        const isActive = state.createSharedUserIds.includes(userKey);
+                        const isOwner = userKey === CURRENT_USER_ID;
+                        return `<button type="button" class="document-share-chip ${isActive ? 'is-active' : ''}" data-create-share-user="${userKey}" ${isOwner ? 'disabled' : ''}>${escapeHtml(user.full_name)}</button>`;
+                    }).join('')}
+                </div>
+            `;
             syncBranchMenuHeight(branchKey);
         }
 
@@ -12722,8 +15025,8 @@ function openInlineForm() {
 
         function updateBranchPageVisibility(branchKey, pageId, visibility) {
             const state = getBranchState(branchKey);
-            const page = getRawBranchPage(branchKey, pageId);
-            if (!canManageBranchPage(page)) return;
+            const page = getRawBranchItem(branchKey, pageId);
+            if (!canManageBranchItem(page)) return;
             page.visibility = normalizeBranchVisibility(visibility);
             if (page.visibility !== 'shared') page.sharedUserIds = [];
             state.permissionEditingId = page.id;
@@ -12735,8 +15038,8 @@ function openInlineForm() {
         }
 
         function toggleBranchPageSharedUser(branchKey, pageId, userKey) {
-            const page = getRawBranchPage(branchKey, pageId);
-            if (!canManageBranchPage(page)) return;
+            const page = getRawBranchItem(branchKey, pageId);
+            if (!canManageBranchItem(page)) return;
             const normalizedUserKey = normalizeUserKey(userKey);
             if (!normalizedUserKey || normalizedUserKey === page.ownerUserId) return;
             page.visibility = 'shared';
@@ -12762,7 +15065,10 @@ function openInlineForm() {
                 const newDivider = {
                     type: 'divider',
                     id: `${config.pageIdPrefix}-divider-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-                    label: dividerMatch[1].trim()
+                    label: dividerMatch[1].trim(),
+                    visibility: normalizeBranchVisibility(state.createVisibility),
+                    ownerUserId: CURRENT_USER_ID,
+                    sharedUserIds: normalizeBranchSharedUsers(state.createSharedUserIds).filter((userKey) => userKey !== CURRENT_USER_ID)
                 };
                 state.pages.push(newDivider);
                 state.animatingId = newDivider.id;
@@ -12837,7 +15143,7 @@ function openInlineForm() {
         function deleteBranchPage(branchKey, pageId) {
             const state = getBranchState(branchKey);
             const deletedItem = state.pages.find((item) => item.id === pageId);
-            if (isBranchPage(deletedItem) && !canManageBranchPage(deletedItem)) return;
+            if (!canManageBranchItem(deletedItem)) return;
             state.deleteConfirmId = null;
             state.actionMenuId = null;
             state.removingId = pageId;
@@ -12865,7 +15171,18 @@ function openInlineForm() {
 
             activeTrackingUserKey = getPreferredTrackingUserKey(members);
 
-            trackingList.innerHTML = members.map((userKey, index) => {
+            const allTrackingHref = getTrackingRouteHref(ALL_TRACKING_USERS_KEY, teamKey);
+            const allTrackingHtml = `
+                <li class="app-appear-item" style="--appear-index:0">
+                    <a href="${escapeHtml(allTrackingHref)}" class="${isAllTrackingUsersKey(activeTrackingUserKey) ? 'member-link is-active' : 'member-link'}" data-member-group="tracking" data-tracking-current="false" data-user-key="${ALL_TRACKING_USERS_KEY}">
+                        <span class="member-index" style="width:1.75rem">All</span>
+                        <span class="member-name">Tất cả</span>
+                        <span class="member-count">${getTaskCountForTeam(teamKey)}</span>
+                    </a>
+                </li>
+            `;
+
+            trackingList.innerHTML = allTrackingHtml + members.map((userKey, index) => {
                 const user = USERS[userKey];
                 const isLoggedInUser = userKey === CURRENT_USER_ID;
                 const isSelected = userKey === activeTrackingUserKey;
@@ -12876,7 +15193,7 @@ function openInlineForm() {
                 const trackingHref = getTrackingRouteHref(userKey, teamKey);
                 return `
                     ${shouldRenderDivider ? `<li class="member-group-divider">${getJobTitleName(user.job_title_id)}</li>` : ''}
-                    <li>
+                    <li class="app-appear-item" style="--appear-index:${index + 1}">
                         <a href="${escapeHtml(trackingHref)}" class="${activeClass}" data-member-group="tracking" data-tracking-current="${isLoggedInUser ? 'true' : 'false'}" data-user-key="${userKey}">
                             <span class="${currentIndexClass}">${index + 1}</span>
                             <span class="member-name">${user.full_name}</span>
@@ -12898,7 +15215,7 @@ function openInlineForm() {
         }
 
         function applySelectedTeam(teamKey, options = {}) {
-            const { updateUrl = true, replaceUrl = false } = options;
+            const { updateUrl = true, replaceUrl = false, staticTaskListValues = false } = options;
             selectedTeamCode = teamKey;
             document.getElementById('teamSelectorValue').textContent = teamKey || 'Không có phòng ban';
             document.querySelectorAll('.team-option').forEach((option) => {
@@ -12916,7 +15233,7 @@ function openInlineForm() {
                 renderBranchPages('document');
             }
             initializeCurrentUserProfile();
-            applyBoardFilter();
+            applyBoardFilter({ staticTaskListValues });
             if (updateUrl && currentWorkspaceView === 'board') {
                 updateTrackingUrl({ ticketId: null, replace: replaceUrl });
             }
@@ -12930,7 +15247,9 @@ function openInlineForm() {
             const initialTrackingRoute = getTrackingRouteFromUrl();
             const routeTeam = isTrackingRoute(initialTrackingRoute) ? resolveTrackingRoute(initialTrackingRoute).team : null;
             const defaultTeam = availableTeams.includes(routeTeam) ? routeTeam : (availableTeams.includes(savedTeam) ? savedTeam : (availableTeams[0] || null));
-            if (isTrackingRoute(initialTrackingRoute) && initialTrackingRoute.user && getUsersByTeamCode(defaultTeam).includes(initialTrackingRoute.user)) {
+            if (isTrackingRoute(initialTrackingRoute) && isAllTrackingUsersKey(initialTrackingRoute.user)) {
+                activeTrackingUserKey = ALL_TRACKING_USERS_KEY;
+            } else if (isTrackingRoute(initialTrackingRoute) && initialTrackingRoute.user && getUsersByTeamCode(defaultTeam).includes(initialTrackingRoute.user)) {
                 activeTrackingUserKey = initialTrackingRoute.user;
             }
 
@@ -13087,9 +15406,9 @@ function openInlineForm() {
             clearMemberActiveStates();
             link.classList.add('is-active');
             if (link.dataset.memberGroup === 'tracking') {
-                activeTrackingUserKey = normalizeUserKey(link.dataset.userKey) || null;
-                applyBoardFilter();
-                setWorkspaceView("board");
+                activeTrackingUserKey = normalizeTrackingUserKey(link.dataset.userKey) || null;
+                applyBoardFilter({ staticTaskListValues: true });
+                setWorkspaceView("board", { staticTaskListValues: true });
                 closeTaskDetailsDrawer({ updateUrl: false, immediate: true });
                 if (updateUrl) updateTrackingUrl({ ticketId: null, replace: replaceUrl });
             } else if (link.dataset.memberGroup === 'document') {
@@ -13191,9 +15510,11 @@ function openInlineForm() {
             const chevron = document.getElementById(chevronId);
             if (!accordionState[menuId]) {
                 menu.style.maxHeight = menu.scrollHeight + 'px';
+                menu.classList.add('is-open');
                 chevron.style.transform = 'rotate(180deg)';
                 accordionState[menuId] = true;
             } else {
+                menu.classList.remove('is-open');
                 menu.style.maxHeight = '0px';
                 chevron.style.transform = 'rotate(0deg)';
                 accordionState[menuId] = false;
@@ -13212,6 +15533,7 @@ function openInlineForm() {
                     const menu = document.getElementById(menuId);
                     const chevronId = menuId === 'trackingMenu' ? 'trackingChevron' : 'documentChevron';
                     document.getElementById(chevronId).style.transform = 'rotate(0deg)';
+                    menu.classList.remove('is-open');
                     menu.style.maxHeight = '0px';
                 });
             } else {
@@ -13221,13 +15543,222 @@ function openInlineForm() {
                         const chevronId = menuId === 'trackingMenu' ? 'trackingChevron' : 'documentChevron';
                         document.getElementById(chevronId).style.transform = 'rotate(180deg)';
                         menu.style.maxHeight = menu.scrollHeight + 'px';
+                        menu.classList.add('is-open');
                     }
                 });
             }
         }
+
+        function getTaskViewMotionDisabled() {
+            return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+        }
+
+        function setTaskListGroupControlVisible(groupControl, isVisible, immediate = false) {
+            if (!groupControl) return;
+            window.clearTimeout(taskListGroupControlTimeout);
+            groupControl.classList.remove('is-hiding');
+
+            if (immediate || getTaskViewMotionDisabled()) {
+                groupControl.classList.toggle('is-visible', isVisible);
+                return;
+            }
+
+            if (isVisible) {
+                groupControl.classList.add('is-visible');
+                return;
+            }
+
+            if (!groupControl.classList.contains('is-visible')) return;
+            groupControl.classList.remove('is-visible');
+            groupControl.classList.add('is-hiding');
+            taskListGroupControlTimeout = window.setTimeout(() => {
+                groupControl.classList.remove('is-hiding');
+            }, 160);
+        }
+
+        function finalizeTaskViewPanel(panel, shouldShow) {
+            if (!panel) return;
+            panel.classList.toggle('hidden', !shouldShow);
+            panel.classList.toggle('is-active', shouldShow);
+            panel.classList.remove('is-leaving');
+        }
+
+        function scheduleTaskViewPanelFinalize(previousPanel, nextPanel, nextMode, onComplete) {
+            let hasFinalized = false;
+            const finish = () => {
+                if (hasFinalized || currentTaskViewMode !== nextMode) return;
+                hasFinalized = true;
+                window.clearTimeout(taskViewTransitionTimeout);
+                previousPanel?.removeEventListener('transitionend', handleTransitionEnd);
+                finalizeTaskViewPanel(previousPanel, false);
+                finalizeTaskViewPanel(nextPanel, true);
+                onComplete?.();
+            };
+            const handleTransitionEnd = (event) => {
+                if (event.target !== previousPanel || event.propertyName !== 'opacity') return;
+                finish();
+            };
+
+            previousPanel?.addEventListener('transitionend', handleTransitionEnd);
+            taskViewTransitionTimeout = window.setTimeout(finish, 280);
+        }
+
+        function setTaskViewMode(mode, options = {}) {
+            const nextMode = mode === 'list' ? 'list' : 'board';
+            const kanbanShell = document.querySelector('#boardWorkspaceView .kanban-scroll-shell');
+            const listView = document.getElementById('taskListView');
+            const groupControl = document.getElementById('taskListGroupControl');
+            const nextPanel = nextMode === 'list' ? listView : kanbanShell;
+            const previousPanel = nextMode === 'list' ? kanbanShell : listView;
+            const immediate = !!options.immediate || getTaskViewMotionDisabled();
+            const completeBoardSetup = () => {
+                requestAnimationFrame(() => {
+                    updateKanbanScrollNavState();
+                    ensureSortableColumns();
+                });
+            };
+
+            currentTaskViewMode = nextMode;
+            window.clearTimeout(taskViewTransitionTimeout);
+            if (nextMode === 'board') {
+                closeTaskListPopovers({ immediate: true });
+                setTaskListGroupControlVisible(groupControl, false, true);
+            }
+            document.querySelectorAll('.task-view-switch').forEach((switchEl) => {
+                switchEl.style.setProperty('--task-view-index', nextMode === 'list' ? '1' : '0');
+            });
+
+            document.querySelectorAll('[data-task-view-mode]').forEach((button) => {
+                const isActive = button.dataset.taskViewMode === nextMode;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+
+            if (nextMode === 'board') {
+                finalizeTaskViewPanel(listView, false);
+                finalizeTaskViewPanel(kanbanShell, true);
+                renderBoardTickets();
+                completeBoardSetup();
+                return;
+            } else {
+                renderTaskListView({ staticValues: true });
+                setTaskListGroupControlVisible(groupControl, true, immediate);
+                finalizeTaskViewPanel(kanbanShell, false);
+                finalizeTaskViewPanel(listView, true);
+                return;
+            }
+        }
+
+        function initializeTaskViewSwitch() {
+            document.querySelectorAll('[data-task-view-mode]').forEach((button) => {
+                if (button.dataset.taskViewBound === 'true') return;
+                button.dataset.taskViewBound = 'true';
+                button.addEventListener('click', () => setTaskViewMode(button.dataset.taskViewMode));
+            });
+            setTaskViewMode(currentTaskViewMode, { immediate: true });
+        }
+
+        function normalizeTaskListColumnWidths(widths) {
+            return TASK_LIST_COLUMN_ORDER.reduce((nextWidths, columnKey) => {
+                const rawWidth = Number(widths?.[columnKey]);
+                const minWidth = TASK_LIST_COLUMN_MIN_WIDTHS[columnKey] || 100;
+                nextWidths[columnKey] = Number.isFinite(rawWidth)
+                    ? Math.max(minWidth, Math.round(rawWidth))
+                    : TASK_LIST_COLUMN_DEFAULT_WIDTHS[columnKey];
+                return nextWidths;
+            }, {});
+        }
+
+        function loadTaskListColumnWidths() {
+            try {
+                const storedWidths = JSON.parse(localStorage.getItem(TASK_LIST_COLUMN_WIDTHS_STORAGE_KEY) || '{}');
+                taskListColumnWidths = normalizeTaskListColumnWidths(storedWidths);
+            } catch (error) {
+                taskListColumnWidths = { ...TASK_LIST_COLUMN_DEFAULT_WIDTHS };
+            }
+        }
+
+        function saveTaskListColumnWidths() {
+            localStorage.setItem(TASK_LIST_COLUMN_WIDTHS_STORAGE_KEY, JSON.stringify(taskListColumnWidths));
+        }
+
+        function applyTaskListColumnWidths() {
+            const listView = document.getElementById('taskListView');
+            if (!listView) return;
+            const columns = TASK_LIST_COLUMN_ORDER
+                .map((columnKey) => {
+                    const width = taskListColumnWidths[columnKey];
+                    const minWidth = TASK_LIST_COLUMN_MIN_WIDTHS[columnKey] || 100;
+                    return `minmax(${minWidth}px, ${width}fr)`;
+                })
+                .join(' ');
+            const minWidth = TASK_LIST_COLUMN_ORDER.reduce((sum, columnKey) => sum + (TASK_LIST_COLUMN_MIN_WIDTHS[columnKey] || 100), 0)
+                + ((TASK_LIST_COLUMN_ORDER.length - 1) * TASK_LIST_COLUMN_GAP)
+                + 64;
+            listView.style.setProperty('--task-list-columns', columns);
+            listView.style.setProperty('--task-list-min-width', `${minWidth}px`);
+        }
+
+        function finishTaskListColumnResize() {
+            if (!taskListColumnResizeState) return;
+            const { handle, pointerId } = taskListColumnResizeState;
+            try {
+                handle?.releasePointerCapture?.(pointerId);
+            } catch (error) {}
+            handle?.classList.remove('is-dragging');
+            document.body.classList.remove('task-list-resize-active');
+            taskListColumnResizeState = null;
+            saveTaskListColumnWidths();
+        }
+
+        function handleTaskListColumnResizeMove(event) {
+            if (!taskListColumnResizeState) return;
+            event.preventDefault();
+            const { columnKey, startX, startWidth } = taskListColumnResizeState;
+            const minWidth = TASK_LIST_COLUMN_MIN_WIDTHS[columnKey] || 100;
+            taskListColumnWidths[columnKey] = Math.max(minWidth, Math.round(startWidth + event.clientX - startX));
+            applyTaskListColumnWidths();
+        }
+
+        function handleTaskListColumnResizeStart(event) {
+            const handle = event.currentTarget;
+            const columnKey = handle?.dataset?.taskListResizeColumn;
+            if (!TASK_LIST_COLUMN_ORDER.includes(columnKey)) return;
+            event.preventDefault();
+            event.stopPropagation();
+            closeTaskListPopovers();
+            taskListColumnResizeState = {
+                columnKey,
+                handle,
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startWidth: taskListColumnWidths[columnKey]
+            };
+            handle.setPointerCapture?.(event.pointerId);
+            handle.classList.add('is-dragging');
+            document.body.classList.add('task-list-resize-active');
+        }
+
+        function initializeTaskListColumnResize() {
+            loadTaskListColumnWidths();
+            applyTaskListColumnWidths();
+            document.querySelectorAll('[data-task-list-resize-column]').forEach((handle) => {
+                if (handle.dataset.taskListResizeBound === 'true') return;
+                handle.dataset.taskListResizeBound = 'true';
+                handle.addEventListener('pointerdown', handleTaskListColumnResizeStart);
+                handle.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                });
+            });
+            document.addEventListener('pointermove', handleTaskListColumnResizeMove);
+            document.addEventListener('pointerup', finishTaskListColumnResize);
+            document.addEventListener('pointercancel', finishTaskListColumnResize);
+        }
+
         // ==========================================
         // 5. KHỞI ĐỘNG (CHẠY NGAY KHI VÀO TRANG)
-        function setWorkspaceView(viewKey) {
+        function setWorkspaceView(viewKey, options = {}) {
             const boardView = document.getElementById('boardWorkspaceView');
             const documentView = document.getElementById('documentWorkspaceView');
             const adminView = document.getElementById('adminWorkspaceView');
@@ -13239,6 +15770,12 @@ function openInlineForm() {
             boardView.classList.toggle('hidden', isAdmin || isDocument);
             documentView.classList.toggle('hidden', !isDocument);
             adminView.classList.toggle('hidden', !isAdmin);
+            if (currentWorkspaceView === 'board') {
+                setTaskViewMode(currentTaskViewMode, {
+                    immediate: true,
+                    staticTaskListValues: !!options.staticTaskListValues
+                });
+            }
         }
 
         function handleAppRouteFromUrl({ replaceUrl = false } = {}) {
@@ -16294,16 +18831,22 @@ function openInlineForm() {
             closeStateColorLov();
             closeTaskCommentReactionMenu();
             closeAssigneeStatusLov();
+            closeTaskListPopovers();
         });
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && document.querySelector('.task-detail-drawer-layer.is-open')) {
                 closeTaskDetailsDrawer();
+            }
+            if (e.key === 'Escape') {
+                closeTaskListPopovers();
             }
         });
 
         // ==========================================
         renderKanbanBoard();
         initializeKanbanScrollNav();
+        initializeTaskListColumnResize();
+        initializeTaskViewSwitch();
         applyUIPermissions();
         initSortableColumns();
         loadBoardState();
